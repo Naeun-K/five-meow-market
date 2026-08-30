@@ -12,8 +12,8 @@ export const reviews = [
 
     // images: ["/images/review/review1.png"],
 
-    createdAt: "2026-08-20",
+    createdAt: new Date("2026-08-20"),
 
-    updatedAt: "2026-08-20",
+    updatedAt: new Date("2026-08-20"),
   },
 ];
