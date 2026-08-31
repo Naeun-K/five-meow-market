@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+#api명세
+*api.md
+
 # env
 .env
 .env.*
