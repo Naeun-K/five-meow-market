@@ -4,7 +4,7 @@
 
 *,
 *::before,
-*::after {
+::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -94,7 +94,7 @@ textarea {
   outline: none;
 }
 
-/* textarea 크기 조절 */
+/* 크기 조절 */
 
 textarea {
   resize: none;
@@ -120,3 +120,5 @@ hr {
   margin: 0;
   border: 0;
 }
+
+/* 스크롤바 숨기기*/
