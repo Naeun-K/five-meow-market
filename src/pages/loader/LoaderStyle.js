@@ -33,8 +33,6 @@ export const ImgBounce = styled.div({
     animation: `${waveAnimation} 2s infinite linear`,
 
     willChange: "transform",
-    transform: "translateZ(0)",
-    backfaceVisibility: "hidden",
   },
 
   "& .img-container:nth-of-type(2)": {
@@ -58,5 +56,6 @@ export const LoaderStyles = styled.div({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  gap: 0,
   "& p": { fontSize: "22px" },
 });
