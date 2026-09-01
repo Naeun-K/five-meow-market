@@ -76,6 +76,37 @@
 
 /* Pretendard 정의 */
 
+/* css 기본변수 */
+:root {
+  /* 모든 화면 배경색 */
+  --bg: #faf8f4;
+  /* 큰 버튼 배경색 - 짙은 브라운*/
+  --bg-button: #745a42;
+  /* 장바구니 주문요약, 반품 안내, 결제 후 적립예정 알림 - 연한 베이지*/
+  --bg-notice: #f3ece6;
+  /* 기본 텍스트 색 - 검정색 */
+  --text-color: #000;
+  /* 색을 준 포인트 글자색 - 짙은 갈색 */
+  --text-primary: #614832;
+  /* 그다지 중요하지 않은 이용약관, 옵션, 안내메세지 전용 - 짙은 회색 */
+  --text-secondary: #66615e;
+  /* 버튼 글자색 - 하얀색 */
+  --text-button: #fff;
+  /* 경계선색 - 연한 회색 */
+  --border: #e8e3dd;
+  /* 발바닥 svg,  취소 버튼, 관심 상품 등록 버튼 등에 쓰이는 포인트색 - 코랄 빛이 섞인 베이지색*/
+  --acent-beidge: #ebccb2;
+
+  /* border-radius 기본 스타일 */
+  --radius-md: 12px;
+  /* box-shadow 기본 스타일 */
+  --shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
+
+  font-family: "Pretendard", sans-serif;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+}
+
 /* Reset CSS */
 
 /* 모든 요소 기본 여백 및 박스 크기 초기화 */
@@ -97,7 +128,6 @@ html {
 body {
   width: 100%;
   background: linear-gradient(135deg, #f3f0ec, #f3ece2);
-  font-family: "Pretendard", sans-serif;
   line-height: 1.5;
 }
 
