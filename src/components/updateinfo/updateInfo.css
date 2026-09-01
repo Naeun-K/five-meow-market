@@ -1,0 +1,112 @@
+.update-info {
+  display: flex;
+  width: 720px;
+  height: 1187px;
+  padding: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  flex-shrink: 0;
+  background: #FAF8F4;
+}
+
+.update-header {
+  display: flex;
+  height: 159px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-shrink: 0;
+}
+
+.update-header h1 {
+  width: 248px;
+  height: 74px;
+  flex-shrink: 0;
+  color: #000;
+  font-family: Inter;
+  font-size: 44px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.update-header h3 {
+ width: 128px;
+height: 29px;
+
+color: #000;
+font-family: Inter;
+font-size: 22px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.update-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  align-self: stretch;
+}
+
+.update-user {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  gap: 20px;
+  align-self: stretch;
+}
+
+.update-name {
+display: flex;
+height: 30px;
+align-items: center;
+gap: 20px;
+align-self: stretch;
+}
+
+.update-name span {
+  width: 117px;
+  height: 13.864px;
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.update-email {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  gap: 15px;
+  align-self: stretch;
+}
+
+.email {
+  width: 73px;
+height: 14px;
+color: #000;
+font-family: Inter;
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.email-name {
+    width: 298px;
+height: 14px;
+color: #000;
+font-family: Inter;
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
