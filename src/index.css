@@ -101,10 +101,6 @@
   --radius-md: 12px;
   /* box-shadow 기본 스타일 */
   --shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
-
-  font-family: "Pretendard", sans-serif;
-  text-rendering: optimizeLegibility;
-  font-synthesis: none;
 }
 
 /* Reset CSS */
@@ -122,6 +118,9 @@
 /* 문서 기본 스타일 */
 
 html {
+  font-family: "Pretendard", sans-serif;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
   scroll-behavior: smooth;
 }
 
@@ -135,6 +134,9 @@ main {
   min-height: 100svh;
   max-width: 1350px;
   margin: 0 auto;
+
+  background: var(--bg);
+  color: var(--text-color);
 }
 /* 제목 기본 스타일 초기화 */
 
