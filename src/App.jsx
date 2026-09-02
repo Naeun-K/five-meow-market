@@ -1,10 +1,10 @@
 import "./App.css";
-import Footer from "./components/footer/Footer.jsx";
+import LoginForm from "./components/Login/LoginForm";
 
 function App() {
   return (
     <main>
-      <Footer />
+      <LoginForm />
     </main>
   );
 }
