@@ -58,22 +58,26 @@ export const FooterMain = styled.div`
 `;
 
 /* 로고 */
+
 export const FooterLogo = styled.div`
-  width: 108px;
-  height: 43px;
+  width: 150px;
+  height: auto;
 
   flex-shrink: 0;
 
   img {
     width: 100%;
-    height: 100%;
-
+    height: auto;
+    display: block;
     object-fit: contain;
+  }
+
+  @media (max-width: 1024px) {
+    width: 140px;
   }
 
   @media (max-width: 767px) {
     width: 132px;
-    height: 53px;
   }
 `;
 
