@@ -1,10 +1,10 @@
 import errorImage from "../../assets/404img.svg";
 
-import catClean from "../../assets/logo-clean.svg";
-import catEat from "../../assets/logo-eat.svg";
-import catHigh from "../../assets/logo-high.svg";
-import catPlay from "../../assets/logo-play.svg";
-import catRest from "../../assets/logo-rest.svg";
+import catClean from "../../assets/logo-clean.webp";
+import catEat from "../../assets/logo-eat.webp";
+import catHigh from "../../assets/logo-high.webp";
+import catPlay from "../../assets/logo-play.webp";
+import catRest from "../../assets/logo-rest.webp";
 
 import * as S from "./404styles";
 

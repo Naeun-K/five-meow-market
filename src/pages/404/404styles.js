@@ -58,7 +58,7 @@ export const NotFoundNumber = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-family: "Pretendard", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 44px;
   line-height: 66px;
@@ -189,129 +189,69 @@ export const NotFoundBottom = styled.div`
 
 export const NotFoundCats = styled.div`
   width: 257px;
-  height: 43px;
+  height: 54px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 
   position: relative;
 
-  margin: 0;
+  margin-bottom: -15px;
   padding: 0;
 
   overflow: visible;
   z-index: 5;
 `;
 
-/* 각각의 고양이 공통 */
+/* 각각의 고양이 */
 
 export const Cat = styled.div`
-  position: absolute;
+  width: 48px;
+  height: 48px;
 
-  width: 54px;
-  height: 43px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 
-  overflow: visible;
+  flex-shrink: 0;
 
   & img {
-    position: absolute;
+    width: 100%;
+    height: 100%;
 
     display: block;
 
-    max-width: none;
+    object-fit: contain;
 
     margin: 0;
     padding: 0;
-
-    object-fit: fill;
 
     pointer-events: none;
   }
 `;
 
-/* CLEAN */
+export const CatClean = styled(Cat)``;
 
-export const CatClean = styled(Cat)`
-  left: 30px;
-  top: 5px;
+export const CatEat = styled(Cat)``;
 
-  & img {
-    width: 320px;
-    height: 70px;
+export const CatHigh = styled(Cat)``;
 
-    left: -120px;
-    top: -6px;
-  }
-`;
+export const CatPlay = styled(Cat)``;
 
-/* EAT */
-
-export const CatEat = styled(Cat)`
-  left: 69px;
-  top: 3px;
-
-  & img {
-    width: 280px;
-    height: 71px;
-
-    left: -79px;
-    top: -7px;
-  }
-`;
-
-/* HIGH */
-
-export const CatHigh = styled(Cat)`
-  left: 108px;
-  top: 2px;
-
-  & img {
-    width: 204px;
-    height: 69px;
-
-    left: -80px;
-    top: -6px;
-  }
-`;
-
-/* PLAY */
-
-export const CatPlay = styled(Cat)`
-  left: 147px;
-  top: 2px;
-
-  & img {
-    width: 280px;
-    height: 71px;
-
-    left: -79px;
-    top: -8px;
-  }
-`;
-
-/* REST */
-
-export const CatRest = styled(Cat)`
-  left: 186px;
-  top: 5px;
-
-  & img {
-    width: 202px;
-    height: 72px;
-
-    left: -82px;
-    top: -6px;
-  }
-`;
+export const CatRest = styled(Cat)``;
 
 /* 홈으로 돌아가기 버튼 */
 
 export const NotFoundButton = styled.button`
   width: 257px;
-  height: 46px;
+  height: 50px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  margin: -1px 0 0;
+  margin: 0;
   padding: 10px 20px;
 
   border: none;
@@ -320,8 +260,8 @@ export const NotFoundButton = styled.button`
   background: var(--bg-button);
 
   font-family: "Pretendard", sans-serif;
-  font-weight: 600;
   font-size: 17px;
+  font-weight: 600;
   line-height: 26px;
 
   text-align: center;

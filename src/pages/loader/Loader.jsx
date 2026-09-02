@@ -1,10 +1,10 @@
 import { LoaderStyles } from "./LoaderStyle";
 import { ImgBounce } from "./LoaderStyle";
-import logoClean from "../../assets/logo-clean.svg";
-import logoPlay from "../../assets/logo-play.svg";
-import logoRest from "../../assets/logo-rest.svg";
-import logoEat from "../../assets/logo-eat.svg";
-import logoHigh from "../../assets/logo-high.svg";
+import logoClean from "../../assets/logo-clean.webp";
+import logoPlay from "../../assets/logo-play.webp";
+import logoRest from "../../assets/logo-rest.webp";
+import logoEat from "../../assets/logo-eat.webp";
+import logoHigh from "../../assets/logo-high.webp";
 
 export default function Loader() {
   return (
