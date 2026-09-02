@@ -57,5 +57,5 @@ export const LoaderStyles = styled.div({
   justifyContent: "center",
   alignItems: "center",
   gap: 0,
-  "& p": { fontSize: "22px" },
+  "& p": { fontSize: "30px", fontWeight: 700 },
 });
