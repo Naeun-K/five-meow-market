@@ -56,8 +56,9 @@ line-height: normal;
 
 .update-user {
   display: flex;
-  height: 30px;
-  align-items: center;
+  height: auto;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 20px;
   align-self: stretch;
 }
@@ -106,6 +107,42 @@ height: 14px;
 color: #000;
 font-family: Inter;
 font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.update-password-section {
+    display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 15px;
+align-self: stretch;
+
+
+
+}
+
+.update-password-input {
+    display: flex;
+height: 32px;
+padding: 21px 38.294px 18px 11px;
+align-items: flex-start;
+gap: 338.588px;
+align-self: stretch;
+
+border-radius: 12px;
+border: 1px solid #E3E3E1;
+background: #FFF;
+}
+
+.update-password-input input {
+    width: 280px;
+height: 20px;
+
+color: #A8A7A7;
+font-family: Inter;
+font-size: 17px;
 font-style: normal;
 font-weight: 500;
 line-height: normal;
