@@ -283,7 +283,8 @@ export const InputWrapper = styled.div`
   width: 100%;
   height: 53px;
 
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
 
   position: relative;
 

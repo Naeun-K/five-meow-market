@@ -1,5 +1,5 @@
 import * as userApi from "../api/userApi";
-import * as userMock from "../mocks/userMock";
+import * as mockUser from "../data/mockUser";
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
 
@@ -15,7 +15,7 @@ export async function getMyInfo() {
   }
 
   if (USE_MOCK) {
-    return userMock.mockGetMyInfo();
+    return userMock.mockGetMyInfo(updateData);
   }
 
   return userApi.getMyInfo(accessToken);
@@ -28,7 +28,7 @@ export async function updateMyInfo(updateData) {
   if (!accessToken) {
     return {
       success: false,
-      message: "로그인이 필요합니다.",
+      message: "회원정보 수정이 실패했습니다.",
     };
   }
 
