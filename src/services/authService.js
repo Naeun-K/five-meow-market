@@ -1,5 +1,5 @@
 import * as authApi from "../api/authApi";
-import * as mockAuth from "../data/mockAuth"
+import * as authMock from "../data/mockAuth";
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
 

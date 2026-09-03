@@ -1,11 +1,37 @@
 import { useState } from "react";
 import { LoginStyle, FormStyle } from "./LoginStyle";
+import useToast from "../../hooks/useToast";
+import * as authService from "../../services/authService";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { showToast } = useToast();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (isSubmitting) return;
+
+    const formData = new FormData(event.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    setIsSubmitting(true);
+
+    try {
+      const result = await authService.login(email, password);
+
+      showToast(result.message, result.success);
+
+      if (result.success) {
+        window.location.href = "/";
+      }
+    } catch {
+      showToast("로그인 중 오류가 발생했습니다.", false);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
