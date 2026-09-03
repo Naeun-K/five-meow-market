@@ -1,11 +1,11 @@
 import "./App.css";
-import UpdateInfo from "./components/updateinfo/updateInfo.jsx";
+import LoginForm from "./components/Login/LoginForm";
 
 function App() {
   return (
-    <div className="app">
-      <UpdateInfo />
-    </div>
+    <main>
+      <LoginForm />
+    </main>
   );
 }
 
