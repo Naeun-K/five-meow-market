@@ -182,3 +182,22 @@
     border-right-color: var(--border);
   }
 } */
+
+#root {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}

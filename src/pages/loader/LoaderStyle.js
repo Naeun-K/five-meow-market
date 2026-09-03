@@ -27,12 +27,18 @@ export const ImgBounce = styled.div({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  flexWrap: "wrap",
+  maxWidth: "100%",
 
   "& .img-container": {
     width: "100px",
     animation: `${waveAnimation} 2s infinite linear`,
 
     willChange: "transform",
+
+    "@media (max-width: 767px)": {
+      width: "50px",
+    },
   },
 
   "& .img-container:nth-of-type(2)": {
