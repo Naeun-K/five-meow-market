@@ -79,7 +79,7 @@ export const SignupContainer = styled.div`
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
 
-    background: var(--bg);
+    background: #fff;
 
     color: var(--text-color);
 
@@ -92,27 +92,95 @@ export const SignupContainer = styled.div`
     &::placeholder {
       color: var(--text-secondary);
     }
+
+    &:hover {
+      border-color: #bb9678;
+    }
+
+    &:focus {
+      border-color: #8a664a;
+
+      box-shadow:
+        0 0 0 2px rgba(201, 143, 120, 0.22),
+        0 0 0 4px rgba(217, 184, 166, 0.12);
+    }
   }
 
   .password-input {
     position: relative;
     width: 100%;
+
+    input {
+      padding-right: 50px;
+    }
   }
 
-  .eye-icon {
+  .eye-button {
     position: absolute;
 
     top: 50%;
-    right: 16px;
+    right: 12px;
 
     transform: translateY(-50%);
 
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
     color: var(--text-secondary);
 
-    font-size: 16px;
-    line-height: 1;
+    cursor: pointer;
+
+    z-index: 2;
+
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #000;
+      background: transparent;
+    }
+
+    &.active {
+      color: #000;
+      background: transparent;
+    }
+  }
+
+  .eye-icon {
+    width: 16px;
+    height: 16px;
+
+    display: block;
+
+    color: currentColor;
 
     pointer-events: none;
+  }
+
+  /* 🔴 추가 - 비밀번호 불일치 */
+  .password-error-input {
+    border-color: #eb2d2d;
+  }
+
+  /* 🔴 추가 - 비밀번호 불일치 안내 문구 */
+  .password-error {
+    margin: 0;
+
+    color: #ee2f2f;
+
+    font-family: "Pretendard", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
   }
 
   /* Tablet */
