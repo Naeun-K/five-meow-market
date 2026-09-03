@@ -1,10 +1,12 @@
 import "./App.css";
-import UpdateInfo from "./components/updateinfo/updateInfo.jsx";
+import LoginPage from "./pages/AuthPage/LoginPage";
+import SignupPage from "./pages/AuthPage/SignupPage";
+import UpdatePage from "./pages/AuthPage/UpdatePage";
 
 function App() {
   return (
     <main>
-      <UpdateInfo />
+      <UpdatePage />
     </main>
   );
 }

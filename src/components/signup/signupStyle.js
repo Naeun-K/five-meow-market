@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 
 export const SignupLayout = styled.div`
-  width: 100%;
-  min-height: 100vh;
-
+  width: "100%";
+height:"100%;
   display: flex;
   justify-content: center;
 
@@ -11,7 +10,7 @@ export const SignupLayout = styled.div`
 `;
 
 export const SignupContainer = styled.div`
-  width: 701px;
+  width: 100%;
   padding: 50px;
 
   display: flex;
