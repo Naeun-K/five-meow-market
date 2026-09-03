@@ -5,10 +5,11 @@ export const BrandStyle = styled.div({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "40px",
+  gap: "60px",
 
   width: "100%",
   height: "100%",
+
   padding: "50px",
 
   backgroundColor: " #F7F1E6",
@@ -17,7 +18,7 @@ export const BrandStyle = styled.div({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "15px",
+    gap: "20px",
 
     "& .phrase-wrapper": {
       color: "var(--text-primary)",
@@ -45,6 +46,9 @@ export const BrandStyle = styled.div({
     gap: "25px",
 
     width: "100%",
+
+    fontFamily: "Poppins",
+    fontWeight: 600,
     "& .message-container": {
       color: "var(--text-primary)",
       fontSize: "22px",

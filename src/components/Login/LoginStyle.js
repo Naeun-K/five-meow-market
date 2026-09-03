@@ -74,7 +74,7 @@ export const LoginStyle = styled.div({
   },
 
   "@media (min-width: 320px) and (max-width: 767px)": {
-    padding: "28px 0",
+    padding: 0,
     gap: "35px",
     "& .top-nav": {
       order: 1,
@@ -98,6 +98,8 @@ export const FormStyle = styled.form({
   justifyContent: "center",
   alignItems: "center",
   gap: "60px",
+
+  width: "100%",
 
   "& .input-container": {
     display: "flex",
