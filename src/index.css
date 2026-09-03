@@ -135,7 +135,7 @@ main {
   max-width: 1350px;
   margin: 0 auto;
 
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--text-color);
 }
 /* 제목 기본 스타일 초기화 */
