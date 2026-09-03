@@ -5,10 +5,10 @@ import { ToastContext } from "./ToastContext";
 function ToastProvider({ children }) {
   const [toast, setToast] = useState(null);
 
-  const showToast = (message, type = "error") => {
+  const showToast = (message, success) => {
     setToast({
       message,
-      type,
+      success,
     });
   };
 
@@ -21,7 +21,11 @@ function ToastProvider({ children }) {
       {children}
 
       {toast && (
-        <Toast message={toast.message} type={toast.type} onClose={closeToast} />
+        <Toast
+          message={toast.message}
+          success={toast.success}
+          onClose={closeToast}
+        />
       )}
     </ToastContext.Provider>
   );

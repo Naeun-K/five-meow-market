@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import * as S from "./Toast.styles";
 
-function Toast({ message, type = "error", onClose }) {
+function Toast({ message, success, onClose }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -11,7 +11,7 @@ function Toast({ message, type = "error", onClose }) {
   }, [onClose]);
 
   return (
-    <S.ToastContainer type={type}>
+    <S.ToastContainer $success={success}>
       <span>{message}</span>
     </S.ToastContainer>
   );
