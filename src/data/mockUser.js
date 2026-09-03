@@ -32,7 +32,8 @@ export function mockGetMyInfo() {
   };
 }
 
-export function mockUpdateMyInfo() {
+export function mockUpdateMyInfo(updateData) {
+  console.log("Mock 회원정보 수정 데이터, updataData")
   return {
     success: true,
     message: "회원정보수정이 정상적으로 완료되었습니다.",
