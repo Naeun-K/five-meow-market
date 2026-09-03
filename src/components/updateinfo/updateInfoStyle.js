@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 
-{/* 전체 틀 프레임 */}
+{
+  /* 전체 틀 프레임 */
+}
 export const Container = styled.div`
   display: flex;
   width: 720px;
@@ -21,25 +23,27 @@ export const Container = styled.div`
   margin: 0 auto;
 
   @media (max-width: 1023px) {
-  width: 384px;
-  margin: 0 auto;
+    width: 384px;
+    margin: 0 auto;
   }
 
   @media (max-width: 767px) {
-  width: calc(100% - 32px);
-  min-width: 0;
-  max-width: 100%;
-  height: auto;
+    width: calc(100% - 32px);
+    min-width: 0;
+    max-width: 100%;
+    height: auto;
 
-  padding: 12px 24px;
-  gap: 20px;
-  
-  margin: 16px auto;
-  box-sizing: border-box;
+    padding: 12px 24px;
+    gap: 20px;
+
+    margin: 16px auto;
+    box-sizing: border-box;
   }
 `;
 
-{/*Update Info, 집사변했어, 고양이 발바닥 */}
+{
+  /*Update Info, 집사변했어, 고양이 발바닥 */
+}
 export const Header = styled.header`
   display: flex;
   width: 100%;
@@ -86,33 +90,38 @@ export const Header = styled.header`
 
     svg {
       width: 40px;
-      height: 40px; 
+      height: 40px;
       flex-shrink: 0;
-      fill: #EBCCB2;}
+      fill: #ebccb2;
+    }
   }
 
   @media (max-width: 1023px) {
-  h1 {
-  font-size: 36px}
-  
+    h1 {
+      font-size: 36px;
+    }
 
-  p {
-  font-size: 20px}
+    p {
+      font-size: 20px;
+    }
 
-  p svg{
-  width: 28px;
-  height: 28px;}
+    p svg {
+      width: 28px;
+      height: 28px;
+    }
 
-  @media (max-width: 767px) {
-  width: 100%;
-  padding: 30px 12px;
-  gap: 20px;
-}
-}
+    @media (max-width: 767px) {
+      width: 100%;
+      padding: 30px 12px;
+      gap: 20px;
+    }
+  }
 `;
 
-{/*헤더 밑에 부분 전체 묶음 */}
-export const Main = styled.main`
+{
+  /*헤더 밑에 부분 전체 묶음 */
+}
+export const Main = styled.div`
   display: flex;
 
   flex-direction: column;
@@ -128,17 +137,20 @@ export const Main = styled.main`
   margin: 0;
 
   @media (max-width: 1023px) {
-  gap: 30px;
+    gap: 30px;
   }
 
   @media (max-width: 767px) {
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  gap: 25px;}
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    gap: 25px;
+  }
 `;
 
-{/*닉네임, 설정 닉네임, 이메일, 사용 이메일  */}
+{
+  /*닉네임, 설정 닉네임, 이메일, 사용 이메일  */
+}
 export const InfoRow = styled.div`
   display: flex;
   width: 100%;
@@ -181,24 +193,26 @@ export const InfoRow = styled.div`
 
     margin: 0;
   }
-    @media (max-width: 1023px) {
+  @media (max-width: 1023px) {
     span {
-    width: auto;
-    font-size: 16px;
+      width: auto;
+      font-size: 16px;
     }
     p {
-    width: auto;
-    font-size: 16px;
+      width: auto;
+      font-size: 16px;
     }
     @media (max-width: 767px) {
-  width: 100%;
+      width: 100%;
 
-  gap: 20px;
-}
-}
+      gap: 20px;
+    }
+  }
 `;
 
-{/*새 비번, 새 비번 확인, 휴대폰 번호, 주소 */}
+{
+  /*새 비번, 새 비번 확인, 휴대폰 번호, 주소 */
+}
 export const FormGroup = styled.div`
   display: flex;
 
@@ -277,7 +291,9 @@ export const FormGroup = styled.div`
 }
 `;
 
-{/*비밀번호 입력칸 , input 및 Placeholder, 버튼 눈 */}
+{
+  /*비밀번호 입력칸 , input 및 Placeholder, 버튼 눈 */
+}
 export const InputWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -354,7 +370,9 @@ export const InputWrapper = styled.div`
   }
 `;
 
-{/* 휴대폰 번호, 본인인증 */}
+{
+  /* 휴대폰 번호, 본인인증 */
+}
 export const PhoneRow = styled.div`
   display: flex;
   min-width: 0;
@@ -380,37 +398,39 @@ export const PhoneRow = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-input::placeholder {
-  color: var(--text-secondary);
-  font-family: Inter;
-  font-size: 16px;
-  font-weight: 500;
-  }
-
-    @media (max-width: 1023px) {
-    height: 45px;
-
-    input {
-    height: 45px;
-    padding: 12px 10px;
   }
 
   input::placeholder {
+    color: var(--text-secondary);
+    font-family: Inter;
     font-size: 16px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 1023px) {
+    height: 45px;
+
+    input {
+      height: 45px;
+      padding: 12px 10px;
+    }
+
+    input::placeholder {
+      font-size: 16px;
     }
   }
 
-    @media (max-width: 767px) {
+  @media (max-width: 767px) {
     gap: 8px;
-    input::placeholder{
-      font-size:14px;
-    }   
+    input::placeholder {
+      font-size: 14px;
+    }
   }
 `;
 
- {/* 우편번호 검색 버튼 */}
+{
+  /* 우편번호 검색 버튼 */
+}
 export const VerifyButton = styled.button`
   width: 140px;
   height: 53px;
@@ -436,23 +456,25 @@ export const VerifyButton = styled.button`
   cursor: pointer;
 
   @media (max-width: 1023px) {
-  width: 107px;
-  height: 45px;
-  padding: 15px 10px;
-  gap: 10px;
-  white-space: nowrap;
+    width: 107px;
+    height: 45px;
+    padding: 15px 10px;
+    gap: 10px;
+    white-space: nowrap;
 
-  @media (max-width: 767px) {
-    width: 100x;
-  height: 45px;
-  padding: 10px 5px;
-  font-size: 14px;
-  white-space: nowrap;
+    @media (max-width: 767px) {
+      width: 100x;
+      height: 45px;
+      padding: 10px 5px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
   }
-}
 `;
 
-{/* 우편번호 검색 버튼 */}
+{
+  /* 우편번호 검색 버튼 */
+}
 export const AddressRow = styled.div`
   display: flex;
   width: 100%;
@@ -500,24 +522,26 @@ export const AddressRow = styled.div`
     background: var(--acent-beidge);
 
     cursor: pointer;
-}
-    @media (max-width: 1023px) {
+  }
+  @media (max-width: 1023px) {
     gap: 10px;
 
     input {
       height: 45px;
       padding: 12px 10px;
-      }
+    }
     button {
       width: 120px;
       height: 48px;
       padding: 10px;
       font-size: 16px;
-      }
+    }
   }
 `;
 
-{/* 본인인증, 우편번호 검색 버튼 */}
+{
+  /* 본인인증, 우편번호 검색 버튼 */
+}
 export const AddressButton = styled.button`
   color: var(--text-button);
   font-family: Inter;
@@ -527,13 +551,16 @@ export const AddressButton = styled.button`
   line-height: normal;
 
   @media (max-width: 1023px) {
-  font-size: 16px; 
+    font-size: 16px;
   }
   @media (max-width: 767px) {
-  font-size: 16px;}
+    font-size: 16px;
+  }
 `;
 
-{/* 회원정보 수정 버튼 */}
+{
+  /* 회원정보 수정 버튼 */
+}
 export const SubmitButton = styled.button`
   display: flex;
   width: 100%;
@@ -563,7 +590,7 @@ export const SubmitButton = styled.button`
   cursor: pointer;
 
   @media (max-width: 1023px) {
-  font-size: 16px; 
-  white-space: nowrap;
+    font-size: 16px;
+    white-space: nowrap;
   }
 `;
