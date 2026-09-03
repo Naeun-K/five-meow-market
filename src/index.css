@@ -131,7 +131,7 @@ body {
 }
 
 main {
-  min-height: 100svh;
+  min-height: 100vh;
   max-width: 1350px;
   margin: 0 auto;
 
