@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import * as S from "./Toast.styles";
+import { ToastContainer } from "./ToastStyle";
 
 function Toast({ message, success, onClose }) {
   useEffect(() => {
@@ -11,9 +11,9 @@ function Toast({ message, success, onClose }) {
   }, [onClose]);
 
   return (
-    <S.ToastContainer $success={success}>
+    <ToastContainer $success={success}>
       <span>{message}</span>
-    </S.ToastContainer>
+    </ToastContainer>
   );
 }
 

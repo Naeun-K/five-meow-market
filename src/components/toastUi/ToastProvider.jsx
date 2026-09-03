@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Toast from "./Toast";
-import { ToastContext } from "./ToastContext";
+import { ToastContext } from "../../hooks/useToast";
 
 function ToastProvider({ children }) {
   const [toast, setToast] = useState(null);
