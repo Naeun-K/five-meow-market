@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
   display: flex;
   width: 100%;
-  minheight: 100vh;
+  min-height: 100vh;
   padding: 50px;
 
   flex-direction: column;
@@ -61,8 +61,6 @@ export const Container = styled.div`
   @media (max-width: 1023px) {
     width: 384px;
     margin: 0 auto;
-    width: 384px;
-    margin: 0 auto;
   }
 
   /* 기존 모바일 */
@@ -114,6 +112,7 @@ export const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: auto;
     height: 29px;
 
@@ -123,17 +122,14 @@ export const Header = styled.header`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    gap: 8px;
 
+    gap: 8px;
     margin: 0;
 
     svg {
       width: 40px;
       height: 40px;
-      height: 40px;
       flex-shrink: 0;
-      fill: #ebccb2;
-    }
       fill: #ebccb2;
     }
   }
@@ -142,13 +138,7 @@ export const Header = styled.header`
     h1 {
       font-size: 36px;
     }
-    h1 {
-      font-size: 36px;
-    }
 
-    p {
-      font-size: 20px;
-    }
     p {
       font-size: 20px;
     }
@@ -156,23 +146,13 @@ export const Header = styled.header`
     p svg {
       width: 28px;
       height: 28px;
-    }
-    p svg {
-      width: 28px;
-      height: 28px;
-    }
-
-    @media (max-width: 767px) {
-      width: 100%;
-      padding: 30px 12px;
-      gap: 20px;
     }
   }
-    @media (max-width: 767px) {
-      width: 100%;
-      padding: 30px 12px;
-      gap: 20px;
-    }
+
+  @media (max-width: 767px) {
+    width: 100%;
+    padding: 30px 12px;
+    gap: 20px;
   }
 `;
 
@@ -196,25 +176,16 @@ export const Main = styled.div`
 
   @media (max-width: 1023px) {
     gap: 30px;
-    gap: 30px;
   }
 
   @media (max-width: 767px) {
     width: 100%;
     min-width: 0;
-    max-width: 100%;ff
-    gap: 25px;
-  }
-    width: 100%;
-    min-width: 0;
     max-width: 100%;
-    gap: 25px;
+    gap: 30px;
   }
 `;
 
-{
-  /*닉네임, 설정 닉네임, 이메일, 사용 이메일  */
-}
 {
   /*닉네임, 설정 닉네임, 이메일, 사용 이메일  */
 }
@@ -232,7 +203,6 @@ export const InfoRow = styled.div`
   span {
     width: 117px;
     flex-shrink: 0;
-    font-size: 14px;
 
     color: var(--text-color);
     font-family: Inter;
@@ -246,10 +216,8 @@ export const InfoRow = styled.div`
     flex: 1;
     min-width: 0;
     overflow-wrap: break-word;
-    word-brack: brack-all;
+    word-break: break-all;
     width: auto;
-    min-width: 0;
-    font-size: 14px;
 
     color: var(--text-color);
     font-family: Inter;
@@ -260,45 +228,32 @@ export const InfoRow = styled.div`
 
     margin: 0;
   }
-  @media (max-width: 1023px) {
+
   @media (max-width: 1023px) {
     span {
       width: auto;
       font-size: 16px;
-      width: auto;
-      font-size: 16px;
     }
+
     p {
       width: auto;
       font-size: 16px;
-      width: auto;
-      font-size: 16px;
     }
+}
+
     @media (max-width: 767px) {
       width: 100%;
-      width: 100%;
-
       gap: 20px;
     }
-  }
-      gap: 20px;
-    }
-  }
 `;
 
-{
-  /*새 비번, 새 비번 확인, 휴대폰 번호, 주소 */
-}
-{
-  /*새 비번, 새 비번 확인, 휴대폰 번호, 주소 */
-}
+
+{ /*새 비번, 새 비번 확인, 휴대폰 번호, 주소 */}
 export const FormGroup = styled.div`
   display: flex;
-
   flex-direction: column;
-  align-items: flex-start;
-  gap: 25px;
-
+  align-items: center;
+  gap: 20px;
   align-self: stretch;
 
   label {
@@ -313,12 +268,17 @@ export const FormGroup = styled.div`
     line-height: normal;
   }
 
+  .password-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
   input {
     display: flex;
     width: 100%;
     height: 53px;
 
-    padding: 21px 40px 18px 13px;
+    padding: 0px 40px 0px 13px;
 
     align-items: flex-start;
 
@@ -337,56 +297,67 @@ export const FormGroup = styled.div`
     font-weight: 500;
     line-height: normal;
   }
-    @media (max-width: 1023px) {
-    gap: 20px;
 
-    label {
-    font-size: 16px;
-    }
+  p {
+    font-size: 17px;
+  }
 
-    input {
-    height: 45px;
-    padding: 12px 17px 12px 12px;
-    }
-
-    input::placeholder {
-    font-size: 16px;
-    }
-}
-    
-    @media (max-width: 767px) {
-    gap: 10px;
-
-    label {
-    font-size: 14px;}
-
-    input {
-    padding: 12px 10px;
-    }
-
-    input::placeholder {
-      font-size: 14px;}
-    }
-}
-   .password-error-input {
+  .password-error-input {
     border-color: #eb2d2d;
   }
 
-  /* 🔴 추가 - 비밀번호 불일치 안내 문구 */
   .password-error {
     margin: 0;
 
     color: #ee2f2f;
-
     font-family: "Pretendard", sans-serif;
     font-size: 14px;
     font-weight: 400;
   }
+
+  @media (max-width: 1023px) {
+    gap: 18px;
+
+    label {
+      font-size: 15px;
+    }
+
+    input {
+      height: 45px;
+      padding: 12px 17px 12px 12px;
+    }
+
+    input::placeholder {
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    gap: 12px;
+
+    label {
+      font-size: 14px;
+    }
+
+    input {
+      height: 45px; 
+      padding: 12px 10px;
+    }
+
+    input::placeholder {
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
 `;
 
-{
-  /*비밀번호 입력칸 , input 및 Placeholder, 버튼 눈 */
-}
 {
   /*비밀번호 입력칸 , input 및 Placeholder, 버튼 눈 */
 }
@@ -396,7 +367,8 @@ export const InputWrapper = styled.div`
   height: 53px;
 
   flex-direction: column;
-  align-items: flex-start;
+  justify-items: center;
+  align-items: center;
 
   position: relative;
 
@@ -416,16 +388,18 @@ export const InputWrapper = styled.div`
 
   .eye-button {
     position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
+    top: 0;
+    bottom: 0;  
+    right: 8px;
+    margin: auto 0;
 
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    line-height: 0;
 
     padding: 0;
     border: none;
@@ -441,6 +415,7 @@ export const InputWrapper = styled.div`
   }
 
   .eye-icon {
+    display: block;
     width: 16px;
     height: 16px;
     color: currentColor;
@@ -459,6 +434,7 @@ export const InputWrapper = styled.div`
       right: 10px;
       background: transparent;
       z-index: 2;
+      margin: auto 0;
     }
   }
 
@@ -467,14 +443,14 @@ export const InputWrapper = styled.div`
 
     input {
       height: 45px;
-      padding: 12px 55px 12px 10px;
+      padding: 5px 55px 5px 10px;
       font-size: 16px;
+      box-sizing: border-box;
     }
 
     .eye-button {
-      width: 28px;
-      height: 28px;
-      right: 8px;
+      width: 20px;
+      height: 20px;
       z-index: 2;
     }
   }
@@ -483,14 +459,11 @@ export const InputWrapper = styled.div`
 {
   /* 휴대폰 번호, 본인인증 */
 }
-{
-  /* 휴대폰 번호, 본인인증 */
-}
 export const PhoneRow = styled.div`
   display: flex;
   min-width: 0;
   width: 100%;
-  height: 53px;
+  height: 45px;
 
   align-items: center;
   gap: 10px;
@@ -499,8 +472,8 @@ export const PhoneRow = styled.div`
     flex: 1;
     min-width: 0;
 
-    height: 53px;
-    padding: 21px 60px 18px 13px;
+    height: 45px;
+    padding: 21px 13px 18px;
 
     border-radius: var(--radius-md);
     border: 1px solid var(--border);
@@ -512,13 +485,7 @@ export const PhoneRow = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  }
 
-  input::placeholder {
-    color: var(--text-secondary);
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 500;
   input::placeholder {
     color: var(--text-secondary);
     font-family: Inter;
@@ -526,7 +493,6 @@ export const PhoneRow = styled.div`
     font-weight: 500;
   }
 
-  @media (max-width: 1023px) {
   @media (max-width: 1023px) {
     height: 45px;
 
@@ -534,12 +500,7 @@ export const PhoneRow = styled.div`
       height: 45px;
       padding: 12px 10px;
     }
-      height: 45px;
-      padding: 12px 10px;
-    }
 
-    input::placeholder {
-      font-size: 16px;
     input::placeholder {
       font-size: 16px;
     }
@@ -548,14 +509,11 @@ export const PhoneRow = styled.div`
   @media (max-width: 767px) {
     gap: 8px;
     input::placeholder {
-      font-size: 16px;
+      font-size: 14px;
     }
   }
 `;
 
-{
-  /* 우편번호 검색 버튼 */
-}
 {
   /* 우편번호 검색 버튼 */
 }
@@ -589,25 +547,17 @@ export const VerifyButton = styled.button`
     padding: 15px 10px;
     gap: 10px;
     white-space: nowrap;
-    width: 107px;
-    height: 45px;
-    padding: 15px 10px;
-    gap: 10px;
-    white-space: nowrap;
+}
 
     @media (max-width: 767px) {
-      width: 100x;
+      width: 100px;
       height: 45px;
       padding: 10px 5px;
       font-size: 14px;
       white-space: nowrap;
-    }
   }
 `;
 
-{
-  /* 우편번호 검색 버튼 */
-}
 {
   /* 우편번호 검색 버튼 */
 }
@@ -659,8 +609,7 @@ export const AddressRow = styled.div`
 
     cursor: pointer;
   }
-  @media (max-width: 1023px) {
-  }
+
   @media (max-width: 1023px) {
     gap: 10px;
 
@@ -668,14 +617,14 @@ export const AddressRow = styled.div`
       height: 45px;
       padding: 12px 10px;
     }
-    }
+    
     button {
       width: 120px;
       height: 48px;
       padding: 10px;
       font-size: 16px;
     }
-    }
+    
   }
   @media (max-width: 767px) {
     width: 100%;
@@ -712,9 +661,6 @@ export const AddressRow = styled.div`
 {
   /* 본인인증, 우편번호 검색 버튼 */
 }
-{
-  /* 본인인증, 우편번호 검색 버튼 */
-}
 export const AddressButton = styled.button`
   color: var(--text-button);
   font-family: Inter;
@@ -725,18 +671,12 @@ export const AddressButton = styled.button`
 
   @media (max-width: 1023px) {
     font-size: 16px;
-    font-size: 16px;
   }
   @media (max-width: 767px) {
     font-size: 16px;
   }
-    font-size: 16px;
-  }
 `;
 
-{
-  /* 회원정보 수정 버튼 */
-}
 {
   /* 회원정보 수정 버튼 */
 }
@@ -769,8 +709,6 @@ export const SubmitButton = styled.button`
   cursor: pointer;
 
   @media (max-width: 1023px) {
-    font-size: 16px;
-    white-space: nowrap;
     font-size: 16px;
     white-space: nowrap;
   }
