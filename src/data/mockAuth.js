@@ -1,9 +1,12 @@
 const mockUser = {
-  id: "550e8400-e29b-41d4-a716-446655440000",
   nickname: "오묘집사",
   email: "cat@test.com",
-  password: "ohmyo1234",
+  password: "Ohmyo1234",
   phone: "01012345678",
+  zipcode: "61945",
+  address: "광주광역시 서구 상무대로 123",
+  detailAddress: "101동 123호",
+  agreements: true,
 };
 
 export function mockCheckEmail(email) {
