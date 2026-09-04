@@ -14,7 +14,7 @@ export const AuthPageLayoutStyle = styled.div({
   "& .form-part": {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
     width: "50%",
   },
 
