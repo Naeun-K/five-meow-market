@@ -3,19 +3,24 @@ import styled from "@emotion/styled";
 export const LoginStyle = styled.div({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
   alignItems: "center",
+  justifyContent: "space-between",
 
   width: "100%",
+  maxWidth: "520px",
+  margin: "0 auto",
+  minHeight: "1030px",
 
-  padding: "50px",
-  gap: "60px",
+  padding: "10% 50px 50px",
+  gap: "30px",
 
   "& .top-nav": {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     gap: "10px",
+
+    order: 1,
 
     width: "177px",
     height: "28px",
@@ -56,10 +61,36 @@ export const LoginStyle = styled.div({
     width: "30px",
     height: "30px",
   },
+  "& .show-password": {
+    width: "20px",
+    height: "20px",
+    flexShrink: 0,
+
+    color: "var(--text-secondary)",
+    cursor: "pointer",
+    transition: "color 0.2s ease",
+
+    "&:hover": {
+      color: "#000",
+    },
+
+    "&.active": {
+      color: "#000",
+    },
+
+    "& svg": {
+      width: "100%",
+      height: "100%",
+      color: "currentColor",
+      pointerEvents: "none",
+    },
+  },
   "@media (max-width: 1023px)": {
-    gap: "50px",
+    minHeight: "800px",
+    gap: "45px",
     "& .top-nav": {
       fontSize: "15px",
+      marginTop: "90px",
     },
     "& .header": {
       "& h2": {
@@ -74,10 +105,14 @@ export const LoginStyle = styled.div({
   },
 
   "@media (min-width: 320px) and (max-width: 767px)": {
-    padding: 0,
-    gap: "35px",
+    minHeight: "auto",
+    justifyContent: "flex-start",
+    padding: "0",
+    gap: "15px",
+
     "& .top-nav": {
       order: 1,
+      marginTop: "20px",
     },
     "& .header": {
       "& h2": {
@@ -85,9 +120,8 @@ export const LoginStyle = styled.div({
       },
     },
     "& .greeting": {
-      "& p": {
-        fontSize: "18px",
-      },
+      fontSize: "18px",
+      marginBottom: "30px",
     },
   },
 });
@@ -95,11 +129,11 @@ export const LoginStyle = styled.div({
 export const FormStyle = styled.form({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
+  justifyContent: "space-between",
   alignItems: "center",
-  gap: "60px",
 
   width: "100%",
+  height: "450px",
 
   "& .input-container": {
     display: "flex",
@@ -117,22 +151,51 @@ export const FormStyle = styled.form({
       border: "1px solid var(--border)",
       borderRadius: "var(--radius-md)",
       fontSize: "17px",
+
+      "&::placeholder": {
+        color: "var(--text-secondary)",
+      },
+
+      "&:hover": {
+        borderColor: "#bb9678",
+      },
+
+      "&:focus": {
+        borderColor: "#8a664a",
+        boxShadow:
+          "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
+      },
     },
+
     "& .password-container": {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
       padding: "12px 10px",
 
-      backgroundColor: "var(--text-button)",
-
+      backgroundColor: "#fff",
       border: "1px solid var(--border)",
       borderRadius: "var(--radius-md)",
+
+      "&:hover": {
+        borderColor: "#bb9678",
+      },
+
+      // 비밀번호 input 클릭했을 때
+      "&:focus-within": {
+        borderColor: "#8a664a",
+        boxShadow:
+          "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
+      },
 
       "& .password-input": {
         width: "100%",
         height: "100%",
+
         border: "none",
+        outline: "none",
+        background: "transparent",
+
         fontSize: "17px",
       },
     },
