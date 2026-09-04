@@ -86,11 +86,11 @@ export const LoginStyle = styled.div({
     },
   },
   "@media (max-width: 1023px)": {
-    minHeight: "840px",
-    gap: "20px",
+    minHeight: "800px",
+    gap: "45px",
     "& .top-nav": {
       fontSize: "15px",
-      marginTop: "100px",
+      marginTop: "90px",
     },
     "& .header": {
       "& h2": {
