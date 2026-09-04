@@ -1,442 +1,515 @@
 import styled from "@emotion/styled";
 
-export const SignupLayout = styled.div`
-  width: "100%";
-height:"100%;
-  display: flex;
-  justify-content: center;
+/* ========================================
+   회원가입 전체 Layout
+======================================== */
 
-  background: var(--bg);
-`;
+export const SignupLayout = styled.div({
+  display: "flex",
+  justifyContent: "center",
 
-export const SignupContainer = styled.div`
-  width: 100%;
-  padding: 50px;
+  width: "100%",
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  backgroundColor: "var(--bg)",
+});
 
-  box-sizing: border-box;
+/* ========================================
+   회원가입 Container
+======================================== */
 
-  background: var(--bg);
-  color: var(--text-color);
+export const SignupContainer = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "20px",
 
-  h1 {
-    margin: 0;
+  width: "100%",
+  maxWidth: "600px",
 
-    color: var(--text-color);
-    font-family: "Pretendard", sans-serif;
-    font-size: 44px;
-    font-weight: 600;
-  }
+  padding: "50px",
 
-  .subtitle {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  boxSizing: "border-box",
 
-    color: var(--text-color);
-    font-family: "Pretendard", sans-serif;
-    font-size: 22px;
-    font-weight: 400;
-  }
+  backgroundColor: "var(--bg)",
+  color: "var(--text-color)",
 
-  .paw-icon {
-    width: 28px;
-    height: 28px;
+  /* ----------------------------------------
+     Title
+  ---------------------------------------- */
 
-    color: var(--acent-beidge);
+  "& h1": {
+    margin: 0,
 
-    flex-shrink: 0;
-  }
+    color: "var(--text-color)",
 
-  form {
-    width: 100%;
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "44px",
+    fontWeight: 600,
+  },
 
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+  /* ----------------------------------------
+     Subtitle
+  ---------------------------------------- */
 
-  label {
-    color: var(--text-color);
+  "& .subtitle": {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
 
-    font-family: "Pretendard", sans-serif;
-    font-size: 17px;
-    font-weight: 500;
-  }
+    color: "var(--text-color)",
 
-  input:not([type="checkbox"]) {
-    width: 100%;
-    height: 54px;
-    padding: 19px 10px;
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "22px",
+    fontWeight: 400,
+  },
 
-    box-sizing: border-box;
+  "& .paw-icon": {
+    width: "28px",
+    height: "28px",
 
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    color: "var(--acent-beidge)",
 
-    background: #fff;
+    flexShrink: 0,
+  },
 
-    color: var(--text-color);
+  /* ----------------------------------------
+     Form
+  ---------------------------------------- */
 
-    font-family: "Pretendard", sans-serif;
-    font-size: 17px;
-    font-weight: 500;
+  "& form": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px",
 
-    outline: none;
+    width: "100%",
+  },
 
-    &::placeholder {
-      color: var(--text-secondary);
-    }
+  "& label": {
+    color: "var(--text-color)",
 
-    &:hover {
-      border-color: #bb9678;
-    }
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "17px",
+    fontWeight: 500,
+  },
 
-    &:focus {
-      border-color: #8a664a;
+  /* checkbox를 제외한 input */
+  '& input:not([type="checkbox"])': {
+    width: "100%",
+    height: "54px",
 
-      box-shadow:
-        0 0 0 2px rgba(201, 143, 120, 0.22),
-        0 0 0 4px rgba(217, 184, 166, 0.12);
-    }
-  }
+    padding: "19px 10px",
 
-  .password-input {
-    position: relative;
-    width: 100%;
+    boxSizing: "border-box",
 
-    input {
-      padding-right: 50px;
-    }
-  }
+    border: "1px solid var(--border)",
+    borderRadius: "var(--radius-md)",
 
-  .eye-button {
-    position: absolute;
+    backgroundColor: "#fff",
+    color: "var(--text-color)",
 
-    top: 50%;
-    right: 12px;
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "17px",
+    fontWeight: 500,
 
-    transform: translateY(-50%);
+    outline: "none",
 
-    width: 32px;
-    height: 32px;
+    "&::placeholder": {
+      color: "var(--text-secondary)",
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
 
-    padding: 0;
+    "&:hover": {
+      borderColor: "#bb9678",
+    },
 
-    border: none;
-    border-radius: 50%;
+    "&:focus": {
+      borderColor: "#8a664a",
 
-    background: transparent;
+      boxShadow:
+        "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
+    },
+  },
 
-    color: var(--text-secondary);
+  /* ----------------------------------------
+     Password
+  ---------------------------------------- */
 
-    cursor: pointer;
+  "& .password-input": {
+    position: "relative",
 
-    z-index: 2;
+    width: "100%",
 
-    transition: color 0.2s ease;
+    "& input": {
+      paddingRight: "50px",
+    },
+  },
 
-    &:hover {
-      color: #000;
-      background: transparent;
-    }
+  "& .eye-button": {
+    position: "absolute",
 
-    &.active {
-      color: #000;
-      background: transparent;
-    }
-  }
+    top: "50%",
+    right: "12px",
 
-  .eye-icon {
-    width: 16px;
-    height: 16px;
+    transform: "translateY(-50%)",
 
-    display: block;
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
 
-    color: currentColor;
+    width: "32px",
+    height: "32px",
 
-    pointer-events: none;
-  }
+    padding: 0,
 
-  /* 🔴 추가 - 비밀번호 불일치 */
-  .password-error-input {
-    border-color: #eb2d2d;
-  }
+    border: "none",
+    borderRadius: "50%",
 
-  /* 🔴 추가 - 비밀번호 불일치 안내 문구 */
-  .password-error {
-    margin: 0;
+    backgroundColor: "transparent",
+    color: "var(--text-secondary)",
 
-    color: #ee2f2f;
+    cursor: "pointer",
 
-    font-family: "Pretendard", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-  }
+    zIndex: 2,
 
-  /* Tablet */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 384px;
-    padding: 20px 30px;
-    gap: 15px;
+    transition: "color 0.2s ease",
 
-    h1 {
-      font-size: 28px;
-    }
+    "&:hover": {
+      color: "#000",
+      backgroundColor: "transparent",
+    },
 
-    .subtitle {
-      font-size: 16px;
-      gap: 10px;
-    }
+    "&.active": {
+      color: "#000",
+      backgroundColor: "transparent",
+    },
+  },
 
-    .paw-icon {
-      width: 20px;
-      height: 20px;
-    }
+  "& .eye-icon": {
+    display: "block",
 
-    form {
-      gap: 15px;
-    }
+    width: "16px",
+    height: "16px",
 
-    label {
-      font-size: 14px;
-    }
+    color: "currentColor",
 
-    input:not([type="checkbox"]) {
-      height: 54px;
-      padding: 10px;
+    pointerEvents: "none",
+  },
 
-      font-size: 14px;
-    }
+  /* ----------------------------------------
+     Password Error
+  ---------------------------------------- */
 
-    .eye-icon {
-      right: 10px;
+  "& .password-error-input": {
+    borderColor: "#eb2d2d",
+  },
 
-      width: 16px;
-      height: 16px;
-    }
-  }
+  "& .password-error": {
+    margin: 0,
 
-  /* Mobile */
-  @media (max-width: 767px) {
-    width: 320px;
-    padding: 20px;
-    gap: 15px;
+    color: "#ee2f2f",
 
-    h1 {
-      font-size: 24px;
-    }
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "14px",
+    fontWeight: 400,
+  },
 
-    .subtitle {
-      font-size: 16px;
-      gap: 10px;
-    }
+  /* ========================================
+     Tablet
+     768px ~ 1023px
+  ======================================== */
 
-    .paw-icon {
-      width: 20px;
-      height: 20px;
-    }
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    width: "100%",
+    maxWidth: "384px",
 
-    form {
-      gap: 15px;
-    }
+    padding: "20px 30px",
 
-    button {
-      height: 33px;
-      padding: 8px 10px;
+    gap: "15px",
 
-      font-size: 12px;
-    }
+    "& h1": {
+      fontSize: "28px",
+    },
 
-    label {
-      font-size: 12px;
-    }
+    "& .subtitle": {
+      gap: "10px",
 
-    input:not([type="checkbox"]) {
-      height: 33px;
-      padding: 8px 10px;
+      fontSize: "16px",
+    },
 
-      font-size: 12px;
-    }
+    "& .paw-icon": {
+      width: "20px",
+      height: "20px",
+    },
 
-    input {
-      width: 14px;
-      height: 16px;
+    "& form": {
+      gap: "15px",
+    },
 
-      flex-shrink: 0;
-    }
+    "& label": {
+      fontSize: "14px",
+    },
 
-    span {
-      font-size: 15px;
-      white-space: nowrap;
-    }
+    '& input:not([type="checkbox"])': {
+      height: "54px",
 
-    .signup-button {
-      width: 280px;
-      height: 35px;
+      padding: "10px",
 
-      margin: 0 auto;
-      padding: 0;
+      fontSize: "14px",
+    },
 
-      font-size: 16px;
-    }
+    "& .eye-icon": {
+      width: "16px",
+      height: "16px",
+    },
+  },
 
-    .eye-icon {
-      right: 10px;
+  /* ========================================
+     Mobile
+     320px ~ 767px
+  ======================================== */
 
-      width: 14px;
-      height: 14px;
-    }
-  }
-`;
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    width: "100%",
+    maxWidth: "320px",
 
-export const FormGroup = styled.div`
-  width: 100%;
+    padding: "20px",
 
-  display: flex;
-  flex-direction: column;
+    gap: "15px",
 
-  gap: 10px;
-`;
+    "& h1": {
+      fontSize: "24px",
+    },
 
-export const Row = styled.div`
-  width: 100%;
+    "& .subtitle": {
+      gap: "10px",
 
-  display: flex;
-  align-items: center;
+      fontSize: "16px",
+    },
 
-  gap: 10px;
+    "& .paw-icon": {
+      width: "20px",
+      height: "20px",
+    },
 
-  input {
-    flex: 1;
-  }
+    "& form": {
+      gap: "15px",
+    },
 
-  button {
-    flex-shrink: 0;
+    "& label": {
+      fontSize: "12px",
+    },
 
-    height: 54px;
-    padding: 16px 24px;
+    '& input:not([type="checkbox"])': {
+      height: "33px",
 
-    border-radius: var(--radius-md);
+      padding: "8px 10px",
 
-    background: var(--acent-beidge);
+      fontSize: "12px",
+    },
 
-    color: var(--text-primary);
+    "& button": {
+      height: "33px",
 
-    font-family: "Pretendard", sans-serif;
-    font-size: 17px;
-    font-weight: 500;
-  }
+      padding: "8px 10px",
 
-  @media (max-width: 767px) {
-    button {
-      height: 33px;
-      padding: 8px 10px;
+      fontSize: "12px",
+    },
 
-      font-size: 12px;
-    }
-  }
-`;
+    '& input[type="checkbox"]': {
+      width: "14px",
+      height: "16px",
 
-export const Agreement = styled.div`
-  width: 100%;
+      flexShrink: 0,
+    },
 
-  display: flex;
-  align-items: center;
+    "& span": {
+      fontSize: "15px",
+      whiteSpace: "nowrap",
+    },
 
-  gap: 10px;
+    "& .signup-button": {
+      width: "100%",
+      height: "35px",
 
-  input {
-    width: 14px;
-    height: 16px;
+      margin: "0 auto",
+      padding: 0,
 
-    flex-shrink: 0;
-  }
+      fontSize: "16px",
+    },
 
-  span {
-    color: var(--text-color);
+    "& .eye-button": {
+      width: "28px",
+      height: "28px",
 
-    font-family: "Pretendard", sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-  }
+      right: "8px",
 
-  strong {
-    color: var(--text-primary);
-    font-weight: 600;
-  }
+      padding: 0,
+    },
 
-  @media (max-width: 767px) {
-    span {
-      font-size: 12px;
-      white-space: normal;
-    }
-  }
-`;
+    "& .eye-icon": {
+      width: "14px",
+      height: "14px",
+    },
+  },
+});
 
-export const BottomArea = styled.div`
-  width: 100%;
+/* ========================================
+   Form Group
+======================================== */
 
-  .signup-button {
-    width: 100%;
-    height: 52px;
+export const FormGroup = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
 
-    border-radius: var(--radius-md);
+  width: "100%",
+});
 
-    background: var(--bg-button);
+/* ========================================
+   Input + Button Row
+======================================== */
 
-    color: var(--text-button);
+export const Row = styled.div({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
 
-    font-family: "Pretendard", sans-serif;
-    font-size: 17px;
-    font-weight: 600;
-  }
+  width: "100%",
 
-  .login-area {
-    margin-top: 20px;
+  "& input": {
+    flex: 1,
+    minWidth: 0,
+  },
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  "& button": {
+    flexShrink: 0,
 
-    gap: 15px;
+    height: "54px",
 
-    color: var(--text-secondary);
+    padding: "16px 24px",
 
-    font-family: "Pretendard", sans-serif;
-    font-size: 16px;
-  }
+    borderRadius: "var(--radius-md)",
 
-  .login-area a {
-    color: var(--text-primary);
+    backgroundColor: "var(--acent-beidge)",
+    color: "var(--text-primary)",
 
-    font-weight: 500;
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "17px",
+    fontWeight: 500,
+  },
 
-    text-decoration: underline;
-    text-underline-offset: 6px;
-  }
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    "& button": {
+      height: "33px",
 
-  @media (max-width: 767px) {
-    .signup-button {
-      width: 100%;
-      height: 35px;
+      padding: "8px 10px",
 
-      font-size: 16px;
-    }
+      fontSize: "12px",
+    },
+  },
+});
 
-    .login-area {
-      margin-top: 15px;
+/* ========================================
+   Agreement
+======================================== */
 
-      font-size: 12px;
-      gap: 10px;
-    }
-  }
-`;
+export const Agreement = styled.div({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+
+  width: "100%",
+
+  "& input": {
+    width: "14px",
+    height: "16px",
+
+    flexShrink: 0,
+  },
+
+  "& span": {
+    color: "var(--text-color)",
+
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "16px",
+    fontWeight: 400,
+  },
+
+  "& strong": {
+    color: "var(--text-primary)",
+
+    fontWeight: 600,
+  },
+
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    "& span": {
+      fontSize: "12px",
+      whiteSpace: "normal",
+    },
+  },
+});
+
+/* ========================================
+   Bottom Area
+======================================== */
+
+export const BottomArea = styled.div({
+  width: "100%",
+
+  "& .signup-button": {
+    width: "100%",
+    height: "52px",
+
+    borderRadius: "var(--radius-md)",
+
+    backgroundColor: "var(--bg-button)",
+    color: "var(--text-button)",
+
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "17px",
+    fontWeight: 600,
+  },
+
+  "& .login-area": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "15px",
+
+    marginTop: "20px",
+
+    color: "var(--text-secondary)",
+
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "16px",
+
+    "& a": {
+      color: "var(--text-primary)",
+
+      fontWeight: 500,
+
+      textDecoration: "underline",
+      textUnderlineOffset: "6px",
+    },
+  },
+
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    "& .signup-button": {
+      width: "100%",
+      height: "35px",
+
+      fontSize: "16px",
+    },
+
+    "& .login-area": {
+      marginTop: "15px",
+
+      gap: "10px",
+
+      fontSize: "12px",
+    },
+  },
+});

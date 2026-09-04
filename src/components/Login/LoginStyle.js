@@ -4,7 +4,8 @@ export const LoginStyle = styled.div({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "space-between",
+  // justifyContent: "space-between",
+  justifyContent: "space-around",
 
   width: "100%",
   maxWidth: "520px",
@@ -61,11 +62,7 @@ export const LoginStyle = styled.div({
     width: "30px",
     height: "30px",
   },
-  "& .show-password": {
-    width: "20px",
-    height: "20px",
-    flexShrink: 0,
-
+  "& .show-password, & .showPasswordConfirm": {
     color: "var(--text-secondary)",
     cursor: "pointer",
     transition: "color 0.2s ease",
@@ -151,17 +148,17 @@ export const FormStyle = styled.form({
       border: "1px solid var(--border)",
       borderRadius: "var(--radius-md)",
       fontSize: "17px",
-
+      transition: "border 0.2s, box-shadow 0.2s",
       "&::placeholder": {
         color: "var(--text-secondary)",
       },
 
       "&:hover": {
-        borderColor: "#bb9678",
+        border: "1px solid #bb9678",
       },
 
       "&:focus": {
-        borderColor: "#8a664a",
+        border: "1px solid #8a664a",
         boxShadow:
           "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
       },
@@ -177,8 +174,9 @@ export const FormStyle = styled.form({
       border: "1px solid var(--border)",
       borderRadius: "var(--radius-md)",
 
+      transition: "border 0.2s, box-shadow 0.2s",
       "&:hover": {
-        borderColor: "#bb9678",
+        border: "1px solid #bb9678",
       },
 
       // 비밀번호 input 클릭했을 때
