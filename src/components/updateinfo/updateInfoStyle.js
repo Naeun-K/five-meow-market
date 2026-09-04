@@ -515,7 +515,7 @@ export const PhoneRow = styled.div`
 `;
 
 {
-  /* 우편번호 검색 버튼 */
+  /* 본인인증 버튼 */
 }
 export const VerifyButton = styled.button`
   width: 140px;
@@ -559,7 +559,7 @@ export const VerifyButton = styled.button`
 `;
 
 {
-  /* 우편번호 검색 버튼 */
+  /* 우편번호 */
 }
 export const AddressRow = styled.div`
   display: flex;
