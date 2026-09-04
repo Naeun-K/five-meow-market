@@ -1,378 +1,369 @@
 const product = [
-    // 먹묘 
   {
-    "productId": "cat-eat-001",
-    "categoryId": "cat-eat",
-    "name": "고양이 츄르",
-    "price": 15900,
-    "thumbnail": "https://i.ibb.co/GvTRTGpc/1.webp",
-    "images": [
+    productId: "cat-eat-001",
+    categoryId: "cat-eat",
+    name: "고양이 츄르",
+    price: 15900,
+    thumbnail: "https://i.ibb.co/GvTRTGpc/1.webp",
+    images: [
       "https://i.ibb.co/GvTRTGpc/1.webp",
-      "https://i.ibb.co/Q76T8xGm/1.webp"
+      "https://i.ibb.co/Q76T8xGm/1.webp",
     ],
-    "averageRating": 4.8,
-    "reviewCount": 128,
-    "qnaCount": 15
+    averageRating: 4.8,
+    reviewCount: 128,
+    qnaCount: 15,
   },
   {
-    "productId": "cat-eat-002",
-    "categoryId": "cat-eat",
-    "name": "사료스타",
-    "price": 24900,
-    "thumbnail": "https://i.ibb.co/hRGD4JMR/2.webp",
-    "images": [
+    productId: "cat-eat-002",
+    categoryId: "cat-eat",
+    name: "사료스타",
+    price: 24900,
+    thumbnail: "https://i.ibb.co/hRGD4JMR/2.webp",
+    images: [
       "https://i.ibb.co/hRGD4JMR/2.webp",
-      "https://i.ibb.co/WpyZjby7/2.webp"
+      "https://i.ibb.co/WpyZjby7/2.webp",
     ],
-    "averageRating": 4.2,
-    "reviewCount": 28,
-    "qnaCount": 4
+    averageRating: 4.2,
+    reviewCount: 28,
+    qnaCount: 4,
   },
   {
-    "productId": "cat-eat-003",
-    "categoryId": "cat-eat",
-    "name": "자연 냥젤리",
-    "price": 23000,
-    "thumbnail": "https://i.ibb.co/r2nVD4wN/3.webp",
-    "images": [
+    productId: "cat-eat-003",
+    categoryId: "cat-eat",
+    name: "자연 냥젤리",
+    price: 23000,
+    thumbnail: "https://i.ibb.co/r2nVD4wN/3.webp",
+    images: [
       "https://i.ibb.co/r2nVD4wN/3.webp",
-      "https://i.ibb.co/PZpCpxg4/3.webp"
+      "https://i.ibb.co/PZpCpxg4/3.webp",
     ],
-    "averageRating": 4.1,
-    "reviewCount": 58,
-    "qnaCount": 13
+    averageRating: 4.1,
+    reviewCount: 58,
+    qnaCount: 13,
   },
   {
-    "productId": "cat-eat-004",
-    "categoryId": "cat-eat",
-    "name": "캔디냥",
-    "price": 3000,
-    "thumbnail": "https://i.ibb.co/h1Jycjp5/4.webp",
-    "images": [
+    productId: "cat-eat-004",
+    categoryId: "cat-eat",
+    name: "캔디냥",
+    price: 3000,
+    thumbnail: "https://i.ibb.co/h1Jycjp5/4.webp",
+    images: [
       "https://i.ibb.co/h1Jycjp5/4.webp",
-      "https://i.ibb.co/fGDF9g7j/5.webp"
+      "https://i.ibb.co/fGDF9g7j/5.webp",
     ],
-    "averageRating": 4.4,
-    "reviewCount": 67,
-    "qnaCount": 9
+    averageRating: 4.4,
+    reviewCount: 67,
+    qnaCount: 9,
   },
   {
-    "productId": "cat-eat-005",
-    "categoryId": "cat-eat",
-    "name": "고양이 시리얼",
-    "price": 14900,
-    "thumbnail": "https://i.ibb.co/B2LrQTrK/5.webp",
-    "images": [
+    productId: "cat-eat-005",
+    categoryId: "cat-eat",
+    name: "고양이 시리얼",
+    price: 14900,
+    thumbnail: "https://i.ibb.co/B2LrQTrK/5.webp",
+    images: [
       "https://i.ibb.co/B2LrQTrK/5.webp",
-      "https://i.ibb.co/7xWW2DcP/4.webp"
+      "https://i.ibb.co/7xWW2DcP/4.webp",
     ],
-    "averageRating": 4.0,
-    "reviewCount": 29,
-    "qnaCount": 5
+    averageRating: 4.0,
+    reviewCount: 29,
+    qnaCount: 5,
   },
 
-  // 놀묘
   {
-  "productId": "cat-play-001",
-  "categoryId": "cat-play",
-  "name": "고양이 낚시대",
-  "price": 12800,
-  "thumbnail": "https://i.ibb.co/PsQ77VDS/1.webp",
-  "images": [
-    "https://i.ibb.co/PsQ77VDS/1.webp",
-    "https://i.ibb.co/sJ9mSMfk/4.webp"
-  ],
-  "averageRating": 4.4,
-  "reviewCount": 25,
-  "qnaCount": 8
-},
+    productId: "cat-play-001",
+    categoryId: "cat-play",
+    name: "고양이 낚시대",
+    price: 12800,
+    thumbnail: "https://i.ibb.co/PsQ77VDS/1.webp",
+    images: [
+      "https://i.ibb.co/PsQ77VDS/1.webp",
+      "https://i.ibb.co/sJ9mSMfk/4.webp",
+    ],
+    averageRating: 4.4,
+    reviewCount: 25,
+    qnaCount: 8,
+  },
 
-{
-  "productId": "cat-play-002",
-  "categoryId": "cat-play",
-  "name": "못잡겠쥐?",
-  "price": 11900,
-  "thumbnail": "https://i.ibb.co/FLPG9XCh/2.webp",
-  "images": [
-    "https://i.ibb.co/FLPG9XCh/2.webp",
-    "https://i.ibb.co/rRmTX4Tz/3.webp"
-  ],
-  "averageRating": 4.2,
-  "reviewCount": 13,
-  "qnaCount": 5
-},
+  {
+    productId: "cat-play-002",
+    categoryId: "cat-play",
+    name: "못잡겠쥐?",
+    price: 11900,
+    thumbnail: "https://i.ibb.co/FLPG9XCh/2.webp",
+    images: [
+      "https://i.ibb.co/FLPG9XCh/2.webp",
+      "https://i.ibb.co/rRmTX4Tz/3.webp",
+    ],
+    averageRating: 4.2,
+    reviewCount: 13,
+    qnaCount: 5,
+  },
 
-{
-  "productId": "cat-play-003",
-  "categoryId": "cat-play",
-  "name": "버튼 꾹꾹이",
-  "price": 13800,
-  "thumbnail": "https://i.ibb.co/QF8CMrR1/3.webp",
-  "images": [
-    "https://i.ibb.co/QF8CMrR1/3.webp",
-    "https://i.ibb.co/kdWgXFV/1.webp"
-  ],
-  "averageRating": 3.9,
-  "reviewCount": 26,
-  "qnaCount": 7
-},
+  {
+    productId: "cat-play-003",
+    categoryId: "cat-play",
+    name: "버튼 꾹꾹이",
+    price: 13800,
+    thumbnail: "https://i.ibb.co/QF8CMrR1/3.webp",
+    images: [
+      "https://i.ibb.co/QF8CMrR1/3.webp",
+      "https://i.ibb.co/kdWgXFV/1.webp",
+    ],
+    averageRating: 3.9,
+    reviewCount: 26,
+    qnaCount: 7,
+  },
 
-{
-  "productId": "cat-play-004",
-  "categoryId": "cat-play",
-  "name": "고양이 스크래처",
-  "price": 19900,
-  "thumbnail": "https://i.ibb.co/Hp7F5wL3/4.webp",
-  "images": [
-    "https://i.ibb.co/Hp7F5wL3/4.webp",
-    "https://i.ibb.co/fb9crh0/5.webp"
-  ],
-  "averageRating": 4.2,
-  "reviewCount": 18,
-  "qnaCount": 6
-},
+  {
+    productId: "cat-play-004",
+    categoryId: "cat-play",
+    name: "고양이 스크래처",
+    price: 19900,
+    thumbnail: "https://i.ibb.co/Hp7F5wL3/4.webp",
+    images: [
+      "https://i.ibb.co/Hp7F5wL3/4.webp",
+      "https://i.ibb.co/fb9crh0/5.webp",
+    ],
+    averageRating: 4.2,
+    reviewCount: 18,
+    qnaCount: 6,
+  },
 
-{
-  "productId": "cat-play-005",
-  "categoryId": "cat-play",
-  "name": "집사말고 이거 물어",
-  "price": 8000,
-  "thumbnail": "https://i.ibb.co/mCgsfCNw/5.webp",
-  "images": [
-    "https://i.ibb.co/mCgsfCNw/5.webp",
-    "https://i.ibb.co/jZ194CSs/2.webp"
-  ],
-  "averageRating": 4.5,
-  "reviewCount": 33,
-  "qnaCount": 14
-},
+  {
+    productId: "cat-play-005",
+    categoryId: "cat-play",
+    name: "집사말고 이거 물어",
+    price: 8000,
+    thumbnail: "https://i.ibb.co/mCgsfCNw/5.webp",
+    images: [
+      "https://i.ibb.co/mCgsfCNw/5.webp",
+      "https://i.ibb.co/jZ194CSs/2.webp",
+    ],
+    averageRating: 4.5,
+    reviewCount: 33,
+    qnaCount: 14,
+  },
 
-// 쉼묘
-{
-  "productId": "cat-rest-001",
-  "categoryId": "cat-rest",
-  "name": "고양이 털방석",
-  "price": 27000,
-  "thumbnail": "https://i.ibb.co/1YVPBhLD/1.webp",
-  "images": [
-    "https://i.ibb.co/1YVPBhLD/1.webp",
-    "https://i.ibb.co/TxBp6t4F/4.webp"
-  ],
-  "averageRating": 4.4,
-  "reviewCount": 30,
-  "qnaCount": 8
-},
+  {
+    productId: "cat-rest-001",
+    categoryId: "cat-rest",
+    name: "고양이 털방석",
+    price: 27000,
+    thumbnail: "https://i.ibb.co/1YVPBhLD/1.webp",
+    images: [
+      "https://i.ibb.co/1YVPBhLD/1.webp",
+      "https://i.ibb.co/TxBp6t4F/4.webp",
+    ],
+    averageRating: 4.4,
+    reviewCount: 30,
+    qnaCount: 8,
+  },
 
-{
-  "productId": "cat-rest-002",
-  "categoryId": "cat-rest",
-  "name": "고양이 쿠션",
-  "price": 21900,
-  "thumbnail": "https://i.ibb.co/0RCQMTWY/2.webp",
-  "images": [
-    "https://i.ibb.co/0RCQMTWY/2.webp",
-    "https://i.ibb.co/23xNRvwV/5.webp"
-  ],
-  "averageRating": 4.3,
-  "reviewCount": 29,
-  "qnaCount": 10
-},
+  {
+    productId: "cat-rest-002",
+    categoryId: "cat-rest",
+    name: "고양이 쿠션",
+    price: 21900,
+    thumbnail: "https://i.ibb.co/0RCQMTWY/2.webp",
+    images: [
+      "https://i.ibb.co/0RCQMTWY/2.webp",
+      "https://i.ibb.co/23xNRvwV/5.webp",
+    ],
+    averageRating: 4.3,
+    reviewCount: 29,
+    qnaCount: 10,
+  },
 
-{
-  "productId": "cat-rest-003",
-  "categoryId": "cat-rest",
-  "name": "텔레비전에 냥이 나왔으면",
-  "price": 31900,
-  "thumbnail": "https://i.ibb.co/rKNY91hg/3.webp",
-  "images": [
-    "https://i.ibb.co/rKNY91hg/3.webp",
-    "https://i.ibb.co/hFJM1ZjP/3.webp"
-  ],
-  "averageRating": 4.8,
-  "reviewCount": 40,
-  "qnaCount": 19
-},
+  {
+    productId: "cat-rest-003",
+    categoryId: "cat-rest",
+    name: "텔레비전에 냥이 나왔으면",
+    price: 31900,
+    thumbnail: "https://i.ibb.co/rKNY91hg/3.webp",
+    images: [
+      "https://i.ibb.co/rKNY91hg/3.webp",
+      "https://i.ibb.co/hFJM1ZjP/3.webp",
+    ],
+    averageRating: 4.8,
+    reviewCount: 40,
+    qnaCount: 19,
+  },
 
-{
-  "productId": "cat-rest-004",
-  "categoryId": "cat-rest",
-  "name": "냥이가 다 해먹",
-  "price": 23000,
-  "thumbnail": "https://i.ibb.co/qMrsVBV9/4.webp",
-  "images": [
-    "https://i.ibb.co/qMrsVBV9/4.webp",
-    "https://i.ibb.co/whNGQBm0/2.webp"
-  ],
-  "averageRating": 4.3,
-  "reviewCount": 32,
-  "qnaCount": 11
-},
+  {
+    productId: "cat-rest-004",
+    categoryId: "cat-rest",
+    name: "냥이가 다 해먹",
+    price: 23000,
+    thumbnail: "https://i.ibb.co/qMrsVBV9/4.webp",
+    images: [
+      "https://i.ibb.co/qMrsVBV9/4.webp",
+      "https://i.ibb.co/whNGQBm0/2.webp",
+    ],
+    averageRating: 4.3,
+    reviewCount: 32,
+    qnaCount: 11,
+  },
 
-{
-  "productId": "cat-rest-005",
-  "categoryId": "cat-rest",
-  "name": "창문 설치용 해먹",
-  "price": 22900,
-  "thumbnail": "https://i.ibb.co/Zz6gQVst/5.webp",
-  "images": [
-    "https://i.ibb.co/Zz6gQVst/5.webp",
-    "https://i.ibb.co/q3xfzzwy/1.webp"
-  ],
-  "averageRating": 3.8,
-  "reviewCount": 28,
-  "qnaCount": 12
-},
+  {
+    productId: "cat-rest-005",
+    categoryId: "cat-rest",
+    name: "창문 설치용 해먹",
+    price: 22900,
+    thumbnail: "https://i.ibb.co/Zz6gQVst/5.webp",
+    images: [
+      "https://i.ibb.co/Zz6gQVst/5.webp",
+      "https://i.ibb.co/q3xfzzwy/1.webp",
+    ],
+    averageRating: 3.8,
+    reviewCount: 28,
+    qnaCount: 12,
+  },
 
-// 높묘
+  {
+    productId: "cat-high-001",
+    categoryId: "cat-high",
+    name: "하우스 캣타워",
+    price: 42000,
+    thumbnail: "https://i.ibb.co/chP4N4yr/1.webp",
+    images: [
+      "https://i.ibb.co/chP4N4yr/1.webp",
+      "https://i.ibb.co/4gjq9MpM/1.webp",
+    ],
+    averageRating: 4.1,
+    reviewCount: 34,
+    qnaCount: 16,
+  },
 
-{
-  "productId": "cat-high-001",
-  "categoryId": "cat-high",
-  "name": "하우스 캣타워",
-  "price": 42000,
-  "thumbnail": "https://i.ibb.co/chP4N4yr/1.webp",
-  "images": [
-    "https://i.ibb.co/chP4N4yr/1.webp",
-    "https://i.ibb.co/4gjq9MpM/1.webp"
-  ],
-  "averageRating": 4.1,
-  "reviewCount": 34,
-  "qnaCount": 16
-},
+  {
+    productId: "cat-high-002",
+    categoryId: "cat-high",
+    name: "선인장 캣타워",
+    price: 37000,
+    thumbnail: "https://i.ibb.co/G4pKFSF7/2.webp",
+    images: [
+      "https://i.ibb.co/G4pKFSF7/2.webp",
+      "https://i.ibb.co/ZzxTr4km/5.webp",
+    ],
+    averageRating: 4.7,
+    reviewCount: 12,
+    qnaCount: 3,
+  },
 
-{
-  "productId": "cat-high-002",
-  "categoryId": "cat-high",
-  "name": "선인장 캣타워",
-  "price": 37000,
-  "thumbnail": "https://i.ibb.co/G4pKFSF7/2.webp",
-  "images": [
-    "https://i.ibb.co/G4pKFSF7/2.webp",
-    "https://i.ibb.co/ZzxTr4km/5.webp"
-  ],
-  "averageRating": 4.7,
-  "reviewCount": 12,
-  "qnaCount": 3
-},
+  {
+    productId: "cat-high-003",
+    categoryId: "cat-high",
+    name: "사각 캣타워",
+    price: 32900,
+    thumbnail: "https://i.ibb.co/chhLsPqp/3.webp",
+    images: [
+      "https://i.ibb.co/chhLsPqp/3.webp",
+      "https://i.ibb.co/BSGKtmP/4.webp",
+    ],
+    averageRating: 4.0,
+    reviewCount: 31,
+    qnaCount: 7,
+  },
+  {
+    productId: "cat-high-004",
+    categoryId: "cat-high",
+    name: "미끄럼틀 캣타워",
+    price: 129000,
+    thumbnail: "https://i.ibb.co/mrWWmwPh/4.webp",
+    images: [
+      "https://i.ibb.co/mrWWmwPh/4.webp",
+      "https://i.ibb.co/79Q9N1S/2.webp",
+    ],
+    averageRating: 3.9,
+    reviewCount: 36,
+    qnaCount: 14,
+  },
+  {
+    productId: "cat-high-005",
+    categoryId: "cat-high",
+    " name": "다용도 캣타워",
+    " price": 24900,
+    thumbnail: "https://i.ibb.co/JRLqWfn7/5.webp",
+    images: [
+      "https://i.ibb.co/JRLqWfn7/5.webp",
+      "https://i.ibb.co/8nV4mQ0N/3.webp",
+    ],
+    averageRating: 4.8,
+    reviewCount: 27,
+    qnaCount: 13,
+  },
+  {
+    productId: "cat-clean-001",
+    categoryId: "cat-clean",
+    name: "고양이 화장실",
+    price: 26000,
+    thumbnail: "https://i.ibb.co/0NyhzV8/1.webp",
+    images: [
+      "https://i.ibb.co/0NyhzV8/1.webp",
+      "https://i.ibb.co/0pPwczcK/1.webp",
+    ],
+    averageRating: 4.6,
+    reviewCount: 38,
+    qnaCount: 5,
+  },
 
-{
-  "productId": "cat-high-003",
-  "categoryId": "cat-high",
-  "name": "사각 캣타워",
-  "price": 32900,
-  "thumbnail": "https://i.ibb.co/chhLsPqp/3.webp",
-  "images": [
-    "https://i.ibb.co/chhLsPqp/3.webp",
-    "https://i.ibb.co/BSGKtmP/4.webp"
-  ],
-  "averageRating": 4.0,
-  "reviewCount": 31,
-  "qnaCount": 7
-},
+  {
+    productId: "cat-clean-002",
+    categoryId: "cat-clean",
+    name: "깨운한 냥장실 ",
+    price: 22900,
+    thumbnail: "https://i.ibb.co/dsDTrc7t/2.webp",
+    images: [
+      "https://i.ibb.co/dsDTrc7t/2.webp",
+      "https://i.ibb.co/XkJCv0tr/3.webp",
+    ],
+    averageRating: 4.6,
+    reviewCount: 38,
+    qnaCount: 5,
+  },
 
-{
-  "productId": "cat-high-004",
-  "categoryId": "cat-high",
-  "name": "미끄럼틀 캣타워",
-  "price": 45000,
-  "thumbnail": "https://i.ibb.co/mrWWmwPh/4.webp",
-  "images": [
-    "https://i.ibb.co/mrWWmwPh/4.webp",
-    "https://i.ibb.co/79Q9N1S/2.webp"
-  ],
-  "averageRating": 3.9,
-  "reviewCount": 36,
-  "qnaCount": 14
-},
+  {
+    productId: "cat-clean-003",
+    categoryId: "cat-clean",
+    name: "고양이 이동형 화장실",
+    price: 33000,
+    thumbnail: "https://i.ibb.co/cc7fLXLk/3.webp",
+    images: [
+      "https://i.ibb.co/cc7fLXLk/3.webp",
+      "https://i.ibb.co/fGDF9g7j/5.webp",
+    ],
+    averageRating: 4.6,
+    reviewCount: 32,
+    qnaCount: 5,
+  },
 
-{
-  "productId": "cat-high-005",
-  "categoryId": "cat-high",
-  "name": "다용도 캣타워",
-  "price": 24900,
-  "thumbnail": "https://i.ibb.co/JRLqWfn7/5.webp",
-  "images": [
-    "https://i.ibb.co/JRLqWfn7/5.webp",
-    "https://i.ibb.co/8nV4mQ0N/3.webp"
-  ],
-  "averageRating": 4.8,
-  "reviewCount": 27,
-  "qnaCount": 13
-},
+  {
+    productId: "cat-clean-004",
+    categoryId: "cat-clean",
+    name: "드럼세탁 화장실",
+    price: 36000,
+    thumbnail: "https://i.ibb.co/MDFZwGPF/4.webp",
+    images: [
+      "https://i.ibb.co/MDFZwGPF/4.webp",
+      "https://i.ibb.co/3mvXYrWs/2.webp",
+    ],
+    averageRating: 4.2,
+    reviewCount: 38,
+    qnaCount: 9,
+  },
 
-// 깔묘
-{
-  "productId": "cat-clean-001",
-  "categoryId": "cat-clean",
-  "name": "고양이 화장실",
-  "price": 26000,
-  "thumbnail": "https://i.ibb.co/0NyhzV8/1.webp",
-  "images": [
-    "https://i.ibb.co/0NyhzV8/1.webp",
-    "https://i.ibb.co/0pPwczcK/1.webp"
-  ],
-  "averageRating": 4.6,
-  "reviewCount": 38,
-  "qnaCount": 5
-},
-
-{
-  "productId": "cat-clean-002",
-  "categoryId": "cat-clean",
-  "name": "냥장실 ",
-  "price": 22900,
-  "thumbnail": "https://i.ibb.co/dsDTrc7t/2.webp",
-  "images": [
-    "https://i.ibb.co/dsDTrc7t/2.webp",
-    "https://i.ibb.co/XkJCv0tr/3.webp"
-  ],
-  "averageRating": 4.6,
-  "reviewCount": 38,
-  "qnaCount": 5
-},
-
-{
-  "productId": "cat-clean-003",
-  "categoryId": "cat-clean",
-  "name": "고양이 이동형 화장실",
-  "price": 33000,
-  "thumbnail": "https://i.ibb.co/cc7fLXLk/3.webp",
-  "images": [
-    "https://i.ibb.co/cc7fLXLk/3.webp",
-    "https://i.ibb.co/fGDF9g7j/5.webp"
-  ],
-  "averageRating": 4.6,
-  "reviewCount": 32,
-  "qnaCount": 5
-},
-
-{
-  "productId": "cat-clean-004",
-  "categoryId": "cat-clean",
-  "name": "드럼세탁 화장실",
-  "price": 36000,
-  "thumbnail": "https://i.ibb.co/MDFZwGPF/4.webp",
-  "images": [
-    "https://i.ibb.co/MDFZwGPF/4.webp",
-    "https://i.ibb.co/3mvXYrWs/2.webp"
-  ],
-  "averageRating": 4.2,
-  "reviewCount": 38,
-  "qnaCount": 9
-},
-
-{
-  "productId": "cat-clean-005",
-  "categoryId": "cat-clean",
-  "name": "냥장실",
-  "price": 32000,
-  "thumbnail": "https://i.ibb.co/1fnJbknD/5.webp",
-  "images": [
-    "https://i.ibb.co/1fnJbknD/5.webp",
-    "https://i.ibb.co/fYw93WrV/4.webp"
-  ],
-  "averageRating": 4.3,
-  "reviewCount": 30,
-  "qnaCount": 4
-}
+  {
+    productId: "cat-clean-005",
+    categoryId: "cat-clean",
+    name: "산뜻한 냥장실",
+    price: 32000,
+    thumbnail: "https://i.ibb.co/1fnJbknD/5.webp",
+    images: [
+      "https://i.ibb.co/1fnJbknD/5.webp",
+      "https://i.ibb.co/fYw93WrV/4.webp",
+    ],
+    averageRating: 4.3,
+    reviewCount: 30,
+    qnaCount: 4,
+  },
 ];
