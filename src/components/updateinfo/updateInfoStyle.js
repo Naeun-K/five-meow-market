@@ -297,7 +297,7 @@ export const FormGroup = styled.div`
 
   flex-direction: column;
   align-items: flex-start;
-  gap: 15px;
+  gap: 25px;
 
   align-self: stretch;
 
@@ -338,7 +338,7 @@ export const FormGroup = styled.div`
     line-height: normal;
   }
     @media (max-width: 1023px) {
-    gap: 15px;
+    gap: 20px;
 
     label {
     font-size: 16px;
@@ -490,7 +490,7 @@ export const PhoneRow = styled.div`
   display: flex;
   min-width: 0;
   width: 100%;
-  height: 45px;
+  height: 53px;
 
   align-items: center;
   gap: 10px;
@@ -499,8 +499,8 @@ export const PhoneRow = styled.div`
     flex: 1;
     min-width: 0;
 
-    height: 45px;
-    padding: 21px 13px 18px;
+    height: 53px;
+    padding: 21px 60px 18px 13px;
 
     border-radius: var(--radius-md);
     border: 1px solid var(--border);
@@ -548,7 +548,7 @@ export const PhoneRow = styled.div`
   @media (max-width: 767px) {
     gap: 8px;
     input::placeholder {
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 `;
