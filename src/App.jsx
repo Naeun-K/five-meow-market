@@ -5,6 +5,7 @@ import "./App.css";
 import LoginPage from "./pages/AuthPage/LoginPage";
 import SignupPage from "./pages/AuthPage/SignupPage";
 import UpdatePage from "./pages/AuthPage/UpdatePage";
+import BasicPage from "./pages/basicPage/BasicPage";
 
 // const PAGES = {
 //   "/login": LoginPage,
@@ -17,7 +18,8 @@ function App() {
 
   return (
     <main>
-      <UpdatePage />
+      <BasicPage />
+      {/* <UpdatePage /> */}
       {/* <LoginPage /> */}
       {/* <SignupPage /> */}
     </main>

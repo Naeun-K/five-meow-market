@@ -4,26 +4,23 @@ import styled from "@emotion/styled";
 export const FooterWrapper = styled.footer`
   width: 100%;
   display: flex;
-  justify-content: center;
-
-  background: var(--bg);
+  justify-content: space-between;
+  align-items: center;
   border-top: 1px solid var(--border);
+
+  @media (min-width: 320px) and (max-width: 767px) {
+    justify-content: center;
+  }
 `;
 
 /* Footer 내부 */
 export const FooterInner = styled.div`
   width: 100%;
-  max-width: 1024px;
-  height: 160px;
-
-  padding: 32px 40px;
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 20px;
-
-  box-sizing: border-box;
+  gap: 10px;
 
   @media (max-width: 1023px) {
     max-width: 768px;
@@ -31,24 +28,18 @@ export const FooterInner = styled.div`
 
   @media (max-width: 767px) {
     max-width: 320px;
-    height: 208px;
-
-    padding: 32px 40px;
   }
 `;
 
 /* 상단 영역 */
 export const FooterMain = styled.div`
   width: 100%;
-  height: 43px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   @media (max-width: 767px) {
-    height: 78px;
-
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -61,18 +52,10 @@ export const FooterMain = styled.div`
 
 export const FooterLogo = styled.div`
   width: 150px;
-  height: auto;
 
   flex-shrink: 0;
 
-  img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-  }
-
-  @media (max-width: 1024px) {
+  @media (max-width: 1023px) {
     width: 140px;
   }
 
@@ -118,8 +101,7 @@ export const CatGraphic = styled.div`
 
 /* Footer 링크 */
 export const FooterLinks = styled.nav`
-  width: 272px;
-  height: 15px;
+  width: 100%;
 
   display: flex;
   align-items: center;
@@ -128,21 +110,33 @@ export const FooterLinks = styled.nav`
 
   a {
     color: var(--text-secondary);
-
-    font-family: "Pretendard", sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 15px;
-
+    font-size: 16px;
     white-space: nowrap;
+  }
+
+  desktop-text {
+    display: inline;
+  }
+
+  .mobile-text {
+    display: none;
   }
 
   @media (max-width: 767px) {
     width: 228px;
 
     justify-content: center;
-
+    font-size: 15px;
     gap: 16px;
+  }
+  @media (max-width: 374px) {
+    .desktop-text {
+      display: none;
+    }
+
+    .mobile-text {
+      display: inline;
+    }
   }
 `;
 
@@ -160,16 +154,11 @@ export const FooterLine = styled.div`
 export const FooterCopyright = styled.p`
   width: 100%;
 
-  margin: 0;
-
   color: var(--text-secondary);
 
-  font-family: "Pretendard", sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 13px;
+  font-size: 16px;
 
   @media (max-width: 767px) {
-    line-height: 13px;
+    font-size: 15px;
   }
 `;
