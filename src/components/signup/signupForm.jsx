@@ -8,14 +8,171 @@ import {
 } from "./signupStyle";
 
 import { useState } from "react";
+import useToast from "../../hooks/useToast";
+import * as authService from "../../services/authService";
+import { searchAddress } from "../../services/addressService";
+
+const isValidPassword = (password) => {
+  return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[A-Z]).+$/.test(password);
+};
 
 const SignupForm = () => {
+  const { showToast } = useToast();
+
   // 비밀번호 보기/숨기기 상태
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
+  const [nickname, setNickname] = useState("");
+  const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [isEmailChecked, setIsEmailChecked] = useState(false);
+
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const [phone, setPhone] = useState("");
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+
+  const [zoneCode, setZoneCode] = useState("");
+  const [address, setAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
+
+  const [agreed, setAgreed] = useState(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 닉네임 중복확인
+  const handleCheckNickname = async () => {
+    if (!nickname) {
+      showToast("닉네임을 입력해주세요.", false);
+      return;
+    }
+
+    try {
+      const result = await authService.checkNickname(nickname);
+
+      showToast(result.message, result.success && !result.isDuplicate);
+      setIsNicknameChecked(result.success && !result.isDuplicate);
+    } catch {
+      showToast("닉네임 중복확인 중 오류가 발생했습니다.", false);
+    }
+  };
+
+  // 이메일 중복확인
+  const handleCheckEmail = async () => {
+    if (!email) {
+      showToast("이메일을 입력해주세요.", false);
+      return;
+    }
+
+    try {
+      const result = await authService.checkEmail(email);
+
+      showToast(result.message, result.success && !result.isDuplicate);
+      setIsEmailChecked(result.success && !result.isDuplicate);
+    } catch {
+      showToast("이메일 중복확인 중 오류가 발생했습니다.", false);
+    }
+  };
+
+  // 휴대폰 인증
+  const handleVerifyPhone = async () => {
+    if (!phone) {
+      showToast("휴대폰번호를 입력해주세요.", false);
+      return;
+    }
+
+    try {
+      const result = await authService.verifyPhone(phone);
+
+      showToast(result.message, result.success);
+      setIsPhoneVerified(result.success);
+    } catch {
+      showToast("휴대폰 인증 중 오류가 발생했습니다.", false);
+    }
+  };
+
+  // 주소 검색
+  const handleSearchAddress = async () => {
+    try {
+      const result = await searchAddress();
+
+      setZoneCode(result.zoneCode);
+      setAddress(result.address);
+    } catch {
+      showToast("주소 검색에 실패했습니다.", false);
+    }
+  };
+
+  // 회원가입
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (isSubmitting) return;
+
+    if (!nickname || !isNicknameChecked) {
+      showToast("닉네임 중복확인을 완료해주세요.", false);
+      return;
+    }
+
+    if (!email || !isEmailChecked) {
+      showToast("이메일 중복확인을 완료해주세요.", false);
+      return;
+    }
+
+    if (!password || !isValidPassword(password)) {
+      showToast("비밀번호는 영문, 숫자, 대문자를 포함해야 합니다.", false);
+      return;
+    }
+
+    if (password !== passwordConfirm) {
+      showToast("비밀번호가 일치하지 않습니다.", false);
+      return;
+    }
+
+    if (!phone || !isPhoneVerified) {
+      showToast("휴대폰 인증을 완료해주세요.", false);
+      return;
+    }
+
+    if (!zoneCode || !address) {
+      showToast("주소를 입력해주세요.", false);
+      return;
+    }
+
+    if (!agreed) {
+      showToast("이용약관 및 개인정보 처리방침에 동의해주세요.", false);
+      return;
+    }
+
+    const signupData = {
+      nickname,
+      email,
+      password,
+      phone,
+      zoneCode,
+      address,
+      detailAddress,
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      const result = await authService.signup(signupData);
+
+      showToast(result.message, result.success);
+
+      if (result.success) {
+        window.location.href = "/login";
+      }
+    } catch {
+      showToast("회원가입 중 오류가 발생했습니다.", false);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <SignupLayout>
@@ -80,14 +237,23 @@ const SignupForm = () => {
           </svg>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* 닉네임 */}
           <FormGroup>
             <label>닉네임</label>
 
             <Row>
-              <input placeholder="닉네임을 입력해주세요" />
-              <button type="button">중복확인</button>
+              <input
+                placeholder="닉네임을 입력해주세요"
+                value={nickname}
+                onChange={(event) => {
+                  setNickname(event.target.value);
+                  setIsNicknameChecked(false);
+                }}
+              />
+              <button type="button" onClick={handleCheckNickname}>
+                중복확인
+              </button>
             </Row>
           </FormGroup>
 
@@ -96,8 +262,18 @@ const SignupForm = () => {
             <label>이메일</label>
 
             <Row>
-              <input type="email" placeholder="이메일을 입력해주세요" />
-              <button type="button">중복확인</button>
+              <input
+                type="email"
+                placeholder="이메일을 입력해주세요"
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  setIsEmailChecked(false);
+                }}
+              />
+              <button type="button" onClick={handleCheckEmail}>
+                중복확인
+              </button>
             </Row>
           </FormGroup>
 
@@ -219,8 +395,18 @@ const SignupForm = () => {
             <label>휴대폰번호</label>
 
             <Row>
-              <input type="tel" placeholder="휴대폰번호를 입력해주세요" />
-              <button type="button">중복확인</button>
+              <input
+                type="tel"
+                placeholder="휴대폰번호를 입력해주세요"
+                value={phone}
+                onChange={(event) => {
+                  setPhone(event.target.value);
+                  setIsPhoneVerified(false);
+                }}
+              />
+              <button type="button" onClick={handleVerifyPhone}>
+                본인인증
+              </button>
             </Row>
           </FormGroup>
 
@@ -229,19 +415,40 @@ const SignupForm = () => {
             <label>주소</label>
 
             <Row>
-              <input type="text" placeholder="우편번호" />
+              <input
+                type="text"
+                placeholder="우편번호"
+                value={zoneCode}
+                readOnly
+              />
 
-              <button type="button">우편번호검색</button>
+              <button type="button" onClick={handleSearchAddress}>
+                우편번호검색
+              </button>
             </Row>
 
-            <input type="text" placeholder="주소를 입력해주세요" />
+            <input
+              type="text"
+              placeholder="주소를 입력해주세요"
+              value={address}
+              readOnly
+            />
 
-            <input type="text" placeholder="상세주소를 입력해주세요" />
+            <input
+              type="text"
+              placeholder="상세주소를 입력해주세요"
+              value={detailAddress}
+              onChange={(event) => setDetailAddress(event.target.value)}
+            />
           </FormGroup>
 
           {/* 이용약관 */}
           <Agreement>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={agreed}
+              onChange={(event) => setAgreed(event.target.checked)}
+            />
 
             <span>
               <strong>이용약관 및 개인정보 처리방침</strong>에 동의합니다
@@ -250,7 +457,11 @@ const SignupForm = () => {
 
           {/* 하단 */}
           <BottomArea>
-            <button type="button" className="signup-button">
+            <button
+              type="submit"
+              className="signup-button"
+              disabled={isSubmitting || !agreed}
+            >
               회원가입
             </button>
 
