@@ -1,4 +1,6 @@
+import { useState } from "react";
 import "./App.css";
+import Pagination from "./components/pagnation/Pagnation";
 // import UpdateInfo from "./components/updateinfo/updateInfo";
 // import LoginForm from "./components/Login/LoginForm";
 // import SignupForm from "./components/signup/signupForm";
@@ -14,11 +16,17 @@ import BasicPage from "./pages/basicPage/BasicPage";
 // };
 
 function App() {
+  const [currentPage, setCurrentPage] = useState(1);
   // const Page = PAGES[window.location.pathname] ?? SignupPage;
 
   return (
     <main>
-      <BasicPage />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={5}
+        onPageChange={setCurrentPage}
+      />
+      {/* <BasicPage /> */}
       {/* <UpdatePage /> */}
       {/* <LoginPage /> */}
       {/* <SignupPage /> */}

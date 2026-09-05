@@ -6,6 +6,9 @@ export const BasicPageStyle = styled.div({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "50px",
+
+  alignSelf: "stretch",
+
   "@media  (max-width: 1023px)": {
     padding: "30px",
   },

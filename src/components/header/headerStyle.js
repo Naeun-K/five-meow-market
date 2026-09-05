@@ -15,6 +15,8 @@ export const HeaderStyle = styled.header({
   "& .svg-container": {
     width: "45px",
     aspectRatio: "1/1",
+
+    cursor: "pointer",
   },
   "& .menu-container": {
     display: "flex",
