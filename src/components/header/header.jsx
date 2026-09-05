@@ -56,10 +56,16 @@ function Header() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <circle cx="9" cy="9" r="6" stroke="black" strokeWidth="1.5" />
+              <circle
+                cx="9.5"
+                cy="9.5"
+                r="6.5"
+                stroke="black"
+                strokeWidth="1.5"
+              />
 
               <path
-                d="M13.5 13.5L19.5 19.5"
+                d="M14.2 14.2L21 21"
                 stroke="black"
                 strokeWidth="1.5"
                 strokeLinecap="round"
@@ -78,7 +84,10 @@ function Header() {
               <circle cx="12" cy="7" r="4" stroke="black" strokeWidth="1.5" />
 
               <path
-                d="M4 21C4 16.5 7.6 13 12 13C16.4 13 20 16.5 20 21H4Z"
+                d="M3 21
+       C3.6 16.5 7 14 12 14
+       C17 14 20.4 16.5 21 21
+       H3Z"
                 stroke="black"
                 strokeWidth="1.5"
                 strokeLinejoin="round"
@@ -93,20 +102,29 @@ function Header() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M3 7H21V22H3V7Z"
+              {/* 가방 */}
+              <rect
+                x="3"
+                y="7"
+                width="18"
+                height="15"
                 stroke="black"
                 strokeWidth="1.5"
                 strokeLinejoin="round"
               />
 
+              {/* 손잡이 */}
               <path
-                d="M8 7V5.5C8 3.3 9.8 2 12 2C14.2 2 16 3.3 16 5.5V7"
+                d="M8 7V5.5
+       C8 3.3 9.8 2 12 2
+       C14.2 2 16 3.3 16 5.5
+       V7"
                 stroke="black"
                 strokeWidth="1.5"
                 strokeLinecap="round"
               />
 
+              {/* + */}
               <path
                 d="M12 10.5V18.5"
                 stroke="black"
