@@ -1,7 +1,20 @@
 import { HeaderStyle } from "./headerStyle";
 import Logo from "../logo/Logo";
+import { useEffect, useRef, useState } from "react"; //추가
 
 function Header() {
+  //추가 시작
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    if (isSearchOpen) {
+      searchInputRef.current?.focus();
+    }
+  }, [isSearchOpen]);
+
+  const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen); //추가 끝
+
   return (
     <HeaderStyle>
       <div className="logo-container">
@@ -48,7 +61,13 @@ function Header() {
           </nav>
         </div>
         <div className="svg-list">
-          <span type="button" aria-label="검색" className="svg-container">
+          <button
+            type="button"
+            aria-label="검색창 열기"
+            className="svg-container search-button"
+            onClick={handleSearchToggle}
+          >
+            //버튼 검색창 열기
             <svg
               width="100%"
               height="100%"
@@ -71,7 +90,7 @@ function Header() {
                 strokeLinecap="round"
               />
             </svg>
-          </span>
+          </button>
 
           <span type="button" aria-label="마이페이지" className="svg-container">
             <svg
@@ -142,6 +161,46 @@ function Header() {
           </span>
         </div>
       </div>
+      //추가시작
+      {isSearchOpen && (
+        <div className="search-panel">
+          <input
+            ref={searchInputRef}
+            type="search"
+            aria-label="상품 검색"
+            placeholder="상품 검색"
+            className="search-input"
+          />
+          <button
+            type="submit"
+            aria-label="검색"
+            className="panel-search-button"
+          >
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="9.5"
+                cy="9.5"
+                r="6.5"
+                stroke="black"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M14.2 14.2L21 21"
+                stroke="black"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+      )}
+      //추가끝
     </HeaderStyle>
   );
 }

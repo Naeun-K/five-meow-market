@@ -4,6 +4,7 @@ export const HeaderStyle = styled.header({
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
+  position: "relative", //추가
 
   gap: "50px",
 
@@ -18,6 +19,41 @@ export const HeaderStyle = styled.header({
 
     cursor: "pointer",
   },
+  //추가 시작부분
+  "& .search-panel": {
+    position: "absolute",
+    top: "calc(100% + 42px)",
+    left: "50%",
+    zIndex: 10,
+    display: "flex",
+    alignItems: "center",
+    width: "min(54vw, 1000px)",
+    height: "58px",
+    transform: "translateX(-50%)",
+    borderBottom: "1px solid #333",
+    backgroundColor: "rgba(255, 255, 255, 0.96)",
+  },
+  "& .search-input": {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    padding: "0 14px",
+    border: 0,
+    background: "transparent",
+    fontSize: "20px",
+    outline: "none",
+  },
+  "& .panel-search-button": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "54px",
+    height: "54px",
+    padding: 0,
+    border: 0,
+    background: "transparent",
+    cursor: "pointer",
+  }, //추가 끝부분
   "& .menu-container": {
     display: "flex",
     justifyContent: "space-around",
@@ -101,5 +137,10 @@ export const HeaderStyle = styled.header({
     "& .svg-list": {
       order: 1,
     },
+    //추가 시작
+    "& .search-panel": {
+      top: "calc(100% + 20px)",
+      width: "calc(100% - 20px)",
+    }, //추가 끝
   },
 });
