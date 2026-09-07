@@ -1,7 +1,7 @@
 import AuthPageLayout from "./AuthPageLayout";
 import LoginForm from "../../components/Login/LoginForm";
 import UserBrandSection from "../../components/userBrandSection/UserBrandSection";
-import loginimg from "../../assets/loginimg.svg";
+import loginimg from "../../assets/loginimg.webp";
 
 export default function LoginPage() {
   return (
