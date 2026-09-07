@@ -112,8 +112,6 @@ export const SignupContainer = styled.div({
     fontSize: "17px",
     fontWeight: 500,
 
-    outline: "none",
-
     "&::placeholder": {
       color: "var(--text-secondary)",
 

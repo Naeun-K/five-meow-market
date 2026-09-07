@@ -14,22 +14,22 @@ export const FooterWrapper = styled.footer`
 `;
 
 /* Footer 내부 */
-export const FooterInner = styled.div`
-  width: 100%;
+export const FooterInner = styled.div({
+  width: "100%",
 
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  display: " flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "10px",
 
-  @media (max-width: 1023px) {
-    max-width: 768px;
-  }
+  "@media (max-width: 1023px)": {
+    maxWidth: "768px",
+  },
 
-  @media (max-width: 767px) {
-    max-width: 320px;
-  }
-`;
+  " @media (max-width: 767px) ": {
+    maxWidth: "320px",
+  },
+});
 
 /* 상단 영역 */
 export const FooterMain = styled.div`
@@ -41,7 +41,7 @@ export const FooterMain = styled.div`
 
   @media (max-width: 767px) {
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 
     gap: 10px;
@@ -50,24 +50,29 @@ export const FooterMain = styled.div`
 
 /* 로고 */
 
-export const FooterLogo = styled.div`
-  width: 150px;
+export const FooterLogo = styled.div({
+  width: "150px",
 
-  flex-shrink: 0;
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 
-  @media (max-width: 1023px) {
-    width: 140px;
-  }
+  "&, & *": {
+    cursor: "default",
+  },
 
-  @media (max-width: 767px) {
-    width: 132px;
-  }
-`;
+  "@media (max-width: 1023px)": {
+    width: "140px",
+  },
+
+  " @media (max-width: 767px)": {
+    width: " 132px",
+  },
+});
 
 /* 오른쪽 영역 */
 export const FooterTop = styled.div`
   width: 326px;
-  height: 22px;
 
   display: flex;
   justify-content: flex-end;
@@ -77,7 +82,6 @@ export const FooterTop = styled.div`
 
   @media (max-width: 767px) {
     width: 228px;
-    height: 15px;
 
     justify-content: center;
   }
@@ -86,7 +90,6 @@ export const FooterTop = styled.div`
 /* 고양이 그래픽 */
 export const CatGraphic = styled.div`
   width: 54px;
-  height: 22px;
 
   display: flex;
   align-items: center;

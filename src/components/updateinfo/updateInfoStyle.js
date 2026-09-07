@@ -141,7 +141,6 @@ export const UpdateStyle = styled.div({
             padding: 0,
 
             border: "none",
-            outline: "none",
 
             fontSize: "17px",
 
