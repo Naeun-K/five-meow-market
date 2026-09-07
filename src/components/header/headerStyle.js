@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 
 export const HeaderStyle = styled.header({
   display: "flex",
-  justifyContent: "space-around",
+  flexDirection: "column",
+  justifyContent: "space-between",
   alignItems: "center",
   position: "relative", //추가
 
@@ -12,6 +13,10 @@ export const HeaderStyle = styled.header({
 
   "& .logo-container": {
     width: "230px",
+
+    position: "absolute",
+    left: "50%",
+    transform: "translateX(-50%)",
   },
   "& .svg-container": {
     width: "45px",
@@ -19,7 +24,10 @@ export const HeaderStyle = styled.header({
 
     cursor: "pointer",
   },
-  //추가 시작부분
+  "& .search-button": {
+    display: "none",
+  },
+
   "& .search-panel": {
     position: "absolute",
     top: "calc(100% + 42px)",
@@ -55,24 +63,16 @@ export const HeaderStyle = styled.header({
   }, //추가 끝부분
   "& .menu-container": {
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
-    gap: "50px",
+    width: "100%",
   },
   "& .navigation-container": {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
-    gap: "50px",
 
     width: "100%",
-    "& .navigation": {
-      display: "flex",
-      alignItems: "center",
-      gap: "50px",
-
-      fontSize: "20px",
-    },
   },
   "& .svg-list": {
     display: "flex",
@@ -81,11 +81,12 @@ export const HeaderStyle = styled.header({
     gap: "50px",
   },
 
-  "& .nav-container": {
+  "& .navigation": {
     display: "flex",
-    justifyContent: "space-between",
     alignItems: "center",
+    gap: "40px",
 
+    fontSize: "20px",
     width: "100%",
   },
   "& .search-svg": {
@@ -98,7 +99,6 @@ export const HeaderStyle = styled.header({
     alignItems: "center",
 
     width: "100%",
-
     padding: "8px 10px",
 
     border: "1px solid var(--border)",
@@ -127,31 +127,41 @@ export const HeaderStyle = styled.header({
       boxShadow:
         "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
     },
-    "& .svg-list": {
-      gap: "20px",
+    "& .search-btn": {
+      width: "30px",
+      height: "30px",
     },
   },
 
   "@media (max-width: 1023px)": {
+    "& .search-button": {
+      display: "block",
+    },
     "& .logo-container": {
       width: "170px",
     },
     "& .menu-container": {
-      display: "flex",
-      flexDirection: "column",
       gap: "10px",
     },
     "& .navigation": {
       fontSize: "18px",
+      justifyContent: "center",
     },
     "& .svg-list": {
-      order: -1,
-      alignSelf: "flex-end",
+      gap: "30px",
     },
     "& .svg-container": { width: "30px" },
+    "& .search-form": { display: "none" },
+    "& .navigation-container": {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+
+      width: "100%",
+    },
   },
   "@media (min-width: 320px) and (max-width: 767px)": {
-    flexDirection: "column",
+    justifyContent: "space-between",
     gap: "20px",
 
     "& .logo-container": {
@@ -160,17 +170,16 @@ export const HeaderStyle = styled.header({
       justifyContent: "center",
     },
     "& .menu-container": {
-      flexDirection: "row",
-      justifyContent: "center",
       gap: "30px",
     },
-    "& .navigation-container": {
-      "& .navigation": {
-        display: "none",
-      },
+
+    "& .navigation": {
+      display: "none",
     },
     "& .svg-list": {
-      order: 1,
+      "& .cart, & .my-page": {
+        display: "none",
+      },
     },
     //추가 시작
     "& .search-panel": {
