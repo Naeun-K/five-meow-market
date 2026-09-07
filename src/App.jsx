@@ -3,7 +3,7 @@ import { useState } from "react";
 // import SignupPage from "./pages/AuthPage/SignupPage";
 // import UpdatePage from "./pages/AuthPage/UpdatePage";
 import BasicPage from "./pages/basicPage/BasicPage";
-
+import MainBenefits from "./components/main/MainBenefits/MainBenefits";
 // const PAGES = {
 //   "/login": LoginPage,
 //   "/signup": SignupPage,
@@ -24,6 +24,7 @@ function App() {
       {/* <UpdatePage /> */}
       {/* <LoginPage /> */}
       {/* <SignupPage /> */}
+      <MainBenefits />
     </main>
   );
 }
