@@ -41,7 +41,6 @@ export const HeaderStyle = styled.header({
     border: 0,
     background: "transparent",
     fontSize: "20px",
-    outline: "none",
   },
   "& .panel-search-button": {
     display: "flex",
@@ -81,16 +80,52 @@ export const HeaderStyle = styled.header({
     alignItems: "center",
     gap: "50px",
   },
-  "@media (max-width: 1250px)": {
-    gap: "30px",
-    "& .menu-container": {
-      gap: "30px",
+
+  "& .nav-container": {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+
+    width: "100%",
+  },
+  "& .search-svg": {
+    display: "none",
+  },
+  "& .search-form": {
+    display: " flex",
+
+    justifyContent: "space-between",
+    alignItems: "center",
+
+    width: "100%",
+
+    padding: "8px 10px",
+
+    border: "1px solid var(--border)",
+    borderRadius: "var(--radius-md)",
+
+    backgroundColor: "#fff",
+    color: "var(--text-color)",
+
+    fontSize: "17px",
+    fontWeight: 500,
+
+    "&::placeholder": {
+      color: "var(--text-secondary)",
+
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
     },
-    "& .navigation-container": {
-      gap: "30px",
-      "& .navigation": {
-        gap: "20px",
-      },
+
+    "&:hover": {
+      borderColor: "#bb9678",
+    },
+
+    "&:focus-within": {
+      border: "1px solid #8a664a",
+      boxShadow:
+        "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
     },
     "& .svg-list": {
       gap: "20px",

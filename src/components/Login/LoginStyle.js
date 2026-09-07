@@ -4,7 +4,7 @@ export const LoginStyle = styled.div({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  // justifyContent: "space-between",
+
   justifyContent: "space-around",
 
   width: "100%",
@@ -191,7 +191,7 @@ export const FormStyle = styled.form({
         height: "100%",
 
         border: "none",
-        outline: "none",
+
         background: "transparent",
 
         fontSize: "17px",
