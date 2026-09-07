@@ -30,6 +30,19 @@ export const BrandStyle = styled.div({
     },
   },
 
+  "& .logo-box": {
+    width: "300px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  "& .logo-box img, & .logo-box svg": {
+    width: "100%",
+    height: "auto",
+    display: "block",
+  },
+
   "& .svg-container": {
     display: "flex",
     justifyContent: "center",
@@ -58,12 +71,19 @@ export const BrandStyle = styled.div({
   },
 
   "& .cat-image": {
-    width: "420px",
-    aspectRatio: "15 / 17",
+    width: "clamp(300px, 32vw, 420px)",
+    maxWidth: "100%",
+    height: "auto",
+    objectFit: "contain",
   },
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     padding: "30px",
+    gap: "40px",
+
+    "& .logo-box": {
+      width: "260px",
+    },
 
     "& .brand-desc .phrase-wrapper": {
       fontSize: "18px",
@@ -77,10 +97,6 @@ export const BrandStyle = styled.div({
     "& .brand-deco .message-container": {
       fontSize: "20px",
     },
-
-    "& .cat-image": {
-      width: "300px",
-    },
   },
 
   "@media (min-width: 320px) and (max-width: 767px)": {
@@ -92,6 +108,10 @@ export const BrandStyle = styled.div({
 
     "& .brand-desc": {
       display: "none",
+    },
+
+    "& .logo-box": {
+      width: "220px",
     },
 
     "& .brand-deco .message-container": {

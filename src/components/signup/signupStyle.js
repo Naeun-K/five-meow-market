@@ -21,12 +21,12 @@ export const SignupContainer = styled.div({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "20px",
+  gap: "14px",
 
-  width: "100%",
-  maxWidth: "600px",
+  width: "95%",
+  maxWidth: "500px",
 
-  padding: "50px",
+  padding: "30px 50px",
 
   boxSizing: "border-box",
 
@@ -43,7 +43,7 @@ export const SignupContainer = styled.div({
     color: "var(--text-color)",
 
     fontFamily: '"Pretendard", sans-serif',
-    fontSize: "44px",
+    fontSize: "40px",
     fontWeight: 600,
   },
 
@@ -59,13 +59,13 @@ export const SignupContainer = styled.div({
     color: "var(--text-color)",
 
     fontFamily: '"Pretendard", sans-serif',
-    fontSize: "22px",
+    fontSize: "20px",
     fontWeight: 400,
   },
 
   "& .paw-icon": {
-    width: "28px",
-    height: "28px",
+    width: "24px",
+    height: "24px",
 
     color: "var(--acent-beidge)",
 
@@ -79,7 +79,7 @@ export const SignupContainer = styled.div({
   "& form": {
     display: "flex",
     flexDirection: "column",
-    gap: "20px",
+    gap: "15px",
 
     width: "100%",
   },
@@ -95,11 +95,12 @@ export const SignupContainer = styled.div({
   /* checkbox를 제외한 input */
   '& input:not([type="checkbox"])': {
     width: "100%",
-    height: "54px",
+    height: "46px",
 
-    padding: "19px 10px",
-
-    boxSizing: "border-box",
+    padding: "12px 10px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
 
     border: "1px solid var(--border)",
     borderRadius: "var(--radius-md)",
@@ -218,16 +219,17 @@ export const SignupContainer = styled.div({
 
   /* ========================================
      Tablet
-     768px ~ 1023px
+     768px ~ 1024px
   ======================================== */
 
-  "@media (min-width: 768px) and (max-width: 1023px)": {
+  "@media (min-width: 768px) and (max-width: 1024px)": {
+    transform: "translateY(30px)",
     width: "100%",
     maxWidth: "384px",
 
-    padding: "20px 30px",
+    padding: "16px 24px",
 
-    gap: "15px",
+    gap: "10px",
 
     "& h1": {
       fontSize: "28px",
@@ -245,15 +247,28 @@ export const SignupContainer = styled.div({
     },
 
     "& form": {
-      gap: "15px",
+      gap: "10px",
     },
 
     "& label": {
       fontSize: "14px",
     },
+    "& .signup-button": {
+      height: "41px",
+      fontSize: "14px",
+      marginTop: "15px",
+    },
 
+    "& .login-area": {
+      marginTop: "20px",
+      gap: "10px",
+      fontSize: "13px",
+    },
+    "& span": {
+      fontSize: "14px",
+    },
     '& input:not([type="checkbox"])': {
-      height: "54px",
+      height: "42px",
 
       padding: "10px",
 
@@ -387,9 +402,9 @@ export const Row = styled.div({
   "& button": {
     flexShrink: 0,
 
-    height: "54px",
+    height: "42px",
 
-    padding: "16px 24px",
+    padding: "8px 10px",
 
     borderRadius: "var(--radius-md)",
 
@@ -397,7 +412,7 @@ export const Row = styled.div({
     color: "var(--text-primary)",
 
     fontFamily: '"Pretendard", sans-serif',
-    fontSize: "17px",
+    fontSize: "15px",
     fontWeight: 500,
   },
 

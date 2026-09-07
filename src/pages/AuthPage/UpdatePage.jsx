@@ -1,7 +1,7 @@
 import AuthPageLayout from "./AuthPageLayout";
 import UpdateInfo from "../../components/updateinfo/updateInfo";
 import UserBrandSection from "../../components/userBrandSection/UserBrandSection";
-import updateimg from "../../assets/updateimg.svg";
+import updateimg from "../../assets/updateimg.webp";
 
 export default function UpdatePage() {
   return (

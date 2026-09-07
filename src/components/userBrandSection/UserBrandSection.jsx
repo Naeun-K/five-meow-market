@@ -6,7 +6,9 @@ export default function UserBrandSection({ phrase, image, message }) {
   const lines = phrase.split("\n");
   return (
     <BrandStyle>
-      <Logo />
+      <div className="logo-box">
+        <Logo />
+      </div>
       <div className="brand-desc">
         <p className="phrase-wrapper">고양이와 함께하는 오묘한 일상</p>
 

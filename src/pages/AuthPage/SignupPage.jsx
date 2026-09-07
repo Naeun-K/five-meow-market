@@ -1,5 +1,5 @@
 import AuthPageLayout from "./AuthPageLayout";
-import signupimg from "../../assets/signupimg.svg";
+import signupimg from "../../assets/signupimg.webp";
 import UserBrandSection from "../../components/userBrandSection/UserBrandSection";
 import SignupForm from "../../components/signup/signupForm";
 

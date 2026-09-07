@@ -26,7 +26,7 @@ export const AuthPageLayoutStyle = styled.div({
   },
 
   /* Tablet */
-  "@media (min-width: 768px) and (max-width: 1023px)": {
+  "@media (min-width: 768px) and (max-width: 1024px)": {
     "& .form-part": {
       padding: "30px",
     },
