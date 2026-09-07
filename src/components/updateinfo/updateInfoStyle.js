@@ -105,51 +105,6 @@ export const UpdateStyle = styled.div({
           },
         },
 
-        "& .password-container": {
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-
-          gap: "15px",
-
-          padding: "8px 20px",
-
-          width: "100%",
-          minWidth: 0,
-
-          backgroundColor: "var(--text-button)",
-
-          border: "1px solid var(--border)",
-          borderRadius: "var(--radius-md)",
-
-          transition: "border 0.2s, box-shadow 0.2s",
-
-          "&:hover": {
-            border: "1px solid #bb9678",
-          },
-
-          "&:focus-within": {
-            border: "1px solid #8a664a",
-            boxShadow:
-              "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
-          },
-
-          "& .password-input": {
-            flex: 1,
-            minWidth: 0,
-
-            padding: 0,
-
-            border: "none",
-
-            fontSize: "17px",
-
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          },
-        },
-
         "& .phone-container, & .zip-container": {
           display: "flex",
           alignItems: "center",
@@ -209,6 +164,77 @@ export const UpdateStyle = styled.div({
       flexShrink: 0,
     },
   },
+  "& .mobile-input-container": {
+    "& .label-guide-container": {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      gap: "30px",
+
+      "& .password-guide": {
+        height: "20px",
+        lineHeight: "20px",
+
+        flexShrink: 0,
+      },
+      "& .guide-hidden": {
+        visibility: "hidden",
+      },
+
+      "& .password-error": {
+        fontSize: "16px",
+        color: "var(--acent-error)",
+      },
+      "& .password-check": {
+        color: "#2E7D32",
+        fontSize: "16px",
+      },
+    },
+    "& .password-container": {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+
+      gap: "15px",
+
+      padding: "8px 20px",
+
+      width: "100%",
+      minWidth: 0,
+
+      backgroundColor: "var(--text-button)",
+
+      border: "1px solid var(--border)",
+      borderRadius: "var(--radius-md)",
+
+      transition: "border 0.2s, box-shadow 0.2s",
+
+      "&:hover": {
+        border: "1px solid #bb9678",
+      },
+
+      "&:focus-within": {
+        border: "1px solid #8a664a",
+        boxShadow:
+          "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
+      },
+
+      "& .password-input": {
+        flex: 1,
+        minWidth: 0,
+
+        padding: 0,
+
+        border: "none",
+
+        fontSize: "17px",
+
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      },
+    },
+  },
 
   "& .show-password, & .showPasswordConfirm": {
     color: "var(--text-secondary)",
@@ -226,11 +252,7 @@ export const UpdateStyle = styled.div({
     },
   },
 
-  "& .guide-container": {
-    color: "#ee2f2f",
-  },
-
-  "@media (min-width: 768px) and (max-width: 1023px)": {
+  "@media (max-width: 1023px)": {
     gap: "35px",
 
     "& .svg-container": {
@@ -269,6 +291,30 @@ export const UpdateStyle = styled.div({
     "& .password-input": {
       width: "100%",
     },
+    "& .mobile-input-container": {
+      display: "flex",
+      flexDirection: "column",
+
+      "& .label-guide-container": {
+        display: "contents",
+        "& .password-guide": {
+          order: 3,
+        },
+        "& .password-error": {
+          fontSize: "15px",
+        },
+        "& .password-check": {
+          fontSize: "15px",
+        },
+        "& label": {
+          order: 1,
+        },
+      },
+
+      "& .password-container": {
+        order: 2,
+      },
+    },
   },
 
   "@media (min-width: 320px) and (max-width: 767px)": {
@@ -285,6 +331,16 @@ export const UpdateStyle = styled.div({
     "& .svg-container": {
       width: "20px",
       height: "20px",
+    },
+    "& .mobile-input-container": {
+      "& .label-guide-container": {
+        "& .password-error": {
+          fontSize: "13.5px",
+        },
+        "& .password-check": {
+          fontSize: "13.5px",
+        },
+      },
     },
   },
 });
