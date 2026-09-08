@@ -20,9 +20,9 @@ function App() {
         totalPages={5}
         onPageChange={setCurrentPage}
       /> */}
-      {/* <BasicPage /> */}
+      <BasicPage />
       {/* <UpdatePage /> */}
-      <LoginPage />
+      {/* <LoginPage /> */}
       {/* <SignupPage /> */}
     </main>
   );

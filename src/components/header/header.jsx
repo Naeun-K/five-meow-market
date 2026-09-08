@@ -40,7 +40,8 @@ function Header() {
         <div className="svg-list">
           <button
             type="button"
-            aria-label="검색창 열기"
+            aria-label={isSearchOpen ? "검색창 닫기" : "검색창 열기"}
+            aria-expanded={isSearchOpen}
             className="svg-container search-button"
             onClick={handleSearchToggle}
           >
@@ -195,44 +196,52 @@ function Header() {
           </button>
         </form>
       </div>
-      {isSearchOpen && (
-        <div className="search-panel">
-          <input
-            ref={searchInputRef}
-            type="search"
-            aria-label="상품 검색"
-            placeholder="검색할 상품을 입력하세요"
-            className="search-input"
-          />
-          <button
-            type="submit"
-            aria-label="검색"
-            className="panel-search-button"
+      <div
+        className={`search-panel${isSearchOpen ? " is-open" : ""}`}
+        aria-hidden={!isSearchOpen}
+      >
+        <input
+          ref={searchInputRef}
+          type="search"
+          aria-label="상품 검색"
+          placeholder="검색할 상품을 입력하세요"
+          className="search-input"
+          tabIndex={isSearchOpen ? 0 : -1}
+        />
+        <button
+          type="submit"
+          aria-label="검색"
+          className="panel-search-button"
+          tabIndex={isSearchOpen ? 0 : -1}
+        >
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="9.5"
-                cy="9.5"
-                r="6.5"
-                stroke="black"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M14.2 14.2L21 21"
-                stroke="black"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-        </div>
-      )}
+            <circle
+              cx="9.5"
+              cy="9.5"
+              r="6.5"
+              stroke="black"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M14.2 14.2L21 21"
+              stroke="black"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        className={`search-backdrop${isSearchOpen ? " is-open" : ""}`}
+        aria-hidden="true"
+        onClick={() => setIsSearchOpen(false)}
+      />
     </HeaderStyle>
   );
 }
