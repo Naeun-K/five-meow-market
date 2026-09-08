@@ -29,10 +29,13 @@ function App() {
       {/* <LoginPage /> */}
       {/* <MainBenefits />
       {/* <SignupPage /> */}
+      {/* 
       <MainBanner />
       <MeowCategory />
       <MainBenefits />
+      */}
       <Navigation/>
+      
     </main>
   );
 }

@@ -49,11 +49,11 @@ const mobileSections = [
 export default function NavigationModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [openSection, setOpenSection] = useState("집사 PICK💗");
-  const wrapperRef = useRef(null); // Header를 감싼 영역 참조
+  const wrapperRef = useRef(null); //
 
   const handleClose = () => setIsOpen(false);
 
-  // Header 안의 기존 햄버거(span[aria-label="메뉴"])를 찾아서 클릭 이벤트를 붙임
+  // Header 안 (span[aria-label="메뉴"])를 찾아서 클릭 이벤트를 붙임
   useEffect(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
@@ -73,8 +73,9 @@ export default function NavigationModal() {
 
   return (
     <div ref={wrapperRef} style={{ position: "relative" }}>
-      <Header /> {/* header.jsx 그대로 렌더 */}
+      <Header /> 
 
+      {/* 메뉴 닫기 및 X 버튼 */}
       <MegaMenuWrapper isOpen={isOpen}>
         <MegaMenuCard>
           <CloseButton onClick={handleClose} aria-label="메뉴 닫기">
@@ -83,10 +84,14 @@ export default function NavigationModal() {
             </svg>
           </CloseButton>
 
+          {/* 태블릿 REVIEW 창 및 전체상품 올리는 창 (Map으로 계속 돌려) */}
           <MegaInner>
             <LeftGroup>
               {leftColumns.map((col) => (
-                <MegaCol key={col.title}>
+                <MegaCol key={col.title} 
+                hideOnTablet= {col.title === "REVIEW"}
+                tabletOffset= {col.title === "전체상품" ? -90 : undefined}
+                >
                   <h3>{col.title}</h3>
                   {col.items.length > 0 && (
                     <ul>
@@ -105,7 +110,8 @@ export default function NavigationModal() {
             </LeftGroup>
 
             <Divider />
-
+            
+            {/* 커뮤니티, 내정보 버튼 (Map으로 계속 돌려) */}
             <MegaCol>
               <h3>COMMUNITY</h3>
               <CommunityLists>
@@ -131,7 +137,8 @@ export default function NavigationModal() {
             </MegaCol>
           </MegaInner>
         </MegaMenuCard>
-
+        
+        {/* 모바일 쪽 작업내역 */}
         <MobileCard>
           <MobileAuthRow>
             {authButtons.map((btn) => (
@@ -188,7 +195,8 @@ export default function NavigationModal() {
 
         
       </MegaMenuWrapper>
-
+      
+      {/* 모달 바깥쪽 클릭 시 창 닫히는 버튼 */}
       <Backdrop isOpen={isOpen} onClick={handleClose} />
     </div>
   );

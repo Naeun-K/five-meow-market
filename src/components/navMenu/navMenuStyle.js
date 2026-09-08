@@ -15,7 +15,7 @@ export const colors = {
 
 export const MegaMenuWrapper = styled.div(({ isOpen }) => ({
   position: "absolute",
-  top: 140,
+  top: 160,
   left: 40,
   right: 40,
   zIndex: 60,
@@ -109,7 +109,7 @@ export const Divider = styled.div({
   },
 });
 
-export const MegaCol = styled.div({
+export const MegaCol = styled.div(({ hideOnTablet, tabletOffset }) => ({
   minWidth: 96,
 
   h3: {
@@ -136,7 +136,12 @@ export const MegaCol = styled.div({
       color: colors.ink,
     },
   },
-});
+
+  "@media (max-width: 1023px)": {
+    display: hideOnTablet ? "none" : undefined,
+    marginTop: tabletOffset,
+  }
+}));
 
 export const ExtraHeading = styled.h3({
   marginTop: 40,
@@ -154,8 +159,13 @@ export const CommunityLists = styled.div({
 export const MyShopGrid = styled.div({
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
-  gap: 6,
+  gap: 10,
   width: 180,
+
+  "@media (max-width: 1023px)": {
+  display: "grid",
+  gridTemplateColumns: "repeat(1, 1fr)",
+  },
 });
 
 
@@ -262,17 +272,24 @@ export const MobileCloseButton = styled.button({
   cursor: "pointer",
 });
 
-export const MyShopButton = styled.button(({ filled }) => ({
+export const MyShopButton = styled.button({
   padding: "8px 14px",
   fontSize: 12,
   fontWeight: 600,
-  border: `1px solid ${filled ? colors.accent : colors.line}`,
+  border: `1px solid ${colors.line}`,
   borderRadius: 12,
-  background: filled ? colors.accent : "#fff",
-  color: filled ? "#fff" : colors.ink,
+  background: "#fff",
+  color: colors.ink,
   cursor: "pointer",
   whiteSpace: "nowrap",
-}));
+  transition: "background .2s ease, color .2s ease, border-color .2s ease",
+
+  "&:hover": {
+    background: colors.accent,
+    color: "#fff",
+    borderColor: colors.accent,
+  },
+});
 
 /* 바깥 클릭용 백드롭 */
 export const Backdrop = styled.div(({ isOpen }) => ({
