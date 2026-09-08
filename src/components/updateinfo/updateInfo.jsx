@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { verifyPhone } from "../../services/authService";
 import { searchAddress } from "../../services/addressService";
-import { updateMyInfo } from "../../services/userService";
 import useToast from "../../hooks/useToast";
 import { UpdateStyle } from "./updateInfoStyle";
 
