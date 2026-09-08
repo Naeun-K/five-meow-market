@@ -24,7 +24,7 @@ function App() {
         totalPages={5}
         onPageChange={setCurrentPage}
       /> */}
-      {/*<BasicPage />/*}
+      {<BasicPage />}
       {/* <UpdatePage /> */}
       {/* <LoginPage /> */}
       {/* <MainBenefits />
@@ -34,8 +34,6 @@ function App() {
       <MeowCategory />
       <MainBenefits />
       */}
-      <Navigation/>
-      
     </main>
   );
 }
