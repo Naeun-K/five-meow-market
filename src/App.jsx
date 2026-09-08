@@ -6,7 +6,6 @@ import BasicPage from "./pages/basicPage/BasicPage";
 import MainBenefits from "./components/main/MainBenefits/MainBenefits";
 import MeowCategory from "./components/main/MeowCategory/MeowCategory";
 import MainBanner from "./components/main/MainBanner/MainBanner";
-import Navigation from "./components/navMenu/navMenu";
 
 // const PAGES = {
 //   "/login": LoginPage,
