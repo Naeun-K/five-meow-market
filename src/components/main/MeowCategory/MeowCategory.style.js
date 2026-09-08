@@ -3,14 +3,12 @@ import { css } from "@emotion/react";
 export const categorySection = css({
   width: "calc(100% - 60px)",
   margin: "0 auto",
-  color: "var(--text-color)",
   color: "#543B2A",
   padding: "24px 40px",
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.12)",
 
   h2: {
     color: "#543B2A",
-    fontFamily: "Inter, Pretendard, sans-serif",
     margin: "0 0 24px",
     textAlign: "center",
     fontSize: "24px",
@@ -23,15 +21,6 @@ export const categorySection = css({
     marginLeft: "4px",
     color: "#ebccb2",
     verticalAlign: "middle",
-  },
-
-  "@media (max-width: 767px)": {
-    padding: "20px 16px",
-
-    h2: {
-      marginBottom: "20px",
-      fontSize: "14px",
-    },
   },
 
   "@media (max-width: 767px)": {
