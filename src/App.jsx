@@ -4,6 +4,7 @@ import { useState } from "react";
 // import UpdatePage from "./pages/AuthPage/UpdatePage";
 import BasicPage from "./pages/basicPage/BasicPage";
 import MainBenefits from "./components/main/MainBenefits/MainBenefits";
+import MeowCategory from "./components/main/MeowCategory/MeowCategory";
 // const PAGES = {
 //   "/login": LoginPage,
 //   "/signup": SignupPage,
@@ -25,6 +26,7 @@ function App() {
       {/* <LoginPage /> */}
       {/* <SignupPage /> */}
       <MainBenefits />
+      <MeowCategory />
     </main>
   );
 }
