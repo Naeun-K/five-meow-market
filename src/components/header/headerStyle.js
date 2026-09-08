@@ -32,12 +32,12 @@ export const HeaderStyle = styled.header({
     position: "absolute",
     top: "calc(100% + 42px)",
     left: "50%",
-    zIndex: 10,
-    display: "flex",
+    zIndex: 11,
+    display: "none",
     alignItems: "center",
     width: "min(54vw, 1000px)",
-    height: "58px",
     transform: "translateX(-50%)",
+    overflow: "hidden",
     borderBottom: "1px solid #333",
     backgroundColor: "rgba(255, 255, 255, 0.96)",
   },
@@ -133,9 +133,37 @@ export const HeaderStyle = styled.header({
     },
   },
 
-  "@media (max-width: 1023px)": {
+  "@media (max-width: 1024px)": {
     "& .search-button": {
       display: "block",
+    },
+    "& .search-panel": {
+      display: "flex",
+      top: "calc(100% + 20px)",
+      width: "min(80vw, 640px)",
+      height: "58px",
+      maxHeight: 0,
+      opacity: 0,
+      pointerEvents: "none",
+      transition: "max-height 0.3s ease, opacity 0.2s ease",
+      "&.is-open": {
+        maxHeight: "58px",
+        opacity: 1,
+        pointerEvents: "auto",
+      },
+    },
+    "& .search-backdrop": {
+      position: "fixed",
+      inset: 0,
+      zIndex: 10,
+      backgroundColor: "rgba(255, 255, 255, 0.82)",
+      opacity: 0,
+      pointerEvents: "none",
+      transition: "opacity 0.3s ease",
+      "&.is-open": {
+        opacity: 1,
+        pointerEvents: "auto",
+      },
     },
     "& .logo-container": {
       width: "170px",
@@ -181,7 +209,6 @@ export const HeaderStyle = styled.header({
         display: "none",
       },
     },
-    //추가 시작
     "& .search-panel": {
       top: "calc(100% + 20px)",
       width: "calc(100% - 20px)",
