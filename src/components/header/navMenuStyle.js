@@ -10,6 +10,11 @@ export const colors = {
 };
 
 /* =======================================================
+   모달 전체를 감싸는 루트
+   ======================================================= */
+export const ModalRoot = styled.div({});
+
+/* =======================================================
    둥근 테두리 카드형 메가메뉴 박스
    ======================================================= */
 
@@ -38,7 +43,7 @@ export const MegaMenuCard = styled.div({
   boxShadow: "0 30px 50px -25px rgba(28,26,23,0.35)",
   padding: "40px 48px",
 
-   "@media (max-width: 1023px)": {   
+  "@media (max-width: 1023px)": {
     padding: "28px 24px",
   },
 
@@ -46,8 +51,6 @@ export const MegaMenuCard = styled.div({
     display: "none",
   },
 });
-
-
 
 export const CloseButton = styled.div({
   position: "absolute",
@@ -90,7 +93,7 @@ export const LeftGroup = styled.div({
   gridTemplateColumns: "repeat(4, 1fr)",
   gap: 28,
 
-  "@media (max-width: 1023px)" : {
+  "@media (max-width: 1023px)": {
     gridTemplateColumns: "repeat(2, 1fr)",
   },
 
@@ -111,6 +114,7 @@ export const Divider = styled.div({
 
 export const MegaCol = styled.div(({ hideOnTablet, tabletOffset }) => ({
   minWidth: 96,
+  tabletOffset: "none",
 
   h3: {
     fontSize: 14,
@@ -139,8 +143,7 @@ export const MegaCol = styled.div(({ hideOnTablet, tabletOffset }) => ({
 
   "@media (max-width: 1023px)": {
     display: hideOnTablet ? "none" : undefined,
-    marginTop: tabletOffset,
-  }
+  },
 }));
 
 export const ExtraHeading = styled.h3({
@@ -163,11 +166,10 @@ export const MyShopGrid = styled.div({
   width: 180,
 
   "@media (max-width: 1023px)": {
-  display: "grid",
-  gridTemplateColumns: "repeat(1, 1fr)",
+    display: "grid",
+    gridTemplateColumns: "repeat(1, 1fr)",
   },
 });
-
 
 /* =======================================================
    모바일 전용 리스트형 카드
@@ -300,5 +302,4 @@ export const Backdrop = styled.div(({ isOpen }) => ({
   pointerEvents: isOpen ? "auto" : "none",
   transition: "opacity .25s ease",
   zIndex: 40,
-}));
-
+}));  
