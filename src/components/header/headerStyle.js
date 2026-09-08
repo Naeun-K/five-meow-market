@@ -6,6 +6,7 @@ export const HeaderStyle = styled.header({
   justifyContent: "space-between",
   alignItems: "center",
   position: "relative", //추가
+  zIndex: 20,
 
   gap: "50px",
 
@@ -88,6 +89,49 @@ export const HeaderStyle = styled.header({
 
     fontSize: "20px",
     width: "100%",
+  },
+  "& .nav-item": {
+    position: "relative",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+
+    "& > a, & > button": {
+      padding: 0,
+      border: 0,
+      background: "none",
+      color: "inherit",
+      font: "inherit",
+      textDecoration: "none",
+      whiteSpace: "nowrap",
+      cursor: "pointer",
+    },
+  },
+  "& .dropdown": {
+    position: "absolute",
+    top: "calc(100% + 22px)",
+    left: "50%",
+    zIndex: 12,
+    display: "flex",
+    flexDirection: "column",
+    minWidth: "170px",
+    padding: "10px 0",
+    transform: "translateX(-50%)",
+    border: "1px solid var(--border)",
+    borderRadius: "var(--radius-md)",
+    backgroundColor: "#fff",
+    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)",
+
+    "& > a": {
+      padding: "10px 20px",
+      color: "var(--text-color)",
+      textDecoration: "none",
+      whiteSpace: "nowrap",
+
+      "&:hover": {
+        backgroundColor: "#f5f5f5",
+      },
+    },
   },
   "& .search-svg": {
     display: "none",
@@ -172,8 +216,16 @@ export const HeaderStyle = styled.header({
       gap: "10px",
     },
     "& .navigation": {
+      display: "flex",
       fontSize: "18px",
+      gap: "24px",
       justifyContent: "center",
+      overflow: "visible",
+      width: "100%",
+      padding: "4px 0",
+      "& .nav-item": {
+        flex: "0 0 auto",
+      },
     },
     "& .svg-list": {
       gap: "30px",
@@ -202,6 +254,9 @@ export const HeaderStyle = styled.header({
     },
 
     "& .navigation": {
+      display: "none",
+    },
+    "& .navigation-container": {
       display: "none",
     },
     "& .svg-list": {
