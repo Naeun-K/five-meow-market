@@ -1,116 +1,78 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { apiRequest } from "./apiClient";
 
 // 이메일 중복 확인
-export async function checkEmail(email) {
-  const response = await fetch(
-    `${BASE_URL}/auth/check-email?email=${encodeURIComponent(email)}`,
-  );
+export function checkEmail(email) {
+  const params = new URLSearchParams({ email });
 
-  return response.json();
+  return apiRequest(`/auth/check-email?${params.toString()}`);
 }
 
 // 닉네임 중복 확인
-export async function checkNickname(nickname) {
-  const response = await fetch(
-    `${BASE_URL}/auth/check-nickname?nickname=${encodeURIComponent(nickname)}`,
-  );
+export function checkNickname(nickname) {
+  const params = new URLSearchParams({ nickname });
 
-  return response.json();
+  return apiRequest(`/auth/check-nickname?${params.toString()}`);
 }
 
 // 휴대폰 인증
-export async function verifyPhone(phone) {
-  const response = await fetch(`${BASE_URL}/auth/phone/verify`, {
+export function verifyPhone(phone) {
+  return apiRequest("/auth/phone/verify", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ phone }),
+    body: { phone },
   });
-
-  return response.json();
 }
 
 // 회원가입
-export async function signup(signupData) {
-  const response = await fetch(`${BASE_URL}/auth/signup`, {
+export function signup(userData) {
+  return apiRequest("/auth/signup", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(signupData),
+    body: userData,
   });
-
-  return response.json();
 }
 
 // 로그인
-export async function login(email, password) {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
+export function login(email, password) {
+  return apiRequest("/auth/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+    body: {
       email,
       password,
-    }),
+    },
   });
-
-  return response.json();
 }
 
 // 로그아웃
-export async function logout(accessToken) {
-  const response = await fetch(`${BASE_URL}/auth/logout`, {
+export function logout(token) {
+  return apiRequest("/auth/logout", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+    token,
   });
-
-  return response.json();
 }
 
 // 로그인 상태 조회
-export async function checkAuth(accessToken) {
-  const response = await fetch(`${BASE_URL}/auth/me`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+export function getMe(token) {
+  return apiRequest("/auth/me", {
+    token,
   });
-
-  return response.json();
 }
 
 // Access Token 재발급
-export async function refreshAccessToken(refreshToken) {
-  const response = await fetch(`${BASE_URL}/auth/refresh`, {
+export function refreshAccessToken(refreshToken) {
+  return apiRequest("/auth/refresh", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+    body: {
       refreshToken,
-    }),
+    },
   });
-
-  return response.json();
 }
 
-// 비밀번호 확인
-export async function verifyPassword(password, accessToken) {
-  const response = await fetch(`${BASE_URL}/auth/verify-password`, {
+// 현재 비밀번호 확인
+export function verifyPassword(password, token) {
+  return apiRequest("/auth/verify-password", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({
+    token,
+    body: {
       password,
-    }),
+    },
   });
-
-  return response.json();
 }
