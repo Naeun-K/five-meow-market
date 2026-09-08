@@ -1,7 +1,7 @@
 import { useState } from "react";
-import LoginPage from "./pages/AuthPage/LoginPage";
-import SignupPage from "./pages/AuthPage/SignupPage";
-import UpdatePage from "./pages/AuthPage/UpdatePage";
+// import LoginPage from "./pages/AuthPage/LoginPage";
+// import SignupPage from "./pages/AuthPage/SignupPage";
+// import UpdatePage from "./pages/AuthPage/UpdatePage";
 import BasicPage from "./pages/basicPage/BasicPage";
 
 // const PAGES = {

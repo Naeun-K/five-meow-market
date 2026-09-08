@@ -13,6 +13,27 @@ function Header() {
   }, [isSearchOpen]);
 
   const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen); //추가 끝
+  //네비게이션 드롭다운 구현용 메뉴 데이터
+  const navItems = [
+    {
+      label: "카테고리",
+      children: [
+        { label: "먹묘", path: "/community/#" },
+        { label: "놀묘", path: "/community/#" },
+        { label: "쉼묘", path: "/community/#" },
+        { label: "높묘", path: "/community/#" },
+        { label: "깔묘", path: "/community/#" },
+      ],
+    },
+    {
+      label: "COMMUNITY",
+      children: [
+        { label: "공지사항", path: "/community/#" },
+        { label: "제품후기", path: "/community/#" },
+        { label: "Q&A", path: "/community/#" },
+      ],
+    },
+  ];
 
   return (
     <HeaderStyle>
