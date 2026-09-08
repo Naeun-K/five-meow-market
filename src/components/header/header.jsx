@@ -47,10 +47,12 @@ const mobileSections = [
 ];
 
 function Header() {
+  const [openMenu, setOpenMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSection, setOpenSection] = useState("집사 PICK💗");
   const searchInputRef = useRef(null);
+  const headerRef = useRef(null);
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -58,15 +60,36 @@ function Header() {
     }
   }, [isSearchOpen]);
 
-  const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!headerRef.current?.contains(event.target)) {
+        setOpenMenu(null);
+      }
+    };
+
+    document.addEventListener("pointerdown", handleOutsideClick);
+    return () =>
+      document.removeEventListener("pointerdown", handleOutsideClick);
+  }, []);
+
+  const isSmallScreen = () => window.matchMedia("(max-width: 1024px)").matches;
+
+  const handleMenuClick = (label) => {
+    if (isSmallScreen()) {
+      setOpenMenu((currentMenu) => (currentMenu === label ? null : label));
+    }
+  };
+
+  const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen); //추가 끝
   const handleMenuToggle = () => setIsMenuOpen((isOpen) => !isOpen);
   const handleMenuClose = () => setIsMenuOpen(false);
-
+  //네비게이션 드롭다운 구현용 메뉴 데이터
   const authButtons = myShopButtons.filter(
-    (b) => b.label === "로그인" || b.label === "회원가입"
+    (b) => b.label === "로그인" || b.label === "회원가입",
   );
-
   const navItems = [
+    { label: "홈", path: "#home" },
+    { label: "베스트", path: "#best" },
     {
       label: "카테고리",
       children: [
@@ -77,8 +100,9 @@ function Header() {
         { label: "깔묘", path: "/community/#" },
       ],
     },
+    { label: "전체상품", path: "#products" },
     {
-      label: "COMMUNITY",
+      label: "커뮤니티",
       children: [
         { label: "공지사항", path: "/community/#" },
         { label: "제품후기", path: "/community/#" },
@@ -88,7 +112,7 @@ function Header() {
   ];
 
   return (
-    <HeaderStyle>
+    <HeaderStyle ref={headerRef}>
       <div className="menu-container">
         <button
           type="button"
@@ -124,14 +148,41 @@ function Header() {
             className="svg-container search-button"
             onClick={handleSearchToggle}
           >
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="9.5" cy="9.5" r="6.5" stroke="black" strokeWidth="1.5" />
-              <path d="M14.2 14.2L21 21" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="9.5"
+                cy="9.5"
+                r="6.5"
+                stroke="black"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M14.2 14.2L21 21"
+                stroke="black"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </button>
 
-          <span type="button" aria-label="마이페이지" className="svg-container my-page">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <span
+            type="button"
+            aria-label="마이페이지"
+            className="svg-container my-page"
+          >
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <circle cx="12" cy="7" r="4" stroke="black" strokeWidth="1.5" />
               <path
                 d="M3 21
@@ -144,9 +195,27 @@ function Header() {
               />
             </svg>
           </span>
-          <span type="button" aria-label="장바구니" className="svg-container cart">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="7" width="18" height="15" stroke="black" strokeWidth="1.5" strokeLinejoin="round" />
+          <span
+            type="button"
+            aria-label="장바구니"
+            className="svg-container cart"
+          >
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="3"
+                y="7"
+                width="18"
+                height="15"
+                stroke="black"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
               <path
                 d="M8 7V5.5
        C8 3.3 9.8 2 12 2
@@ -156,19 +225,52 @@ function Header() {
                 strokeWidth="1.5"
                 strokeLinecap="round"
               />
-              <path d="M12 10.5V18.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M8 14.5H16" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+              <path
+                d="M12 10.5V18.5"
+                stroke="black"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M8 14.5H16"
+                stroke="black"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </span>
         </div>
       </div>
       <div className="navigation-container">
         <nav className="navigation">
-          <a href="#home" className="nav-item">홈</a>
-          <a href="#best" className="nav-item">베스트</a>
-          <a href="#category" className="nav-item">카테고리</a>
-          <a href="#products" className="nav-item">전체상품</a>
-          <a href="#community" className="nav-item">커뮤니티</a>
+          {navItems.map((menu) => (
+            <div
+              key={menu.label}
+              className="nav-item"
+              onMouseEnter={() => !isSmallScreen() && setOpenMenu(menu.label)}
+            >
+              {menu.children ? (
+                <button
+                  type="button"
+                  aria-expanded={openMenu === menu.label}
+                  onClick={() => handleMenuClick(menu.label)}
+                >
+                  {menu.label}
+                </button>
+              ) : (
+                <a href={`#${menu.label}`}>{menu.label}</a>
+              )}
+              {openMenu === menu.label && menu.children && (
+                <div className="dropdown">
+                  {menu.children.map((child, index) => (
+                    <a key={`${child.path}-${index}`} href={child.path}>
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
         </nav>
         <form className="search-form">
           <input
@@ -179,9 +281,26 @@ function Header() {
             placeholder="검색할 상품을 입력하세요"
           />
           <button className="search-btn svg-container">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="9.5" cy="9.5" r="6.5" stroke="black" strokeWidth="1.5" />
-              <path d="M14.2 14.2L21 21" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="9.5"
+                cy="9.5"
+                r="6.5"
+                stroke="black"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M14.2 14.2L21 21"
+                stroke="black"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </button>
         </form>
@@ -204,9 +323,26 @@ function Header() {
           className="panel-search-button"
           tabIndex={isSearchOpen ? 0 : -1}
         >
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="9.5" cy="9.5" r="6.5" stroke="black" strokeWidth="1.5" />
-            <path d="M14.2 14.2L21 21" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="9.5"
+              cy="9.5"
+              r="6.5"
+              stroke="black"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M14.2 14.2L21 21"
+              stroke="black"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
           </svg>
         </button>
       </div>
@@ -220,8 +356,14 @@ function Header() {
       <MegaMenuWrapper isOpen={isMenuOpen}>
         <MegaMenuCard>
           <CloseButton onClick={handleMenuClose} aria-label="메뉴 닫기">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
             </svg>
           </CloseButton>
 
@@ -238,30 +380,35 @@ function Header() {
                     <ul>
                       {col.items.map((item) => (
                         <li key={item}>
-                          <a href="#" onClick={handleMenuClose}>{item}</a>
+                          <a href="#" onClick={handleMenuClose}>
+                            {item}
+                          </a>
                         </li>
                       ))}
                     </ul>
                   )}
                   {col.extra && (
-                    <ExtraHeading onClick={handleMenuClose}>{col.extra.title}</ExtraHeading>
+                    <ExtraHeading onClick={handleMenuClose}>
+                      {col.extra.title}
+                    </ExtraHeading>
                   )}
                 </MegaCol>
               ))}
-  
-            <MegaCol>
-              <h3>COMMUNITY</h3>
-              <CommunityLists>
-                <ul>
-                  {communityLeft.map((item) => (
-                    <li key={item}>
-                      <a href="#" onClick={handleMenuClose}>{item}</a>
-                    </li>
-                  ))}
-                </ul>
-              </CommunityLists>
-            </MegaCol>
 
+              <MegaCol>
+                <h3>COMMUNITY</h3>
+                <CommunityLists>
+                  <ul>
+                    {communityLeft.map((item) => (
+                      <li key={item}>
+                        <a href="#" onClick={handleMenuClose}>
+                          {item}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </CommunityLists>
+              </MegaCol>
             </LeftGroup>
 
             <Divider />
@@ -270,7 +417,11 @@ function Header() {
               <h3>MY SHOP</h3>
               <MyShopGrid>
                 {myShopButtons.map((btn) => (
-                  <MyShopButton key={btn.label} filled={btn.filled} onClick={handleMenuClose}>
+                  <MyShopButton
+                    key={btn.label}
+                    filled={btn.filled}
+                    onClick={handleMenuClose}
+                  >
                     {btn.label}
                   </MyShopButton>
                 ))}
@@ -283,7 +434,11 @@ function Header() {
         <MobileCard>
           <MobileAuthRow>
             {authButtons.map((btn) => (
-              <MyShopButton key={btn.label} filled={btn.filled} onClick={handleMenuClose}>
+              <MyShopButton
+                key={btn.label}
+                filled={btn.filled}
+                onClick={handleMenuClose}
+              >
                 {btn.label}
               </MyShopButton>
             ))}
@@ -306,7 +461,9 @@ function Header() {
             return (
               <MobileAccordionSection key={section.title}>
                 <MobileAccordionHeader
-                  onClick={() => setOpenSection(isSectionOpen ? null : section.title)}
+                  onClick={() =>
+                    setOpenSection(isSectionOpen ? null : section.title)
+                  }
                 >
                   {section.title}
                   <MobileChevron isOpen={isSectionOpen}>▾</MobileChevron>
@@ -316,7 +473,9 @@ function Header() {
                   <MobileSubNavList>
                     {section.items.map((item) => (
                       <li key={item}>
-                        <MobileSubNavLink href="#" onClick={handleMenuClose}>{item}</MobileSubNavLink>
+                        <MobileSubNavLink href="#" onClick={handleMenuClose}>
+                          {item}
+                        </MobileSubNavLink>
                       </li>
                     ))}
                   </MobileSubNavList>
@@ -328,8 +487,14 @@ function Header() {
           <MobileMyShopHeading>MY SHOP</MobileMyShopHeading>
 
           <MobileCloseButton onClick={handleMenuClose} aria-label="메뉴 닫기">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
             </svg>
           </MobileCloseButton>
         </MobileCard>
