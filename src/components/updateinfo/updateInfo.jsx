@@ -186,8 +186,24 @@ const UpdateInfo = () => {
         </div>
 
         <form className="form-style">
-          <div className="input-container">
-            <label>새 비밀번호</label>
+          <div className="input-container mobile-input-container">
+            <div className="label-guide-container">
+              <label>새 비밀번호</label>
+
+              <p
+                className={`password-guide ${
+                  !password
+                    ? "guide-hidden"
+                    : isValidPassword(password)
+                      ? "password-check"
+                      : "password-error"
+                }`}
+              >
+                {isValidPassword(password)
+                  ? "사용 가능한 비밀번호입니다."
+                  : "새 비밀번호는 영문, 숫자, 대문자를 포함해야 합니다."}
+              </p>
+            </div>
             <div className="password-container">
               <input
                 className="password-input"
@@ -227,14 +243,28 @@ const UpdateInfo = () => {
                 )}
               </span>
             </div>
-            {password && !isValidPassword(password) && (
-              <p className="guide-container">
-                영문, 숫자, 대문자를 포함해주세요.
-              </p>
-            )}
           </div>
-          <div className="input-container">
-            <label>새 비밀번호 확인</label>
+          <div className="input-container  mobile-input-container">
+            <div className="label-guide-container">
+              <label>새 비밀번호 확인</label>
+
+              <p
+                className={`password-guide ${
+                  !passwordConfirm
+                    ? "guide-hidden"
+                    : password === passwordConfirm
+                      ? "password-check"
+                      : "password-error"
+                }`}
+              >
+                {passwordConfirm
+                  ? password !== passwordConfirm
+                    ? "비밀번호가 일치하지 않습니다."
+                    : "비밀번호가 일치합니다."
+                  : ""}
+              </p>
+            </div>
+
             <div className="password-container">
               <input
                 className="password-input"
@@ -273,11 +303,6 @@ const UpdateInfo = () => {
                 )}
               </span>
             </div>
-            {passwordConfirm && password !== passwordConfirm && (
-              <p className="guide-container">
-                새 비밀번호가 일치하지 않습니다.
-              </p>
-            )}
           </div>
           <div className="input-container">
             <label>휴대폰 번호</label>
@@ -320,12 +345,7 @@ const UpdateInfo = () => {
               </button>
             </div>
 
-            <input
-              type="text"
-              value={address}
-              readOnly
-              placeholder="주소를 입력해주세요."
-            />
+            <input type="text" value={address} readOnly placeholder="주소" />
             <input
               type="text"
               value={detailAddress}

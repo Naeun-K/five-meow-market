@@ -9,8 +9,6 @@ export const SignupLayout = styled.div({
   justifyContent: "center",
 
   width: "100%",
-
-  backgroundColor: "var(--bg)",
 });
 
 /* ========================================
@@ -23,26 +21,15 @@ export const SignupContainer = styled.div({
   alignItems: "center",
   gap: "14px",
 
-  width: "95%",
-  maxWidth: "500px",
-
-  padding: "30px 50px",
-
-  boxSizing: "border-box",
-
-  backgroundColor: "var(--bg)",
-  color: "var(--text-color)",
+  width: "100%",
 
   /* ----------------------------------------
      Title
   ---------------------------------------- */
 
   "& h1": {
-    margin: 0,
-
     color: "var(--text-color)",
 
-    fontFamily: '"Pretendard", sans-serif',
     fontSize: "40px",
     fontWeight: 600,
   },
@@ -58,9 +45,7 @@ export const SignupContainer = styled.div({
 
     color: "var(--text-color)",
 
-    fontFamily: '"Pretendard", sans-serif',
     fontSize: "20px",
-    fontWeight: 400,
   },
 
   "& .paw-icon": {
@@ -197,35 +182,13 @@ export const SignupContainer = styled.div({
     pointerEvents: "none",
   },
 
-  /* ----------------------------------------
-     Password Error
-  ---------------------------------------- */
-
-  "& .password-error-input": {
-    borderColor: "#eb2d2d",
-  },
-
-  "& .password-error": {
-    margin: 0,
-
-    color: "#ee2f2f",
-
-    fontFamily: '"Pretendard", sans-serif',
-    fontSize: "14px",
-    fontWeight: 400,
-  },
-
   /* ========================================
      Tablet
      768px ~ 1024px
   ======================================== */
 
   "@media (min-width: 768px) and (max-width: 1024px)": {
-    transform: "translateY(30px)",
     width: "100%",
-    maxWidth: "384px",
-
-    padding: "16px 24px",
 
     gap: "10px",
 
@@ -254,7 +217,6 @@ export const SignupContainer = styled.div({
     "& .signup-button": {
       height: "41px",
       fontSize: "14px",
-      marginTop: "15px",
     },
 
     "& .login-area": {
@@ -268,7 +230,7 @@ export const SignupContainer = styled.div({
     '& input:not([type="checkbox"])': {
       height: "42px",
 
-      padding: "10px",
+      padding: "8px 10px",
 
       fontSize: "14px",
     },
@@ -379,6 +341,72 @@ export const FormGroup = styled.div({
   gap: "10px",
 
   width: "100%",
+
+  "& .label-guide-container": {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "30px",
+
+    "& .password-guide": {
+      height: "20px",
+      lineHeight: "20px",
+
+      flexShrink: 0,
+    },
+    "& .guide-hidden": {
+      visibility: "hidden",
+    },
+
+    "& .password-error-input": {
+      borderColor: "#eb2d2d",
+    },
+
+    "& .password-error": {
+      fontSize: "16px",
+      color: "var(--acent-error)",
+    },
+    "& .password-check": {
+      color: "#2E7D32",
+      fontSize: "16px",
+    },
+  },
+
+  "@media (max-width:1023px)": {
+    "& .label-guide-container": {
+      gap: "15px",
+      "& .password-error": {
+        fontSize: "13.5px",
+      },
+      "& .password-check": {
+        fontSize: "13.5px",
+      },
+    },
+  },
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    display: "flex",
+    flexDirection: "column",
+
+    "& .label-guide-container": {
+      display: "contents",
+      "& .password-guide": {
+        order: 3,
+      },
+      "& .password-error": {
+        fontSize: "12px",
+      },
+      "& .password-check": {
+        fontSize: "12px",
+      },
+      "& label": {
+        order: 1,
+      },
+    },
+
+    "& .password-input": {
+      order: 2,
+    },
+  },
 });
 
 /* ========================================
@@ -414,6 +442,11 @@ export const Row = styled.div({
     fontWeight: 500,
   },
 
+  "@media (max-width: 1023px)": {
+    "& button": {
+      height: "fit-content",
+    },
+  },
   "@media (min-width: 320px) and (max-width: 767px)": {
     "& button": {
       height: "33px",
@@ -444,11 +477,7 @@ export const Agreement = styled.div({
   },
 
   "& span": {
-    color: "var(--text-color)",
-
-    fontFamily: '"Pretendard", sans-serif',
     fontSize: "16px",
-    fontWeight: 400,
   },
 
   "& strong": {

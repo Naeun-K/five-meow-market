@@ -5,7 +5,7 @@ export const BrandStyle = styled.div({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "60px",
+  gap: "70px",
 
   width: "100%",
   height: "100%",
@@ -56,7 +56,7 @@ export const BrandStyle = styled.div({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: "25px",
+    gap: "10px",
 
     width: "100%",
     height: "38px",
@@ -79,7 +79,7 @@ export const BrandStyle = styled.div({
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     padding: "30px",
-    gap: "40px",
+    // gap: "40px",
 
     "& .logo-box": {
       width: "260px",

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginStyle, FormStyle } from "./LoginStyle";
 import useToast from "../../hooks/useToast";
 import * as authService from "../../services/authService";
 
 export default function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [saveEmail, setSaveEmail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { showToast } = useToast();
@@ -21,7 +23,11 @@ export default function LoginForm() {
 
     try {
       const result = await authService.login(email, password);
-
+      if (saveEmail) {
+        localStorage.setItem("savedEmail", email);
+      } else {
+        localStorage.removeItem("savedEmail");
+      }
       showToast(result.message, result.success);
 
       if (result.success) {
@@ -33,6 +39,15 @@ export default function LoginForm() {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("savedEmail");
+
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setSaveEmail(true);
+    }
+  }, []);
 
   return (
     <LoginStyle>
@@ -171,7 +186,12 @@ export default function LoginForm() {
 
         <div className="options-container">
           <div className="save-info-container">
-            <input type="checkbox" name="saveId" />
+            <input
+              type="checkbox"
+              name="saveId"
+              checked={saveEmail}
+              onChange={(event) => setSaveEmail(event.target.checked)}
+            />
             <label>아이디 저장</label>
           </div>
 

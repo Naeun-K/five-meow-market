@@ -279,7 +279,22 @@ const SignupForm = () => {
 
           {/* 비밀번호 */}
           <FormGroup>
-            <label>비밀번호</label>
+            <div className="label-guide-container">
+              <label>비밀번호</label>
+              <p
+                className={`password-guide ${
+                  !password
+                    ? "guide-hidden"
+                    : isValidPassword(password)
+                      ? "password-check"
+                      : "password-error"
+                }`}
+              >
+                {isValidPassword(password)
+                  ? "사용 가능한 비밀번호입니다."
+                  : "비밀번호는 영문, 숫자, 대문자를 포함해야 합니다."}
+              </p>
+            </div>
 
             <div className="password-input">
               <input
@@ -331,7 +346,24 @@ const SignupForm = () => {
 
           {/* 비밀번호 확인 */}
           <FormGroup>
-            <label>비밀번호 확인</label>
+            <div className="label-guide-container">
+              <label>비밀번호 확인</label>
+              <p
+                className={`password-guide ${
+                  !passwordConfirm
+                    ? "guide-hidden"
+                    : password === passwordConfirm
+                      ? "password-check"
+                      : "password-error"
+                }`}
+              >
+                {passwordConfirm
+                  ? password !== passwordConfirm
+                    ? "비밀번호가 일치하지 않습니다."
+                    : "비밀번호가 일치합니다."
+                  : ""}
+              </p>
+            </div>
 
             <div className="password-input">
               <input
@@ -385,9 +417,6 @@ const SignupForm = () => {
                 )}
               </button>
             </div>
-            {passwordConfirm && password !== passwordConfirm && (
-              <p className="password-error">비밀번호가 일치하지 않습니다.</p>
-            )}
           </FormGroup>
 
           {/* 휴대폰번호 */}
@@ -427,12 +456,7 @@ const SignupForm = () => {
               </button>
             </Row>
 
-            <input
-              type="text"
-              placeholder="주소를 입력해주세요"
-              value={address}
-              readOnly
-            />
+            <input type="text" placeholder="주소" value={address} readOnly />
 
             <input
               type="text"

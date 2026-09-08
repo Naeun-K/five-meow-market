@@ -15,15 +15,14 @@ function App() {
 
   return (
     <main>
-      {/* <BasicPage /> */}
       {/* <Pagination
         currentPage={currentPage}
         totalPages={5}
         onPageChange={setCurrentPage}
       /> */}
-      <BasicPage />
+      {/* <BasicPage /> */}
       {/* <UpdatePage /> */}
-      {/* <LoginPage /> */}
+      <LoginPage />
       {/* <SignupPage /> */}
     </main>
   );

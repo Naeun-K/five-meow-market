@@ -5,14 +5,12 @@ export const LoginStyle = styled.div({
   flexDirection: "column",
   alignItems: "center",
 
-  justifyContent: "space-around",
+  justifyContent: "space-evenly",
 
   width: "100%",
-  maxWidth: "520px",
-  margin: "0 auto",
+
   minHeight: "1030px",
 
-  padding: "10% 50px 50px",
   gap: "30px",
 
   "& .top-nav": {
@@ -43,7 +41,7 @@ export const LoginStyle = styled.div({
 
     "& h2": {
       fontSize: "44px",
-      fontStyle: "normal",
+
       fontWeight: 600,
     },
 
@@ -78,7 +76,7 @@ export const LoginStyle = styled.div({
     "& svg": {
       width: "100%",
       height: "100%",
-      color: "currentColor",
+
       pointerEvents: "none",
     },
   },
@@ -87,7 +85,7 @@ export const LoginStyle = styled.div({
     gap: "45px",
     "& .top-nav": {
       fontSize: "15px",
-      marginTop: "90px",
+      // marginTop: "90px",
     },
     "& .header": {
       "& h2": {
@@ -104,7 +102,7 @@ export const LoginStyle = styled.div({
   "@media (min-width: 320px) and (max-width: 767px)": {
     minHeight: "auto",
     justifyContent: "flex-start",
-    padding: "0",
+
     gap: "15px",
 
     "& .top-nav": {
