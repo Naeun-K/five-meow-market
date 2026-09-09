@@ -1,13 +1,20 @@
 import { css } from "@emotion/react";
 
 export const categorySection = css({
-  width: "calc(100% - 60px)",
-  color: "#543B2A",
-  padding: "24px 15px",
+  width: "100%",
 
+  // width: "calc(100% - 60px)",
+  // color: "#543B2A",
+  // padding: "24px 15px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "24px",
+  padding: "0 50px",
   h2: {
-    color: "#543B2A",
-    margin: "0 0 24px",
+    color: "var( --text-primary)",
+    // margin: "0 0 24px",
     textAlign: "center",
     fontSize: "24px",
     fontWeight: 600,
@@ -21,17 +28,25 @@ export const categorySection = css({
     verticalAlign: "middle",
   },
 
+  "@media (max-width: 1023px)": {
+    padding: "0 30px",
+  },
   "@media (max-width: 767px)": {
     display: "none",
   },
 });
 
 export const categoryList = css({
-  display: "grid",
-  gridTemplateColumns: "repeat(5, 1fr)",
+  // display: "grid",
+  // gridTemplateColumns: "repeat(5, 1fr)",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
   gap: "40px",
-  maxWidth: "1000px",
-  margin: "0 auto",
+
+  width: "100%",
+  // maxWidth: "1000px",
+  // margin: "0 auto",
 
   "@media (max-width: 767px)": {
     gap: "12px",

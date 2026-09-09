@@ -126,7 +126,8 @@ html {
 
 body {
   width: 100%;
-  background: linear-gradient(135deg, #f3f0ec, #f3ece2);
+  background-color: var(--bg);
+  /* background: linear-gradient(135deg, #f3f0ec, #f3ece2); */
   line-height: 1.5;
 }
 

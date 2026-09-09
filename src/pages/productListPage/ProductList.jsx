@@ -4,7 +4,11 @@ import BasicPage from "../basicPage/BasicPage";
 import Loader from "../../components/loader/Loader";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
 import * as productService from "../../services/productServices";
-import { CardContainer, PageTitleContainer } from "./ProductListStyle";
+import {
+  CardContainer,
+  PageTitleContainer,
+  ProductPage,
+} from "./ProductListStyle";
 import useToast from "../../hooks/useToast";
 import { useProductLimit } from "../../hooks/useProductLimit";
 import ChatIcon from "../../components/ChatIcon/ChatIcon";
@@ -57,34 +61,36 @@ export default function ProductList() {
   }
   return (
     <BasicPage>
-      <PageTitleContainer>
-        <h2>전체상품</h2>
+      <ProductPage>
+        <PageTitleContainer>
+          <h2>전체상품</h2>
 
-        <p>총 {totalCount}개의 상품</p>
-      </PageTitleContainer>
+          <p>총 {totalCount}개의 상품</p>
+        </PageTitleContainer>
 
-      <CardContainer>
-        {products.map((product) => (
-          <div key={product.productId} className="card-wrapper">
-            <ProductCard
-              image={product.thumbnail}
-              name={product.name}
-              badge=""
-              showHeart
-            />
+        <CardContainer>
+          {products.map((product) => (
+            <div key={product.productId} className="card-wrapper">
+              <ProductCard
+                image={product.thumbnail}
+                name={product.name}
+                badge=""
+                showHeart
+              />
 
-            <p>{product.name}</p>
+              <p>{product.name}</p>
 
-            <strong>{product.price.toLocaleString()}원</strong>
-          </div>
-        ))}
-      </CardContainer>
-      <ChatIcon />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+              <strong>{product.price.toLocaleString()}원</strong>
+            </div>
+          ))}
+        </CardContainer>
+        <ChatIcon />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      </ProductPage>
     </BasicPage>
   );
 }
