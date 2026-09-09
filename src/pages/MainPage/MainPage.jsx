@@ -4,6 +4,7 @@ import MeowCategory from "../../components/main/MeowCategory/MeowCategory";
 import MainBenefits from "../../components/main/MainBenefits/MainBenefits";
 import ChatIcon from "../../components/ChatIcon/ChatIcon";
 import { CardContainer } from "./MainPageStyle";
+import MainProduct from "../../components/main/MainProduct/MainProduct";
 
 export default function MainPage() {
   return (
@@ -83,14 +84,32 @@ export default function MainPage() {
                 viewBox="0 0 16 16"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"
                 />
               </svg>
             </span>
           </div>
         </div>
-        <div className="card-wrapper"></div>
+        <div className="card-wrapper">
+          <MainProduct badge="bestOrange" />
+        </div>
+        <button type="button" className="mobile-more-button">
+          더보기
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+          >
+            <path
+              fillRule="evenodd"
+              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+            />
+          </svg>
+        </button>
       </CardContainer>
       {/* 신상품 */}
       <CardContainer>
@@ -165,14 +184,35 @@ export default function MainPage() {
                 viewBox="0 0 16 16"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"
                 />
               </svg>
             </span>
           </div>
         </div>
-        <div className="card-wrapper"></div>
+        <div className="card-wrapper">
+          <MainProduct badge="new" />
+        </div>
+
+        <button className="mobile-more-button">
+          <span>더보기</span>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-plus-lg"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+          >
+            <path
+              fillRule="evenodd"
+              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+            />
+          </svg>
+        </button>
       </CardContainer>
       {/* 베스트 리뷰 */}
       <CardContainer>
@@ -247,14 +287,32 @@ export default function MainPage() {
                 viewBox="0 0 16 16"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"
                 />
               </svg>
             </span>
           </div>
         </div>
-        <div className="card-wrapper"></div>
+        <div className="card-wrapper">
+          <MainProduct showHeart={false} showInfo={false} />
+        </div>
+        <button type="button" className="mobile-more-button">
+          더보기
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+          >
+            <path
+              fillRule="evenodd"
+              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+            />
+          </svg>
+        </button>
       </CardContainer>
       <ChatIcon />
       <MainBenefits />
