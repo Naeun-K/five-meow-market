@@ -35,7 +35,6 @@ function App() {
       {/* <MainBanner /> */}
       {/* <MeowCategory /> */}
       {/* <MainBenefits /> */}
-      <ProductCard badge="new" />
     </main>
   );
 }
