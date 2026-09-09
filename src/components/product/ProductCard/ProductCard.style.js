@@ -4,12 +4,14 @@ export const badgeText = {
   bestOrange: "BEST",
   bestBrown: "BEST",
   new: "NEW",
+  badgeNone: "",
 };
 
 const badgeColors = {
   bestOrange: "#D25F36",
   bestBrown: "#B9785A",
   new: "#8DA64B",
+  badgeNone: "transparent",
 };
 
 export const card = css({

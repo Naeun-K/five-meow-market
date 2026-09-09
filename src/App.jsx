@@ -7,13 +7,14 @@ import MainBenefits from "./components/main/MainBenefits/MainBenefits";
 import MeowCategory from "./components/main/MeowCategory/MeowCategory";
 import MainBanner from "./components/main/MainBanner/MainBanner";
 import MainPage from "./pages/MainPage/MainPage";
+import ProductList from "./pages/productListPage/ProductList";
 
 // const PAGES = {
 //   "/login": LoginPage,
 //   "/signup": SignupPage,
 //   "/update": UpdatePage,
 // };
-
+//
 function App() {
   // const [currentPage, setCurrentPage] = useState(1);
   // const Page = PAGES[window.location.pathname] ?? SignupPage;
@@ -27,7 +28,8 @@ function App() {
         totalPages={3}
         onPageChange={setCurrentPage}
       /> */}
-      <MainPage />
+      {/* <MainPage /> */}
+      <ProductList />
       {/* <UpdatePage /> */}
       {/* <LoginPage /> */}
       {/* <MainBenefits />
