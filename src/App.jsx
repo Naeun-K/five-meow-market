@@ -14,7 +14,7 @@ import ProductList from "./pages/productListPage/ProductList";
 //   "/signup": SignupPage,
 //   "/update": UpdatePage,
 // };
-
+//
 function App() {
   // const [currentPage, setCurrentPage] = useState(1);
   // const Page = PAGES[window.location.pathname] ?? SignupPage;
