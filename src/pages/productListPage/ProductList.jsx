@@ -46,7 +46,7 @@ export default function ProductList() {
     };
 
     fetchProducts();
-  }, [currentPage, limit]);
+  }, [currentPage, limit, showToast]);
 
   if (isLoading) {
     return (
@@ -70,7 +70,7 @@ export default function ProductList() {
               image={product.thumbnail}
               name={product.name}
               badge=""
-              showHeart={false}
+              showHeart
             />
 
             <p>{product.name}</p>
