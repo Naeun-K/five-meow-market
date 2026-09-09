@@ -28,8 +28,8 @@ function App() {
         totalPages={3}
         onPageChange={setCurrentPage}
       /> */}
-      {/* <MainPage /> */}
-      <ProductList />
+      <MainPage />
+      {/* <ProductList /> */}
       {/* <UpdatePage /> */}
       {/* <LoginPage /> */}
       {/* <MainBenefits />
