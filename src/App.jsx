@@ -31,11 +31,10 @@ function App() {
       {/* <UpdatePage /> */}
       {/* <LoginPage /> */}
       {/* <MainBenefits />
-      {/* 
-      <MainBanner />
-      <MeowCategory />
-      <MainBenefits />
-      */}
+      {/* <SignupPage /> */}
+      {/* <MainBanner /> */}
+      {/* <MeowCategory /> */}
+      {/* <MainBenefits /> */}
     </main>
   );
 }
