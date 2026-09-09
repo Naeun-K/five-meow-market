@@ -7,7 +7,14 @@ export const MainPageSytle = styled.div({
   alignItems: "center",
   gap: "80px",
 
+  width: "100%",
+
   "@media (min-width:320px) and (max-width:767px)": { gap: "50px" },
+});
+
+export const bannerContainer = styled.picture({
+  display: "block",
+  width: "100%",
 });
 
 export const CardContainer = styled.div({
@@ -18,6 +25,7 @@ export const CardContainer = styled.div({
   gap: "30px",
 
   width: "100%",
+  // minWidth: 0,
 
   padding: "0 50px",
 
@@ -132,10 +140,11 @@ export const CardContainer = styled.div({
 
 export const ProductListStyle = styled.div({
   display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateColumns: "repeat(4,  minmax(0, 1fr))",
   gap: "40px",
 
   width: "100%",
+  // minWidth: 0,
 
   cursor: "pointer",
   "& .product-item": {
@@ -144,6 +153,8 @@ export const ProductListStyle = styled.div({
     justifyContents: "center",
     alignItems: "center",
     gap: "5px",
+
+    // minWidth: 0,
   },
 
   "& .product-info": {
@@ -168,11 +179,11 @@ export const ProductListStyle = styled.div({
   },
 
   "@media (max-width: 1023px)": {
-    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateColumns: "repeat(2,  minmax(0, 1fr))",
     // gap: "30px",
     justifyItems: "center",
     "& .product-item": {
-      maxWidth: "300px",
+      // maxWidth: "300px",
     },
   },
 
