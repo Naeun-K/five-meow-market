@@ -5,15 +5,19 @@ import Loader from "../../components/loader/Loader";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
 import * as productService from "../../services/productServices";
 import { CardContainer, PageTitleContainer } from "./ProductListStyle";
+import useToast from "../../hooks/useToast";
+import { useProductLimit } from "../../hooks/useProductLimit";
+import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 export default function ProductList() {
+  const { showToast } = useToast();
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const limit = 8;
+  const limit = useProductLimit();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -34,7 +38,7 @@ export default function ProductList() {
         setTotalCount(result.totalCount);
       } catch (error) {
         console.error("상품 목록 조회 실패:", error);
-
+        showToast(error.message, false);
         setProducts([]);
       } finally {
         setIsLoading(false);
@@ -42,7 +46,7 @@ export default function ProductList() {
     };
 
     fetchProducts();
-  }, [currentPage]);
+  }, [currentPage, limit]);
 
   if (isLoading) {
     return (
@@ -66,7 +70,7 @@ export default function ProductList() {
               image={product.thumbnail}
               name={product.name}
               badge=""
-              showHeart
+              showHeart={false}
             />
 
             <p>{product.name}</p>
@@ -75,6 +79,7 @@ export default function ProductList() {
           </div>
         ))}
       </CardContainer>
+      <ChatIcon />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

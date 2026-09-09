@@ -13,7 +13,7 @@ export const ChatIconStyle = styled.button`
   background: transparent;
 
   cursor: pointer;
-  z-index: 9999;
+  z-index: 9;
 
   svg {
     display: block;

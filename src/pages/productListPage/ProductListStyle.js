@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 export const PageTitleContainer = styled.div({
   display: "flex",
   flexDirection: "column",
-  //   justifyContent: "center",
   alignItems: "center",
   gap: "20px",
   "& h2": {
@@ -41,8 +40,12 @@ export const CardContainer = styled.div({
     justifyContent: "center",
     alignItems: "center",
     gap: "8px",
+
+    cursor: "pointer",
   },
   "& p": {
+    width: "250px",
+    textAlign: "center",
     fontSize: "20px",
   },
   "& strong": {
