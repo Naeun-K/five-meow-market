@@ -1,16 +1,23 @@
 import styled from "@emotion/styled";
 
 export const HeaderStyle = styled.header({
+  position: "sticky",
+  top: 0,
+
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
-  position: "relative", //추가
+
   zIndex: 20,
 
   gap: "50px",
 
   width: "100%",
+
+  backgroundColor: "var(--bg)",
+
+  padding: "15px 0",
 
   "& .logo-container": {
     width: "230px",
