@@ -1,52 +1,75 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LoginStyle, FormStyle } from "./LoginStyle";
 import useToast from "../../hooks/useToast";
 import * as authService from "../../services/authService";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [saveEmail, setSaveEmail] = useState(false);
+  const [email, setEmail] = useState(
+    () => localStorage.getItem("savedEmail") || "",
+  );
+  const [password, setPassword] = useState("");
+  const [saveEmail, setSaveEmail] = useState(
+    () => !!localStorage.getItem("savedEmail"),
+  );
+
   const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { showToast } = useToast();
+  const inputRef = useRef(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (isSubmitting) return;
+    const trimmedEmail = email.trim();
 
-    const formData = new FormData(event.target);
-    const email = formData.get("email");
-    const password = formData.get("password");
+    // 이메일 작성 여부
+    if (!trimmedEmail) {
+      showToast("이메일을 입력해주세요.", false);
+      return;
+    }
 
-    setIsSubmitting(true);
+    // 이메일 형식
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(trimmedEmail)) {
+      showToast("올바른 이메일 형식으로 입력해주세요.", false);
+      return;
+    }
+
+    // 비밀번호 작성 여부
+    if (!password.trim()) {
+      showToast("비밀번호를 입력해주세요.", false);
+      return;
+    }
 
     try {
-      const result = await authService.login(email, password);
+      // Mock API에서 email/password 비교
+      const result = await authService.login(trimmedEmail, password);
+
+      // Mock API에서 발급받은 Access Token 저장
+      // localStorage.setItem("accessToken", result.accessToken);
+
+      // 로그인 상태 저장
+      localStorage.setItem("isLoggedIn", result.success);
+
+      // 이메일 저장
       if (saveEmail) {
-        localStorage.setItem("savedEmail", email);
+        localStorage.setItem("savedEmail", trimmedEmail);
       } else {
         localStorage.removeItem("savedEmail");
       }
+
+      // 로그인 완료
       showToast(result.message, result.success);
 
-      if (result.success) {
-        window.location.href = "/";
-      }
+      // 필요하면 로그인 완료 후 이동
+      // window.location.href = "/";
     } catch {
-      showToast("로그인 중 오류가 발생했습니다.", false);
-    } finally {
-      setIsSubmitting(false);
+      showToast(result.message, result.success);
     }
   };
 
   useEffect(() => {
-    const savedEmail = localStorage.getItem("savedEmail");
-
-    if (savedEmail) {
-      setEmail(savedEmail);
-      setSaveEmail(true);
-    }
+    inputRef.current?.focus();
   }, []);
 
   return (
@@ -124,7 +147,7 @@ export default function LoginForm() {
         </div>
       </header>
 
-      <FormStyle onSubmit={handleSubmit}>
+      <FormStyle onSubmit={handleSubmit} noValidate>
         <div className="input-container">
           <label htmlFor="email">이메일</label>
           <input
@@ -132,9 +155,12 @@ export default function LoginForm() {
             id="email"
             name="email"
             type="email"
+            ref={inputRef}
             placeholder="이메일을 입력해주세요"
             autoComplete="email"
             required
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
         </div>
 
@@ -149,6 +175,8 @@ export default function LoginForm() {
               placeholder="비밀번호를 입력해주세요"
               autoComplete="current-password"
               required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
             />
             <button
               className={`svg-container show-password ${showPassword ? "active" : ""}`}
@@ -192,7 +220,7 @@ export default function LoginForm() {
               checked={saveEmail}
               onChange={(event) => setSaveEmail(event.target.checked)}
             />
-            <label>아이디 저장</label>
+            <label>이메일 저장</label>
           </div>
 
           <a href="/find-password">비밀번호 찾기</a>

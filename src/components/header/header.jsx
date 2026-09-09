@@ -1,4 +1,4 @@
-import { HeaderStyle } from "./headerStyle";
+import { DropdownMenu, HeaderStyle } from "./headerStyle";
 import Logo from "../logo/Logo";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -49,14 +49,40 @@ const mobileSections = [
 function Header() {
   const [openMenu, setOpenMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const desktopSearchInputRef = useRef(null);
+  const mobileSearchInputRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSection, setOpenSection] = useState("집사 PICK💗");
-  const searchInputRef = useRef(null);
   const headerRef = useRef(null);
+  const closeTimerRef = useRef(null);
+
+  const handleMenuEnter = (menu) => {
+    if (isSmallScreen()) return;
+
+    clearTimeout(closeTimerRef.current);
+
+    if (menu.children) {
+      setOpenMenu(menu.label);
+    } else {
+      setOpenMenu(null);
+    }
+  };
+
+  const handleMenuLeave = () => {
+    if (isSmallScreen()) return;
+
+    closeTimerRef.current = setTimeout(() => {
+      setOpenMenu(null);
+    }, 150);
+  };
+
+  useEffect(() => {
+    desktopSearchInputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (isSearchOpen) {
-      searchInputRef.current?.focus();
+      mobileSearchInputRef.current?.focus();
     }
   }, [isSearchOpen]);
 
@@ -201,42 +227,14 @@ function Header() {
             className="svg-container cart"
           >
             <svg
+              xmlns="http://www.w3.org/2000/svg"
               width="100%"
               height="100%"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              className="bi bi-cart"
+              viewBox="0 0 16 16"
             >
-              <rect
-                x="3"
-                y="7"
-                width="18"
-                height="15"
-                stroke="black"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M8 7V5.5
-       C8 3.3 9.8 2 12 2
-       C14.2 2 16 3.3 16 5.5
-       V7"
-                stroke="black"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M12 10.5V18.5"
-                stroke="black"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M8 14.5H16"
-                stroke="black"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
             </svg>
           </span>
         </div>
@@ -247,7 +245,8 @@ function Header() {
             <div
               key={menu.label}
               className="nav-item"
-              onMouseEnter={() => !isSmallScreen() && setOpenMenu(menu.label)}
+              onMouseEnter={() => handleMenuEnter(menu)}
+              onMouseLeave={handleMenuLeave}
             >
               {menu.children ? (
                 <button
@@ -260,14 +259,14 @@ function Header() {
               ) : (
                 <a href={`#${menu.label}`}>{menu.label}</a>
               )}
-              {openMenu === menu.label && menu.children && (
-                <div className="dropdown">
+              {menu.children && (
+                <DropdownMenu $isOpen={openMenu === menu.label}>
                   {menu.children.map((child, index) => (
                     <a key={`${child.path}-${index}`} href={child.path}>
                       {child.label}
                     </a>
                   ))}
-                </div>
+                </DropdownMenu>
               )}
             </div>
           ))}
@@ -276,7 +275,7 @@ function Header() {
           <input
             type="text"
             className="search-input"
-            ref={searchInputRef}
+            ref={desktopSearchInputRef}
             aria-label="상품 검색"
             placeholder="검색할 상품을 입력하세요"
           />
@@ -305,53 +304,135 @@ function Header() {
           </button>
         </form>
       </div>
-      <div
-        className={`search-panel${isSearchOpen ? " is-open" : ""}`}
-        aria-hidden={!isSearchOpen}
-      >
-        <input
-          ref={searchInputRef}
-          type="search"
-          aria-label="상품 검색"
-          placeholder="검색할 상품을 입력하세요"
-          className="search-input"
-          tabIndex={isSearchOpen ? 0 : -1}
-        />
-        <button
-          type="submit"
-          aria-label="검색"
-          className="panel-search-button"
-          tabIndex={isSearchOpen ? 0 : -1}
-        >
-          <svg
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="9.5"
-              cy="9.5"
-              r="6.5"
-              stroke="black"
-              strokeWidth="1.5"
-            />
-            <path
-              d="M14.2 14.2L21 21"
-              stroke="black"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
-        </button>
-      </div>
-      <div
+      {/* <div
         className={`search-backdrop${isSearchOpen ? " is-open" : ""}`}
         aria-hidden="true"
         onClick={() => setIsSearchOpen(false)}
-      />
+      >
+        <div className="search-wrapper" aria-hidden={!isSearchOpen}>
+          <div
+            className={`search-panel${isSearchOpen ? " is-open" : ""}`}
+            aria-hidden={!isSearchOpen}
+          >
+            <input
+              ref={mobileSearchInputRef}
+              type="search"
+              aria-label="상품 검색"
+              placeholder="검색할 상품을 입력하세요"
+              className="search-input"
+              tabIndex={isSearchOpen ? 0 : -1}
+            />
+            <button
+              type="submit"
+              aria-label="검색"
+              className="panel-search-button"
+              tabIndex={isSearchOpen ? 0 : -1}
+            >
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="9.5"
+                  cy="9.5"
+                  r="6.5"
+                  stroke="black"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M14.2 14.2L21 21"
+                  stroke="black"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
 
+          <span className="close-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+            </svg>
+          </span>
+        </div>
+      </div> */}
+      {/* 검색모달 */}
+      <div
+        className={`search-backdrop${isSearchOpen ? " is-open" : ""}`}
+        aria-hidden={!isSearchOpen}
+        onClick={() => setIsSearchOpen(false)}
+      >
+        <div
+          className="search-wrapper"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className={`search-panel${isSearchOpen ? " is-open" : ""}`}>
+            <input
+              ref={mobileSearchInputRef}
+              type="search"
+              aria-label="상품 검색"
+              placeholder="검색할 상품을 입력하세요"
+              className="search-input"
+              tabIndex={isSearchOpen ? 0 : -1}
+            />
+
+            <button
+              type="submit"
+              aria-label="검색"
+              className="panel-search-button"
+              tabIndex={isSearchOpen ? 0 : -1}
+            >
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="9.5"
+                  cy="9.5"
+                  r="6.5"
+                  stroke="black"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M14.2 14.2L21 21"
+                  stroke="black"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <button
+            type="button"
+            className="close-icon"
+            aria-label="검색창 닫기"
+            onClick={() => setIsSearchOpen(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="100%"
+              height="100%"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+            >
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+            </svg>
+          </button>
+        </div>
+      </div>
       {/* 여기서부터 모달 */}
       <MegaMenuWrapper isOpen={isMenuOpen}>
         <MegaMenuCard>
@@ -372,10 +453,11 @@ function Header() {
               {leftColumns.map((col) => (
                 <MegaCol
                   key={col.title}
+                  $title={col.title}
                   hideOnTablet={col.title === "REVIEW"}
-                  tabletOffset={col.title === "전체상품" ? -90 : undefined}
                 >
                   <h3>{col.title}</h3>
+
                   {col.items.length > 0 && (
                     <ul>
                       {col.items.map((item) => (
@@ -387,6 +469,7 @@ function Header() {
                       ))}
                     </ul>
                   )}
+
                   {col.extra && (
                     <ExtraHeading onClick={handleMenuClose}>
                       {col.extra.title}
@@ -395,8 +478,9 @@ function Header() {
                 </MegaCol>
               ))}
 
-              <MegaCol>
+              <MegaCol $title="COMMUNITY">
                 <h3>COMMUNITY</h3>
+
                 <CommunityLists>
                   <ul>
                     {communityLeft.map((item) => (
@@ -410,7 +494,6 @@ function Header() {
                 </CommunityLists>
               </MegaCol>
             </LeftGroup>
-
             <Divider />
 
             <MegaCol>
@@ -427,7 +510,6 @@ function Header() {
                 ))}
               </MyShopGrid>
             </MegaCol>
-            <Divider />
           </MegaInner>
         </MegaMenuCard>
 

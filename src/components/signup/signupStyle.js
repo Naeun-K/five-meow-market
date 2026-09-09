@@ -347,8 +347,13 @@ export const FormGroup = styled.div({
     flexDirection: "row",
     alignItems: "center",
     gap: "30px",
+    "& label": {
+      flexShrink: 0,
+      whiteSpace: "nowrap",
+    },
 
     "& .password-guide": {
+      minWidth: 0,
       height: "20px",
       lineHeight: "20px",
 

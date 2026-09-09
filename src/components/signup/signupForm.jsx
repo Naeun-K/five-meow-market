@@ -7,13 +7,13 @@ import {
   BottomArea,
 } from "./signupStyle";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useToast from "../../hooks/useToast";
 import * as authService from "../../services/authService";
 import { searchAddress } from "../../services/addressService";
 
 const isValidPassword = (password) => {
-  return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[A-Z]).+$/.test(password);
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
 };
 
 const SignupForm = () => {
@@ -41,56 +41,109 @@ const SignupForm = () => {
 
   const [agreed, setAgreed] = useState(false);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const inputRef = useRef(null);
 
   // 닉네임 중복확인
   const handleCheckNickname = async () => {
-    if (!nickname) {
+    const trimmed = nickname.trim();
+
+    // 필수 입력
+    if (!trimmed) {
       showToast("닉네임을 입력해주세요.", false);
       return;
     }
 
-    try {
-      const result = await authService.checkNickname(nickname);
+    // 길이 검사
+    if (trimmed.length < 2 || trimmed.length > 10) {
+      showToast("닉네임은 2자 이상 10자 이하로 입력해주세요.", false);
+      return;
+    }
 
-      showToast(result.message, result.success && !result.isDuplicate);
-      setIsNicknameChecked(result.success && !result.isDuplicate);
+    // 한글, 영문, 숫자 검사
+    if (!/^[가-힣a-zA-Z0-9]+$/.test(trimmed)) {
+      showToast("닉네임은 한글, 영문, 숫자만 사용할 수 있습니다.", false);
+      return;
+    }
+
+    try {
+      const result = await authService.checkNickname(trimmed);
+      const isAvailable = result.success && !result.isDuplicate;
+
+      setIsNicknameChecked(isAvailable);
+
+      showToast(result.message, isAvailable);
     } catch {
-      showToast("닉네임 중복확인 중 오류가 발생했습니다.", false);
+      setIsNicknameChecked(isAvailable);
+
+      showToast(result.message, isAvailable);
     }
   };
 
   // 이메일 중복확인
   const handleCheckEmail = async () => {
-    if (!email) {
+    const trimmed = email.trim();
+    if (!trimmed) {
       showToast("이메일을 입력해주세요.", false);
       return;
     }
 
-    try {
-      const result = await authService.checkEmail(email);
+    // 이메일 형식 검사
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      showToast(result.message, result.success && !result.isDuplicate);
-      setIsEmailChecked(result.success && !result.isDuplicate);
-    } catch {
-      showToast("이메일 중복확인 중 오류가 발생했습니다.", false);
+    if (!emailRegex.test(trimmed)) {
+      showToast("올바른 이메일 형식으로 입력해주세요.", false);
+      return;
     }
+
+    try {
+      const result = await authService.checkEmail(trimmed);
+      const isAvailable = result.success && !result.isDuplicate;
+      setIsEmailChecked(isAvailable);
+      showToast(result.message, isAvailable);
+    } catch {
+      setIsEmailChecked(isAvailable);
+      showToast(result.message, isAvailable);
+    }
+  };
+
+  // 휴대폰번호처럼 화면에 보이기
+  const formatPhoneNumber = (value) => {
+    // 숫자가 아닌 문자 제거
+    const numbers = value.replace(/\D/g, "").slice(0, 11);
+
+    if (numbers.length <= 3) {
+      return numbers;
+    }
+
+    if (numbers.length <= 7) {
+      return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    }
+
+    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7)}`;
   };
 
   // 휴대폰 인증
   const handleVerifyPhone = async () => {
-    if (!phone) {
+    const raw = phone.replace(/\D/g, "");
+
+    if (!/^01[016789]\d{8}$/.test(raw)) {
+      showToast("올바른 휴대폰번호를 입력해주세요.", false);
+      return;
+    }
+
+    const trimmed = raw.trim();
+    if (!trimmed) {
       showToast("휴대폰번호를 입력해주세요.", false);
       return;
     }
 
     try {
-      const result = await authService.verifyPhone(phone);
-
-      showToast(result.message, result.success);
+      const result = await authService.verifyPhone(trimmed);
       setIsPhoneVerified(result.success);
+      showToast(result.message, result.success);
     } catch {
-      showToast("휴대폰 인증 중 오류가 발생했습니다.", false);
+      setIsPhoneVerified(result.success);
+      showToast(result.message, result.success);
     }
   };
 
@@ -98,7 +151,6 @@ const SignupForm = () => {
   const handleSearchAddress = async () => {
     try {
       const result = await searchAddress();
-
       setZoneCode(result.zoneCode);
       setAddress(result.address);
     } catch {
@@ -107,72 +159,89 @@ const SignupForm = () => {
   };
 
   // 회원가입
-  const handleSubmit = async (event) => {
+  const handleSignup = async (event) => {
     event.preventDefault();
 
-    if (isSubmitting) return;
+    const rawPhone = phone.replace(/\D/g, "");
 
-    if (!nickname || !isNicknameChecked) {
-      showToast("닉네임 중복확인을 완료해주세요.", false);
+    // 필수 입력값 확인
+    if (
+      !nickname.trim() ||
+      !email.trim() ||
+      !password ||
+      !passwordConfirm ||
+      !rawPhone ||
+      !zoneCode ||
+      !address
+    ) {
+      showToast("필수 정보를 모두 입력해주세요.", false);
       return;
     }
 
-    if (!email || !isEmailChecked) {
-      showToast("이메일 중복확인을 완료해주세요.", false);
+    // 중복 확인 / 인증 여부
+    if (!isNicknameChecked) {
+      showToast("닉네임 중복확인을 해주세요.", false);
       return;
     }
 
-    if (!password || !isValidPassword(password)) {
-      showToast("비밀번호는 영문, 숫자, 대문자를 포함해야 합니다.", false);
+    if (!isEmailChecked) {
+      showToast("이메일 중복확인을 해주세요.", false);
       return;
     }
 
+    if (!isPhoneVerified) {
+      showToast("휴대폰 인증을 완료해주세요.", false);
+      return;
+    }
+
+    // 비밀번호 확인
     if (password !== passwordConfirm) {
       showToast("비밀번호가 일치하지 않습니다.", false);
       return;
     }
 
-    if (!phone || !isPhoneVerified) {
-      showToast("휴대폰 인증을 완료해주세요.", false);
-      return;
-    }
-
-    if (!zoneCode || !address) {
-      showToast("주소를 입력해주세요.", false);
-      return;
-    }
-
+    // 이용약관
     if (!agreed) {
-      showToast("이용약관 및 개인정보 처리방침에 동의해주세요.", false);
+      showToast("이용약관에 동의해주세요.", false);
       return;
     }
 
-    const signupData = {
-      nickname,
-      email,
+    const userData = {
+      nickname: nickname.trim(),
+      email: email.trim(),
       password,
-      phone,
-      zoneCode,
+      phone: rawPhone,
+      zipcode: zoneCode,
       address,
-      detailAddress,
+      detailAddress: detailAddress.trim(),
+      agreements: agreed,
     };
 
-    setIsSubmitting(true);
-
     try {
-      const result = await authService.signup(signupData);
+      const result = await authService.signup(userData);
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      users.push({
+        ...userData,
+        point: 0,
+      });
+
+      localStorage.setItem("users", JSON.stringify(users));
 
       showToast(result.message, result.success);
 
-      if (result.success) {
-        window.location.href = "/login";
-      }
+      console.log("정상적으로 유저가 저장되었습니다");
+      console.table(JSON.parse(localStorage.getItem("users")));
+      // navigate("/login");
     } catch {
-      showToast("회원가입 중 오류가 발생했습니다.", false);
-    } finally {
-      setIsSubmitting(false);
+      showToast(result.message, result.success);
     }
   };
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   return (
     <SignupLayout>
@@ -237,13 +306,14 @@ const SignupForm = () => {
           </svg>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSignup}>
           {/* 닉네임 */}
           <FormGroup>
             <label>닉네임</label>
 
             <Row>
               <input
+                ref={inputRef}
                 placeholder="닉네임을 입력해주세요"
                 value={nickname}
                 onChange={(event) => {
@@ -429,7 +499,7 @@ const SignupForm = () => {
                 placeholder="휴대폰번호를 입력해주세요"
                 value={phone}
                 onChange={(event) => {
-                  setPhone(event.target.value);
+                  setPhone(formatPhoneNumber(event.target.value));
                   setIsPhoneVerified(false);
                 }}
               />
@@ -481,11 +551,7 @@ const SignupForm = () => {
 
           {/* 하단 */}
           <BottomArea>
-            <button
-              type="submit"
-              className="signup-button"
-              disabled={isSubmitting || !agreed}
-            >
+            <button type="submit" className="signup-button">
               회원가입
             </button>
 
