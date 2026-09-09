@@ -16,7 +16,7 @@ const badgeColors = {
 
 export const card = css({
   position: "relative",
-  width: "240px",
+  width: "100%",
   aspectRatio: "1 / 1",
   borderRadius: "8px",
   overflow: "hidden",
@@ -27,6 +27,7 @@ export const productImage = css({
   width: "100%",
   height: "100%",
   objectFit: "cover",
+  objectPosition: "center center",
   display: "block",
 });
 

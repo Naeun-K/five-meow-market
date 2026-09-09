@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Toast from "./Toast";
 import { ToastContext } from "../../hooks/useToast";
 
 function ToastProvider({ children }) {
   const [toast, setToast] = useState(null);
 
-  const showToast = (message, success) => {
+  const showToast = useCallback((message, success) => {
     setToast({
       message,
       success,
     });
-  };
+  }, []);
 
   const closeToast = () => {
     setToast(null);

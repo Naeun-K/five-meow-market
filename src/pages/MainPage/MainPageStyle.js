@@ -1,5 +1,22 @@
 import styled from "@emotion/styled";
 
+export const MainPageSytle = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "80px",
+
+  width: "100%",
+
+  "@media (min-width:320px) and (max-width:767px)": { gap: "50px" },
+});
+
+export const bannerContainer = styled.picture({
+  display: "block",
+  width: "100%",
+});
+
 export const CardContainer = styled.div({
   display: "flex",
   flexDirection: "column",
@@ -8,6 +25,9 @@ export const CardContainer = styled.div({
   gap: "30px",
 
   width: "100%",
+  // minWidth: 0,
+
+  padding: "0 50px",
 
   "& .labeling-wrapper": {
     display: "flex",
@@ -28,18 +48,27 @@ export const CardContainer = styled.div({
       fontWeight: 600,
     },
   },
-
-  "& .svg-container": {
-    width: "25px",
-    height: "25px",
-
-    "& .paw-icon": {
-      fill: "var(--acent-beidge)",
+  "& .see-more": {
+    cursor: "pointer",
+    "& p": {
+      fontSize: "20px",
     },
+  },
 
-    "& .bi-arrow-right-short": {
-      fill: "var(--text-primary)",
-    },
+  "& .paw-container": {
+    width: "30px",
+    height: "30px",
+    color: "var(--acent-beidge)",
+  },
+
+  "& .arrow-container": {
+    width: "18px",
+    height: "18px",
+    color: "var(--text-primary)",
+
+    // "& .bi-arrow-right-short": {
+    //   fill:
+    // },
   },
 
   "& .card-wrapper": {
@@ -53,15 +82,25 @@ export const CardContainer = styled.div({
 
   // 태블릿
   "@media (max-width:1023px)": {
+    padding: "0 30px",
+
     "& .labeling": {
       "& p": {
         fontSize: "24px",
+      },
+    },
+
+    "& .see-more": {
+      "& p": {
+        fontSize: "18px",
       },
     },
   },
 
   // 모바일
   "@media (min-width:320px) and (max-width:767px)": {
+    padding: "0 20px",
+
     "& .labeling-wrapper": {
       justifyContent: "center",
     },
@@ -76,7 +115,8 @@ export const CardContainer = styled.div({
 
     // 🔴 ADD - 모바일에서만 더보기 버튼 표시
     "& .mobile-more-button": {
-      width: "220px",
+      width: "100%",
+      maxWidth: "400px",
       height: "57px",
 
       display: "flex",
@@ -95,5 +135,71 @@ export const CardContainer = styled.div({
 
       cursor: "pointer",
     },
+  },
+});
+
+export const ProductListStyle = styled.div({
+  display: "grid",
+  gridTemplateColumns: "repeat(4,  minmax(0, 1fr))",
+  gap: "40px",
+
+  width: "100%",
+  // minWidth: 0,
+
+  cursor: "pointer",
+  "& .product-item": {
+    display: "flex",
+    flexDirection: "column",
+    justifyContents: "center",
+    alignItems: "center",
+    gap: "5px",
+
+    // minWidth: 0,
+  },
+
+  "& .product-info": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "5px",
+    marginTop: "10px",
+
+    width: "100%",
+
+    textAlign: "center",
+  },
+  "& .product-name": {
+    fontSize: "18px",
+    fontWeight: 600,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+  "& .product-price": {
+    fontSize: "16px",
+  },
+
+  "@media (max-width: 1023px)": {
+    gridTemplateColumns: "repeat(2,  minmax(0, 1fr))",
+    // gap: "30px",
+    justifyItems: "center",
+    "& .product-item": {
+      // maxWidth: "300px",
+    },
+  },
+
+  "@media (max-width: 767px)": {
+    gridTemplateColumns: "1fr",
+    gap: "24px",
+    justifyItems: "center",
+
+    "& .product-item": {
+      maxWidth: "400px",
+    },
+
+    // "& .product-info": {
+
+    //   // maxWidth: "220px",
+    //   alignItems: "center",
+    // },
   },
 });

@@ -1,5 +1,17 @@
 import styled from "@emotion/styled";
 
+export const ProductPage = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "80px",
+
+  width: "100%",
+
+  "@media  (max-width:767px)": { gap: "40px" },
+});
+
 export const PageTitleContainer = styled.div({
   display: "flex",
   flexDirection: "column",
@@ -33,8 +45,14 @@ export const PageTitleContainer = styled.div({
 export const CardContainer = styled.div({
   display: "grid",
   gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
-  gap: "50px",
+  alignItems: "start",
+  gap: "35px",
+
+  padding: "0 50px",
+  minHeight: "1040px",
+
   "& .card-wrapper": {
+    maxWidth: "380px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -52,9 +70,10 @@ export const CardContainer = styled.div({
     fontSize: "18px",
   },
 
-  "@media (max-width:1023px)": {
+  "@media (max-width:1230px)": {
     gridTemplateColumns: "repeat(3,  minmax(0, 1fr))",
-    gap: "30px",
+
+    padding: "0 30px",
 
     "& p": {
       fontSize: "18px",
@@ -63,16 +82,19 @@ export const CardContainer = styled.div({
       fontSize: "17px",
     },
   },
-  "@media  (max-width:767px)": {
+  "@media  (max-width:900px)": {
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
     gap: "20px",
+
+    padding: "0 20px",
+
     "& strong": {
       fontSize: "16px",
     },
   },
-  "@media (min-width:320px) and (max-width:530px)": {
+  "@media (min-width:320px) and (max-width:575px)": {
     gridTemplateColumns: "repeat(1, minmax(0, 1fr))",
-    gap: "20px",
+
     "& strong": {
       fontSize: "16px",
     },

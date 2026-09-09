@@ -7,9 +7,14 @@ export const FooterWrapper = styled.footer`
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--border);
+  padding: 50px;
 
+  @media (max-width: 1023px) {
+    padding: 30px;
+  }
   @media (min-width: 320px) and (max-width: 767px) {
     justify-content: center;
+    padding: 20px;
   }
 `;
 

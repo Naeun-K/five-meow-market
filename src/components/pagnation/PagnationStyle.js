@@ -4,12 +4,9 @@ export const PaginationStyle = styled.nav({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  gap: "8px",
+  gap: "30px",
 
   "& button": {
-    width: "36px",
-    height: "36px",
-
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -22,6 +19,8 @@ export const PaginationStyle = styled.nav({
     cursor: "pointer",
   },
 
+  "& button:not(.page-button)": { width: "20px", height: "20px" },
+  "& button.page-button": { width: "36px", height: "36px" },
   '& button[aria-current="page"]': {
     backgroundColor: "var(--bg-button)",
     color: "var(--text-button)",
@@ -40,17 +39,22 @@ export const PaginationStyle = styled.nav({
     cursor: "default",
   },
   "@media (max-width:1023px)": {
-    "& button": {
+    // gap: "25px",
+    "& button.page-button": {
       width: "30px",
       height: "30px",
 
       fontSize: "16px",
     },
+    // "& button:not(.page-button)": { width: "18px", height: "18px" },
+    // "& button.page-button": { width: "36px", height: "36px" },
   },
   "@media (min-width:320px) and (max-width:767px)": {
-    "& button": {
+    gap: "10px",
+    "& button.page-button": {
       width: "25px",
       height: "25px",
     },
+    "& button:not(.page-button)": { width: "15px", height: "15px" },
   },
 });

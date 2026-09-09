@@ -100,9 +100,9 @@ const SignupForm = () => {
       const isAvailable = result.success && !result.isDuplicate;
       setIsEmailChecked(isAvailable);
       showToast(result.message, isAvailable);
-    } catch {
+    } catch (error) {
       setIsEmailChecked(isAvailable);
-      showToast(result.message, isAvailable);
+      showToast(error.message, isAvailable);
     }
   };
 

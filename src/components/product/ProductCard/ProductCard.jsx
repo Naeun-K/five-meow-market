@@ -6,7 +6,9 @@ import HeartButton from "../HeartButton/HeartButton";
 const ProductCard = ({ image, name, badge, showHeart = true }) => {
   return (
     <article css={S.card}>
-      {image && <img css={S.productImage} src={image} alt={name} />}
+      {image && (
+        <img css={S.productImage} src={image} alt={name} loading="lazy" />
+      )}
 
       {badge && <span css={S.badge(badge)}>{S.badgeText[badge]}</span>}
 

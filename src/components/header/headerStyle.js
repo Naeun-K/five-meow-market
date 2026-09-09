@@ -1,26 +1,33 @@
 import styled from "@emotion/styled";
 
 export const HeaderStyle = styled.header({
+  position: "sticky",
+  top: 0,
+
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
-  position: "relative", //추가
+
   zIndex: 20,
 
   gap: "50px",
 
   width: "100%",
 
+  backgroundColor: "var(--bg)",
+
+  padding: "50px 50px 20px 50px",
+
   "& .logo-container": {
-    width: "230px",
+    width: "280px",
 
     position: "absolute",
     left: "50%",
     transform: "translateX(-50%)",
   },
   "& .svg-container": {
-    width: "45px",
+    width: "35px",
     aspectRatio: "1/1",
 
     cursor: "pointer",
@@ -196,6 +203,8 @@ export const HeaderStyle = styled.header({
   },
 
   "@media (max-width: 1023px)": {
+    padding: "30px 30px 20px 30px",
+
     "& .search-button": {
       display: "block",
     },
@@ -216,7 +225,7 @@ export const HeaderStyle = styled.header({
     },
 
     "& .logo-container": {
-      width: "170px",
+      width: "220px",
     },
     "& .menu-container": {
       gap: "10px",
@@ -236,7 +245,7 @@ export const HeaderStyle = styled.header({
     "& .svg-list": {
       gap: "30px",
     },
-    "& .svg-container": { width: "30px" },
+    "& .svg-container": { width: "27px" },
     "& .search-form": { display: "none" },
     "& .navigation-container": {
       display: "flex",
@@ -248,12 +257,16 @@ export const HeaderStyle = styled.header({
   },
   "@media (min-width: 320px) and (max-width: 767px)": {
     justifyContent: "space-between",
-    gap: "20px",
+    gap: " 20px 20px 30px 20px",
+
+    padding: "20px",
 
     "& .logo-container": {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+
+      width: "170px",
     },
     "& .menu-container": {
       gap: "30px",

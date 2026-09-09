@@ -4,12 +4,13 @@ export const benefits = css({
   width: "100%",
   display: "grid",
   gridTemplateColumns: "repeat(4, max-content)",
-  justifyContent: "center",
+  justifyContent: "space-between",
   columnGap: "80px",
   padding: "28px 40px",
   backgroundColor: "#f7f1e8",
 
   "@media (max-width: 1023px)": {
+    justifyContent: "center",
     gridTemplateColumns: "repeat(2, max-content)",
     columnGap: "80px",
     rowGap: "24px",
