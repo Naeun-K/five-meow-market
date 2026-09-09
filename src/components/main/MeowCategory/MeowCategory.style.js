@@ -2,10 +2,8 @@ import { css } from "@emotion/react";
 
 export const categorySection = css({
   width: "calc(100% - 60px)",
-  margin: "0 auto",
   color: "#543B2A",
-  padding: "24px 40px",
-  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.12)",
+  padding: "24px 15px",
 
   h2: {
     color: "#543B2A",
@@ -61,8 +59,8 @@ export const categoryItem = css({
 });
 
 export const imageBox = css({
-  width: "95px",
-  height: "95px",
+  width: "130px",
+  height: "130px",
   padding: "5px",
   border: "1px solid #b5b5b5",
   borderRadius: "50%",
@@ -74,7 +72,9 @@ export const imageBox = css({
 
   "&:hover": {
     transform: "translateY(-3px)",
-    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.12)",
+    backgroundColor: "#F2DFC6", // 🔴 ADD
+    borderColor: "#9A806B", // 🔴 ADD
+    boxShadow: "0 5px 12px rgba(0, 0, 0, 0.2)",
   },
 
   img: {
