@@ -43,7 +43,7 @@ export const MegaMenuCard = styled.div({
   boxShadow: "0 30px 50px -25px rgba(28,26,23,0.35)",
   padding: "40px 48px",
 
-  "@media (max-width: 1023px)": {
+  "@media (max-width: 930px)": {
     padding: "28px 24px",
   },
 
@@ -54,7 +54,8 @@ export const MegaMenuCard = styled.div({
 
 export const CloseButton = styled.div({
   position: "absolute",
-  top: 28,
+
+  top: 25,
   right: 32,
   width: 28,
   height: 28,
@@ -68,6 +69,11 @@ export const CloseButton = styled.div({
   alignItems: "center",
   justifyContent: "center",
   zIndex: 70,
+
+  "@media (min-width:768px) and (max-width:1023px)": {
+    top: 15,
+    right: 15,
+  },
 });
 
 export const MegaInner = styled.div({
@@ -91,10 +97,17 @@ export const LeftGroup = styled.div({
   flex: "1 1 auto",
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
+
   gap: 28,
 
   "@media (max-width: 1023px)": {
-    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateColumns: "repeat(3, 1fr)",
+
+    gridTemplateAreas: `
+    "pick category community"
+    "all  category community"
+  `,
+    gap: 10,
   },
 
   "@media (max-width: 767px)": {
@@ -112,12 +125,12 @@ export const Divider = styled.div({
   },
 });
 
-export const MegaCol = styled.div(({ hideOnTablet, tabletOffset }) => ({
+export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
   minWidth: 96,
   tabletOffset: "none",
 
   h3: {
-    fontSize: 14,
+    fontSize: 20,
     margin: "0 0 16px",
     fontWeight: 700,
     color: colors.ink,
@@ -132,7 +145,7 @@ export const MegaCol = styled.div(({ hideOnTablet, tabletOffset }) => ({
     gap: 10,
   },
   a: {
-    fontSize: 13,
+    fontSize: 18,
     color: colors.muted,
     textDecoration: "none",
     whiteSpace: "nowrap",
@@ -143,6 +156,31 @@ export const MegaCol = styled.div(({ hideOnTablet, tabletOffset }) => ({
 
   "@media (max-width: 1023px)": {
     display: hideOnTablet ? "none" : undefined,
+
+    minWidth: 0,
+
+    ...($title === "집사 PICK💗" && {
+      gridArea: "pick",
+    }),
+
+    ...($title === "카테고리" && {
+      gridArea: "category",
+    }),
+
+    ...($title === "전체상품" && {
+      gridArea: "all",
+    }),
+
+    ...($title === "COMMUNITY" && {
+      gridArea: "community",
+    }),
+    h3: {
+      fontSize: 18,
+    },
+
+    a: {
+      fontSize: 17,
+    },
   },
 }));
 
@@ -275,8 +313,8 @@ export const MobileCloseButton = styled.button({
 });
 
 export const MyShopButton = styled.button({
-  padding: "8px 14px",
-  fontSize: 12,
+  padding: "8px 10px",
+  fontSize: 17,
   fontWeight: 600,
   border: `1px solid ${colors.line}`,
   borderRadius: 12,
@@ -291,6 +329,9 @@ export const MyShopButton = styled.button({
     color: "#fff",
     borderColor: colors.accent,
   },
+  "@media (max-width:1023px)": {
+    fontSize: 15,
+  },
 });
 
 /* 바깥 클릭용 백드롭 */
@@ -302,4 +343,4 @@ export const Backdrop = styled.div(({ isOpen }) => ({
   pointerEvents: isOpen ? "auto" : "none",
   transition: "opacity .25s ease",
   zIndex: 40,
-}));  
+}));

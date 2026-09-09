@@ -28,19 +28,73 @@ export const HeaderStyle = styled.header({
   "& .search-button": {
     display: "none",
   },
+  "& .search-backdrop": {
+    position: "fixed",
+    inset: 0,
+    zIndex: 10,
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
+
+    paddingTop: "20vh",
+
+    backgroundColor: "rgba(255, 255, 255, 0.82)",
+
+    opacity: 0,
+    pointerEvents: "none",
+
+    transition: "opacity 0.3s ease",
+
+    "&.is-open": {
+      opacity: 1,
+      pointerEvents: "auto",
+    },
+  },
+
+  "& .search-wrapper": {
+    display: "flex",
+    alignItems: "center",
+    gap: "50px",
+
+    width: "min(60vw, 1100px)",
+    "& .close-icon": {
+      width: "30px",
+      height: "30px",
+
+      cursor: "pointer",
+    },
+  },
 
   "& .search-panel": {
-    position: "absolute",
-    top: "calc(100% + 42px)",
-    left: "50%",
-    zIndex: 11,
-    display: "none",
+    display: "flex",
     alignItems: "center",
-    width: "min(54vw, 1000px)",
-    transform: "translateX(-50%)",
-    overflow: "hidden",
+    flex: 1,
+
     borderBottom: "1px solid #333",
     backgroundColor: "rgba(255, 255, 255, 0.96)",
+
+    opacity: 0,
+    transform: "translateY(-10px)",
+
+    transition: "opacity 0.3s ease, transform 0.3s ease",
+
+    "&.is-open": {
+      opacity: 1,
+      transform: "translateY(0)",
+    },
+
+    "& .panel-search-button": {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "54px",
+      height: "54px",
+      padding: 0,
+      border: 0,
+      background: "transparent",
+      cursor: "pointer",
+    },
   },
   "& .search-input": {
     flex: 1,
@@ -51,17 +105,6 @@ export const HeaderStyle = styled.header({
     background: "transparent",
     fontSize: "20px",
   },
-  "& .panel-search-button": {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "54px",
-    height: "54px",
-    padding: 0,
-    border: 0,
-    background: "transparent",
-    cursor: "pointer",
-  }, //추가 끝부분
   "& .menu-container": {
     display: "flex",
     justifyContent: "space-between",
@@ -107,32 +150,7 @@ export const HeaderStyle = styled.header({
       cursor: "pointer",
     },
   },
-  "& .dropdown": {
-    position: "absolute",
-    top: "calc(100% + 22px)",
-    left: "50%",
-    zIndex: 12,
-    display: "flex",
-    flexDirection: "column",
-    minWidth: "170px",
-    padding: "10px 0",
-    transform: "translateX(-50%)",
-    border: "1px solid var(--border)",
-    borderRadius: "var(--radius-md)",
-    backgroundColor: "#fff",
-    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)",
 
-    "& > a": {
-      padding: "10px 20px",
-      color: "var(--text-color)",
-      textDecoration: "none",
-      whiteSpace: "nowrap",
-
-      "&:hover": {
-        backgroundColor: "#f5f5f5",
-      },
-    },
-  },
   "& .search-svg": {
     display: "none",
   },
@@ -196,19 +214,7 @@ export const HeaderStyle = styled.header({
         pointerEvents: "auto",
       },
     },
-    "& .search-backdrop": {
-      position: "fixed",
-      inset: 0,
-      zIndex: 10,
-      backgroundColor: "rgba(255, 255, 255, 0.82)",
-      opacity: 0,
-      pointerEvents: "none",
-      transition: "opacity 0.3s ease",
-      "&.is-open": {
-        opacity: 1,
-        pointerEvents: "auto",
-      },
-    },
+
     "& .logo-container": {
       width: "170px",
     },
@@ -264,9 +270,58 @@ export const HeaderStyle = styled.header({
         display: "none",
       },
     },
-    "& .search-panel": {
-      top: "calc(100% + 20px)",
-      width: "calc(100% - 20px)",
-    }, //추가 끝
+    "& .search-backdrop": { paddingTop: "15vh" },
+    "& .search-wrapper": {
+      width: "100%",
+      flexDirection: "column",
+      gap: "15px",
+
+      "& .close-icon": {
+        order: -1,
+        alignSelf: "flex-end",
+        marginRight: "20px",
+      },
+      "& .search-input::placeholder": {
+        fontSize: "15.5px",
+      },
+    },
   },
 });
+
+export const DropdownMenu = styled.div(({ $isOpen }) => ({
+  position: "absolute",
+  top: "calc(100% + 12px)",
+  left: "50%",
+  zIndex: 12,
+  display: "flex",
+  flexDirection: "column",
+  minWidth: "170px",
+  padding: "10px 0",
+  border: "1px solid var(--border)",
+  borderRadius: "var(--radius-md)",
+  backgroundColor: "#fff",
+  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)",
+
+  opacity: $isOpen ? 1 : 0,
+  visibility: $isOpen ? "visible" : "hidden",
+  pointerEvents: $isOpen ? "auto" : "none",
+
+  transform: $isOpen
+    ? "translateX(-50%) translateY(0)"
+    : "translateX(-50%) translateY(-50px)",
+
+  transition: $isOpen
+    ? "opacity 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)"
+    : "opacity 0.2s ease, transform 0.25s ease",
+
+  "& > a": {
+    padding: "10px 20px",
+    color: "var(--text-color)",
+    textDecoration: "none",
+    whiteSpace: "nowrap",
+
+    "&:hover": {
+      backgroundColor: "#f5f5f5",
+    },
+  },
+}));
