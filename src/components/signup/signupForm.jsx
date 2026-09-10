@@ -67,15 +67,22 @@ const SignupForm = () => {
 
     try {
       const result = await authService.checkNickname(trimmed);
+
+      if (result.isDuplicate) {
+        showToast(result.message, result.success);
+      }
       const isAvailable = result.success && !result.isDuplicate;
 
       setIsNicknameChecked(isAvailable);
 
       showToast(result.message, isAvailable);
-    } catch {
-      setIsNicknameChecked(isAvailable);
+    } catch (error) {
+      console.error(error.message);
 
-      showToast(result.message, isAvailable);
+      showToast(
+        "닉네임 중복 확인 중 오류가 발생했습니다. 다시 시도해주세요",
+        false,
+      );
     }
   };
 
@@ -97,12 +104,20 @@ const SignupForm = () => {
 
     try {
       const result = await authService.checkEmail(trimmed);
+
+      if (result.isDuplicate) {
+        showToast(result.message, result.success);
+      }
+
       const isAvailable = result.success && !result.isDuplicate;
       setIsEmailChecked(isAvailable);
       showToast(result.message, isAvailable);
     } catch (error) {
-      setIsEmailChecked(isAvailable);
-      showToast(error.message, isAvailable);
+      console.error(error.message);
+      showToast(
+        "이메일 중복 확인 중 오류가 발생했습니다. 다시 시도해주세요",
+        false,
+      );
     }
   };
 
@@ -141,9 +156,12 @@ const SignupForm = () => {
       const result = await authService.verifyPhone(trimmed);
       setIsPhoneVerified(result.success);
       showToast(result.message, result.success);
-    } catch {
-      setIsPhoneVerified(result.success);
-      showToast(result.message, result.success);
+    } catch (error) {
+      console.error(error.message);
+      showToast(
+        "휴대폰 인증 처리 중 오류가 발생했습니다. 다시 시도해주세요",
+        false,
+      );
     }
   };
 
@@ -154,7 +172,7 @@ const SignupForm = () => {
       setZoneCode(result.zoneCode);
       setAddress(result.address);
     } catch {
-      showToast("주소 검색에 실패했습니다.", false);
+      showToast("주소 검색에 실패했습니다. 다시 시도해주세요.", false);
     }
   };
 
@@ -234,8 +252,12 @@ const SignupForm = () => {
       console.log("정상적으로 유저가 저장되었습니다");
       console.table(JSON.parse(localStorage.getItem("users")));
       // navigate("/login");
-    } catch {
-      showToast(result.message, result.success);
+    } catch (error) {
+      console.error(error.message);
+      showToast(
+        "회원가입 처리 중 오류가 발생했습니다. 다시 시도해주세요.",
+        false,
+      );
     }
   };
 
