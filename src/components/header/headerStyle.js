@@ -1,23 +1,38 @@
 import styled from "@emotion/styled";
 
-export const HeaderStyle = styled.header({
+export const WholeStyle = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+
   position: "sticky",
   top: 0,
+
+  zIndex: 20,
+
+  backgroundColor: "var(--bg)",
+});
+
+export const HeaderStyle = styled.header({
+  // position: "sticky",
+  // top: 0,
 
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
 
-  zIndex: 20,
+  // zIndex: 20,
 
-  gap: "50px",
+  gap: "60px",
 
   width: "100%",
+  maxWidth: "1300px",
 
-  backgroundColor: "var(--bg)",
+  padding: "80px 50px 20px 50px",
 
-  padding: "50px 50px 20px 50px",
+  // borderRadius: "var(--radius-md)",
 
   "& .logo-container": {
     width: "280px",
@@ -144,7 +159,11 @@ export const HeaderStyle = styled.header({
     position: "relative",
     height: "100%",
     display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
+    // gap: "5px",
+    gap: 0,
 
     "& > button": {
       padding: 0,
@@ -156,6 +175,79 @@ export const HeaderStyle = styled.header({
       whiteSpace: "nowrap",
       cursor: "pointer",
     },
+    "& .nav-cat-container": {
+      width: "45px",
+      aspectRatio: "1/1",
+
+      position: "absolute",
+
+      // width: "40px",
+      // height: "40px",
+
+      left: "50%",
+      bottom: "calc(100% - 13px)",
+
+      transform: "translateX(-50%)",
+
+      objectFit: "contain",
+      pointerEvents: "none",
+    },
+  },
+  "& .navigation .nav-item > button": {
+    position: "relative",
+
+    "&::after": {
+      content: '""',
+
+      position: "absolute",
+      left: 0,
+      bottom: "-6px",
+
+      width: "100%",
+      height: "2px",
+
+      backgroundColor: "var(--text-primary)",
+
+      transform: "scaleX(0)",
+      transformOrigin: "center",
+
+      transition: "transform 0.3s ease",
+    },
+
+    "&:hover::after": {
+      transform: "scaleX(1)",
+    },
+  },
+
+  // "& .nav-item button": {
+  //   position: "relative",
+
+  //   "&::after": {
+  //     content: '""',
+  //     position: "absolute",
+
+  //     left: 0,
+  //     bottom: "-5px",
+
+  //     width: "100%",
+  //     height: "2px",
+
+  //     backgroundColor: "var(--text-primary)",
+
+  //     transform: "scaleX(0)",
+  //     transformOrigin: "center",
+  //     transition: "transform 0.2s ease",
+  //   },
+  // },
+
+  // hover하면 밑줄
+  "& .nav-item:hover > button::after": {
+    transform: "scaleX(1)",
+  },
+
+  // 현재 페이지면 hover하지 않아도 밑줄
+  "& .nav-item.active > button::after": {
+    transform: "scaleX(1)",
   },
 
   "& .search-svg": {
@@ -170,7 +262,7 @@ export const HeaderStyle = styled.header({
     width: "100%",
     padding: "8px 10px",
 
-    border: "1px solid var(--border)",
+    border: "1px solid var(--text-secondary)",
     borderRadius: "var(--radius-md)",
 
     backgroundColor: "#fff",
@@ -203,7 +295,7 @@ export const HeaderStyle = styled.header({
   },
 
   "@media (max-width: 1023px)": {
-    padding: "30px 30px 20px 30px",
+    padding: "50px 30px 20px 30px",
 
     "& .search-button": {
       display: "block",
@@ -233,7 +325,7 @@ export const HeaderStyle = styled.header({
     "& .navigation": {
       display: "flex",
       fontSize: "18px",
-      gap: "24px",
+      gap: "50px",
       justifyContent: "center",
       overflow: "visible",
       width: "100%",
@@ -259,7 +351,7 @@ export const HeaderStyle = styled.header({
     justifyContent: "space-between",
     gap: " 20px 20px 30px 20px",
 
-    padding: "20px",
+    padding: "40px 20px 20px 20px",
 
     "& .logo-container": {
       display: "flex",

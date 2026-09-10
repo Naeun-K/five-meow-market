@@ -12,7 +12,7 @@ import {
 import useToast from "../../hooks/useToast";
 import { useProductLimit } from "../../hooks/useProductLimit";
 import ChatIcon from "../../components/ChatIcon/ChatIcon";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const categoryNames = {
   "cat-eat": "먹묘",
@@ -23,7 +23,7 @@ const categoryNames = {
 };
 
 export default function ProductList() {
-  const { categoryId } = useParams();
+  // const { categoryId } = useParams();
   const [searchParams] = useSearchParams();
   const { showToast } = useToast();
   const [products, setProducts] = useState([]);
@@ -34,6 +34,7 @@ export default function ProductList() {
 
   const limit = useProductLimit();
   const keyword = searchParams.get("keyword") || "";
+  const category = searchParams.get("category") || "";
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -43,7 +44,7 @@ export default function ProductList() {
         const result = await productService.getProducts({
           page: currentPage,
           limit,
-          category: categoryId,
+          category,
           keyword,
         });
 
@@ -64,7 +65,7 @@ export default function ProductList() {
     };
 
     fetchProducts();
-  }, [currentPage, limit, categoryId, keyword, showToast]);
+  }, [currentPage, limit, keyword, category, showToast]);
 
   if (isLoading) {
     return (
@@ -74,7 +75,7 @@ export default function ProductList() {
     );
   }
 
-  const pageTitle = categoryId ? categoryNames[categoryId] : "전체상품";
+  const pageTitle = category ? categoryNames[category] : "전체상품";
 
   return (
     <BasicPage>

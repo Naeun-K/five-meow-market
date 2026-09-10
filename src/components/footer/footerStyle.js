@@ -1,4 +1,10 @@
 import styled from "@emotion/styled";
+export const WholeStyle = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+});
 
 /* Footer 전체 */
 export const FooterWrapper = styled.footer`
@@ -8,6 +14,8 @@ export const FooterWrapper = styled.footer`
   align-items: center;
   border-top: 1px solid var(--border);
   padding: 50px;
+
+  max-width: 1300px;
 
   @media (max-width: 1023px) {
     padding: 30px;
@@ -27,13 +35,13 @@ export const FooterInner = styled.div({
   alignItems: "flex-start",
   gap: "10px",
 
-  "@media (max-width: 1023px)": {
-    maxWidth: "768px",
-  },
+  // "@media (max-width: 1023px)": {
+  //   // maxWidth: "768px",
+  // },
 
-  " @media (max-width: 767px) ": {
-    maxWidth: "320px",
-  },
+  // " @media (max-width: 767px) ": {
+  //   maxWidth: "320px",
+  // },
 });
 
 /* 상단 영역 */

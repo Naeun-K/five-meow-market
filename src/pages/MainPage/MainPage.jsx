@@ -1,6 +1,8 @@
 import BasicPage from "../basicPage/BasicPage";
 // import MainBanner from "../../components/main/MainBanner/MainBanner";
-import mainBanner from "../../assets/main-meow-pick-banner.webp";
+// import mainBanner from "../../assets/main-meow-pick-banner.webp";
+import tabletMainBanner from "../../assets/tablet-meow-main-banner.webp";
+import wideMainBanner from "../../assets/wide-main-banner.webp";
 import MeowCategory from "../../components/main/MeowCategory/MeowCategory";
 import MainBenefits from "../../components/main/MainBenefits/MainBenefits";
 import ChatIcon from "../../components/ChatIcon/ChatIcon";
@@ -8,6 +10,8 @@ import {
   CardContainer,
   ProductListStyle,
   MainPageSytle,
+  BannerContainer,
+  BannerBackground,
 } from "./MainPageStyle";
 // import MainProduct from "../../components/main/MainProduct/MainProduct";
 import useToast from "../../hooks/useToast";
@@ -16,6 +20,7 @@ import { getMainProducts } from "../../services/productServices";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
 import mobileMainBanner from "../../assets/mobile-meow-main-banner.webp";
 import { useNavigate } from "react-router-dom";
+import BestReview from "../../components/bestReview/BestReview";
 
 export default function MainPage() {
   const { showToast } = useToast();
@@ -48,21 +53,25 @@ export default function MainPage() {
 
   return (
     <BasicPage>
-      <MainPageSytle>
-        <picture className="banner-container">
-          {/* 모바일 320px ~ 767px */}
-          <source
-            media="(max-width: 767px)"
-            srcSet={mobileMainBanner}
-            alt="메인 배너 - 다섯 고양이가 고른 묘한 PICK"
-          />
+      <BannerBackground
+        style={{
+          "--desktop-banner": `url(${wideMainBanner})`,
+          "--tablet-banner": `url(${tabletMainBanner})`,
+          "--mobile-banner": `url(${mobileMainBanner})`,
+        }}
+      >
+        <BannerContainer>
+          <source media="(max-width: 767px)" srcSet={mobileMainBanner} />
 
-          {/* 태블릿/데스크톱 */}
+          <source media="(max-width: 1023px)" srcSet={tabletMainBanner} />
+
           <img
-            src={mainBanner}
+            src={wideMainBanner}
             alt="메인 배너 - 다섯 고양이가 고른 묘한 PICK"
           />
-        </picture>
+        </BannerContainer>
+      </BannerBackground>
+      <MainPageSytle>
         <MeowCategory />
         {/* 베스트 상품 */}
         <CardContainer>
@@ -127,7 +136,7 @@ export default function MainPage() {
             </div>
             <button
               className="see-more labeling"
-              onClick={() => naviagate("/products")}
+              onClick={() => naviagate("/products/best")}
             >
               <p>전체보기</p>
               <span className="arrow-container">
@@ -244,7 +253,10 @@ export default function MainPage() {
                 </svg>
               </span>
             </div>
-            <div className="see-more labeling">
+            <button
+              className="see-more labeling"
+              onClick={() => naviagate("/products")}
+            >
               <p>전체보기</p>
               <span className="arrow-container">
                 <svg
@@ -260,7 +272,7 @@ export default function MainPage() {
                   />
                 </svg>
               </span>
-            </div>
+            </button>
           </div>
           <ProductListStyle>
             {newProducts.map((product) => (
@@ -360,7 +372,10 @@ export default function MainPage() {
                 </svg>
               </span>
             </div>
-            <div className="see-more labeling">
+            <button
+              className="see-more labeling"
+              onClick={() => naviagate("/community/review")}
+            >
               <p>전체보기</p>
               <span className="arrow-container">
                 <svg
@@ -376,9 +391,11 @@ export default function MainPage() {
                   />
                 </svg>
               </span>
-            </div>
+            </button>
           </div>
-          <div className="card-wrapper">{/* 리뷰 목업 자리 */}</div>
+          <div className="card-wrapper">
+            <BestReview />
+          </div>
           <button type="button" className="mobile-more-button">
             더보기
             <svg
@@ -397,8 +414,8 @@ export default function MainPage() {
           </button>
         </CardContainer>
         <ChatIcon />
-        <MainBenefits />
       </MainPageSytle>
+      <MainBenefits />
     </BasicPage>
   );
 }

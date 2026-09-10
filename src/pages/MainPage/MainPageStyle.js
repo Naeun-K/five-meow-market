@@ -5,16 +5,109 @@ export const MainPageSytle = styled.div({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "80px",
+  gap: "180px",
 
   width: "100%",
 
-  "@media (min-width:320px) and (max-width:767px)": { gap: "50px" },
+  // padding: "80px 0",
+
+  minHeight: "100vh",
+  maxWidth: "1300px",
+  // margin: " 0 auto",
+
+  "@media (max-width:1023px)": { gap: "150px" },
+  "@media (min-width:320px) and (max-width:767px)": { gap: "100px" },
 });
 
-export const bannerContainer = styled.picture({
-  display: "block",
+export const BannerBackground = styled.div({
+  position: "relative",
+
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
   width: "100%",
+  overflow: "hidden",
+
+  // 기본 바탕은 이미지 벽지색
+  backgroundColor: "#F7EEE5",
+
+  "&::before": {
+    content: '""',
+
+    position: "absolute",
+
+    // 실제 배너보다 좌우로만 조금 크게
+    width: "1300px",
+    height: "100%",
+
+    left: "50%",
+    top: 0,
+    transform: "translateX(-50%)",
+
+    backgroundImage: "var(--desktop-banner)",
+    // backgroundPosition: "center",
+    backgroundPosition: "center bottom",
+    backgroundRepeat: "no-repeat",
+
+    // ★ cover 절대 사용하지 않음
+    backgroundSize: "2560px 100%",
+
+    filter: "blur(35px)",
+  },
+
+  "@media (max-width: 1023px)": {
+    // "&::before": {
+    //   display: "none",
+    // },
+    "&::before": {
+      content: '""',
+
+      position: "absolute",
+      width: "1300px",
+      height: "100%",
+
+      left: "50%",
+      bottom: 0,
+      transform: "translateX(-50%)",
+
+      backgroundImage: "var(--desktop-banner)",
+      backgroundPosition: "center bottom",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "1200px auto",
+
+      filter: "blur(35px)",
+    },
+  },
+});
+
+export const BannerContainer = styled.picture({
+  position: "relative",
+  zIndex: 1,
+
+  display: "block",
+
+  width: "100%",
+  maxWidth: "1500px",
+
+  "& img": {
+    display: "block",
+    width: "100%",
+    height: "auto",
+
+    WebkitMaskImage:
+      "linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)",
+
+    maskImage:
+      "linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)",
+  },
+
+  "@media (max-width: 1023px)": {
+    "& img": {
+      WebkitMaskImage: "none",
+      maskImage: "none",
+    },
+  },
 });
 
 export const CardContainer = styled.div({
@@ -141,7 +234,7 @@ export const CardContainer = styled.div({
 export const ProductListStyle = styled.div({
   display: "grid",
   gridTemplateColumns: "repeat(4,  minmax(0, 1fr))",
-  gap: "40px",
+  gap: "60px",
 
   width: "100%",
   // minWidth: 0,

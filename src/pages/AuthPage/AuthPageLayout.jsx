@@ -1,5 +1,12 @@
-import { AuthPageLayoutStyle } from "./AuthPageLayoutStyle";
+import {
+  AuthBackgroundStyle,
+  AuthPageLayoutStyle,
+} from "./AuthPageLayoutStyle";
 
 export default function AuthPageLayout({ children }) {
-  return <AuthPageLayoutStyle>{children}</AuthPageLayoutStyle>;
+  return (
+    <AuthBackgroundStyle>
+      <AuthPageLayoutStyle>{children}</AuthPageLayoutStyle>
+    </AuthBackgroundStyle>
+  );
 }
