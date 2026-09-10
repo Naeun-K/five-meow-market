@@ -16,7 +16,7 @@ export const categorySection = css({
     color: "var( --text-primary)",
     // margin: "0 0 24px",
     textAlign: "center",
-    fontSize: "24px",
+    fontSize: "28px",
     fontWeight: 600,
   },
 
@@ -30,6 +30,9 @@ export const categorySection = css({
 
   "@media (max-width: 1023px)": {
     padding: "0 30px",
+    h2: {
+      fontSize: "24px",
+    },
   },
   "@media (max-width: 767px)": {
     display: "none",
@@ -105,14 +108,29 @@ export const imageBox = css({
 });
 
 export const tags = css({
-  marginTop: "3px",
+  // marginTop: "3px",
   display: "flex",
-  flexDirection: "column",
+  // flexDirection: "column",
   minWidth: 0,
 
+  // display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexWrap: "wrap",
+  gap: "5px",
+
+  marginTop: "6px",
+
   span: {
+    padding: "4px 8px",
+
+    borderRadius: "20px",
+
+    backgroundColor: "#F3E7DC",
+    color: "var(--text-primary)",
     maxWidth: "100%",
     fontSize: "16px",
+    fontWeight: 600,
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",

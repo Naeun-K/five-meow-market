@@ -6,9 +6,9 @@ export const reviewGrid = css({
 
   display: "grid",
   gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-
-  columnGap: "30px",
-  rowGap: "30px",
+  // justifyContent: "center",
+  // alignItems: "center",
+  gap: "60px",
 
   padding: "0 30px",
 
@@ -16,17 +16,18 @@ export const reviewGrid = css({
 
   "@media (max-width: 1023px)": {
     padding: "0 20px",
-    columnGap: "20px",
-    rowGap: "30px",
+    // columnGap: "20px",
+    // rowGap: "30px",
+    gridTemplateColumns: "1fr",
   },
 
   "@media (max-width: 767px)": {
     gridTemplateColumns: "1fr",
-
+    justifyItems: "center",
     padding: "0 20px",
 
     columnGap: 0,
-    rowGap: "30px",
+    rowGap: "50px",
   },
 });
 
@@ -45,6 +46,7 @@ export const reviewCard = css({
   boxSizing: "border-box",
 
   "@media (max-width: 767px)": {
+    maxWidth: "400px",
     height: "auto",
     flexDirection: "column",
   },

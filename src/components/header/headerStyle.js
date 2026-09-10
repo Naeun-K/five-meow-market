@@ -1,23 +1,38 @@
 import styled from "@emotion/styled";
 
-export const HeaderStyle = styled.header({
+export const WholeStyle = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+
   position: "sticky",
   top: 0,
+
+  zIndex: 20,
+
+  backgroundColor: "var(--bg)",
+});
+
+export const HeaderStyle = styled.header({
+  // position: "sticky",
+  // top: 0,
 
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
 
-  zIndex: 20,
+  // zIndex: 20,
 
   gap: "50px",
 
   width: "100%",
-
-  backgroundColor: "var(--bg)",
+  maxWidth: "1300px",
 
   padding: "50px 50px 20px 50px",
+
+  // borderRadius: "var(--radius-md)",
 
   "& .logo-container": {
     width: "280px",

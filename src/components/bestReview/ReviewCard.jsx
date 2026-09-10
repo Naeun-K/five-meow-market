@@ -52,11 +52,16 @@ function Star({ filled }) {
 
 function ReviewCard({ review }) {
   const ratingTextValue = getRatingText(review.rating);
-  const filledStars = Math.round(review.rating);
+  const filledStars = Math.round(review.rating).toFixed(1);
 
   return (
     <article css={reviewCard}>
-      <img css={productImage} src={review.image} alt={review.name} />
+      <img
+        css={productImage}
+        src={review.image}
+        alt={review.name}
+        loading="lazy"
+      />
 
       <div css={reviewContent}>
         <p css={productName}>{review.name}</p>
