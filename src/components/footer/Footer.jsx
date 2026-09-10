@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Logo from "../logo/Logo";
 
 import {
@@ -12,6 +13,7 @@ import {
 } from "./footerStyle";
 
 function Footer() {
+  const navigate = useNavigate();
   return (
     <FooterWrapper>
       <FooterInner>
@@ -22,15 +24,15 @@ function Footer() {
 
           <FooterTop>
             <FooterLinks>
-              <a href="#">이용약관</a>
-              <a href="#" className="desktop-text">
+              <button onClick={() => navigate("/*")}>이용약관</button>
+              <button onClick={() => navigate("/*")} className="desktop-text">
                 개인정보처리방침
-              </a>
-              <a href="#" className="mobile-text">
+              </button>
+              <button onClick={() => navigate("/*")} className="mobile-text">
                 개인정보
-              </a>
-              <a href="#">고객센터</a>
-              <a href="#">회사소개</a>
+              </button>
+              <button onClick={() => navigate("/*")}>고객센터</button>
+              <button onClick={() => navigate("/*")}>회사소개</button>
             </FooterLinks>
           </FooterTop>
         </FooterMain>

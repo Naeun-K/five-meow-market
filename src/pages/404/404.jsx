@@ -1,4 +1,5 @@
-import errorImage from "../../assets/404img.svg";
+import { useNavigate } from "react-router-dom";
+import errorImage from "../../assets/404img.webp";
 
 import catClean from "../../assets/logo-clean.webp";
 import catEat from "../../assets/logo-eat.webp";
@@ -9,6 +10,7 @@ import catRest from "../../assets/logo-rest.webp";
 import * as S from "./404styles";
 
 function NotFound() {
+  const navigate = useNavigate();
   return (
     <S.NotFoundPage>
       <S.NotFoundContent>
@@ -52,7 +54,9 @@ function NotFound() {
             </S.CatRest>
           </S.NotFoundCats>
 
-          <S.NotFoundButton type="button">홈으로 돌아가기</S.NotFoundButton>
+          <S.NotFoundButton type="button" onClick={() => navigate("/")}>
+            홈으로 돌아가기
+          </S.NotFoundButton>
         </S.NotFoundBottom>
       </S.NotFoundContent>
     </S.NotFoundPage>

@@ -9,7 +9,7 @@ import {
   Divider,
   MegaCol,
   ExtraHeading,
-  CommunityLists,
+  // CommunityLists,
   MyShopGrid,
   MyShopButton,
   Backdrop,
@@ -29,23 +29,46 @@ import { useNavigate } from "react-router-dom";
 import useToast from "../../hooks/useToast.js";
 
 const leftColumns = [
-  { title: "집사 PICK💗", items: ["베스트 상품"] },
-  { title: "카테고리", items: ["먹묘", "놀묘", "쉼묘", "높묘", "깔묘"] },
-  { title: "전체상품", items: [] },
+  {
+    title: "집사 PICK💗",
+    items: [{ label: "베스트 상품", path: "/#best" }],
+  },
+  {
+    title: "카테고리",
+    items: [
+      { label: "먹묘", path: "/products/cat-eat" },
+      { label: "놀묘", path: "/products/cat-play" },
+      { label: "쉼묘", path: "/products/cat-rest" },
+      { label: "높묘", path: "/products/cat-high" },
+      { label: "깔묘", path: "/products/cat-clean" },
+    ],
+  },
+  {
+    title: "전체상품",
+    path: "/products",
+    items: [],
+  },
+  {
+    title: "COMMUNITY",
+    items: [
+      { label: "제품후기", path: "/" },
+      { label: "Q&A", path: "/" },
+      { label: "공지사항", path: "/" },
+    ],
+  },
 ];
-
-const communityLeft = ["제품후기", "Q&A", "공지사항"];
+// const communityLeft = ["제품후기", "Q&A", "공지사항"];
 
 const myShopButtons = [
-  { label: "로그인", filled: false },
-  { label: "회원가입", filled: true },
-  { label: "장바구니", filled: false },
-  { label: "마이페이지", filled: false },
+  { label: "로그인", path: "/login", filled: false },
+  { label: "회원가입", path: "/signup", filled: true },
+  { label: "장바구니", path: "#", filled: false },
+  { label: "마이페이지", path: "/mypage/edit", filled: false },
 ];
 
 const mobileSections = [
   ...leftColumns.filter((col) => col.title !== "REVIEW"),
-  { title: "COMMUNITY", items: communityLeft },
+  // { title: "COMMUNITY", items: communityLeft },
 ];
 
 function Header() {
@@ -121,7 +144,7 @@ function Header() {
       return;
     }
 
-    navigate(`products?keyword=${encodeURIComponent(keyword)}`);
+    navigate(`/products?keyword=${encodeURIComponent(keyword)}`);
 
     setIsSearchOpen(false);
   };
@@ -133,26 +156,35 @@ function Header() {
   const authButtons = myShopButtons.filter(
     (b) => b.label === "로그인" || b.label === "회원가입",
   );
+
+  const handleNavigate = (path) => {
+    if (!path || path === "#") return;
+
+    navigate(path);
+    setOpenMenu(null);
+    setIsMenuOpen(false);
+  };
+
   const navItems = [
-    { label: "홈", path: "#home" },
-    { label: "베스트", path: "#best" },
+    { label: "홈", path: "/" },
+    { label: "베스트", path: "/#best" },
     {
       label: "카테고리",
       children: [
-        { label: "먹묘", path: "/community/#" },
-        { label: "놀묘", path: "/community/#" },
-        { label: "쉼묘", path: "/community/#" },
-        { label: "높묘", path: "/community/#" },
-        { label: "깔묘", path: "/community/#" },
+        { label: "먹묘", path: "/products/cat-eat" },
+        { label: "놀묘", path: "/products/cat-play" },
+        { label: "쉼묘", path: "/products/cat-rest" },
+        { label: "높묘", path: "/products/cat-high" },
+        { label: "깔묘", path: "/products/cat-clean" },
       ],
     },
-    { label: "전체상품", path: "#products" },
+    { label: "전체상품", path: "/products" },
     {
       label: "커뮤니티",
       children: [
-        { label: "공지사항", path: "/community/#" },
-        { label: "제품후기", path: "/community/#" },
-        { label: "Q&A", path: "/community/#" },
+        { label: "공지사항", path: "#" },
+        { label: "제품후기", path: "#" },
+        { label: "Q&A", path: "#" },
       ],
     },
   ];
@@ -221,6 +253,7 @@ function Header() {
             type="button"
             aria-label="마이페이지"
             className="svg-container my-page"
+            onClick={() => handleNavigate("/mypage/edit")}
           >
             <svg
               width="100%"
@@ -277,14 +310,26 @@ function Header() {
                   {menu.label}
                 </button>
               ) : (
-                <a href={`#${menu.label}`}>{menu.label}</a>
+                // <a href={`#${menu.label}`}>{menu.label}</a>
+                <button type="button" onClick={() => handleNavigate(menu.path)}>
+                  {menu.label}
+                </button>
               )}
               {menu.children && (
                 <DropdownMenu $isOpen={openMenu === menu.label}>
-                  {menu.children.map((child, index) => (
+                  {/* {menu.children.map((child, index) => (
                     <a key={`${child.path}-${index}`} href={child.path}>
                       {child.label}
                     </a>
+                  ))} */}
+                  {menu.children.map((child) => (
+                    <button
+                      key={child.path}
+                      type="button"
+                      onClick={() => handleNavigate(child.path)}
+                    >
+                      {child.label}
+                    </button>
                   ))}
                 </DropdownMenu>
               )}
@@ -421,15 +466,32 @@ function Header() {
                   $title={col.title}
                   hideOnTablet={col.title === "REVIEW"}
                 >
-                  <h3>{col.title}</h3>
+                  {/* <h3>{col.title}</h3> */}
+
+                  {col.path ? (
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate(col.path)}
+                    >
+                      <h3>{col.title}</h3>
+                    </button>
+                  ) : (
+                    <h3>{col.title}</h3>
+                  )}
 
                   {col.items.length > 0 && (
                     <ul>
                       {col.items.map((item) => (
-                        <li key={item}>
-                          <a href="#" onClick={handleMenuClose}>
+                        <li key={item.path}>
+                          <button
+                            type="button"
+                            onClick={() => handleNavigate(item.path)}
+                          >
+                            {item.label}
+                          </button>
+                          {/* <a href="#" onClick={handleMenuClose}>
                             {item}
-                          </a>
+                          </a> */}
                         </li>
                       ))}
                     </ul>
@@ -442,22 +504,28 @@ function Header() {
                   )}
                 </MegaCol>
               ))}
-
+              {/* 
               <MegaCol $title="COMMUNITY">
-                <h3>COMMUNITY</h3>
+                <h3>COMMUNITY</h3> */}
 
-                <CommunityLists>
+              {/* <CommunityLists>
                   <ul>
                     {communityLeft.map((item) => (
                       <li key={item}>
-                        <a href="#" onClick={handleMenuClose}>
+                        <button
+                          type="button"
+                          onClick={() => handleNavigate(item.path)}
+                        >
+                          {item.label}
+                        </button> */}
+              {/* <a href="#" onClick={handleMenuClose}>
                           {item}
-                        </a>
-                      </li>
+                        </a> */}
+              {/* </li>
                     ))}
                   </ul>
                 </CommunityLists>
-              </MegaCol>
+              </MegaCol> */}
             </LeftGroup>
             <Divider />
 
@@ -468,7 +536,7 @@ function Header() {
                   <MyShopButton
                     key={btn.label}
                     filled={btn.filled}
-                    onClick={handleMenuClose}
+                    onClick={() => handleNavigate(btn.path)}
                   >
                     {btn.label}
                   </MyShopButton>
@@ -498,8 +566,8 @@ function Header() {
             if (!isAccordion) {
               return (
                 <MobileAccordionSection key={section.title}>
-                  <MobilePlainLink href="#" onClick={handleMenuClose}>
-                    {section.title}
+                  <MobilePlainLink onClick={() => handleNavigate(section.path)}>
+                    {section.label}
                   </MobilePlainLink>
                 </MobileAccordionSection>
               );
@@ -520,8 +588,10 @@ function Header() {
                   <MobileSubNavList>
                     {section.items.map((item) => (
                       <li key={item}>
-                        <MobileSubNavLink href="#" onClick={handleMenuClose}>
-                          {item}
+                        <MobileSubNavLink
+                          onClick={() => handleNavigate(item.path)}
+                        >
+                          {item.label}
                         </MobileSubNavLink>
                       </li>
                     ))}

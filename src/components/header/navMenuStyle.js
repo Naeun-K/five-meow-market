@@ -144,7 +144,7 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     flexDirection: "column",
     gap: 10,
   },
-  a: {
+  button: {
     fontSize: 18,
     color: colors.muted,
     textDecoration: "none",
@@ -178,7 +178,7 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
       fontSize: 18,
     },
 
-    a: {
+    button: {
       fontSize: 17,
     },
   },
@@ -256,7 +256,7 @@ export const MobileAccordionHeader = styled.button({
   textAlign: "left",
 });
 
-export const MobilePlainLink = styled.a({
+export const MobilePlainLink = styled.button({
   display: "flex",
   alignItems: "center",
   gap: 10,
@@ -284,7 +284,7 @@ export const MobileSubNavList = styled.ul({
   gap: 12,
 });
 
-export const MobileSubNavLink = styled.a({
+export const MobileSubNavLink = styled.button({
   fontSize: 14,
   color: colors.muted,
   textDecoration: "none",
