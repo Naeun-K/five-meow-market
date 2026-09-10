@@ -63,8 +63,9 @@ export default function LoginForm() {
 
       // 필요하면 로그인 완료 후 이동
       // window.location.href = "/";
-    } catch {
-      showToast(result.message, result.success);
+    } catch (error) {
+      console.error(error);
+      showToast("이메일 또는 비밀번호가 일치하지 않습니다.", false);
     }
   };
 
