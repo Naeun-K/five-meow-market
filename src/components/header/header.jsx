@@ -27,11 +27,17 @@ import {
 } from "./navMenuStyle.js";
 import { useNavigate } from "react-router-dom";
 import useToast from "../../hooks/useToast.js";
+import navCat1 from "../../assets/logo-eat.webp";
+import navCat2 from "../../assets/logo-play.webp";
+import navCat3 from "../../assets/logo-rest.webp";
+import navCat4 from "../../assets/logo-high.webp";
+import navCat5 from "../../assets/logo-clean.webp";
+import { useLocation } from "react-router-dom";
 
 const leftColumns = [
   {
     title: "집사 PICK💗",
-    items: [{ label: "베스트 상품", path: "/#best" }],
+    items: [{ label: "베스트 상품", path: "/products/best" }],
   },
   {
     title: "카테고리",
@@ -51,9 +57,9 @@ const leftColumns = [
   {
     title: "COMMUNITY",
     items: [
-      { label: "제품후기", path: "/" },
-      { label: "Q&A", path: "/" },
-      { label: "공지사항", path: "/" },
+      { label: "공지사항", path: "/community/notice" },
+      { label: "제품후기", path: "/community/review" },
+      { label: "Q&A", path: "/community/qna" },
     ],
   },
 ];
@@ -82,6 +88,47 @@ function Header() {
   const closeTimerRef = useRef(null);
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { pathname, search } = useLocation();
+
+  const params = new URLSearchParams(search);
+  const category = params.get("category");
+
+  const isHomePage = pathname === "/";
+
+  const isBestPage = pathname === "/products/best";
+
+  // /products?category=cat-play 등
+  const isCategoryPage = pathname === "/products" && Boolean(category);
+
+  // 쿼리스트링에 category가 없는 /products
+  const isAllProductsPage = pathname === "/products" && !category;
+
+  const isCommunityPage =
+    pathname === "/community/notice" ||
+    pathname === "/community/review" ||
+    pathname === "/community/qna";
+
+  const isActiveMenu = (label) => {
+    switch (label) {
+      case "홈":
+        return isHomePage;
+
+      case "베스트":
+        return isBestPage;
+
+      case "카테고리":
+        return isCategoryPage;
+
+      case "전체상품":
+        return isAllProductsPage;
+
+      case "커뮤니티":
+        return isCommunityPage;
+
+      default:
+        return false;
+    }
+  };
 
   const handleMenuEnter = (menu) => {
     if (isSmallScreen()) return;
@@ -166,10 +213,11 @@ function Header() {
   };
 
   const navItems = [
-    { label: "홈", path: "/" },
-    { label: "베스트", path: "/#best" },
+    { label: "홈", path: "/", image: navCat1 },
+    { label: "베스트", path: "/products/best", image: navCat2 },
     {
       label: "카테고리",
+      image: navCat3,
       children: [
         { label: "먹묘", path: "/products?category=cat-eat" },
         { label: "놀묘", path: "/products?category=cat-play" },
@@ -178,13 +226,14 @@ function Header() {
         { label: "깔묘", path: "/products?category=cat-clean" },
       ],
     },
-    { label: "전체상품", path: "/products" },
+    { label: "전체상품", image: navCat4, path: "/products" },
     {
       label: "커뮤니티",
+      image: navCat5,
       children: [
-        { label: "공지사항", path: "#" },
-        { label: "제품후기", path: "#" },
-        { label: "Q&A", path: "#" },
+        { label: "공지사항", path: "/community/notice" },
+        { label: "제품후기", path: "/community/review" },
+        { label: "Q&A", path: "/community/qna" },
       ],
     },
   ];
@@ -295,50 +344,64 @@ function Header() {
         </div>
         <div className="navigation-container">
           <nav className="navigation">
-            {navItems.map((menu) => (
-              <div
-                key={menu.label}
-                className="nav-item"
-                onMouseEnter={() => handleMenuEnter(menu)}
-                onMouseLeave={handleMenuLeave}
-              >
-                {menu.children ? (
-                  <button
-                    type="button"
-                    aria-expanded={openMenu === menu.label}
-                    onClick={() => handleMenuClick(menu.label)}
-                  >
-                    {menu.label}
-                  </button>
-                ) : (
-                  // <a href={`#${menu.label}`}>{menu.label}</a>
-                  <button
-                    type="button"
-                    onClick={() => handleNavigate(menu.path)}
-                  >
-                    {menu.label}
-                  </button>
-                )}
-                {menu.children && (
-                  <DropdownMenu $isOpen={openMenu === menu.label}>
-                    {/* {menu.children.map((child, index) => (
+            {navItems.map((menu) => {
+              const isActive = isActiveMenu(menu.label);
+              return (
+                <div
+                  key={menu.label}
+                  // className="nav-item"
+                  className={`nav-item${isActive ? " active" : ""}`}
+                  onMouseEnter={() => handleMenuEnter(menu)}
+                  onMouseLeave={handleMenuLeave}
+                >
+                  {isActive && (
+                    <div className="nav-cat-container">
+                      <img
+                        src={menu.image}
+                        alt="화면 네비게이션용 고양이 이미지"
+                        className="nav-cat"
+                        aria-hidden="true"
+                      />
+                    </div>
+                  )}
+                  {menu.children ? (
+                    <button
+                      type="button"
+                      aria-expanded={openMenu === menu.label}
+                      onClick={() => handleMenuClick(menu.label)}
+                    >
+                      {menu.label}
+                    </button>
+                  ) : (
+                    // <a href={`#${menu.label}`}>{menu.label}</a>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate(menu.path)}
+                    >
+                      {menu.label}
+                    </button>
+                  )}
+                  {menu.children && (
+                    <DropdownMenu $isOpen={openMenu === menu.label}>
+                      {/* {menu.children.map((child, index) => (
                     <a key={`${child.path}-${index}`} href={child.path}>
                       {child.label}
                     </a>
                   ))} */}
-                    {menu.children.map((child) => (
-                      <button
-                        key={child.path}
-                        type="button"
-                        onClick={() => handleNavigate(child.path)}
-                      >
-                        {child.label}
-                      </button>
-                    ))}
-                  </DropdownMenu>
-                )}
-              </div>
-            ))}
+                      {menu.children.map((child) => (
+                        <button
+                          key={child.path}
+                          type="button"
+                          onClick={() => handleNavigate(child.path)}
+                        >
+                          {child.label}
+                        </button>
+                      ))}
+                    </DropdownMenu>
+                  )}
+                </div>
+              );
+            })}
           </nav>
           <form className="search-form" onSubmit={handleSearch}>
             <input

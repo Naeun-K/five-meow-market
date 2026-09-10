@@ -125,20 +125,20 @@ html {
 }
 
 body {
+  margin: 0 auto;
+
   width: 100%;
   background-color: var(--bg);
+  color: var(--text-color);
   /* background: linear-gradient(135deg, #f3f0ec, #f3ece2); */
   line-height: 1.5;
 }
 
-main {
+/* main {
   min-height: 100vh;
   max-width: 1300px;
-  margin: 0 auto;
-
-  background-color: var(--bg);
-  color: var(--text-color);
-}
+  margin: 0 auto; */
+/* } */
 /* 제목 기본 스타일 초기화 */
 
 h1,

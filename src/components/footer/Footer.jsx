@@ -33,7 +33,7 @@ function Footer() {
                 <button onClick={() => navigate("/*")} className="mobile-text">
                   개인정보
                 </button>
-                <button onClick={() => navigate("/*")}>고객센터</button>
+                <button onClick={() => navigate("/*")}>고객문의</button>
                 <button onClick={() => navigate("/*")}>회사소개</button>
               </FooterLinks>
             </FooterTop>

@@ -35,13 +35,13 @@ export const FooterInner = styled.div({
   alignItems: "flex-start",
   gap: "10px",
 
-  "@media (max-width: 1023px)": {
-    maxWidth: "768px",
-  },
+  // "@media (max-width: 1023px)": {
+  //   // maxWidth: "768px",
+  // },
 
-  " @media (max-width: 767px) ": {
-    maxWidth: "320px",
-  },
+  // " @media (max-width: 767px) ": {
+  //   maxWidth: "320px",
+  // },
 });
 
 /* 상단 영역 */

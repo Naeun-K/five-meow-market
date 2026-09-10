@@ -1,4 +1,10 @@
 import styled from "@emotion/styled";
+export const AuthBackgroundStyle = styled.div({
+  width: "100%",
+  minHeight: "100vh",
+
+  background: "linear-gradient(to right, #F7F1E6 0 50%, var(--bg) 50% 100%)",
+});
 
 export const AuthPageLayoutStyle = styled.div({
   display: "grid",
@@ -6,6 +12,8 @@ export const AuthPageLayoutStyle = styled.div({
 
   width: "100%",
   minHeight: "100vh",
+  maxWidth: "1300px",
+  margin: "0 auto",
 
   "& .brand-part": {
     display: "flex",

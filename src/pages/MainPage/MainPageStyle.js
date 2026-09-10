@@ -15,6 +15,7 @@ export const MainPageSytle = styled.div({
   maxWidth: "1300px",
   // margin: " 0 auto",
 
+  "@media (max-width:1023px)": { gap: "150px" },
   "@media (min-width:320px) and (max-width:767px)": { gap: "100px" },
 });
 

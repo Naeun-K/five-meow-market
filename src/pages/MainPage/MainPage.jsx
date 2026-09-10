@@ -136,7 +136,7 @@ export default function MainPage() {
             </div>
             <button
               className="see-more labeling"
-              onClick={() => naviagate("/products")}
+              onClick={() => naviagate("/products/best")}
             >
               <p>전체보기</p>
               <span className="arrow-container">
@@ -253,7 +253,10 @@ export default function MainPage() {
                 </svg>
               </span>
             </div>
-            <div className="see-more labeling">
+            <button
+              className="see-more labeling"
+              onClick={() => naviagate("/products")}
+            >
               <p>전체보기</p>
               <span className="arrow-container">
                 <svg
@@ -269,7 +272,7 @@ export default function MainPage() {
                   />
                 </svg>
               </span>
-            </div>
+            </button>
           </div>
           <ProductListStyle>
             {newProducts.map((product) => (
@@ -369,7 +372,10 @@ export default function MainPage() {
                 </svg>
               </span>
             </div>
-            <div className="see-more labeling">
+            <button
+              className="see-more labeling"
+              onClick={() => naviagate("/community/review")}
+            >
               <p>전체보기</p>
               <span className="arrow-container">
                 <svg
@@ -385,7 +391,7 @@ export default function MainPage() {
                   />
                 </svg>
               </span>
-            </div>
+            </button>
           </div>
           <div className="card-wrapper">
             <BestReview />

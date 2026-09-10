@@ -9,6 +9,9 @@ export const ProductPage = styled.div({
 
   width: "100%",
 
+  minHeight: "100vh",
+  maxWidth: "1300px",
+
   "@media  (max-width:767px)": { gap: "40px" },
 });
 
@@ -44,15 +47,18 @@ export const PageTitleContainer = styled.div({
 
 export const CardContainer = styled.div({
   display: "grid",
-  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+  // alignItems: "start",
   alignItems: "start",
-  gap: "35px",
+  alignContent: "start", // ⭐ 추가
+  gap: "100px",
 
   padding: "0 50px",
   minHeight: "1040px",
 
   "& .card-wrapper": {
     maxWidth: "380px",
+    minWidth: "280px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -70,9 +76,14 @@ export const CardContainer = styled.div({
     fontSize: "18px",
   },
 
-  "@media (max-width:1230px)": {
-    gridTemplateColumns: "repeat(3,  minmax(0, 1fr))",
+  "@media (max-width:1280px)": { gap: "60px" },
+  "@media (max-width:1060px)": {
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: "100px",
+  },
+  // gridTemplateColumns: "repeat(3,  minmax(0, 1fr))",
 
+  "@media (max-width:1023px)": {
     padding: "0 30px",
 
     "& p": {
@@ -82,19 +93,18 @@ export const CardContainer = styled.div({
       fontSize: "17px",
     },
   },
-  "@media  (max-width:900px)": {
-    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: "20px",
+  "@media  (max-width:710px)": {
+    // gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: "50px",
 
-    padding: "0 20px",
-
-    "& strong": {
-      fontSize: "16px",
-    },
+    // "& strong": {
+    //   fontSize: "16px",
+    // },
   },
-  "@media (min-width:320px) and (max-width:575px)": {
+  "@media (min-width:320px) and (max-width:670px)": {
     gridTemplateColumns: "repeat(1, minmax(0, 1fr))",
-
+    // gap: "50px",
+    padding: "0 20px",
     "& strong": {
       fontSize: "16px",
     },

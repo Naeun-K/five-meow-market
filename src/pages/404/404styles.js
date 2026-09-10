@@ -6,6 +6,7 @@ export const NotFoundPage = styled.main`
   width: 100%;
   max-width: none;
   min-height: 100svh;
+  margin: 0 auto;
 
   display: flex;
   justify-content: center;

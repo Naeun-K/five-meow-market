@@ -8,11 +8,11 @@ export const reviewGrid = css({
   gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
   // justifyContent: "center",
   // alignItems: "center",
+  justifyContent: "space-between",
+  alignContent: "space-between",
   gap: "60px",
 
-  padding: "0 30px",
-
-  boxSizing: "border-box",
+  // padding: "0 30px",
 
   "@media (max-width: 1023px)": {
     padding: "0 20px",
@@ -58,7 +58,7 @@ export const productImage = css({
   height: "100%",
 
   flexShrink: 0,
-
+  aspectRatio: "1 / 1",
   display: "block",
 
   objectFit: "cover",
@@ -70,9 +70,9 @@ export const productImage = css({
     width: "100%",
     height: "auto",
 
-    aspectRatio: "1 / 1",
+    // aspectRatio: "1 / 1",
 
-    objectFit: "cover",
+    // objectFit: "cover",
   },
 });
 
