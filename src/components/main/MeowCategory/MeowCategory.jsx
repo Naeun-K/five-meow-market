@@ -6,6 +6,7 @@ import logoPlay from "../../../assets/logo-play.webp";
 import logoRest from "../../../assets/logo-rest.webp";
 import logoEat from "../../../assets/logo-eat.webp";
 import logoHigh from "../../../assets/logo-high.webp";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   {
@@ -13,34 +14,40 @@ const categories = [
     name: "먹묘",
     image: logoEat,
     tags: ["#먹방요정", "#고양이먹거리"],
+    path: "/products/cat-eat",
   },
   {
     id: 2,
     name: "놀묘",
     image: logoPlay,
     tags: ["#장난꾸러기", "#내고양이는관심"],
+    path: "/products/cat-play",
   },
   {
     id: 3,
     name: "쉼묘",
     image: logoRest,
     tags: ["#잠꾸러기", "#고양이쉼터"],
+    path: "/products/cat-rest",
   },
   {
     id: 4,
     name: "높묘",
     image: logoHigh,
     tags: ["#점프킹", "#고양이집사"],
+    path: "/products/cat-high",
   },
   {
     id: 5,
     name: "깔묘",
     image: logoClean,
     tags: ["#왕감자", "#고양이화장실"],
+    path: "/products/cat-clean",
   },
 ];
 
 const MeowCategory = () => {
+  const navigate = useNavigate();
   return (
     <section css={S.categorySection}>
       <h2>
@@ -104,11 +111,11 @@ const MeowCategory = () => {
         {categories.map((category) => (
           <div key={category.id} css={S.categoryItem}>
             <div css={S.categoryItem}>
-              <div css={S.imageBox}>
+              <button css={S.imageBox} onClick={() => navigate(category.path)}>
                 {category.image && (
                   <img src={category.image} alt={category.name} />
                 )}
-              </div>
+              </button>
 
               <strong>{category.name}</strong>
 

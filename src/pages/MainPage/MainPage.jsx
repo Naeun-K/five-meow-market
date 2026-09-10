@@ -15,9 +15,11 @@ import { useEffect, useState } from "react";
 import { getMainProducts } from "../../services/productServices";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
 import mobileMainBanner from "../../assets/mobile-meow-main-banner.webp";
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
   const { showToast } = useToast();
+  const naviagate = useNavigate();
   const [bestProducts, setBestProducts] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
   useEffect(() => {
@@ -123,7 +125,10 @@ export default function MainPage() {
                 </svg>
               </span>
             </div>
-            <div className="see-more labeling">
+            <button
+              className="see-more labeling"
+              onClick={() => naviagate("/products")}
+            >
               <p>전체보기</p>
               <span className="arrow-container">
                 <svg
@@ -139,7 +144,7 @@ export default function MainPage() {
                   />
                 </svg>
               </span>
-            </div>
+            </button>
           </div>
           <ProductListStyle>
             {bestProducts.map((product) => (

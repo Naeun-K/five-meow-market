@@ -116,7 +116,7 @@ export const FooterLinks = styled.nav`
 
   gap: 16px;
 
-  a {
+  button {
     color: var(--text-secondary);
     font-size: 16px;
     white-space: nowrap;

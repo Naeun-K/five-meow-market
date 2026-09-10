@@ -146,7 +146,7 @@ export const HeaderStyle = styled.header({
     display: "flex",
     alignItems: "center",
 
-    "& > a, & > button": {
+    "& > button": {
       padding: 0,
       border: 0,
       background: "none",
@@ -327,7 +327,7 @@ export const DropdownMenu = styled.div(({ $isOpen }) => ({
     ? "opacity 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)"
     : "opacity 0.2s ease, transform 0.25s ease",
 
-  "& > a": {
+  "& > button": {
     padding: "10px 20px",
     color: "var(--text-color)",
     textDecoration: "none",
