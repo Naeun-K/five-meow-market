@@ -1,7 +1,7 @@
 import MainPage from "./pages/MainPage/MainPage";
 // import ProductList from "./pages/productListPage/ProductList";
 // import DetailProduct from "./pages/detailProduct/DetailProduct";
-
+import CartItem from "./components/cart/CartItem/CartItem";
 // const PAGES = {
 //   "/login": LoginPage,
 //   "/signup": SignupPage,
@@ -15,8 +15,9 @@ function App() {
     <main>
       {/* <DetailProduct /> */}
 
-      <MainPage />
+      {/* <MainPage /> */}
       {/* <ProductList /> */}
+      <CartItem />
     </main>
   );
 }
