@@ -1,3 +1,4 @@
+import EmptyCart from "./components/cartui/emptyCart";
 import MainPage from "./pages/MainPage/MainPage";
 // import ProductList from "./pages/productListPage/ProductList";
 // import DetailProduct from "./pages/detailProduct/DetailProduct";
@@ -15,9 +16,10 @@ function App() {
     <main>
       {/* <DetailProduct /> */}
 
-      {/* <MainPage /> */}
+      {/* {/*<MainPage /> */}
       {/* <ProductList /> */}
       <CartItem />
+      <EmptyCart/>
     </main>
   );
 }
