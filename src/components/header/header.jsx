@@ -25,6 +25,8 @@ import {
   MobileSubNavLink,
   MobileCloseButton,
 } from "./navMenuStyle.js";
+import { useNavigate } from "react-router-dom";
+import useToast from "../../hooks/useToast.js";
 
 const leftColumns = [
   { title: "집사 PICK💗", items: ["베스트 상품"] },
@@ -55,6 +57,8 @@ function Header() {
   const [openSection, setOpenSection] = useState("집사 PICK💗");
   const headerRef = useRef(null);
   const closeTimerRef = useRef(null);
+  const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleMenuEnter = (menu) => {
     if (isSmallScreen()) return;
@@ -104,6 +108,22 @@ function Header() {
     if (isSmallScreen()) {
       setOpenMenu((currentMenu) => (currentMenu === label ? null : label));
     }
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    const searchValue = new FormData(e.currentTarget);
+    const keyword = searchValue.get("keyword")?.trim();
+
+    if (!keyword) {
+      showToast("검색할 상품명을 입력해주세요", false);
+      return;
+    }
+
+    navigate(`products?keyword=${encodeURIComponent(keyword)}`);
+
+    setIsSearchOpen(false);
   };
 
   const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen); //추가 끝
@@ -271,15 +291,16 @@ function Header() {
             </div>
           ))}
         </nav>
-        <form className="search-form">
+        <form className="search-form" onSubmit={handleSearch}>
           <input
             type="text"
+            name="keyword"
             className="search-input"
             ref={desktopSearchInputRef}
             aria-label="상품 검색"
             placeholder="검색할 상품을 입력하세요"
           />
-          <button className="search-btn svg-container">
+          <button type="submit" className="search-btn svg-container">
             <svg
               width="100%"
               height="100%"
@@ -304,67 +325,7 @@ function Header() {
           </button>
         </form>
       </div>
-      {/* <div
-        className={`search-backdrop${isSearchOpen ? " is-open" : ""}`}
-        aria-hidden="true"
-        onClick={() => setIsSearchOpen(false)}
-      >
-        <div className="search-wrapper" aria-hidden={!isSearchOpen}>
-          <div
-            className={`search-panel${isSearchOpen ? " is-open" : ""}`}
-            aria-hidden={!isSearchOpen}
-          >
-            <input
-              ref={mobileSearchInputRef}
-              type="search"
-              aria-label="상품 검색"
-              placeholder="검색할 상품을 입력하세요"
-              className="search-input"
-              tabIndex={isSearchOpen ? 0 : -1}
-            />
-            <button
-              type="submit"
-              aria-label="검색"
-              className="panel-search-button"
-              tabIndex={isSearchOpen ? 0 : -1}
-            >
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="9.5"
-                  cy="9.5"
-                  r="6.5"
-                  stroke="black"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M14.2 14.2L21 21"
-                  stroke="black"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-          </div>
 
-          <span className="close-icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-            >
-              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-            </svg>
-          </span>
-        </div>
-      </div> */}
       {/* 검색모달 */}
       <div
         className={`search-backdrop${isSearchOpen ? " is-open" : ""}`}
@@ -375,10 +336,14 @@ function Header() {
           className="search-wrapper"
           onClick={(event) => event.stopPropagation()}
         >
-          <div className={`search-panel${isSearchOpen ? " is-open" : ""}`}>
+          <form
+            onSubmit={handleSearch}
+            className={`search-panel${isSearchOpen ? " is-open" : ""}`}
+          >
             <input
               ref={mobileSearchInputRef}
-              type="search"
+              type="text"
+              name="keyword"
               aria-label="상품 검색"
               placeholder="검색할 상품을 입력하세요"
               className="search-input"
@@ -413,7 +378,7 @@ function Header() {
                 />
               </svg>
             </button>
-          </div>
+          </form>
 
           <button
             type="button"
