@@ -3,6 +3,7 @@ import { verifyPhone } from "../../services/authService";
 import { searchAddress } from "../../services/addressService";
 import useToast from "../../hooks/useToast";
 import { UpdateStyle } from "./updateInfoStyle";
+import PawIcon from "../common/PawIcon/PawIcon";
 
 const UpdateInfo = () => {
   // 비밀번호
@@ -114,65 +115,7 @@ const UpdateInfo = () => {
         <div className="header-wrapper">
           <p>집사가 변했어</p>
           <span className="svg-container">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="100%"
-              height="100%"
-              viewBox="0 0 120 120"
-              fill="var(--acent-beidge)"
-              aria-hidden="true"
-            >
-              {/* 왼쪽 바깥 발가락 젤리 */}
-              <ellipse
-                cx="25"
-                cy="46"
-                rx="10"
-                ry="14"
-                transform="rotate(-25 25 46)"
-              />
-
-              {/* 왼쪽 안쪽 발가락 젤리 */}
-              <ellipse
-                cx="47"
-                cy="29"
-                rx="10"
-                ry="14"
-                transform="rotate(-8 47 29)"
-              />
-
-              {/* 오른쪽 안쪽 발가락 젤리 */}
-              <ellipse
-                cx="73"
-                cy="29"
-                rx="10"
-                ry="14"
-                transform="rotate(8 73 29)"
-              />
-
-              {/* 오른쪽 바깥 발가락 젤리 */}
-              <ellipse
-                cx="95"
-                cy="46"
-                rx="10"
-                ry="14"
-                transform="rotate(25 95 46)"
-              />
-
-              {/* 중앙 발바닥 젤리 */}
-              <path
-                d="
-      M60 52
-      C47 52 39 61 34 71
-      C31 77 27 82 27 90
-      C27 101 35 108 46 108
-      C51 108 56 104 60 104
-      C64 104 69 108 74 108
-      C85 108 93 101 93 90
-      C93 82 89 77 86 71
-      C81 61 73 52 60 52Z
-    "
-              />
-            </svg>
+            <PawIcon />
           </span>
         </div>
       </header>

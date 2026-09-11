@@ -7,6 +7,7 @@ import logoRest from "../../../assets/logo-rest.webp";
 import logoEat from "../../../assets/logo-eat.webp";
 import logoHigh from "../../../assets/logo-high.webp";
 import { useNavigate } from "react-router-dom";
+import PawIcon from "../../common/PawIcon/PawIcon";
 
 const categories = [
   {
@@ -50,93 +51,9 @@ const MeowCategory = () => {
   const navigate = useNavigate();
   return (
     <section css={S.categorySection}>
-      <header css={S.titleWrapper}>
-        <h2>
-          오묘한 생활의 다섯고양이{" "}
-          <svg
-            className="paw-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 120 120"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <ellipse
-              cx="25"
-              cy="46"
-              rx="10"
-              ry="14"
-              transform="rotate(-25 25 46)"
-            />
-
-            <ellipse
-              cx="47"
-              cy="29"
-              rx="10"
-              ry="14"
-              transform="rotate(-8 47 29)"
-            />
-
-            <ellipse
-              cx="73"
-              cy="29"
-              rx="10"
-              ry="14"
-              transform="rotate(8 73 29)"
-            />
-
-            <ellipse
-              cx="95"
-              cy="46"
-              rx="10"
-              ry="14"
-              transform="rotate(25 95 46)"
-            />
-
-            <path
-              d="
-                M60 52
-                C47 52 39 61 34 71
-                C31 77 27 82 27 90
-                C27 101 35 108 46 108
-                C51 108 56 104 60 104
-                C64 104 69 108 74 108
-                C85 108 93 101 93 90
-                C93 82 89 77 86 71
-                C81 61 73 52 60 52Z
-              "
-            />
-          </svg>
-        </h2>
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="30"
-            height="30"
-            fill="currentColor"
-            class="bi bi-arrow-left-short"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"
-            />
-          </svg>{" "}
-          밀어서 보기{" "}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="30"
-            height="30"
-            fill="currentColor"
-            class="bi bi-arrow-right-short"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8"
-            />
-          </svg>
-        </span>
-      </header>
+      <h2 className="section-title">
+        오묘한 생활의 다섯고양이 <PawIcon />
+      </h2>
 
       <div css={S.categoryList}>
         {categories.map((category) => (
