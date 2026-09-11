@@ -10,6 +10,7 @@ import QnaPage from "./pages/communitypage/QnaPage";
 import ReviewPage from "./pages/communitypage/ReviewPage";
 import CartPage from "./pages/cartpage/CartPage";
 import ScrollToTop from "./routes/ScrollTop";
+import CheckoutPage from "./pages/checkout/CheckoutPage";
 
 function App() {
   return (
