@@ -28,8 +28,8 @@ export async function getMe(token) {
   return authApi.getMe(token);
 }
 
-export async function refreshAccessToken(refreshToken) {
-  return authApi.refreshAccessToken(refreshToken);
+export async function refreshAccessToken() {
+  return authApi.refreshAccessToken();
 }
 
 export async function verifyPassword(password, token) {

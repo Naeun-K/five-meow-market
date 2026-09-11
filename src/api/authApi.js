@@ -57,12 +57,9 @@ export function getMe(token) {
 }
 
 // Access Token 재발급
-export function refreshAccessToken(refreshToken) {
+export function refreshAccessToken() {
   return apiRequest("/auth/refresh", {
     method: "POST",
-    body: {
-      refreshToken,
-    },
   });
 }
 

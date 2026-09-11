@@ -14,12 +14,13 @@ export const heartButton = (isLiked) =>
     justifyContent: "center",
 
     padding: 0,
-    border: "none",
+    border: "1px solid var(--bg-button)",
+    // border: "none",
     borderRadius: "50%",
     backgroundColor: "#fff",
 
     // 안 눌렀을 때 검정 / 눌렀을 때 빨강
-    color: isLiked ? "var(--acent-error)" : "#000",
+    color: isLiked ? "var(--acent-error)" : "var(--text-primary)",
     //가운데 안와서 위로 올림
     transform: "translateY(1px)",
 

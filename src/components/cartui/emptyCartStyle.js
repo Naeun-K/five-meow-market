@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div({
   display: "flex",
 
-  padding: "0 24px 24px",
+  // padding: "0 24px 240px",
   flexDirection: "column",
   alignItems: "center",
   gap: "100px",
@@ -12,12 +12,16 @@ export const Wrapper = styled.div({
   width: "100%",
   maxWidth: "1300px",
 
+  padding: "0 50px",
+
   "@media (max-width: 1023px)": {
     gap: "80px",
+    padding: "0 30px",
   },
 
   "@media (max-width: 767px)": {
     gap: "40px",
+    padding: "0 20px",
   },
 });
 

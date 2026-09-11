@@ -10,7 +10,7 @@ export const categorySection = css({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "24px",
+  gap: "30px",
   padding: "0 50px",
   h2: {
     color: "var( --text-primary)",
@@ -35,29 +35,82 @@ export const categorySection = css({
     },
   },
   "@media (max-width: 767px)": {
-    display: "none",
+    // display: "none",
+    padding: 0,
+    h2: {
+      fontSize: "20px",
+    },
   },
 });
+export const titleWrapper = css({
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+  justifyContent: "center",
+  alignItems: "center",
+  "& span": { display: "none" },
+  "@media (max-width:767px)": {
+    "& span": {
+      display: "flex",
+      alignItems: "center",
+      gap: "15px",
 
+      fontSize: "18px",
+      fontWeight: 600,
+      color: "var(--text-secondary)",
+    },
+  },
+});
 export const categoryList = css({
   // display: "grid",
   // gridTemplateColumns: "repeat(5, 1fr)",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  gap: "40px",
+  // gap: "40px",
 
   width: "100%",
   // maxWidth: "1000px",
   // margin: "0 auto",
 
   "@media (max-width: 767px)": {
-    gap: "12px",
+    width: "100%",
+
+    justifyContent: "flex-start",
+    // gap: "20px",
+
+    overflowX: "auto",
+    overflowY: "hidden",
+
+    scrollSnapType: "x mandatory",
+
+    padding: "0 20px",
+
+    scrollbarWidth: "none",
+
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+
+    // overflowX: "auto",
+    // overflowY: "hidden",
+
+    // padding: "0 20px",
+
+    // // 모바일 스크롤을 좀 더 자연스럽게
+    // WebkitOverflowScrolling: "touch",
+
+    // // 스크롤바 숨기기
+    // scrollbarWidth: "none",
+
+    gap: "25px",
   },
 });
 
 export const categoryItem = css({
-  minWidth: 0,
+  minWidth: "136px",
+  width: "136px",
+  // aspectRatio: "68 / 123",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -70,9 +123,17 @@ export const categoryItem = css({
   },
 
   "@media (max-width: 767px)": {
-    strong: {
-      fontSize: "11px",
-    },
+    width: "150px",
+
+    flexShrink: 0,
+
+    scrollSnapAlign: "center",
+
+    gap: "20px",
+
+    // strong: {
+    //   fontSize: "11px",
+    // },
   },
 });
 
@@ -102,8 +163,10 @@ export const imageBox = css({
   },
 
   "@media (max-width: 767px)": {
-    width: "48px",
-    height: "48px",
+    width: "100%",
+    // height: "48px",
+    height: "auto",
+    aspectRatio: "1/1",
   },
 });
 
@@ -136,9 +199,9 @@ export const tags = css({
     textOverflow: "ellipsis",
   },
 
-  "@media (max-width: 767px)": {
-    span: {
-      fontSize: "8px",
-    },
-  },
+  // "@media (max-width: 767px)": {
+  //   span: {
+  //     fontSize: "8px",
+  //   },
+  // },
 });
