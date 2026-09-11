@@ -6,7 +6,7 @@ function getProductLimit() {
   }
 
   if (window.matchMedia("(max-width: 1023px)").matches) {
-    return 9;
+    return 8;
   }
 
   return 12;
