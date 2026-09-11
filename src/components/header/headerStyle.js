@@ -25,7 +25,7 @@ export const HeaderStyle = styled.header({
 
   // zIndex: 20,
 
-  gap: "60px",
+  gap: "80px",
 
   width: "100%",
   maxWidth: "1300px",
@@ -185,7 +185,7 @@ export const HeaderStyle = styled.header({
       // height: "40px",
 
       left: "50%",
-      bottom: "calc(100% - 13px)",
+      bottom: "calc(100% - 8px)",
 
       transform: "translateX(-50%)",
 
@@ -296,6 +296,8 @@ export const HeaderStyle = styled.header({
 
   "@media (max-width: 1023px)": {
     padding: "50px 30px 20px 30px",
+
+    gap: "70px",
 
     "& .search-button": {
       display: "block",

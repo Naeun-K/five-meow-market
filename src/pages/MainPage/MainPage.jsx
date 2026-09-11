@@ -18,7 +18,7 @@ import useToast from "../../hooks/useToast";
 import { useEffect, useState } from "react";
 import { getMainProducts } from "../../services/productServices";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
-import mobileMainBanner from "../../assets/mobile-meow-main-banner.webp";
+import mobileMainBanner from "../../assets/mobile-meow-main-banner2.webp";
 import { useNavigate } from "react-router-dom";
 import BestReview from "../../components/bestReview/BestReview";
 

@@ -15,8 +15,13 @@ export const MainPageSytle = styled.div({
   maxWidth: "1300px",
   // margin: " 0 auto",
 
-  "@media (max-width:1023px)": { gap: "150px" },
-  "@media (min-width:320px) and (max-width:767px)": { gap: "100px" },
+  margin: "100px 0",
+
+  "@media (max-width:1023px)": { gap: "150px", margin: "80px 0" },
+  "@media (min-width:320px) and (max-width:767px)": {
+    gap: "100px",
+    margin: "50px 0",
+  },
 });
 
 export const BannerBackground = styled.div({
