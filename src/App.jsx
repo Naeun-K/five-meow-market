@@ -12,8 +12,6 @@ import CartPage from "./pages/cartpage/CartPage";
 
 function App() {
   return (
-    //
-
     <Routes>
       {/* 홈 */}
       <Route path="/" element={<MainPage />} />
@@ -21,7 +19,6 @@ function App() {
       {/* 상품 */}
       <Route path="/products" element={<ProductList />}>
         <Route index element={<ProductList />} />
-        <Route path="/products" element={<ProductList />} />
         {/* <Route path="/products/best" element={<ProductList />} /> */}
       </Route>
 

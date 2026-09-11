@@ -9,6 +9,47 @@ const mockUser = {
   agreements: true,
 };
 
+// 현재 유효한 Access Token
+let currentAccessToken = null;
+
+// Mock Refresh 세션
+const MOCK_REFRESH_SESSION_KEY = "mock-refresh-session";
+
+function getMockRefreshSession() {
+  const session = sessionStorage.getItem(MOCK_REFRESH_SESSION_KEY);
+
+  if (!session) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(session);
+  } catch {
+    sessionStorage.removeItem(MOCK_REFRESH_SESSION_KEY);
+    return null;
+  }
+}
+
+// export function createMockRefreshSession(user) {
+//   const session = {
+//     refreshToken: "mock-refresh-token",
+//     email: user.email,
+//   };
+
+//   sessionStorage.setItem(MOCK_REFRESH_SESSION_KEY, JSON.stringify(session));
+// }
+
+export function createMockRefreshSession(user) {
+  const session = {
+    email: user.email,
+  };
+
+  sessionStorage.setItem(MOCK_REFRESH_SESSION_KEY, JSON.stringify(session));
+}
+
+export function clearMockRefreshSession() {
+  sessionStorage.removeItem(MOCK_REFRESH_SESSION_KEY);
+}
 export function mockCheckEmail(email) {
   const isDuplicate = email === mockUser.email;
 
@@ -47,37 +88,67 @@ export function mockSignup() {
   };
 }
 
+// 로그인
 export function mockLogin(email, password) {
-  if (email === mockUser.email && password === mockUser.password) {
+  if (email !== mockUser.email || password !== mockUser.password) {
     return {
-      success: true,
-      accessToken: "mock-access-token",
-      refreshToken: "mock-refresh-token",
-      user: {
-        id: mockUser.id,
-        nickname: mockUser.nickname,
-      },
-      message: "로그인이 정상적으로 완료되었습니다.",
+      success: false,
+      message: "이메일 또는 비밀번호가 올바르지 않습니다.",
     };
   }
 
-  return {
-    success: false,
-    message: "이메일 또는 비밀번호가 올바르지 않습니다.",
-  };
-}
+  // Access Token 발급
+  currentAccessToken = `mock-access-token-${Date.now()}`;
 
-export function mockLogout() {
+  // 실제 서버의 Refresh Token + HttpOnly Cookie 역할을 Mock에서 흉내냄
+  createMockRefreshSession(mockUser);
+
   return {
     success: true,
-    message: "로그아웃이 정상적으로 완료되었습니다.",
+    accessToken: currentAccessToken,
+    user: {
+      nickname: mockUser.nickname,
+    },
+    message: "로그인이 정상적으로 완료되었습니다.",
   };
 }
 
+// // 로그인 성공 시 Refresh 세션 생성
+// export function createMockRefreshSession(user) {
+//   mockRefreshSession = {
+//     refreshToken: "mock-refresh-token",
+//     email: user.email,
+//   };
+// }
+
+// Access Token 재발급
+export function mockRefreshAccessToken() {
+  const refreshSession = getMockRefreshSession();
+
+  if (!refreshSession) {
+    return {
+      success: false,
+      message: "인증 정보가 만료되었습니다. 다시 로그인해주세요.",
+    };
+  }
+
+  currentAccessToken = `mock-access-token-${Date.now()}`;
+
+  return {
+    success: true,
+    accessToken: currentAccessToken,
+  };
+}
+// 로그인 상태 조회
 export function mockCheckAuth(accessToken) {
-  if (accessToken === "mock-access-token") {
+  if (accessToken === currentAccessToken) {
     return {
       success: true,
+      user: {
+        nickname: mockUser.nickname,
+        email: mockUser.email,
+        phone: mockUser.phone,
+      },
     };
   }
 
@@ -87,19 +158,21 @@ export function mockCheckAuth(accessToken) {
   };
 }
 
-export function mockRefreshToken(refreshToken) {
-  if (refreshToken === "mock-refresh-token") {
-    return {
-      success: true,
-      accessToken: "new-mock-access-token",
-    };
-  }
+// 로그아웃
+export function mockLogout() {
+  currentAccessToken = null;
+  clearMockRefreshSession();
 
   return {
-    success: false,
-    message: "인증 정보가 만료되었습니다. 다시 로그인해주세요.",
+    success: true,
+    message: "로그아웃이 정상적으로 완료되었습니다.",
   };
 }
+
+// // Refresh 세션 삭제
+// export function clearMockRefreshSession() {
+//   mockRefreshSession = null;
+// }
 
 export function mockVerifyPassword(password) {
   const isMatched = password === mockUser.password;

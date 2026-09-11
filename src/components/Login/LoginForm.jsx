@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { LoginStyle, FormStyle } from "./LoginStyle";
 import useToast from "../../hooks/useToast";
-import * as authService from "../../services/authService";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
+  const { login, isAuthLoading } = useAuth();
+  const { showToast } = useToast();
+  const navigate = useNavigate();
   const [email, setEmail] = useState(
     () => localStorage.getItem("savedEmail") || "",
   );
@@ -11,9 +15,7 @@ export default function LoginForm() {
   const [saveEmail, setSaveEmail] = useState(
     () => !!localStorage.getItem("savedEmail"),
   );
-
   const [showPassword, setShowPassword] = useState(false);
-  const { showToast } = useToast();
   const inputRef = useRef(null);
 
   const handleSubmit = async (event) => {
@@ -43,13 +45,7 @@ export default function LoginForm() {
 
     try {
       // Mock API에서 email/password 비교
-      const result = await authService.login(trimmedEmail, password);
-
-      // Mock API에서 발급받은 Access Token 저장
-      // localStorage.setItem("accessToken", result.accessToken);
-
-      // 로그인 상태 저장
-      localStorage.setItem("isLoggedIn", result.success);
+      const result = await login(trimmedEmail, password);
 
       // 이메일 저장
       if (saveEmail) {
@@ -59,13 +55,14 @@ export default function LoginForm() {
       }
 
       // 로그인 완료
-      showToast(result.message, result.success);
+      showToast(result.message, true);
 
-      // 필요하면 로그인 완료 후 이동
-      // window.location.href = "/";
+      navigate("/");
     } catch (error) {
-      console.error(error);
-      showToast("이메일 또는 비밀번호가 일치하지 않습니다.", false);
+      showToast(
+        error.message || "이메일 또는 비밀번호가 일치하지 않습니다.",
+        false,
+      );
     }
   };
 
@@ -227,8 +224,8 @@ export default function LoginForm() {
           <a href="/find-password">비밀번호 찾기</a>
         </div>
 
-        <button type="submit" className="login-button">
-          로그인
+        <button type="submit" className="login-button" disabled={isAuthLoading}>
+          {isAuthLoading ? "로그인 중..." : "로그인"}
         </button>
       </FormStyle>
     </LoginStyle>
