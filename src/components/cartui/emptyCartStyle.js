@@ -1,22 +1,24 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 // 전체 감싸는 Wrapper
 export const Wrapper = styled.div({
   display: "flex",
-  maxWidth: "100%",
+
   padding: "0 24px 24px",
   flexDirection: "column",
   alignItems: "center",
-  gap: "160px",
-  alignSelf: "stretch",
+  gap: "100px",
+
+  width: "100%",
+  maxWidth: "1300px",
 
   "@media (max-width: 1023px)": {
-    gap: "120px",
+    gap: "80px",
   },
 
   "@media (max-width: 767px)": {
     gap: "40px",
-  }
+  },
 });
 
 // 타이틀(장바구니 / 0개상품) 묶는 Wrapper
@@ -31,9 +33,9 @@ export const TitleWrapper = styled.div({
 
   "@media (max-width: 767px)": {
     padding: "0 20px",
-    alignItems:"center",
+    alignItems: "center",
     flex: "none",
-  }
+  },
 });
 
 export const Title = styled.h1({
@@ -45,14 +47,12 @@ export const Title = styled.h1({
   lineHeight: "normal",
 
   "@media (max-width: 1023px)": {
-   fontSize: "36px",
+    fontSize: "36px",
   },
 
   "@media (max-width: 767px)": {
     fontSize: "32px",
-  }
-
-  
+  },
 });
 
 export const Subtitle = styled.p({
@@ -63,13 +63,13 @@ export const Subtitle = styled.p({
   fontWeight: 400,
   lineHeight: "normal",
 
-    "@media (max-width: 1023px)": {
-   fontSize: "18px",
+  "@media (max-width: 1023px)": {
+    fontSize: "18px",
   },
 
   "@media (max-width: 767px)": {
     display: "none",
-  }
+  },
 });
 
 // 아이콘 + 메시지/버튼 묶는 Wrapper
@@ -83,20 +83,19 @@ export const EmptyStateWrapper = styled.div({
   "@media (max-width: 767px)": {
     height: "auto",
     gap: "60px",
-  }
-
+  },
 });
 
 export const IconWrap = styled.svg({
-  width:"140px",
-  height:"140px",
+  width: "140px",
+  height: "140px",
   flexShrink: 0,
   aspectRatio: "1 / 1",
-  color:" #A8A7A7;",
+  color: " #A8A7A7;",
 
-    "@media (max-width: 1023px)": {
-   width: "120px",
-   height: "120px",
+  "@media (max-width: 1023px)": {
+    width: "120px",
+    height: "120px",
   },
 
   "@media (max-width: 767px)": {
@@ -109,12 +108,15 @@ export const IconWrap = styled.svg({
 export const MessageWrapper = styled.div({
   display: "flex",
   flexDirection: "column",
+  justifyContent: "center",
   alignItems: "center",
-  gap: "20px",
+  gap: "80px",
+
+  width: "100%",
 
   "@media (max-width: 767px)": {
-    gap: "18px",
-  }
+    gap: "30px",
+  },
 });
 
 // 텍스트 두 줄 묶는 Wrapper
@@ -136,47 +138,54 @@ export const EmptyMessage = styled.p({
   lineHeight: "normal",
 
   "@media (max-width: 1023px)": {
-   fontSize: "22px",
+    fontSize: "22px",
   },
 
   "@media (max-width: 767px)": {
     fontSize: "18px",
     lineHeight: "1.6",
     margin: 0,
-    textAlign: "center", 
-  }
+    textAlign: "center",
+  },
 });
 
 export const NewProductMessage = styled.p({
   color: "var(--text-color)",
-  textAlign: 'center',
-  fontFamily: 'Inter',
-  fontSize: '28px',
-  fontStyle: 'normal',
-  lineHeight: 'normal',
+  textAlign: "center",
+  fontFamily: "Inter",
+  fontSize: "28px",
+  fontStyle: "normal",
+  lineHeight: "normal",
 
-   "@media (max-width: 1023px)": {
-   fontSize: "22px",
+  "@media (max-width: 1023px)": {
+    fontSize: "22px",
   },
 
-   "@media (max-width: 767px)": {
+  "@media (max-width: 767px)": {
     fontSize: "18px",
-  }
+  },
 });
 
 export const GoShopButton = styled.button({
   display: "flex",
-  width: "100%",
-  height: "75px",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: "var(--bg-button)",
+
+  width: "100%",
+  // height: "75px",
+
+  padding: "20px 30px",
+
   color: "var(--text-button)",
   border: "none",
   borderRadius: "var(--radius-md)",
   fontSize: "24px",
   fontWeight: 600,
+
+  textWrap: "nowrap",
+
   cursor: "pointer",
 
   "@media (max-width: 1023px)": {
@@ -188,5 +197,19 @@ export const GoShopButton = styled.button({
     padding: 0,
     justifyContent: "center",
     fontSize: "15px",
-  }
+  },
+});
+
+export const ButtonWrapper = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "30px",
+
+  width: "100%",
+
+  "@media (max-width: 767px)": {
+    flexDirection: "column",
+    "& .login-btn": { order: -1 },
+  },
 });

@@ -83,7 +83,7 @@ function ReviewCard({ review }) {
                 marginLeft: "auto",
               }}
             >
-              {review.userName}
+              {review.userName.slice(0, 1) + "*** 님"}
             </span>
           </div>
 

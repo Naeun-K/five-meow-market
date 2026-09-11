@@ -8,6 +8,7 @@ import ProductList from "./pages/productListPage/ProductList";
 import NoticePage from "./pages/communitypage/NoticePage";
 import QnaPage from "./pages/communitypage/QnaPage";
 import ReviewPage from "./pages/communitypage/ReviewPage";
+import CartPage from "./pages/cartpage/CartPage";
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
       {/* <Route path="/mypage/orders/detail" element={<OrderList />} /> */}
 
       {/* 장바구니 / 주문 */}
-      {/* <Route path="/cart" element={<Cart />} /> */}
+      <Route path="/cart" element={<CartPage />} />
       {/* <Route path="/checkout" element={<Checkout />} /> */}
 
       {/* 공지사항 */}
