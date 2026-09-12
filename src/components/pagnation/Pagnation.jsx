@@ -17,15 +17,15 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           width="100%"
           height="100%"
           fill="currentColor"
-          class="bi bi-chevron-double-left"
+          className="bi bi-chevron-double-left"
           viewBox="0 0 16 16"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
           />
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
           />
         </svg>
@@ -42,11 +42,11 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           width="100%"
           height="100%"
           fill="currentColor"
-          class="bi bi-chevron-left"
+          className="bi bi-chevron-left"
           viewBox="0 0 16 16"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
           />
         </svg>
@@ -75,11 +75,11 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           width="100%"
           height="100%"
           fill="currentColor"
-          class="bi bi-chevron-right"
+          className="bi bi-chevron-right"
           viewBox="0 0 16 16"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
           />
         </svg>
@@ -97,15 +97,15 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           width="100%"
           height="100%"
           fill="currentColor"
-          class="bi bi-chevron-double-right"
+          className="bi bi-chevron-double-right"
           viewBox="0 0 16 16"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"
           />
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"
           />
         </svg>

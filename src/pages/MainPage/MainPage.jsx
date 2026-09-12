@@ -5,7 +5,6 @@ import tabletMainBanner from "../../assets/tablet-meow-main-banner.webp";
 import wideMainBanner from "../../assets/wide-main-banner.webp";
 import MeowCategory from "../../components/main/MeowCategory/MeowCategory";
 import MainBenefits from "../../components/main/MainBenefits/MainBenefits";
-import ChatIcon from "../../components/ChatIcon/ChatIcon";
 import {
   CardContainer,
   ProductListStyle,
@@ -269,7 +268,6 @@ export default function MainPage() {
             </svg>
           </button>
         </CardContainer>
-        <ChatIcon />
       </MainPageSytle>
       <MainBenefits />
     </BasicPage>

@@ -20,7 +20,7 @@ export const UpdateStyle = styled.div({
 
     order: 1,
 
-    width: "177px",
+    width: "100%",
     height: "28px",
 
     fontSize: "16px",

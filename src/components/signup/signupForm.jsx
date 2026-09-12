@@ -210,14 +210,14 @@ const SignupForm = () => {
       return;
     }
 
-    if (!isPhoneVerified) {
-      showToast("휴대폰 인증을 완료해주세요.", false);
-      return;
-    }
-
     // 비밀번호 확인
     if (password !== passwordConfirm) {
       showToast("비밀번호가 일치하지 않습니다.", false);
+      return;
+    }
+
+    if (!isPhoneVerified) {
+      showToast("휴대폰 인증을 완료해주세요.", false);
       return;
     }
 
@@ -467,6 +467,7 @@ const SignupForm = () => {
                 type="tel"
                 placeholder="휴대폰번호를 입력해주세요"
                 value={phone}
+                maxLength={13}
                 onChange={(event) => {
                   setPhone(formatPhoneNumber(event.target.value));
                   setIsPhoneVerified(false);

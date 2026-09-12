@@ -1,6 +1,5 @@
 import BasicPage from "../basicPage/BasicPage";
 import BoardPage from "../../components/board/BoardPage";
-import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const reviewData = [
   {
@@ -101,7 +100,6 @@ export default function ReviewPage() {
   return (
     <BasicPage>
       <BoardPage type="review" data={reviewData} />
-      <ChatIcon />
     </BasicPage>
   );
 }

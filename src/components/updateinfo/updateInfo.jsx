@@ -4,8 +4,17 @@ import { searchAddress } from "../../services/addressService";
 import useToast from "../../hooks/useToast";
 import { UpdateStyle } from "./updateInfoStyle";
 import PawIcon from "../common/PawIcon/PawIcon";
+import useAuth from "../../hooks/useAuth";
+import { updateUser } from "../../services/userService";
+import { useNavigate } from "react-router-dom";
 
 const UpdateInfo = () => {
+  const { user } = useAuth();
+
+  const nickname =
+    user?.nickname || user?.nickName || user?.username || user?.name || "회원";
+  const email = user?.email ?? "";
+
   // 비밀번호
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -15,7 +24,9 @@ const UpdateInfo = () => {
 
   // 휴대폰 번호
   const [phone, setPhone] = useState("");
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   // 주소
   const [zoneCode, setZoneCode] = useState("");
@@ -24,23 +35,46 @@ const UpdateInfo = () => {
 
   // 본인인증
   const handleVerifyPhone = async () => {
-    if (phone.length !== 11) {
-      showToast("휴대폰 번호 11자리를 입력해주세요.", false);
+    const raw = phone.replace(/\D/g, "");
+
+    if (!raw) {
+      showToast("휴대폰번호를 입력해주세요.", false);
       return;
     }
 
-    const fullphone = `010-${phone.slice(0, 4)}-${phone.slice(4)}`;
+    if (!/^01[016789]\d{8}$/.test(raw)) {
+      showToast("올바른 휴대폰번호를 입력해주세요.", false);
+      return;
+    }
 
     try {
-      const result = await verifyPhone(fullphone);
-      console.log("휴대폰 인증 결과:", result);
-      showToast("본인인증 요청이 완료되었습니다.", true);
+      const result = await verifyPhone(raw);
+      setIsPhoneVerified(result.success);
+      showToast(result.message, result.success);
     } catch (error) {
-      console.error("휴대폰 인증 실패:", error);
-      showToast("본인인증에 실패했습니다.", false);
+      console.error(error.message);
+      showToast(
+        "휴대폰 인증 처리 중 오류가 발생했습니다. 다시 시도해주세요",
+        false,
+      );
     }
   };
 
+  // 휴대폰번호처럼 화면에 보이기
+  const formatPhoneNumber = (value) => {
+    // 숫자가 아닌 문자 제거
+    const numbers = value.replace(/\D/g, "").slice(0, 11);
+
+    if (numbers.length <= 3) {
+      return numbers;
+    }
+
+    if (numbers.length <= 7) {
+      return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    }
+
+    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7)}`;
+  };
   // 주소 검색
   const handleSearchAddress = async () => {
     try {
@@ -53,13 +87,13 @@ const UpdateInfo = () => {
     } catch (error) {
       console.error("주소 검색 실패:", error);
 
-      showToast("주소 검색에 실패했습니다.", false);
+      showToast("주소 검색에 실패했습니다. 다시 시도해주세요.", false);
     }
   };
 
-  // 회원정보 수정
+  // 비밀번호 검증
   const isValidPassword = (password) => {
-    return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[A-Z]).+$/.test(password);
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
   };
 
   const handleSubmit = async (event) => {
@@ -67,27 +101,47 @@ const UpdateInfo = () => {
 
     // 비밀번호 입력했을 때만 형식 검사
     if (password && !isValidPassword(password)) {
-      showToast("비밀번호는 영문, 숫자, 대문자를 포함해야 합니다.", false);
+      showToast(
+        "비밀번호는 8자 이상이며 영문 대/소문자와 숫자를 포함해야 합니다.",
+        false,
+      );
       return;
     }
     // 비밀번호 입력했을 때만 일치 여부 확인
-    if (password && password !== passwordConfirm) {
+    if (password !== passwordConfirm) {
       showToast("새 비밀번호가 일치하지 않습니다.", false);
       return;
     }
+    const rawPhone = phone.replace(/\D/g, "");
 
-    const fullPhone = phone ? `010-${phone.slice(0, 4)}-${phone.slice(4)}` : "";
+    if (rawPhone && !isPhoneVerified) {
+      showToast("휴대폰 인증을 완료해주세요.", false);
+      return;
+    }
 
-    const updateData = {
-      password,
-      phone: fullPhone,
-      zoneCode,
-      address,
-      detailAddress,
-    };
+    const updateData = {};
+    // 변경된 값만 요청에 포함
+    if (password) {
+      updateData.newPassword = password;
+    }
+
+    if (rawPhone) {
+      updateData.phone = rawPhone;
+    }
+
+    if (zoneCode && address) {
+      updateData.zipcode = zoneCode;
+      updateData.address = address;
+      updateData.detailAddress = detailAddress.trim();
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      showToast("수정할 정보를 입력해주세요.", false);
+      return;
+    }
 
     try {
-      const result = await updateMyInfo(updateData);
+      const result = await updateUser(updateData);
 
       console.log("회원정보 수정 결과:", result);
 
@@ -96,11 +150,22 @@ const UpdateInfo = () => {
         return;
       }
 
-      showToast("회원정보가 수정되었습니다.", true);
+      showToast(result.message || "회원정보가 수정되었습니다.", true);
+
+      // 입력값 초기화
+      setPassword("");
+      setPasswordConfirm("");
+      setPhone("");
+      setIsPhoneVerified(false);
+      setZoneCode("");
+      setAddress("");
+      setDetailAddress("");
+
+      navigate("/mypage");
     } catch (error) {
       console.error("회원정보 수정 실패:", error);
 
-      showToast("회원정보 수정에 실패했습니다.", false);
+      showToast(error.message || "회원정보 수정에 실패했습니다.", false);
     }
   };
 
@@ -123,15 +188,15 @@ const UpdateInfo = () => {
       <div className="main">
         <div className="info-container">
           <span>닉네임</span>
-          <p>김오묘</p>
+          <p>{nickname}</p>
         </div>
 
         <div className="info-container">
           <span>이메일</span>
-          <p>ohmyoh@domain.com</p>
+          <p>{email}</p>
         </div>
 
-        <form className="form-style">
+        <form className="form-style" onSubmit={handleSubmit}>
           <div className="input-container mobile-input-container">
             <div className="label-guide-container">
               <label>새 비밀번호</label>
@@ -255,20 +320,13 @@ const UpdateInfo = () => {
             <div className="phone-container">
               <input
                 type="tel"
-                value={
-                  phone.length > 7
-                    ? `${phone.slice(0, 3)}-${phone.slice(3, 7)}-${phone.slice(7)}`
-                    : phone.length > 3
-                      ? `${phone.slice(0, 3)}-${phone.slice(3)}`
-                      : phone
-                }
-                onChange={(event) => {
-                  const value = event.target.value.replace(/\D/g, "");
-
-                  setPhone(value.slice(0, 11));
-                }}
-                placeholder="010-0000-0000"
+                placeholder="휴대폰번호를 입력해주세요"
+                value={phone}
                 maxLength={13}
+                onChange={(event) => {
+                  setPhone(formatPhoneNumber(event.target.value));
+                  setIsPhoneVerified(false);
+                }}
               />
 
               <button type="button" onClick={handleVerifyPhone}>
@@ -300,9 +358,7 @@ const UpdateInfo = () => {
             />
           </div>
 
-          <button type="submit" onClick={handleSubmit}>
-            회원정보수정
-          </button>
+          <button type="submit">회원정보수정</button>
         </form>
       </div>
     </UpdateStyle>
