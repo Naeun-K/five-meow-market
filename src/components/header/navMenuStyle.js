@@ -73,10 +73,10 @@ export const MegaMenuCard = styled.div({
 
   padding: "60px 48px",
   paddingBottom: "90px",
-  boxSizing: "border-box",
+  // boxSizing: "border-box",
 
   "@media (max-width: 930px)": {
-    padding: "28px 24px",
+    padding: "60px 24px",
   },
 
   "@media (max-width: 767px)": {
@@ -117,13 +117,13 @@ export const MegaInner = styled.div({
   alignItems: "flex-start",
   justifyContent: "center",
 
-  boxSizing: "border-box",
+  // boxSizing: "border-box",
 
   gap: "40px",
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     padding: "0 8px",
-    boxSizing: "border-box",
+    // boxSizing: "border-box",
 
     display: "flex",
     alignItems: "flex-start",
@@ -245,22 +245,30 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
 
     ...($title === "집사 PICK" && {
       order: 1,
-      flex: "0 0 auto",
+      // flex: "0 0 auto",
+      flex: "0 0 96px",
     }),
 
     ...($title === "카테고리" && {
       order: 2,
-      flex: "0 0 auto",
+      // flex: "0 0 auto",
+      flex: "0 0 96px",
     }),
 
     ...($title === "COMMUNITY" && {
       order: 3,
-      flex: "0 0 auto",
+      flex: "0 0 96px",
+      // flex: "0 0 auto",
     }),
 
     ...($title === "전체상품" && {
       order: 4,
-      flex: "0 0 auto",
+
+      // 강제로 다음 줄로 보내기
+      marginRight: "calc(100% - 96px)",
+
+      flex: "0 0 96px",
+      // flex: "0 0 auto",
       marginTop: "-80px",
     }),
   },
@@ -423,7 +431,7 @@ export const MobileCard = styled.div({
 
     width: "100%",
     margin: 0,
-    boxSizing: "border-box",
+    // boxSizing: "border-box",
 
     background: colors.paper,
     border: `1px solid ${colors.line}`,
@@ -432,6 +440,10 @@ export const MobileCard = styled.div({
     boxShadow: "0 20px 40px -25px rgba(28,26,23,0.25)",
   },
 
+  "& .flex-wrapper": {
+    display: "flex",
+    flexDirection: "column",
+  },
   ".mobile-user-area": {
     paddingTop: 20,
   },
@@ -474,7 +486,16 @@ export const MobileCard = styled.div({
     display: "flex",
     flexDirection: "column",
     gap: 8,
+    "& .button-wrapper": {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      gap: "10px",
 
+      width: "100%",
+
+      order: 1,
+    },
     button: {
       width: "100%",
     },
@@ -486,6 +507,7 @@ export const MobileCard = styled.div({
     alignItems: "center",
     gap: 8,
     paddingTop: 20,
+
     textAlign: "center",
   },
 
