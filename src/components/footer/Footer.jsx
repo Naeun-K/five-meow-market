@@ -26,15 +26,21 @@ function Footer() {
 
             <FooterTop>
               <FooterLinks>
-                <button onClick={() => navigate("/*")}>이용약관</button>
-                <button onClick={() => navigate("/*")} className="desktop-text">
+                <button onClick={() => navigate("/terms")}>이용약관</button>
+                <button
+                  onClick={() => navigate("/privacy-policy")}
+                  className="desktop-text"
+                >
                   개인정보처리방침
                 </button>
-                <button onClick={() => navigate("/*")} className="mobile-text">
+                <button
+                  onClick={() => navigate("/privacy-policy")}
+                  className="mobile-text"
+                >
                   개인정보
                 </button>
                 <button onClick={() => navigate("/*")}>고객문의</button>
-                <button onClick={() => navigate("/*")}>회사소개</button>
+                <button onClick={() => navigate("/about")}>회사소개</button>
               </FooterLinks>
             </FooterTop>
           </FooterMain>
