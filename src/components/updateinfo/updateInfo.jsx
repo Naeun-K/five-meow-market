@@ -105,6 +105,10 @@ const UpdateInfo = () => {
 
   return (
     <UpdateStyle>
+      <nav className="top-nav">
+        <span>회원정보를 삭제하시겠습니다?</span>
+        <button>회원탈퇴</button>
+      </nav>
       <header className="header">
         <h1>Update Info</h1>
         <div className="header-wrapper">

@@ -74,7 +74,7 @@ export default function LoginForm() {
     <LoginStyle>
       <nav className="top-nav">
         <span>처음이신가요?</span>
-        <a href="/signup">회원가입</a>
+        <button onClick={() => navigate("/signup")}>회원가입</button>
       </nav>
 
       <header className="header">

@@ -12,6 +12,25 @@ export const UpdateStyle = styled.div({
   maxWidth: "600px",
   minWidth: 0,
 
+  "& .top-nav": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "10px",
+
+    order: 1,
+
+    width: "177px",
+    height: "28px",
+
+    fontSize: "16px",
+
+    "& button": {
+      color: "var( --text-secondary)",
+      textDecoration: "underline",
+    },
+  },
+
   "& .header": {
     display: "flex",
     flexDirection: "column",
@@ -254,6 +273,10 @@ export const UpdateStyle = styled.div({
 
   "@media (max-width: 1023px)": {
     gap: "35px",
+    "& .top-nav": {
+      fontSize: "15px",
+      // marginTop: "90px",
+    },
 
     "& .svg-container": {
       width: "25px",
@@ -319,6 +342,10 @@ export const UpdateStyle = styled.div({
 
   "@media (min-width: 320px) and (max-width: 767px)": {
     gap: "35px",
+    "& .top-nav": {
+      order: 1,
+      marginTop: "20px",
+    },
 
     "& .header": {
       gap: "15px",

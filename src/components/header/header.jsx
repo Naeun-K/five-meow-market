@@ -69,7 +69,7 @@ const leftColumns = [
 const myShopButtons = [
   { label: "로그인", path: "/login", filled: false },
   { label: "회원가입", path: "/signup", filled: true },
-  { label: "장바구니", path: "#", filled: false },
+  { label: "장바구니", path: "/cart", filled: false },
   { label: "마이페이지", path: "/mypage", filled: false },
 ];
 
@@ -723,7 +723,7 @@ function Header() {
                 <MyShopButton
                   key={btn.label}
                   filled={btn.filled}
-                  onClick={handleMenuClose}
+                  onClick={() => handleNavigate(btn.path)}
                 >
                   {btn.label}
                 </MyShopButton>
@@ -741,7 +741,7 @@ function Header() {
                     <MobilePlainLink
                       onClick={() => handleNavigate(section.path)}
                     >
-                      {section.label}
+                      {section.title}
                     </MobilePlainLink>
                   </MobileAccordionSection>
                 );

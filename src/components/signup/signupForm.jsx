@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import useToast from "../../hooks/useToast";
 import * as authService from "../../services/authService";
 import { searchAddress } from "../../services/addressService";
+import { useNavigate } from "react-router-dom";
 
 const isValidPassword = (password) => {
   return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
@@ -18,6 +19,7 @@ const isValidPassword = (password) => {
 
 const SignupForm = () => {
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   // 비밀번호 보기/숨기기 상태
   const [showPassword, setShowPassword] = useState(false);
@@ -238,20 +240,16 @@ const SignupForm = () => {
     try {
       const result = await authService.signup(userData);
 
-      const users = JSON.parse(localStorage.getItem("users")) || [];
+      if (!result.success) {
+        showToast(result.message || "회원가입에 실패했습니다.", result.success);
+        return;
+      }
 
-      users.push({
-        ...userData,
-        point: 0,
-      });
+      showToast(result.message || "회원가입이 완료되었습니다.", result.success);
 
-      localStorage.setItem("users", JSON.stringify(users));
+      console.log("회원가입 성공:", result);
 
-      showToast(result.message, result.success);
-
-      console.log("정상적으로 유저가 저장되었습니다");
-      console.table(JSON.parse(localStorage.getItem("users")));
-      // navigate("/login");
+      navigate("/login");
     } catch (error) {
       console.error(error.message);
       showToast(

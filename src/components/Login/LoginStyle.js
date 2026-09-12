@@ -26,7 +26,7 @@ export const LoginStyle = styled.div({
 
     fontSize: "16px",
 
-    "& a": {
+    "& button": {
       color: "var( --text-primary)",
       textDecoration: "underline",
     },
@@ -106,7 +106,7 @@ export const LoginStyle = styled.div({
     gap: "15px",
 
     "& .top-nav": {
-      order: 1,
+      // order: 1,
       marginTop: "20px",
     },
     "& .header": {
