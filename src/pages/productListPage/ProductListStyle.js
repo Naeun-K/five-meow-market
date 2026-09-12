@@ -47,7 +47,7 @@ export const PageTitleContainer = styled.div({
 
 export const CardContainer = styled.div({
   display: "grid",
-  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+  gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
   // alignItems: "start",
   alignItems: "start",
   alignContent: "start", // ⭐ 추가
@@ -78,7 +78,7 @@ export const CardContainer = styled.div({
 
   "@media (max-width:1280px)": { gap: "60px" },
   "@media (max-width:1060px)": {
-    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
     gap: "80px 50px",
   },
   // gridTemplateColumns: "repeat(3,  minmax(0, 1fr))",
