@@ -399,7 +399,11 @@ export const HeaderStyle = styled.header({
   },
 
   "& .user-icon": {
+    width: "38px",
+
     flexShrink: 0,
+    aspectRatio: "1/1",
+    order: -1,
   },
 
   "& .user-dropdown": {
@@ -467,7 +471,10 @@ export const HeaderStyle = styled.header({
 
   "@media (max-width: 1023px)": {
     padding: "50px 30px 20px 30px",
-
+    "& .user-icon": {
+      width: "30px",
+      // display: "none",
+    },
     "& .search-button": {
       display: "block",
     },
@@ -675,7 +682,8 @@ export const HeaderStyle = styled.header({
     },
 
     "& .user-icon": {
-      width: "27px",
+      // width: "27px",
+      display: "none",
     },
 
     "& .user-dropdown": {

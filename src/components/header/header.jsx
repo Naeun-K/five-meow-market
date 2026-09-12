@@ -341,28 +341,66 @@ function Header() {
 
                     <span className="user-icon svg-container">
                       <svg
+                        xmlns="http://www.w3.org/2000/svg"
                         width="100%"
                         height="100%"
-                        viewBox="0 0 24 24"
+                        viewBox="0 0 40 40"
                         fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
                       >
+                        {/* 바깥 원 */}
                         <circle
-                          cx="12"
-                          cy="7"
-                          r="4"
-                          stroke="black"
+                          cx="20"
+                          cy="20"
+                          r="18"
+                          stroke="#614832"
                           strokeWidth="1.5"
                         />
 
+                        {/* 고양이 얼굴 */}
                         <path
-                          d="M3 21
-                        C3.6 16.5 7 14 12 14
-                        C17 14 20.4 16.5 21 21
-                        H3Z"
-                          stroke="black"
+                          d="M10 20
+       L10 12
+       L16 16
+       C18 15 22 15 24 16
+       L30 12
+       L30 20
+       C32 22 32 25 31 27
+       C29 31 25 33 20 33
+       C15 33 11 31 9 27
+       C8 25 8 22 10 20Z"
+                          stroke="#614832"
                           strokeWidth="1.5"
+                          strokeLinecap="round"
                           strokeLinejoin="round"
+                        />
+
+                        {/* 눈 */}
+                        <circle cx="16" cy="23" r="1" fill="#614832" />
+                        <circle cx="24" cy="23" r="1" fill="#614832" />
+
+                        {/* 코 */}
+                        <circle cx="20" cy="26" r="0.8" fill="#614832" />
+
+                        {/* 입 */}
+                        <path
+                          d="M20 27
+       C19 29 17.5 29 17 28
+       M20 27
+       C21 29 22.5 29 23 28"
+                          stroke="#614832"
+                          strokeWidth="1"
+                          strokeLinecap="round"
+                        />
+
+                        {/* 수염 */}
+                        <path
+                          d="M14 26L10 25
+       M14 28L10 29
+       M26 26L30 25
+       M26 28L30 29"
+                          stroke="#614832"
+                          strokeWidth="1"
+                          strokeLinecap="round"
                         />
                       </svg>
                     </span>
@@ -669,10 +707,6 @@ function Header() {
                             >
                               {item.label}
                             </button>
-
-                            {/* <a href="#" onClick={handleMenuClose}>
-                            {item}
-                          </a> */}
                           </li>
                         ))}
                       </ul>
@@ -791,125 +825,132 @@ function Header() {
           </MegaMenuCard>
 
           <MobileCard>
-            {mobileSections.map((section) => {
-              const isAccordion = section.items.length > 0;
+            <div className="flex-wrapper">
+              {mobileSections.map((section) => {
+                const isAccordion = section.items.length > 0;
 
-              const isSectionOpen = openSection === section.title;
+                const isSectionOpen = openSection === section.title;
 
-              if (!isAccordion) {
+                if (!isAccordion) {
+                  return (
+                    <MobileAccordionSection key={section.title}>
+                      <MobilePlainLink
+                        onClick={() => handleNavigate(section.path)}
+                      >
+                        {section.title}
+                      </MobilePlainLink>
+                    </MobileAccordionSection>
+                  );
+                }
+
                 return (
                   <MobileAccordionSection key={section.title}>
-                    <MobilePlainLink
-                      onClick={() => handleNavigate(section.path)}
+                    <MobileAccordionHeader
+                      onClick={() =>
+                        setOpenSection(isSectionOpen ? null : section.title)
+                      }
                     >
-                      {section.title}
-                    </MobilePlainLink>
+                      <span className="mobile-title">
+                        {section.title}
+
+                        {section.title === "집사 PICK" && (
+                          <span className="mobile-paw">
+                            <PawIcon />
+                          </span>
+                        )}
+                      </span>
+
+                      <MobileChevron isOpen={isSectionOpen}>▾</MobileChevron>
+                    </MobileAccordionHeader>
+
+                    {isSectionOpen && (
+                      <MobileSubNavList>
+                        {section.items.map((item) => (
+                          <li key={item.path}>
+                            <MobileSubNavLink
+                              onClick={() => handleNavigate(item.path)}
+                            >
+                              {item.label}
+                            </MobileSubNavLink>
+                          </li>
+                        ))}
+                      </MobileSubNavList>
+                    )}
                   </MobileAccordionSection>
                 );
-              }
+              })}
 
-              return (
-                <MobileAccordionSection key={section.title}>
-                  <MobileAccordionHeader
-                    onClick={() =>
-                      setOpenSection(isSectionOpen ? null : section.title)
-                    }
-                  >
-                    <span className="mobile-title">
-                      {section.title}
+              {!isLoggedIn && (
+                <div className="mobile-guest-area">
+                  <img src={guestCat} alt="" className="mobile-guest-image" />
 
-                      {section.title === "집사 PICK" && (
-                        <span className="mobile-paw">
-                          <PawIcon />
-                        </span>
-                      )}
-                    </span>
+                  <strong className="mobile-guest-title">
+                    오묘한 생활에
+                    <br />
+                    놀러오세요!
+                  </strong>
 
-                    <MobileChevron isOpen={isSectionOpen}>▾</MobileChevron>
-                  </MobileAccordionHeader>
+                  <span className="mobile-guest-text">
+                    로그인하고 더 많은 혜택을 만나보세요.
+                  </span>
 
-                  {isSectionOpen && (
-                    <MobileSubNavList>
-                      {section.items.map((item) => (
-                        <li key={item.path}>
-                          <MobileSubNavLink
-                            onClick={() => handleNavigate(item.path)}
-                          >
-                            {item.label}
-                          </MobileSubNavLink>
-                        </li>
-                      ))}
-                    </MobileSubNavList>
-                  )}
-                </MobileAccordionSection>
-              );
-            })}
-
-            {!isLoggedIn && (
-              <div className="mobile-guest-area">
-                <img src={guestCat} alt="" className="mobile-guest-image" />
-
-                <strong className="mobile-guest-title">
-                  오묘한 생활에
-                  <br />
-                  놀러오세요!
-                </strong>
-
-                <span className="mobile-guest-text">
-                  로그인하고 더 많은 혜택을 만나보세요.
-                </span>
-
-                <div className="mobile-guest-buttons">
-                  {authButtons.map((btn) => (
-                    <MyShopButton
-                      key={btn.label}
-                      filled={btn.filled}
-                      onClick={() => handleNavigate(btn.path)}
-                    >
-                      {btn.label}
-                    </MyShopButton>
-                  ))}
+                  <div className="mobile-guest-buttons">
+                    {authButtons.map((btn) => (
+                      <MyShopButton
+                        key={btn.label}
+                        filled={btn.filled}
+                        onClick={() => handleNavigate(btn.path)}
+                      >
+                        {btn.label}
+                      </MyShopButton>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            {isLoggedIn && (
-              <div className="mobile-user-area">
-                <div className="mobile-user-profile">
-                  <div className="mobile-user-image">
-                    <img src={myShopCat} alt="" />
+              )}
+              {isLoggedIn && (
+                <div className="mobile-user-area">
+                  <div className="mobile-user-profile">
+                    <div className="mobile-user-image">
+                      <img src={myShopCat} alt="" />
+                    </div>
+
+                    <strong>{nickname} 님</strong>
+
+                    <span className="mobile-user-points">
+                      {points.toLocaleString()} P
+                    </span>
                   </div>
 
-                  <strong>{nickname} 님</strong>
+                  <div className="mobile-user-menu">
+                    <div className="button-wrapper">
+                      <MyShopButton onClick={() => handleNavigate("/mypage")}>
+                        마이페이지
+                      </MyShopButton>
 
-                  <span className="mobile-user-points">
-                    {points.toLocaleString()} P
-                  </span>
+                      <MyShopButton onClick={() => handleNavigate("/cart")}>
+                        장바구니
+                      </MyShopButton>
+                    </div>
+
+                    <MyShopButton onClick={handleLogout}>로그아웃</MyShopButton>
+                  </div>
                 </div>
-
-                <div className="mobile-user-menu">
-                  <MyShopButton onClick={() => handleNavigate("/mypage")}>
-                    마이페이지
-                  </MyShopButton>
-
-                  <MyShopButton onClick={() => handleNavigate("/cart")}>
-                    장바구니
-                  </MyShopButton>
-
-                  <MyShopButton onClick={handleLogout}>로그아웃</MyShopButton>
-                </div>
-              </div>
-            )}
-            <MobileCloseButton onClick={handleMenuClose} aria-label="메뉴 닫기">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                viewBox="0 0 16 16"
+              )}
+              <MobileCloseButton
+                onClick={handleMenuClose}
+                aria-label="메뉴 닫기"
               >
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-              </svg>
-            </MobileCloseButton>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                </svg>
+              </MobileCloseButton>
+            </div>
           </MobileCard>
         </MegaMenuWrapper>
 
