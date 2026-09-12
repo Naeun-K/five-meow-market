@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { getMainProducts } from "../../services/productServices";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
 import mobileMainBanner from "../../assets/mobile-meow-main-banner2.webp";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BestReview from "../../components/bestReview/BestReview";
 
 export default function MainPage() {
@@ -157,22 +157,27 @@ export default function MainPage() {
           </div>
           <ProductListStyle>
             {bestProducts.map((product) => (
-              <div className="product-item" key={product.productId}>
-                <ProductCard
-                  image={product.thumbnail}
-                  name={product.name}
-                  badge="bestOrange"
-                  showHeart
-                />
+              <Link
+                to={`/products/${product.productId}`}
+                className="product-link"
+              >
+                <div className="product-item" key={product.productId}>
+                  <ProductCard
+                    image={product.thumbnail}
+                    name={product.name}
+                    badge="bestOrange"
+                    showHeart
+                  />
 
-                <div className="product-info">
-                  <p className="product-name">{product.name}</p>
+                  <div className="product-info">
+                    <p className="product-name">{product.name}</p>
 
-                  <p className="product-price">
-                    {product.price.toLocaleString()}원
-                  </p>
+                    <p className="product-price">
+                      {product.price.toLocaleString()}원
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </ProductListStyle>
           <button type="button" className="mobile-more-button">
@@ -276,22 +281,28 @@ export default function MainPage() {
           </div>
           <ProductListStyle>
             {newProducts.map((product) => (
-              <div className="product-item" key={product.productId}>
-                <ProductCard
-                  image={product.thumbnail}
-                  name={product.name}
-                  badge="new"
-                  showHeart
-                />
+              <Link
+                to={`/products/${product.productId}`}
+                className="product-link"
+              >
+                {" "}
+                <div className="product-item" key={product.productId}>
+                  <ProductCard
+                    image={product.thumbnail}
+                    name={product.name}
+                    badge="new"
+                    showHeart
+                  />
 
-                <div className="product-info">
-                  <p className="product-name">{product.name}</p>
+                  <div className="product-info">
+                    <p className="product-name">{product.name}</p>
 
-                  <p className="product-price">
-                    {product.price.toLocaleString()}원
-                  </p>
+                    <p className="product-price">
+                      {product.price.toLocaleString()}원
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </ProductListStyle>
           <button type="button" className="mobile-more-button">

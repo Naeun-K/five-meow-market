@@ -281,8 +281,8 @@ const product = [
   {
     productId: "cat-high-005",
     categoryId: "cat-high",
-    " name": "다용도 캣타워",
-    " price": 24900,
+    name: "다용도 캣타워",
+    price: 24900,
     thumbnail: "https://i.ibb.co/MyzQG5sx/5.webp",
     images: [
       "https://i.ibb.co/MyzQG5sx/5.webp",
