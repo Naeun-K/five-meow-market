@@ -34,10 +34,11 @@ import navCat4 from "../../assets/logo-high.webp";
 import navCat5 from "../../assets/logo-clean.webp";
 import { useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
+import PawIcon from "../common/PawIcon/PawIcon.jsx";
 
 const leftColumns = [
   {
-    title: "집사 PICK💗",
+    title: "집사 PICK",
     items: [{ label: "베스트 상품", path: "/products/best" }],
   },
   {
@@ -79,12 +80,13 @@ const mobileSections = [
 ];
 
 function Header() {
+  const [isLoggedin, setIsLoggedin] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const desktopSearchInputRef = useRef(null);
   const mobileSearchInputRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openSection, setOpenSection] = useState("집사 PICK💗");
+  const [openSection, setOpenSection] = useState("집사 PICK");
   const headerRef = useRef(null);
   const closeTimerRef = useRef(null);
   const navigate = useNavigate();
@@ -234,6 +236,10 @@ function Header() {
   const handleMenuToggle = () => setIsMenuOpen((isOpen) => !isOpen);
 
   const handleMenuClose = () => setIsMenuOpen(false);
+  function handleLogin() {
+    setIsLoggedin(true);
+    setIsMenuOpen(false);
+  }
 
   const handleLogout = async () => {
     try {
@@ -633,17 +639,29 @@ function Header() {
                     $title={col.title}
                     hideOnTablet={col.title === "REVIEW"}
                   >
-                    {/* <h3>{col.title}</h3> */}
-
                     {col.path ? (
                       <button
                         type="button"
                         onClick={() => handleNavigate(col.path)}
                       >
-                        <h3>{col.title}</h3>
+                        <h3>
+                          {col.title}
+                          {col.title === "집사 PICK" && (
+                            <span className="mega-paw">
+                              <PawIcon />
+                            </span>
+                          )}
+                        </h3>
                       </button>
                     ) : (
-                      <h3>{col.title}</h3>
+                      <h3>
+                        {col.title}
+                        {col.title === "집사 PICK" && (
+                          <span className="mega-paw">
+                            <PawIcon />
+                          </span>
+                        )}
+                      </h3>
                     )}
 
                     {col.items.length > 0 && (
@@ -719,15 +737,19 @@ function Header() {
 
           <MobileCard>
             <MobileAuthRow>
-              {authButtons.map((btn) => (
-                <MyShopButton
-                  key={btn.label}
-                  filled={btn.filled}
-                  onClick={() => handleNavigate(btn.path)}
-                >
-                  {btn.label}
-                </MyShopButton>
-              ))}
+              {!isLoggedin ? (
+                authButtons.map((btn) => (
+                  <MyShopButton
+                    key={btn.label}
+                    filled={btn.filled}
+                    onClick={() => handleNavigate(btn.path)}
+                  >
+                    {btn.label}
+                  </MyShopButton>
+                ))
+              ) : (
+                <MyShopButton onClick={handleLogout}>logout</MyShopButton>
+              )}
             </MobileAuthRow>
 
             {mobileSections.map((section) => {
@@ -754,7 +776,15 @@ function Header() {
                       setOpenSection(isSectionOpen ? null : section.title)
                     }
                   >
-                    {section.title}
+                    <span className="mobile-title">
+                      {section.title}
+
+                      {section.title === "집사 PICK" && (
+                        <span className="mobile-paw">
+                          <PawIcon />
+                        </span>
+                      )}
+                    </span>
 
                     <MobileChevron isOpen={isSectionOpen}>▾</MobileChevron>
                   </MobileAccordionHeader>

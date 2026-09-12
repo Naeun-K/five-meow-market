@@ -21,27 +21,60 @@ export const ModalRoot = styled.div({});
 export const MegaMenuWrapper = styled.div(({ isOpen }) => ({
   position: "absolute",
   top: 160,
-  left: 40,
-  right: 40,
+  left: "50%",
+
+  width: "calc(100% - 80px)",
+  maxWidth: "1300px",
+
+  transform: isOpen ? "translate(-50%, 0)" : "translate(-50%, -12px)",
+
   zIndex: 60,
 
   opacity: isOpen ? 1 : 0,
   visibility: isOpen ? "visible" : "hidden",
-  transform: isOpen ? "translateY(0)" : "translateY(-12px)",
+
   transition: "opacity .25s ease, transform .25s ease, visibility .25s",
 
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    width: "calc(100% - 0px)",
+    maxWidth: "none",
+
+    left: "50%",
+    right: "auto",
+
+    transform: isOpen
+      ? "translateX(-50%) translateY(0)"
+      : "translateX(-50%) translateY(-12px)",
+  },
+
   "@media (max-width: 767px)": {
+    position: "fixed",
+
     top: 80,
+    left: 0,
+    right: 0,
+
+    width: "100vw",
+    maxWidth: "none",
+
+    transform: isOpen ? "translateY(0)" : "translateY(-12px)",
   },
 }));
 
 export const MegaMenuCard = styled.div({
   position: "relative",
+  width: "100%",
+
   background: "#fff",
-  border: `1px solid ${colors.ink}`,
+  border: "1px solid #d4b59a",
+  borderRadius: 0,
+
   borderRadius: 28,
   boxShadow: "0 30px 50px -25px rgba(28,26,23,0.35)",
-  padding: "40px 48px",
+
+  padding: "60px 48px",
+  paddingBottom: "90px",
+  boxSizing: "border-box",
 
   "@media (max-width: 930px)": {
     padding: "28px 24px",
@@ -77,15 +110,28 @@ export const CloseButton = styled.div({
 });
 
 export const MegaInner = styled.div({
-  maxwidth: 1024,
-  width: "100%",
-  display: "flex",
-  justifyContent: "space-between",
-  gap: 32,
+  width: "fit-content",
+  maxWidth: "100%",
+  margin: "0 auto",
 
-  "@media (max-width: 1023px)": {
-    flexwrap: "wrap",
-    gap: 24,
+  display: "flex",
+  alignItems: "flex-start",
+  justifyContent: "center",
+
+  boxSizing: "border-box",
+
+  gap: "40px",
+
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    padding: "0 8px",
+    boxSizing: "border-box",
+
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center",
+
+    flexWrap: "nowrap",
+    gap: "10px",
   },
 
   "@media (max-width: 767px)": {
@@ -94,24 +140,28 @@ export const MegaInner = styled.div({
 });
 
 export const LeftGroup = styled.div({
-  flex: "1 1 auto",
-  display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
+  display: "flex",
+  alignItems: "flex-start",
+  justifyContent: "center",
+  flex: "0 0 auto",
 
-  gap: 28,
+  gap: "55px",
 
-  "@media (max-width: 1023px)": {
-    gridTemplateColumns: "repeat(3, 1fr)",
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    flex: "1 1 0",
+    minWidth: 0,
 
-    gridTemplateAreas: `
-    "pick category community"
-    "all  category community"
-  `,
-    gap: 10,
+    display: "flex",
+    flexWrap: "wrap", // 🔴 전체상품을 다음 줄로 보낼 수 있게
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+
+    columnGap: 50,
+    rowGap: 18,
   },
 
   "@media (max-width: 767px)": {
-    gridTemplateColumns: "repeat(2, 1fr)",
+    flexDirection: "column",
   },
 });
 
@@ -119,6 +169,10 @@ export const Divider = styled.div({
   width: 1,
   background: colors.line,
   alignSelf: "stretch",
+
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    marginRight: "25px",
+  },
 
   "@media (max-width: 767px)": {
     display: "none",
@@ -129,12 +183,34 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
   minWidth: 96,
   tabletOffset: "none",
 
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  textAlign: "center",
+
   h3: {
     fontSize: 20,
     margin: "0 0 16px",
     fontWeight: 700,
     color: colors.ink,
     whiteSpace: "nowrap",
+
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+
+    ".mega-paw": {
+      width: "30px",
+      height: "30px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+
+      svg: {
+        width: "100%",
+        height: "100%",
+      },
+    },
   },
   ul: {
     listStyle: "none",
@@ -142,6 +218,7 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     padding: 0,
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
     gap: 10,
   },
   button: {
@@ -154,26 +231,11 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     },
   },
 
-  "@media (max-width: 1023px)": {
-    display: hideOnTablet ? "none" : undefined,
+  // 🔴 태블릿 기본
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    display: hideOnTablet ? "none" : "block",
+    minWidth: 96,
 
-    minWidth: 0,
-
-    ...($title === "집사 PICK💗" && {
-      gridArea: "pick",
-    }),
-
-    ...($title === "카테고리" && {
-      gridArea: "category",
-    }),
-
-    ...($title === "전체상품" && {
-      gridArea: "all",
-    }),
-
-    ...($title === "COMMUNITY" && {
-      gridArea: "community",
-    }),
     h3: {
       fontSize: 18,
     },
@@ -181,6 +243,29 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     button: {
       fontSize: 17,
     },
+
+    // 첫 줄
+    ...($title === "집사 PICK💗" && {
+      order: 1,
+      flex: "0 0 auto",
+    }),
+
+    ...($title === "카테고리" && {
+      order: 2,
+      flex: "0 0 auto",
+    }),
+
+    ...($title === "COMMUNITY" && {
+      order: 3,
+      flex: "0 0 auto",
+    }),
+
+    // 작은 태블릿에서는 아래로
+    ...($title === "전체상품" && {
+      order: 4,
+      flex: "0 0 auto",
+      marginTop: "-80px",
+    }),
   },
 }));
 
@@ -219,6 +304,11 @@ export const MobileCard = styled.div({
   "@media (max-width: 767px)": {
     display: "block",
     position: "relative",
+
+    width: "100%",
+    margin: 0,
+    boxSizing: "border-box",
+
     background: colors.paper,
     border: `1px solid ${colors.line}`,
     borderRadius: 16,
@@ -246,14 +336,33 @@ export const MobileAccordionHeader = styled.button({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
+
   padding: "16px 2px",
   background: "none",
   border: "none",
+
   fontSize: 16,
   fontWeight: 700,
   color: colors.ink,
   cursor: "pointer",
   textAlign: "left",
+
+  "& .mobile-title": {
+    display: "flex",
+    alignItems: "center",
+    gap: "5px",
+  },
+
+  "& .mobile-paw": {
+    width: "25px",
+    height: "25px",
+    display: "flex",
+  },
+
+  svg: {
+    width: "100%",
+    height: "100%",
+  },
 });
 
 export const MobilePlainLink = styled.button({
