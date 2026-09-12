@@ -129,6 +129,10 @@ export const DetailProductStyle = styled.div({
 
   padding: "50px",
 
+  "@media (max-width: 600px)": {
+    padding: "20px",
+  },
+
   width: "100%",
 
   fontSize: "18px",
