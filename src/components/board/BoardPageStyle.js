@@ -1,808 +1,552 @@
 import styled from "@emotion/styled";
 
-/* =========================
-   Grid
-========================= */
+export const BoardContainer = styled.section`
+  width: 100%;
+  max-width: 1300px;
+  min-height: 850px;
+  margin: 0 auto;
+  padding: 0 50px;
+  box-sizing: border-box;
 
-const getGridColumns = (type) => {
-  switch (type) {
-    case "review":
-      return "80px 300px minmax(0, 1fr) 120px 160px 120px";
-
-    case "notice":
-    case "qna":
-    default:
-      return "80px minmax(0, 1fr) 120px 160px 80px";
+  h2 {
+    margin: 0 0 70px;
+    color: var(--text-primary, #3a3032);
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1.5px;
   }
-};
 
-const getTabletGridColumns = (type) => {
-  switch (type) {
-    case "review":
-      return "60px 190px minmax(0, 1fr) 90px 120px 90px";
-
-    case "notice":
-    case "qna":
-    default:
-      return "60px minmax(0, 1fr) 90px 120px 60px";
+  .board-body {
+    width: 100%;
   }
-};
 
-const getMobileGridColumns = (type) => {
-  switch (type) {
-    case "review":
-      return "90px minmax(0, 1fr)";
+  @media (max-width: 1023px) {
+    min-height: 750px;
+    padding: 0 30px;
 
-    case "notice":
-    case "qna":
-    default:
-      return "42px minmax(0, 1fr) 60px";
+    h2 {
+      margin-bottom: 50px;
+      font-size: 36px;
+    }
   }
-};
 
-/* =========================
-   Board Container
-========================= */
-
-export const BoardContainer = styled.section({
-  display: "flex",
-  flexDirection: "column",
-
-  width: "100%",
-  maxWidth: "1300px",
-  minWidth: 0,
-  minHeight: "850px",
-
-  padding: "0 50px",
-
-  "& > h2": {
-    width: "100%",
-    minWidth: 0,
-
-    margin: "0 0 70px",
-
-    // Page Title - PC
-    fontSize: "44px",
-    fontWeight: 600,
-    textAlign: "center",
-
-    // color: "var(--text-primary)",
-  },
-
-  /* Tablet */
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    width: "100%",
-    minWidth: 0,
-    minHeight: "750px",
-
-    padding: "0 30px",
-
-    "& > h2": {
-      width: "100%",
-
-      marginBottom: "60px",
-
-      // Page Title - Tablet
-      fontSize: "36px",
-    },
-  },
-
-  /* Mobile */
-  "@media (min-width: 320px) and (max-width: 767px)": {
-    width: "100%",
-    minWidth: 0,
-    minHeight: "650px",
-
-    padding: "0 12px",
-
-    "& > h2": {
-      width: "100%",
-
-      marginBottom: "40px",
-
-      // Page Title - Mobile
-      fontSize: "28px",
-    },
-  },
-});
-
-/* =========================
-   Board Header
-========================= */
-
-export const BoardHeader = styled.div(({ boardType }) => ({
-  display: "grid",
-  gridTemplateColumns: getGridColumns(boardType),
-  alignItems: "center",
-
-  width: "100%",
-  minWidth: 0,
-  minHeight: "65px",
-
-  borderTop: "1px solid var(--border)",
-  borderBottom: "1px solid var(--border)",
-
-  /* 컬럼명 = Body */
-  "& > span": {
-    width: "100%",
-    minWidth: 0,
-
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-
-    // Body - PC
-    fontSize: "18px",
-
-    textAlign: "center",
-  },
-
-  "& .title-header": {
-    textAlign: boardType === "review" ? "center" : "left",
-  },
-
-  /* =========================
-     Tablet
-  ========================= */
-
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    width: "100%",
-    minWidth: 0,
-
-    gridTemplateColumns: getTabletGridColumns(boardType),
-
-    "& > span": {
-      width: "100%",
-      minWidth: 0,
-
-      // Body - Tablet
-      fontSize: "17px",
-    },
-  },
-
-  /* =========================
-     Mobile
-  ========================= */
-
-  "@media (min-width: 320px) and (max-width: 767px)": {
-    width: "100%",
-    minWidth: 0,
-
-    gridTemplateColumns: getMobileGridColumns(boardType),
-
-    columnGap: "15px",
-
-    minHeight: "55px",
-
-    "& > span": {
-      width: "100%",
-      minWidth: 0,
-
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-
-      // Body - Mobile
-      fontSize: "16px",
-    },
-
-    ...(boardType !== "review" && {
-      "& .date-header, & .views-header": {
-        display: "none",
-      },
-
-      "& .title-header": {
-        textAlign: "left",
-      },
-    }),
-
-    ...(boardType === "review" && {
-      "& .number-header, & .writer-header, & .date-header, & .rating-header": {
-        display: "none",
-      },
-
-      "& .product-header, & .title-header": {
-        textAlign: "left",
-      },
-    }),
-  },
-}));
-
-/* =========================
-   Board Row
-========================= */
-
-export const BoardRow = styled.div(({ boardType }) => ({
-  display: "grid",
-  gridTemplateColumns: getGridColumns(boardType),
-  alignItems: "center",
-
-  width: "100%",
-  minWidth: 0,
-
-  minHeight: boardType === "review" ? "130px" : "70px",
-
-  borderBottom: "1px solid var(--border)",
-
-  /* =========================
-     기본 게시판 글자
-     번호 / 제목 / 작성자 등
-     = Body
-  ========================= */
-
-  "& > *": {
-    width: "100%",
-    minWidth: 0,
-
-    // Body - PC
-    fontSize: "18px",
-
-    textAlign: "center",
-  },
-
-  /* 번호 = Body */
-
-  "& .number-cell": {
-    width: "100%",
-    minWidth: 0,
-
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-
-    // Body - PC
-    fontSize: "18px",
-  },
-
-  "& .notice-number": {
-    fontWeight: 600,
-  },
-
-  /* =========================
-     제목 = Body
-  ========================= */
-
-  "& .title": {
-    width: "100%",
-    minWidth: 0,
-
-    overflow: "hidden",
-
-    // Body - PC
-    fontSize: "18px",
-
-    textAlign: "left",
-  },
-
-  "& .title-main": {
-    display: "flex",
-    alignItems: "center",
-    gap: "15px",
-
-    width: "100%",
-    minWidth: 0,
-
-    overflow: "hidden",
-
-    // Body - PC
-    fontSize: "18px",
-  },
-
-  "& .title-text": {
-    display: "block",
-
-    width: "100%",
-    minWidth: 0,
-
-    flex: "1 1 0",
-
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-
-    // Body - PC
-    fontSize: "18px",
-  },
-
-  /* =========================
-     작성자 = Body
-  ========================= */
-
-  "& .writer-cell": {
-    width: "100%",
-    minWidth: 0,
-
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-
-    // Body - PC
-    fontSize: "18px",
-  },
-
-  /* =========================
-     모바일용 날짜
-  ========================= */
-
-  "& .mobile-date": {
-    display: "none",
-  },
-
-  /* =========================
-     NEW = Badge
-  ========================= */
-
-  "& .new-badge": {
-    width: "auto",
-    minWidth: "auto",
-
-    flexShrink: 0,
-
-    padding: "2px 5px",
-
-    backgroundColor: "var(--bg-button)",
-    color: "#fffdf9",
-
-    // Badge - PC
-    fontSize: "14px",
-    fontWeight: 500,
-  },
-
-  /* =========================
-     자물쇠
-  ========================= */
-
-  "& .secret": {
-    width: "20px",
-    minWidth: "20px",
-
-    flexShrink: 0,
-  },
-
-  /* =========================
-     댓글 수 = Secondary
-  ========================= */
-
-  "& .comment-count": {
-    width: "auto",
-    minWidth: "auto",
-
-    flexShrink: 0,
-
-    // Secondary - PC
-    fontSize: "16px",
-
-    color: "var(--text-secondary)",
-  },
-
-  /* =========================
-     작성일 / 조회 = Secondary
-  ========================= */
-
-  "& .date, & .views": {
-    width: "100%",
-    minWidth: 0,
-
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-
-    // Secondary - PC
-    fontSize: "16px",
-
-    color: "var(--text-secondary)",
-  },
-
-  /* =========================
-     SVG
-  ========================= */
-
-  "& .svg-container": {
-    display: "flex",
-    alignItems: "center",
-
-    width: "20px",
-    minWidth: "20px",
-    aspectRatio: "1 / 1",
-
-    flexShrink: 0,
-
-    color: "var(--text-secondary)",
-  },
-
-  /* ==================================================
-     Tablet 768px ~ 1023px
-  ================================================== */
-
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    width: "100%",
-    minWidth: 0,
-
-    gridTemplateColumns: getTabletGridColumns(boardType),
-
-    /* 기본 = Body 17px */
-
-    "& > *": {
-      width: "100%",
-      minWidth: 0,
-
-      fontSize: "17px",
-    },
-
-    "& .number-cell": {
-      width: "100%",
-      minWidth: 0,
-
-      fontSize: "17px",
-    },
-
-    "& .title": {
-      width: "100%",
-      minWidth: 0,
-
-      fontSize: "17px",
-    },
-
-    "& .title-main": {
-      width: "100%",
-      minWidth: 0,
-
-      gap: "10px",
-
-      fontSize: "17px",
-    },
-
-    "& .title-text": {
-      width: "100%",
-      minWidth: 0,
-
-      fontSize: "17px",
-    },
-
-    "& .writer-cell": {
-      width: "100%",
-      minWidth: 0,
-
-      fontSize: "17px",
-    },
-
-    /* Secondary = 16px */
-
-    "& .date, & .views, & .comment-count": {
-      fontSize: "16px",
-    },
-
-    /* Badge = 14px */
-
-    "& .new-badge": {
-      width: "auto",
-      minWidth: "auto",
-
-      fontSize: "14px",
-    },
-
-    "& .secret, & .svg-container": {
-      width: "20px",
-      minWidth: "20px",
-    },
-  },
-
-  /* ==================================================
-     Mobile 320px ~ 767px
-  ================================================== */
-
-  "@media (min-width: 320px) and (max-width: 767px)": {
-    width: "100%",
-    minWidth: 0,
-
-    gridTemplateColumns: getMobileGridColumns(boardType),
-
-    columnGap: "15px",
-
-    minHeight: boardType === "review" ? "105px" : "80px",
-
-    /* =========================
-       기본 = Body 16px
-    ========================= */
-
-    "& > *": {
-      width: "100%",
-      minWidth: 0,
-
-      fontSize: "16px",
-    },
-
-    /* 번호 = Body */
-
-    "& .number-cell": {
-      width: "100%",
-      minWidth: 0,
-
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-
-      fontSize: "16px",
-    },
-
-    /* 제목 = Body */
-
-    "& .title-cell": {
-      width: "100%",
-      minWidth: 0,
-
-      padding: "10px 0",
-
-      overflow: "hidden",
-
-      fontSize: "16px",
-    },
-
-    "& .title-main": {
-      display: "flex",
-      alignItems: "center",
-      gap: "6px",
-
-      width: "100%",
-      minWidth: 0,
-
-      overflow: "hidden",
-
-      fontSize: "16px",
-    },
-
-    "& .title-text": {
-      display: "block",
-
-      width: "100%",
-      minWidth: 0,
-
-      flex: "1 1 0",
-
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-
-      fontSize: "16px",
-    },
-
-    /* 작성자 = Body */
-
-    "& .writer-cell": {
-      width: "100%",
-      minWidth: 0,
-
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-
-      fontSize: "16px",
-    },
-
-    /* =========================
-       Secondary = 15px
-    ========================= */
-
-    "& .mobile-date": {
-      display: "block",
-
-      width: "100%",
-      minWidth: 0,
-
-      marginTop: "5px",
-
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-
-      fontSize: "15px",
-
-      color: "var(--text-secondary)",
-    },
-
-    "& .date, & .views, & .comment-count": {
-      fontSize: "15px",
-
-      color: "var(--text-secondary)",
-    },
-
-    /* =========================
-       Badge = 13px
-    ========================= */
-
-    "& .new-badge": {
-      width: "auto",
-      minWidth: "auto",
-
-      flexShrink: 0,
-
-      fontSize: "13px",
-    },
-
-    /* 아이콘 */
-
-    "& .secret, & .svg-container": {
-      width: "18px",
-      minWidth: "18px",
-
-      flexShrink: 0,
-    },
-
-    /* =========================
-       공지사항 / Q&A
-    ========================= */
-
-    ...(boardType !== "review" && {
-      "& .date-cell, & .views-cell": {
-        display: "none",
-      },
-
-      "& .number-cell": {
-        alignSelf: "start",
-
-        paddingTop: "12px",
-      },
-
-      "& .writer-cell": {
-        alignSelf: "start",
-
-        paddingTop: "12px",
-      },
-    }),
-
-    /* =========================
-       리뷰
-    ========================= */
-
-    ...(boardType === "review" && {
-      "& .number-cell, & .writer-cell, & .date-cell, & .rating-cell": {
-        display: "none",
-      },
-    }),
-  },
-}));
-
-/* =========================
-   Product Info
-   상품명 = Body
-========================= */
-
-export const ProductInfo = styled.div({
-  display: "flex",
-  alignItems: "center",
-  gap: "15px",
-
-  width: "100%",
-  minWidth: 0,
-
-  // Body - PC
-  fontSize: "18px",
-
-  "& img": {
-    width: "85px",
-    maxWidth: "85px",
-    aspectRatio: "1 / 1",
-
-    objectFit: "cover",
-    borderRadius: "8px",
-
-    flexShrink: 0,
-  },
-
-  "& span": {
-    display: "block",
-
-    width: "100%",
-    minWidth: 0,
-
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-
-    // Body - PC
-    fontSize: "18px",
-
-    textAlign: "left",
-  },
-
-  /* Tablet */
-
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    width: "100%",
-    minWidth: 0,
-
-    gap: "10px",
-
-    // Body - Tablet
-    fontSize: "17px",
-
-    "& img": {
-      width: "65px",
-      maxWidth: "65px",
-    },
-
-    "& span": {
-      width: "100%",
-      minWidth: 0,
-
-      // Body - Tablet
-      fontSize: "17px",
-    },
-  },
-
-  /* Mobile */
-
-  "@media (min-width: 320px) and (max-width: 767px)": {
-    width: "100%",
-    minWidth: 0,
-
-    gap: "6px",
-
-    paddingRight: "8px",
-
-    // Body - Mobile
-    fontSize: "16px",
-
-    "& img": {
-      width: "50px",
-      maxWidth: "50px",
-
-      borderRadius: "6px",
-    },
-
-    "& span": {
-      width: "100%",
-      minWidth: 0,
-
-      display: "none",
-
-      // Body - Mobile
-      fontSize: "16px",
-    },
-  },
-});
-
-/* =========================
-   Rating
-========================= */
-
-export const Rating = styled.div({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-
-  width: "100%",
-  minWidth: 0,
-
-  "& .svg-container": {
-    width: "30px",
-    minWidth: 0,
-    aspectRatio: "1 / 1",
-
-    flexShrink: 1,
-
-    color: "var(--bg-button)",
-  },
-
-  /* Tablet */
-
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    width: "100%",
-    minWidth: 0,
-
-    "& .svg-container": {
-      width: "24px",
-    },
-  },
-
-  /* Mobile */
-
-  "@media (min-width: 320px) and (max-width: 767px)": {
-    width: "100%",
-    minWidth: 0,
-
-    "& .svg-container": {
-      width: "20px",
-    },
-  },
-});
+  @media (max-width: 767px) {
+    min-height: 650px;
+    padding: 0 12px;
+
+    h2 {
+      margin-bottom: 35px;
+      font-size: 28px;
+      letter-spacing: -1px;
+    }
+  }
+`;
+
+export const BoardHeader = styled.div`
+  display: grid;
+  align-items: center;
+  width: 100%;
+  min-height: 72px;
+  box-sizing: border-box;
+  border-top: 1px solid var(--border, #ddd6cc);
+  border-bottom: 1px solid var(--border, #ddd6cc);
+  text-align: center;
+
+  ${({ boardType }) =>
+    boardType === "review"
+      ? `
+        grid-template-columns: 160px minmax(0, 1fr) 120px 160px 120px;
+      `
+      : `
+        grid-template-columns: 80px minmax(0, 1fr) 120px 160px 80px;
+      `}
+
+  span {
+    min-width: 0;
+    color: var(--text-primary, #3a3032);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1023px) {
+    min-height: 70px;
+
+    ${({ boardType }) =>
+      boardType === "review"
+        ? `
+          grid-template-columns: 120px minmax(0, 1fr) 90px 120px 90px;
+        `
+        : `
+          grid-template-columns: 60px minmax(0, 1fr) 90px 120px 60px;
+        `}
+
+    span {
+      font-size: 17px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    min-height: 55px;
+    gap: 10px;
+    padding: 0 8px;
+    text-align: center;
+
+    ${({ boardType }) =>
+      boardType === "review"
+        ? `
+          grid-template-columns: 64px minmax(0, 1fr) 82px;
+        `
+        : `
+          grid-template-columns: 42px minmax(0, 1fr) 60px;
+        `}
+
+    span {
+      min-width: 0;
+      font-size: 14px;
+      line-height: 1;
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+
+    ${({ boardType }) =>
+      boardType === "review"
+        ? `
+          .number-header,
+          .writer-header,
+          .date-header {
+            display: none;
+          }
+
+          .product-header,
+          .title-header,
+          .rating-header {
+            display: block;
+          }
+
+          .product-header {
+            white-space: nowrap;
+            word-break: keep-all;
+          }
+
+          .title-header {
+            text-align: left;
+          }
+
+          .rating-header {
+            text-align: center;
+          }
+        `
+        : `
+          .writer-header,
+          .date-header {
+            display: none;
+          }
+
+          .number-header,
+          .title-header,
+          .views-header {
+            display: block;
+          }
+
+          .title-header {
+            text-align: left;
+          }
+
+          .views-header {
+            text-align: center;
+          }
+        `}
+  }
+`;
+
+export const BoardRow = styled.div`
+  display: grid;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--border, #ddd6cc);
+  text-align: center;
+
+  ${({ boardType }) =>
+    boardType === "review"
+      ? `
+        grid-template-columns: 160px minmax(0, 1fr) 120px 160px 120px;
+        min-height: 150px;
+        padding: 20px;
+      `
+      : `
+        grid-template-columns: 80px minmax(0, 1fr) 120px 160px 80px;
+        min-height: 96px;
+        padding: 18px 20px;
+      `}
+
+  & > span,
+  & > div {
+    min-width: 0;
+    color: var(--text-primary, #3a3032);
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .number-cell,
+  .writer-cell,
+  .date-cell,
+  .views-cell {
+    text-align: center;
+  }
+
+  .number-cell.notice-number {
+    color: var(--bg-button, #614832);
+    font-weight: 600;
+  }
+
+  .title-cell {
+    min-width: 0;
+    text-align: left;
+  }
+
+  .title-main {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    min-width: 0;
+    gap: 10px;
+  }
+
+  .title-text {
+    display: -webkit-box;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--text-primary, #3a3032);
+    font-size: 18px;
+    line-height: 1.7;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .new-badge {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 7px;
+    border-radius: 3px;
+    background: var(--bg-button, #614832);
+    color: #fffdf9;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .secret {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--text-secondary, #99918a);
+    order: -1;
+  }
+
+  .comment-count {
+    flex-shrink: 0;
+    color: var(--text-secondary, #99918a);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .mobile-date {
+    display: none;
+  }
+
+  .date-cell,
+  .views-cell,
+  .writer-cell {
+    color: var(--text-secondary, #99918a);
+    font-size: 16px;
+  }
+
+  .svg-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 1023px) {
+    ${({ boardType }) =>
+      boardType === "review"
+        ? `
+          grid-template-columns: 120px minmax(0, 1fr) 90px 120px 90px;
+          min-height: 145px;
+          padding: 18px;
+        `
+        : `
+          grid-template-columns: 60px minmax(0, 1fr) 90px 120px 60px;
+          min-height: 100px;
+          padding: 16px;
+        `}
+
+    & > span,
+    & > div {
+      font-size: 17px;
+    }
+
+    .title-text {
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .date-cell,
+    .views-cell,
+    .writer-cell {
+      font-size: 15px;
+    }
+
+    .new-badge {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    gap: 15px;
+    padding: 14px 8px;
+
+    ${({ boardType }) =>
+      boardType === "review"
+        ? `
+          grid-template-columns: 64px minmax(0, 1fr) 82px;
+          min-height: 125px;
+        `
+        : `
+          grid-template-columns: 42px minmax(0, 1fr) 60px;
+          min-height: 88px;
+        `}
+
+    & > span,
+    & > div {
+      font-size: 16px;
+    }
+
+    .title-cell {
+      min-width: 0;
+      padding: 8px 0;
+    }
+
+    .title-main {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      min-width: 0;
+      gap: 7px;
+      overflow: hidden;
+    }
+
+    /*
+      모바일 제목:
+      - 무조건 한 줄
+      - 길면 ... 표시
+      - 줄바꿈 방지
+    */
+    .title-text {
+      display: block;
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      font-size: 16px;
+      line-height: 1.55;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+
+    .new-badge {
+      flex-shrink: 0;
+      padding: 3px 5px;
+      font-size: 10px;
+    }
+
+    .secret {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+    }
+
+    .comment-count {
+      flex-shrink: 0;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .mobile-date {
+      display: block;
+      margin-top: 5px;
+      color: var(--text-secondary, #99918a);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .date-cell,
+    .views-cell,
+    .writer-cell {
+      font-size: 13px;
+    }
+
+    ${({ boardType }) =>
+      boardType === "review"
+        ? `
+          .product-cell {
+            grid-column: 1;
+            grid-row: 1;
+            align-self: start;
+            justify-content: center;
+            align-items: center;
+            width: 65px;
+            height: 65px;
+            aspect-ratio: 1 / 1;
+            box-sizing: border-box;
+          }
+
+          .title-cell {
+            grid-column: 2 / 4;
+            grid-row: 1;
+            align-self: stretch;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+            overflow: hidden;
+          }
+
+          .number-cell,
+          .writer-cell,
+          .date-cell {
+            display: none;
+          }
+
+          .rating-cell {
+            grid-column: 3;
+            grid-row: 1;
+            display: flex !important;
+            align-self: end;
+            justify-self: end;
+            justify-content: center;
+            align-items: center;
+            width: 82px;
+            margin-top: auto;
+            margin-bottom: 2px;
+            z-index: 2;
+          }
+        `
+        : `
+          .writer-cell,
+          .date-cell {
+            display: none;
+          }
+        `}
+  }
+`;
+
+/*상품 이미지 영역*/
+export const ProductInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  text-align: center;
+  box-sizing: border-box;
+
+  img {
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 112px;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 1023px) {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    img {
+      width: 100%;
+      max-width: 90px;
+      aspect-ratio: 1 / 1;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 767px) {
+    width: 65px;
+    height: 65px;
+    aspect-ratio: 1 / 1;
+
+    img {
+      width: 65px;
+      height: 65px;
+      max-width: 65px;
+      aspect-ratio: 1 / 1;
+      border-radius: 5px;
+    }
+  }
+`;
+
+export const Rating = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--bg-button, #614832);
+  white-space: nowrap;
+
+  .svg-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 1023px) {
+    gap: 2px;
+
+    .svg-container {
+      width: 19px;
+      height: 19px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    display: flex !important;
+    gap: 1px;
+    justify-content: center;
+    align-items: center;
+
+    .svg-container {
+      display: inline-flex !important;
+      width: 14px;
+      height: 14px;
+    }
+
+    svg {
+      display: block !important;
+      width: 100%;
+      height: 100%;
+    }
+  }
+`;
