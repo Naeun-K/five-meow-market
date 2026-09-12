@@ -67,7 +67,6 @@ export const MegaMenuCard = styled.div({
 
   background: "#fff",
   border: "1px solid #d4b59a",
-  borderRadius: 0,
 
   borderRadius: 28,
   boxShadow: "0 30px 50px -25px rgba(28,26,23,0.35)",
@@ -152,7 +151,7 @@ export const LeftGroup = styled.div({
     minWidth: 0,
 
     display: "flex",
-    flexWrap: "wrap", // 🔴 전체상품을 다음 줄로 보낼 수 있게
+    flexWrap: "wrap",
     justifyContent: "flex-start",
     alignItems: "flex-start",
 
@@ -179,9 +178,10 @@ export const Divider = styled.div({
   },
 });
 
+/* 메뉴 카테고리 */
+
 export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
   minWidth: 96,
-  tabletOffset: "none",
 
   display: "flex",
   flexDirection: "column",
@@ -231,9 +231,8 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     },
   },
 
-  // 🔴 태블릿 기본
   "@media (min-width: 768px) and (max-width: 1023px)": {
-    display: hideOnTablet ? "none" : "block",
+    display: hideOnTablet ? "none" : "flex",
     minWidth: 96,
 
     h3: {
@@ -244,8 +243,7 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
       fontSize: 17,
     },
 
-    // 첫 줄
-    ...($title === "집사 PICK💗" && {
+    ...($title === "집사 PICK" && {
       order: 1,
       flex: "0 0 auto",
     }),
@@ -260,7 +258,6 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
       flex: "0 0 auto",
     }),
 
-    // 작은 태블릿에서는 아래로
     ...($title === "전체상품" && {
       order: 4,
       flex: "0 0 auto",
@@ -287,9 +284,128 @@ export const MyShopGrid = styled.div({
   gridTemplateColumns: "repeat(2, 1fr)",
   gap: 10,
   width: 180,
+  ".myshop-guest": {
+    width: "100%",
+    gridColumn: "1 / -1",
 
-  "@media (max-width: 1023px)": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    gap: 8,
+  },
+
+  ".myshop-guest-image": {
+    width: 100,
+    height: "auto",
+    objectFit: "contain",
+    display: "block",
+  },
+
+  ".myshop-guest-title": {
+    fontSize: 15,
+    fontWeight: 700,
+    lineHeight: 1.4,
+    color: colors.ink,
+  },
+
+  ".myshop-guest-text": {
+    fontSize: 12,
+    color: colors.muted,
+    whiteSpace: "nowrap",
+  },
+
+  ".myshop-guest-buttons": {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+    marginTop: 4,
+
+    button: {
+      width: "100%",
+    },
+  },
+
+  ".myshop-user": {
+    width: "100%",
+    gridColumn: "1 / -1",
+
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 10,
+  },
+
+  ".myshop-profile": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 4,
+  },
+
+  ".myshop-profile-image": {
+    width: 68,
+    height: "auto",
+    objectFit: "contain",
+    display: "block",
+  },
+  ".myshop-image-circle": {
+    width: 82,
+    height: 82,
+
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+    backgroundColor: "#F7EFE5",
+    borderRadius: "50%",
+
+    overflow: "visible",
+  },
+
+  ".myshop-nickname": {
+    fontSize: 15,
+    fontWeight: 600,
+    color: colors.ink,
+    whiteSpace: "nowrap",
+  },
+
+  ".myshop-points": {
+    padding: "4px 12px",
+    borderRadius: 20,
+    backgroundColor: "#F7EFE5",
+
+    fontSize: 13,
+    fontWeight: 600,
+    color: "#9A765B",
+    whiteSpace: "nowrap",
+  },
+
+  ".logout-button": {
+    width: "100%",
+  },
+
+  ".myshop-menu-buttons": {
+    width: "100%",
+
     display: "grid",
+    gridTemplateColumns: "1fr",
+    gap: 8,
+
+    button: {
+      minWidth: 0,
+      padding: "8px 6px",
+
+      "&:hover": {
+        backgroundColor: "#F2DFC6",
+        borderColor: "#D8BFA8",
+        color: colors.ink,
+      },
+    },
+  },
+  "@media (max-width: 1023px)": {
     gridTemplateColumns: "repeat(1, 1fr)",
   },
 });
@@ -315,15 +431,91 @@ export const MobileCard = styled.div({
     padding: "20px 20px 28px",
     boxShadow: "0 20px 40px -25px rgba(28,26,23,0.25)",
   },
-});
 
-export const MobileAuthRow = styled.div({
-  display: "flex",
-  gap: 10,
-  padding: "16px 0 20px",
+  ".mobile-user-area": {
+    paddingTop: 20,
+  },
 
-  button: {
-    flex: 1,
+  ".mobile-user-profile": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 16,
+  },
+
+  ".mobile-user-image": {
+    width: 76,
+    height: 76,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#F7EFE5",
+    borderRadius: "50%",
+
+    img: {
+      width: 62,
+      height: "auto",
+      display: "block",
+    },
+  },
+
+  ".mobile-user-points": {
+    padding: "5px 14px",
+    backgroundColor: "#F7EFE5",
+    borderRadius: 20,
+
+    fontSize: 13,
+    color: "#9A765B",
+    whiteSpace: "nowrap",
+  },
+
+  ".mobile-user-menu": {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+
+    button: {
+      width: "100%",
+    },
+  },
+
+  ".mobile-guest-area": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 8,
+    paddingTop: 20,
+    textAlign: "center",
+  },
+
+  ".mobile-guest-image": {
+    width: 90,
+    height: "auto",
+    display: "block",
+  },
+
+  ".mobile-guest-title": {
+    fontSize: 16,
+    fontWeight: 700,
+    lineHeight: 1.4,
+  },
+
+  ".mobile-guest-text": {
+    fontSize: 12,
+    color: colors.muted,
+  },
+
+  ".mobile-guest-buttons": {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+    marginTop: 8,
+
+    button: {
+      width: "100%",
+    },
   },
 });
 
@@ -399,13 +591,6 @@ export const MobileSubNavLink = styled.button({
   textDecoration: "none",
 });
 
-export const MobileMyShopHeading = styled.h3({
-  fontSize: 16,
-  fontWeight: 700,
-  color: colors.ink,
-  margin: "20px 2px 12px",
-});
-
 export const MobileCloseButton = styled.button({
   display: "flex",
   alignItems: "center",
@@ -420,6 +605,8 @@ export const MobileCloseButton = styled.button({
   color: colors.ink,
   cursor: "pointer",
 });
+
+/* 공통 버튼 */
 
 export const MyShopButton = styled.button({
   padding: "8px 10px",
