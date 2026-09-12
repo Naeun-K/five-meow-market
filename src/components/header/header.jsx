@@ -25,7 +25,7 @@ import {
   MobileSubNavLink,
   MobileCloseButton,
 } from "./navMenuStyle.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useToast from "../../hooks/useToast.js";
 import navCat1 from "../../assets/logo-eat.webp";
 import navCat2 from "../../assets/logo-play.webp";
@@ -88,7 +88,24 @@ function Header() {
   const closeTimerRef = useRef(null);
   const navigate = useNavigate();
   const { showToast } = useToast();
+
+  const [user, setUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem("user");
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
   const { pathname, search } = useLocation();
+
+  const nickname =
+    user?.nickname || user?.nickName || user?.username || user?.name || "회원";
+
+  const points = user?.points ?? 0;
 
   const params = new URLSearchParams(search);
   const category = params.get("category");
@@ -168,8 +185,31 @@ function Header() {
     };
 
     document.addEventListener("pointerdown", handleOutsideClick);
+
     return () =>
       document.removeEventListener("pointerdown", handleOutsideClick);
+  }, []);
+
+  useEffect(() => {
+    try {
+      const savedUser = localStorage.getItem("user");
+      setUser(savedUser ? JSON.parse(savedUser) : null);
+    } catch {
+      setUser(null);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleUserMenuOutsideClick = (event) => {
+      if (!userMenuRef.current?.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handleUserMenuOutsideClick);
+
+    return () =>
+      document.removeEventListener("pointerdown", handleUserMenuOutsideClick);
   }, []);
 
   const isSmallScreen = () => window.matchMedia("(max-width: 1024px)").matches;
@@ -197,8 +237,20 @@ function Header() {
   };
 
   const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen); //추가 끝
+
   const handleMenuToggle = () => setIsMenuOpen((isOpen) => !isOpen);
+
   const handleMenuClose = () => setIsMenuOpen(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+
+    setUser(null);
+    setIsUserMenuOpen(false);
+  };
+
   //네비게이션 드롭다운 구현용 메뉴 데이터
   const authButtons = myShopButtons.filter(
     (b) => b.label === "로그인" || b.label === "회원가입",
@@ -249,26 +301,94 @@ function Header() {
             className="svg-container"
             onClick={handleMenuToggle}
           >
+            {/* 햄버거 아이콘 1개 / 4줄 */}
             <svg
               width="100%"
               height="100%"
-              viewBox="0 0 32 20"
+              viewBox="0 0 32 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M0 18.8831C0 18.6195 0.139612 18.3667 0.388122 18.1803C0.636631 17.994 0.973683 17.8892 1.32513 17.8892H30.478C30.8294 17.8892 31.1665 17.994 31.415 18.1803C31.6635 18.3667 31.8031 18.6195 31.8031 18.8831C31.8031 19.1467 31.6635 19.3995 31.415 19.5858C31.1665 19.7722 30.8294 19.8769 30.478 19.8769H1.32513C0.973683 19.8769 0.636631 19.7722 0.388122 19.5858C0.139612 19.3995 0 19.1467 0 18.8831ZM0 12.92C0 12.6564 0.139612 12.4036 0.388122 12.2173C0.636631 12.0309 0.973683 11.9262 1.32513 11.9262H30.478C30.8294 11.9262 31.1665 12.0309 31.415 12.2173C31.6635 12.4036 31.8031 12.6564 31.8031 12.92C31.8031 13.1836 31.6635 13.4364 31.415 13.6228C31.1665 13.8092 30.8294 13.9139 30.478 13.9139H1.32513C0.973683 13.9139 0.636631 13.8092 0.388122 13.6228C0.139612 13.4364 0 13.1836 0 12.92ZM0 6.95693C0 6.69334 0.139612 6.44056 0.388122 6.25417C0.636631 6.06779 0.973683 5.96308 1.32513 5.96308H30.478C30.8294 5.96308 31.1665 6.06779 31.415 6.25417C31.6635 6.44056 31.8031 6.69334 31.8031 6.95693C31.8031 7.22051 31.6635 7.4733 31.415 7.65968C31.1665 7.84607 30.8294 7.95078 30.478 7.95078H1.32513C0.973683 7.95078 0.636631 7.84607 0.388122 7.65968C0.139612 7.4733 0 7.22051 0 6.95693ZM0 0.993847C0 0.730262 0.139612 0.477474 0.388122 0.291091C0.636631 0.104709 0.973683 0 1.32513 0H30.478C30.8294 0 31.1665 0.104709 31.415 0.291091C31.6635 0.477474 31.8031 0.730262 31.8031 0.993847C31.8031 1.25743 31.6635 1.51022 31.415 1.6966C31.1665 1.88299 30.8294 1.98769 30.478 1.98769H1.32513C0.973683 1.98769 0.636631 1.88299 0.388122 1.6966C0.139612 1.51022 0 1.25743 0 0.993847Z"
-                fill="black"
-              />
+              <rect y="0" width="32" height="2" rx="1" fill="black" />
+              <rect y="7" width="32" height="2" rx="1" fill="black" />
+              <rect y="14" width="32" height="2" rx="1" fill="black" />
+              <rect y="21" width="32" height="2" rx="1" fill="black" />
             </svg>
           </button>
+
           <div className="logo-container">
             <Logo />
           </div>
 
           <div className="svg-list">
+            {!user ? (
+              <Link to="/login" className="login-link">
+                로그인
+              </Link>
+            ) : (
+              <div className="user-area" ref={userMenuRef}>
+                <button
+                  type="button"
+                  className="user-menu-button"
+                  aria-expanded={isUserMenuOpen}
+                  aria-haspopup="menu"
+                  onClick={() => setIsUserMenuOpen((isOpen) => !isOpen)}
+                >
+                  <span className="user-nickname">{nickname}</span>
+                  <span className="user-nim">님</span>
+
+                  <span className="user-icon svg-container">
+                    <svg
+                      width="100%"
+                      height="100%"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="12"
+                        cy="7"
+                        r="4"
+                        stroke="black"
+                        strokeWidth="1.5"
+                      />
+
+                      <path
+                        d="M3 21
+                        C3.6 16.5 7 14 12 14
+                        C17 14 20.4 16.5 21 21
+                        H3Z"
+                        stroke="black"
+                        strokeWidth="1.5"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
+
+                <DropdownMenu
+                  $isOpen={isUserMenuOpen}
+                  $alignRight={true}
+                  className="user-dropdown"
+                >
+                  <div className="user-dropdown-info">
+                    <strong>{nickname}님</strong>
+                    <span>{points.toLocaleString()}P</span>
+                  </div>
+
+                  <div className="user-dropdown-divider" />
+
+                  <Link to="/mypage" onClick={() => setIsUserMenuOpen(false)}>
+                    마이페이지
+                  </Link>
+
+                  <button type="button" onClick={handleLogout}>
+                    로그아웃
+                  </button>
+                </DropdownMenu>
+              </div>
+            )}
+
             <button
               type="button"
               aria-label={isSearchOpen ? "검색창 닫기" : "검색창 열기"}
@@ -290,6 +410,7 @@ function Header() {
                   stroke="black"
                   strokeWidth="1.5"
                 />
+
                 <path
                   d="M14.2 14.2L21 21"
                   stroke="black"
@@ -299,31 +420,6 @@ function Header() {
               </svg>
             </button>
 
-            <span
-              type="button"
-              aria-label="마이페이지"
-              className="svg-container my-page"
-              onClick={() => handleNavigate("/mypage/edit")}
-            >
-              <svg
-                width="100%"
-                height="100%"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle cx="12" cy="7" r="4" stroke="black" strokeWidth="1.5" />
-                <path
-                  d="M3 21
-       C3.6 16.5 7 14 12 14
-       C17 14 20.4 16.5 21 21
-       H3Z"
-                  stroke="black"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
             <button
               type="button"
               aria-label="장바구니"
@@ -343,14 +439,15 @@ function Header() {
             </button>
           </div>
         </div>
+
         <div className="navigation-container">
           <nav className="navigation">
             {navItems.map((menu) => {
               const isActive = isActiveMenu(menu.label);
+
               return (
                 <div
                   key={menu.label}
-                  // className="nav-item"
                   className={`nav-item${isActive ? " active" : ""}`}
                   onMouseEnter={() => handleMenuEnter(menu)}
                   onMouseLeave={handleMenuLeave}
@@ -365,6 +462,7 @@ function Header() {
                       />
                     </div>
                   )}
+
                   {menu.children ? (
                     <button
                       type="button"
@@ -374,7 +472,6 @@ function Header() {
                       {menu.label}
                     </button>
                   ) : (
-                    // <a href={`#${menu.label}`}>{menu.label}</a>
                     <button
                       type="button"
                       onClick={() => handleNavigate(menu.path)}
@@ -382,13 +479,9 @@ function Header() {
                       {menu.label}
                     </button>
                   )}
+
                   {menu.children && (
                     <DropdownMenu $isOpen={openMenu === menu.label}>
-                      {/* {menu.children.map((child, index) => (
-                    <a key={`${child.path}-${index}`} href={child.path}>
-                      {child.label}
-                    </a>
-                  ))} */}
                       {menu.children.map((child) => (
                         <button
                           key={child.path}
@@ -404,6 +497,7 @@ function Header() {
               );
             })}
           </nav>
+
           <form className="search-form" onSubmit={handleSearch}>
             <input
               type="text"
@@ -413,6 +507,7 @@ function Header() {
               aria-label="상품 검색"
               placeholder="검색할 상품을 입력하세요"
             />
+
             <button type="submit" className="search-btn svg-container">
               <svg
                 width="100%"
@@ -428,6 +523,7 @@ function Header() {
                   stroke="black"
                   strokeWidth="1.5"
                 />
+
                 <path
                   d="M14.2 14.2L21 21"
                   stroke="black"
@@ -483,6 +579,7 @@ function Header() {
                     stroke="black"
                     strokeWidth="1.5"
                   />
+
                   <path
                     d="M14.2 14.2L21 21"
                     stroke="black"
@@ -511,6 +608,7 @@ function Header() {
             </button>
           </div>
         </div>
+
         {/* 여기서부터 모달 */}
         <MegaMenuWrapper isOpen={isMenuOpen}>
           <MegaMenuCard>
@@ -557,6 +655,7 @@ function Header() {
                             >
                               {item.label}
                             </button>
+
                             {/* <a href="#" onClick={handleMenuClose}>
                             {item}
                           </a> */}
@@ -572,6 +671,7 @@ function Header() {
                     )}
                   </MegaCol>
                 ))}
+
                 {/* 
               <MegaCol $title="COMMUNITY">
                 <h3>COMMUNITY</h3> */}
@@ -595,10 +695,12 @@ function Header() {
                 </CommunityLists>
               </MegaCol> */}
               </LeftGroup>
+
               <Divider />
 
               <MegaCol>
                 <h3>MY SHOP</h3>
+
                 <MyShopGrid>
                   {myShopButtons.map((btn) => (
                     <MyShopButton
@@ -629,6 +731,7 @@ function Header() {
 
             {mobileSections.map((section) => {
               const isAccordion = section.items.length > 0;
+
               const isSectionOpen = openSection === section.title;
 
               if (!isAccordion) {
@@ -651,13 +754,14 @@ function Header() {
                     }
                   >
                     {section.title}
+
                     <MobileChevron isOpen={isSectionOpen}>▾</MobileChevron>
                   </MobileAccordionHeader>
 
                   {isSectionOpen && (
                     <MobileSubNavList>
                       {section.items.map((item) => (
-                        <li key={item}>
+                        <li key={item.path}>
                           <MobileSubNavLink
                             onClick={() => handleNavigate(item.path)}
                           >
