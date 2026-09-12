@@ -504,8 +504,8 @@ export const HeaderStyle = styled.header({
     "& .navigation": {
       display: "flex",
 
-      fontSize: "18px",
-      gap: "50px",
+      fontSize: "17px",
+      gap: "28px",
 
       justifyContent: "center",
 
@@ -521,7 +521,7 @@ export const HeaderStyle = styled.header({
     },
 
     "& .svg-list": {
-      gap: "30px",
+      gap: "24px",
     },
 
     "& .svg-container": {

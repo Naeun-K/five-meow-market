@@ -121,6 +121,7 @@ export const FooterLinks = styled.nav`
 
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 
   gap: 16px;
 
@@ -130,7 +131,7 @@ export const FooterLinks = styled.nav`
     white-space: nowrap;
   }
 
-  desktop-text {
+  .desktop-text {
     display: inline;
   }
 
@@ -139,11 +140,15 @@ export const FooterLinks = styled.nav`
   }
 
   @media (max-width: 767px) {
-    width: 228px;
+    width: 100%;
 
     justify-content: center;
     font-size: 15px;
-    gap: 16px;
+    gap: 10px 16px;
+
+    button {
+      font-size: 14px;
+    }
   }
   @media (max-width: 374px) {
     .desktop-text {
@@ -176,5 +181,8 @@ export const FooterCopyright = styled.p`
 
   @media (max-width: 767px) {
     font-size: 15px;
+    line-height: 1.6;
+    text-align: center;
+    word-break: keep-all;
   }
 `;

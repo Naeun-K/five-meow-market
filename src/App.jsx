@@ -11,6 +11,9 @@ import ReviewPage from "./pages/communitypage/ReviewPage";
 import CartPage from "./pages/cartpage/CartPage";
 import ScrollToTop from "./routes/ScrollTop";
 import CheckoutPage from "./pages/checkout/CheckoutPage";
+import PrivacyPolicyPage from "./pages/privacyPolicy/PrivacyPolicyPage";
+import TermsPage from "./pages/terms/TermsPage";
+import AboutPage from "./pages/about/AboutPage";
 
 function App() {
   return (
@@ -39,6 +42,9 @@ function App() {
 
         {/* 장바구니 / 주문 */}
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/about" element={<AboutPage />} />
         {/* <Route path="/checkout" element={<Checkout />} /> */}
 
         {/* 공지사항 */}
