@@ -11,7 +11,6 @@ import {
 } from "./ProductListStyle";
 import useToast from "../../hooks/useToast";
 import { useProductLimit } from "../../hooks/useProductLimit";
-import ChatIcon from "../../components/ChatIcon/ChatIcon";
 import { Link, useSearchParams } from "react-router-dom";
 // import {  useNavigate } from "react-router-dom";
 
@@ -109,7 +108,6 @@ export default function ProductList() {
             </Link>
           ))}
         </CardContainer>
-        <ChatIcon />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

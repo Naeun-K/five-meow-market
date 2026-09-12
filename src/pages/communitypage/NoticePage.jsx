@@ -1,6 +1,5 @@
 import BasicPage from "../basicPage/BasicPage";
 import BoardPage from "../../components/board/BoardPage";
-import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const noticeData = [
   {
@@ -73,7 +72,6 @@ export default function NoticePage() {
   return (
     <BasicPage>
       <BoardPage type="notice" data={noticeData} />
-      <ChatIcon />
     </BasicPage>
   );
 }

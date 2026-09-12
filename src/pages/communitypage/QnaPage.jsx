@@ -1,6 +1,5 @@
 import BasicPage from "../basicPage/BasicPage";
 import BoardPage from "../../components/board/BoardPage";
-import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const qnaData = [
   {
@@ -78,7 +77,6 @@ export default function QnaPage() {
   return (
     <BasicPage>
       <BoardPage type="qna" data={qnaData}></BoardPage>
-      <ChatIcon />
     </BasicPage>
   );
 }

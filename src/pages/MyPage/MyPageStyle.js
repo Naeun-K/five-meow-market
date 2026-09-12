@@ -109,7 +109,7 @@ export const OrderCard = styled.article({
   },
 
   "& .img-container": {
-    width: "104px",
+    width: "110px",
     aspectRatio: "1/1",
 
     border: "1px solid var(--border)",
@@ -263,19 +263,7 @@ export const userCard = css({
     padding: "40px 45px",
 
     "& .profile-wrapper": {
-      // display: "flex",
-      // justifyContent: "flex-start",
-      // alignItems: "center",
-      gap: "30px",
-
-      // width: "100%",
-    },
-
-    "& .profile-svg": {
-      aspectRatio: "1 / 1",
-      width: "60px",
-
-      // color: "var(--text-primary)",
+      gap: "40px",
     },
   },
 
@@ -287,8 +275,8 @@ export const userCard = css({
     gap: "30px",
     "& .profile-wrapper": {
       position: "relative",
-      padding: "0 0 30px 0",
-      gap: "10px",
+      padding: "0 0 20px 0",
+      gap: "25px",
     },
     "& .profile-wrapper::after": {
       content: '""',
@@ -320,8 +308,11 @@ export const userInfo = css({
   alignItems: "flex-start",
   gap: "20px",
 
+  "& .info-wrapper": { display: "flex", alignItems: "center", gap: "20px" },
+
   "@media (max-width: 1023px)": {
     gap: "15px",
+    "& .info-wrapper": { flexDirection: "column", gap: "15px" },
   },
 
   "@media (max-width: 767px)": {
@@ -372,11 +363,61 @@ export const userEmail = css({
   flexShrink: 0,
   // margin: 0,
   fontSize: "18px",
-  // fontWeight: 400,
+
   lineHeight: "1.6",
   letterSpacing: "-0.01em",
   color: "var(--text-secondary)",
-  opacity: 0.8,
+  // opacity: 0.8,
+
+  "&.pointDeco": {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+
+    padding: "4px 12px",
+    border: "1px solid transparent",
+    borderRadius: "20px",
+    backgroundColor: "#F7EFE5",
+
+    // color: "#9A765B",
+    color: "var(--text-primary)",
+    whiteSpace: "nowrap",
+    fontWeight: 600,
+
+    transition: "border-color 0.3s",
+  },
+  "&.pointDeco:hover": {
+    borderColor: "var(--text-primary)",
+  },
+
+  "@media (max-width: 1023px)": {
+    fontSize: "17px",
+    lineHeight: "1.6",
+  },
+
+  "@media (max-width: 767px)": {
+    fontSize: "16px",
+    lineHeight: "26px",
+  },
+
+  /* 모바일 S */
+  "@media (max-width: 374px)": {
+    // fontSize: "16px",
+    lineHeight: "26px",
+  },
+});
+
+/* 이메일 */
+export const userPoint = css({
+  display: "block",
+  flexShrink: 0,
+  // margin: 0,
+  fontSize: "18px",
+  fontWeight: 600,
+  lineHeight: "1.6",
+  letterSpacing: "-0.01em",
+  color: "var(--text-secondary)",
+  // opacity: 0.8,
 
   "@media (max-width: 1023px)": {
     fontSize: "17px",
@@ -407,7 +448,8 @@ export const editButton = css({
 
   gap: "20px",
 
-  border: "1px solid var(--text-secondary)",
+  // border: "1px solid var(--text-secondary)",
+  border: "1px solid var(--border)",
   borderRadius: "var(--radius-md)",
   // backgroundColor: "var(--bg-button)",
   color: "var(--text-secondary)",
@@ -415,10 +457,7 @@ export const editButton = css({
 
   opacity: 0.8,
 
-  // fontWeight: 500,
-  // lineHeight: "1.6",
-  // letterSpacing: "-0.01em",
-  // cursor: "pointer",
+  transition: "border-color 0.3s",
 
   "& .quick-arrow": {
     display: "flex",
@@ -431,6 +470,9 @@ export const editButton = css({
     transition: "transform 0.3s ease",
   },
 
+  "&:hover": {
+    borderColor: "var(--text-primary)",
+  },
   "&:hover .quick-arrow": {
     transform: "translateX(8px)",
   },
@@ -523,6 +565,8 @@ export const summaryItem = css({
 
     border: "1px solid var(--text-primary)",
     borderRadius: "999px",
+
+    boxShadow: "var(--shadow)",
 
     transition: "transform 0.3s",
   },
