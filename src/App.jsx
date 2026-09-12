@@ -11,7 +11,7 @@ import ReviewPage from "./pages/communitypage/ReviewPage";
 import CartPage from "./pages/cartpage/CartPage";
 import ScrollToTop from "./routes/ScrollTop";
 import MyPage from "./pages/MyPage/MyPage";
-import CheckoutPage from "./pages/checkout/CheckoutPage";
+// import CheckoutPage from "./pages/checkout/CheckoutPage";
 import DetailProduct from "./pages/detailProduct/DetailProduct";
 import PrivacyPolicyPage from "./pages/privacyPolicy/PrivacyPolicyPage";
 import TermsPage from "./pages/terms/TermsPage";
