@@ -13,8 +13,7 @@ import {
   GoShopButton,
   ButtonWrapper,
 } from "./emptyCartStyle";
-import { useEffect, useState } from "react";
-import { getMe } from "../../services/authService";
+import useAuth from "../../hooks/useAuth";
 
 const EmptyCartIcon = () => (
   <IconWrap
@@ -32,22 +31,7 @@ const EmptyCartIcon = () => (
 
 const EmptyCart = () => {
   const navigate = useNavigate();
-  const [isLoggedin, setIsLoggedin] = useState(false);
-
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const result = await getMe();
-
-        setIsLoggedin(result.success);
-      } catch (error) {
-        console.error("로그인 상태 확인 실패:", error);
-        setIsLoggedin(false);
-      }
-    };
-
-    checkLogin();
-  }, []);
+  const { isLoggedIn } = useAuth();
 
   return (
     <Wrapper>
@@ -64,6 +48,7 @@ const EmptyCart = () => {
             <EmptyMessage>장바구니가 비어있습니다.</EmptyMessage>
             <NewProductMessage>새로운 상품으로 채워주세요.</NewProductMessage>
           </TextWrapper>
+
           <ButtonWrapper>
             <GoShopButton
               className="products-btn"
@@ -71,7 +56,8 @@ const EmptyCart = () => {
             >
               상품보러가기
             </GoShopButton>
-            {isLoggedin && (
+
+            {!isLoggedIn && (
               <GoShopButton
                 className="login-btn"
                 onClick={() => navigate("/login")}
