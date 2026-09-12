@@ -280,9 +280,9 @@ function MyPage() {
                   <div className="button-container">
                     <div className="badge">배송완료</div>
                     {!isPerchased ? (
-                      <button>구매 결정</button>
+                      <button>구매결정</button>
                     ) : (
-                      <button>리뷰 작성</button>
+                      <button>리뷰작성</button>
                     )}
                   </div>
                 </div>
@@ -317,11 +317,11 @@ function MyPage() {
                     <div className="badge">배송완료</div>
                     {!isPerchased ? (
                       <button onClick={() => setIsPerchased(true)}>
-                        구매 결정
+                        구매결정
                       </button>
                     ) : (
                       <button onClick={() => navigate("/community/review")}>
-                        리뷰 작성
+                        리뷰작성
                       </button>
                     )}
                   </div>

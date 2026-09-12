@@ -61,7 +61,7 @@ const leftColumns = [
     items: [
       { label: "공지사항", path: "/community/notice" },
       { label: "제품후기", path: "/community/review" },
-      { label: "Q&A", path: "/community/qna" },
+      { label: "Q & A", path: "/community/qna" },
     ],
   },
 ];
@@ -74,10 +74,7 @@ const myShopButtons = [
   { label: "마이페이지", path: "/mypage", filled: false },
 ];
 
-const mobileSections = [
-  ...leftColumns.filter((col) => col.title !== "REVIEW"),
-  // { title: "COMMUNITY", items: communityLeft },
-];
+const mobileSections = [...leftColumns.filter((col) => col.title !== "REVIEW")];
 
 function Header() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -184,15 +181,6 @@ function Header() {
       document.removeEventListener("pointerdown", handleOutsideClick);
   }, []);
 
-  // useEffect(() => {
-  //   try {
-  //     const savedUser = localStorage.getItem("user");
-  //     setUser(savedUser ? JSON.parse(savedUser) : null);
-  //   } catch {
-  //     setUser(null);
-  //   }
-  // }, [pathname]);
-
   useEffect(() => {
     const handleUserMenuOutsideClick = (event) => {
       if (!userMenuRef.current?.contains(event.target)) {
@@ -283,7 +271,7 @@ function Header() {
       children: [
         { label: "공지사항", path: "/community/notice" },
         { label: "제품후기", path: "/community/review" },
-        { label: "Q&A", path: "/community/qna" },
+        { label: "Q & A", path: "/community/qna" },
       ],
     },
   ];

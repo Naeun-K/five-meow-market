@@ -172,7 +172,10 @@ export const CardContainer = styled.div({
   "& .card-wrapper": {
     width: "100%",
   },
-
+  "& .product-item": {
+    maxWidth: "300px",
+    minWidth: "260px",
+  },
   // 🔴 ADD - 기본적으로 더보기 버튼 숨김
   "& .mobile-more-button": {
     display: "none",
@@ -198,6 +201,7 @@ export const CardContainer = styled.div({
   // 모바일
   "@media (min-width:320px) and (max-width:767px)": {
     padding: "0 20px",
+    gap: "40px",
 
     "& .labeling-wrapper": {
       justifyContent: "center",
@@ -210,7 +214,10 @@ export const CardContainer = styled.div({
     "& .labeling-wrapper > .labeling:last-child": {
       display: "none",
     },
-
+    "& .product-item": {
+      maxWidth: "400px",
+      // minWidth: "260px",
+    },
     // 🔴 ADD - 모바일에서만 더보기 버튼 표시
     "& .mobile-more-button": {
       width: "100%",
@@ -239,9 +246,10 @@ export const CardContainer = styled.div({
 export const ProductListStyle = styled.div({
   display: "grid",
   gridTemplateColumns: "repeat(4,  minmax(0, 1fr))",
-  gap: "60px",
+  gap: "40px",
 
   width: "100%",
+
   // minWidth: 0,
 
   cursor: "pointer",
@@ -276,23 +284,24 @@ export const ProductListStyle = styled.div({
     fontSize: "16px",
   },
 
-  "@media (max-width: 1023px)": {
+  "@media (max-width: 1255px)": {
     gridTemplateColumns: "repeat(2,  minmax(0, 1fr))",
-    // gap: "30px",
+    gap: "80px 40px ",
+
     justifyItems: "center",
-    "& .product-item": {
-      // maxWidth: "300px",
-    },
+    // "& .product-item": {
+    //   // maxWidth: "300px",
+    // },
   },
 
   "@media (max-width: 767px)": {
     gridTemplateColumns: "1fr",
-    gap: "24px",
+    gap: "40px",
     justifyItems: "center",
 
-    "& .product-item": {
-      maxWidth: "400px",
-    },
+    // "& .product-item": {
+    //   maxWidth: "400px",
+    // },
 
     // "& .product-info": {
 

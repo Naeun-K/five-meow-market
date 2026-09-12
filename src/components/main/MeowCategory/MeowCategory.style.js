@@ -26,6 +26,14 @@ export const categorySection = css({
     justifyContent: "center",
     gap: "8px",
   },
+  "& .header": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  "& .guide-message": { display: "none" },
 
   "@media (max-width: 1023px)": {
     padding: "0 30px",
@@ -38,6 +46,16 @@ export const categorySection = css({
     padding: 0,
     h2: {
       fontSize: "20px",
+    },
+
+    "&  .guide-message": {
+      display: "flex",
+      alignItems: "center",
+      gap: "15px",
+
+      fontSize: "18px",
+      fontWeight: 600,
+      color: "var(--text-secondary)",
     },
   },
 });
@@ -66,17 +84,18 @@ export const categoryList = css({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  // gap: "40px",
+  gap: "40px",
 
   width: "100%",
   // maxWidth: "1000px",
   // margin: "0 auto",
 
+  "@media (max-width: 1023px)": { gap: 0 },
   "@media (max-width: 767px)": {
-    width: "100%",
+    // width: "100%",
 
     justifyContent: "flex-start",
-    // gap: "20px",
+    gap: "20px",
 
     overflowX: "auto",
     overflowY: "hidden",
@@ -90,19 +109,6 @@ export const categoryList = css({
     "&::-webkit-scrollbar": {
       display: "none",
     },
-
-    // overflowX: "auto",
-    // overflowY: "hidden",
-
-    // padding: "0 20px",
-
-    // // 모바일 스크롤을 좀 더 자연스럽게
-    // WebkitOverflowScrolling: "touch",
-
-    // // 스크롤바 숨기기
-    // scrollbarWidth: "none",
-
-    gap: "25px",
   },
 });
 
@@ -122,13 +128,13 @@ export const categoryItem = css({
   },
 
   "@media (max-width: 767px)": {
-    width: "150px",
+    width: "128px",
 
     flexShrink: 0,
 
     scrollSnapAlign: "center",
 
-    gap: "20px",
+    gap: "10px",
 
     // strong: {
     //   fontSize: "11px",

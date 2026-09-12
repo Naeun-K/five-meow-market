@@ -128,7 +128,11 @@ export default function MainPage() {
               </Link>
             ))}
           </ProductListStyle>
-          <button type="button" className="mobile-more-button">
+          <button
+            type="button"
+            className="mobile-more-button"
+            onClick={() => naviagate("/products/best")}
+          >
             더보기
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +205,11 @@ export default function MainPage() {
               </Link>
             ))}
           </ProductListStyle>
-          <button type="button" className="mobile-more-button">
+          <button
+            type="button"
+            className="mobile-more-button"
+            onClick={() => naviagate("/products")}
+          >
             더보기
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +259,11 @@ export default function MainPage() {
           <div className="card-wrapper">
             <BestReview />
           </div>
-          <button type="button" className="mobile-more-button">
+          <button
+            type="button"
+            className="mobile-more-button"
+            onClick={() => naviagate("/community/review")}
+          >
             더보기
             <svg
               xmlns="http://www.w3.org/2000/svg"
