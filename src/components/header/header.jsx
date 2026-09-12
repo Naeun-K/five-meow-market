@@ -16,10 +16,8 @@ import {
   CloseButton,
   MobileCard,
   MobileAccordionSection,
-  MobileMyShopHeading,
   MobileAccordionHeader,
   MobilePlainLink,
-  MobileAuthRow,
   MobileChevron,
   MobileSubNavList,
   MobileSubNavLink,
@@ -34,10 +32,13 @@ import navCat4 from "../../assets/logo-high.webp";
 import navCat5 from "../../assets/logo-clean.webp";
 import { useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
+import PawIcon from "../common/PawIcon/PawIcon.jsx";
+import myShopCat from "../../assets/logo-myshop.webp";
+import guestCat from "../../assets/logo-guest.webp";
 
 const leftColumns = [
   {
-    title: "집사 PICK💗",
+    title: "집사 PICK",
     items: [{ label: "베스트 상품", path: "/products/best" }],
   },
   {
@@ -84,7 +85,7 @@ function Header() {
   const desktopSearchInputRef = useRef(null);
   const mobileSearchInputRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openSection, setOpenSection] = useState("집사 PICK💗");
+  const [openSection, setOpenSection] = useState("집사 PICK");
   const headerRef = useRef(null);
   const closeTimerRef = useRef(null);
   const navigate = useNavigate();
@@ -633,17 +634,29 @@ function Header() {
                     $title={col.title}
                     hideOnTablet={col.title === "REVIEW"}
                   >
-                    {/* <h3>{col.title}</h3> */}
-
                     {col.path ? (
                       <button
                         type="button"
                         onClick={() => handleNavigate(col.path)}
                       >
-                        <h3>{col.title}</h3>
+                        <h3>
+                          {col.title}
+                          {col.title === "집사 PICK" && (
+                            <span className="mega-paw">
+                              <PawIcon />
+                            </span>
+                          )}
+                        </h3>
                       </button>
                     ) : (
-                      <h3>{col.title}</h3>
+                      <h3>
+                        {col.title}
+                        {col.title === "집사 PICK" && (
+                          <span className="mega-paw">
+                            <PawIcon />
+                          </span>
+                        )}
+                      </h3>
                     )}
 
                     {col.items.length > 0 && (
@@ -703,33 +716,81 @@ function Header() {
                 <h3>MY SHOP</h3>
 
                 <MyShopGrid>
-                  {myShopButtons.map((btn) => (
-                    <MyShopButton
-                      key={btn.label}
-                      filled={btn.filled}
-                      onClick={() => handleNavigate(btn.path)}
-                    >
-                      {btn.label}
-                    </MyShopButton>
-                  ))}
+                  {!isLoggedIn ? (
+                    // 로그아웃 상태
+
+                    <div className="myshop-guest">
+                      <img
+                        src={guestCat}
+                        alt=""
+                        className="myshop-guest-image"
+                      />
+
+                      <strong className="myshop-guest-title">
+                        오묘한 생활에
+                        <br />
+                        놀러오세요!
+                      </strong>
+
+                      <span className="myshop-guest-text">
+                        로그인하고 더 많은 혜택을 만나보세요.
+                      </span>
+
+                      <div className="myshop-guest-buttons">
+                        {authButtons.map((btn) => (
+                          <MyShopButton
+                            key={btn.label}
+                            filled={btn.filled}
+                            onClick={() => handleNavigate(btn.path)}
+                          >
+                            {btn.label}
+                          </MyShopButton>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    // 로그인 상태
+                    <div className="myshop-user">
+                      <div className="myshop-profile">
+                        <div className="myshop-image-circle">
+                          <img
+                            src={myShopCat}
+                            alt=""
+                            className="myshop-profile-image"
+                          />
+                        </div>
+
+                        <span className="myshop-nickname">{nickname} 님</span>
+
+                        <span className="myshop-points">
+                          {points.toLocaleString()} P
+                        </span>
+                      </div>
+
+                      <MyShopButton
+                        className="logout-button"
+                        onClick={handleLogout}
+                      >
+                        로그아웃
+                      </MyShopButton>
+
+                      <div className="myshop-menu-buttons">
+                        <MyShopButton onClick={() => handleNavigate("/cart")}>
+                          장바구니
+                        </MyShopButton>
+
+                        <MyShopButton onClick={() => handleNavigate("/mypage")}>
+                          마이페이지
+                        </MyShopButton>
+                      </div>
+                    </div>
+                  )}
                 </MyShopGrid>
               </MegaCol>
             </MegaInner>
           </MegaMenuCard>
 
           <MobileCard>
-            <MobileAuthRow>
-              {authButtons.map((btn) => (
-                <MyShopButton
-                  key={btn.label}
-                  filled={btn.filled}
-                  onClick={() => handleNavigate(btn.path)}
-                >
-                  {btn.label}
-                </MyShopButton>
-              ))}
-            </MobileAuthRow>
-
             {mobileSections.map((section) => {
               const isAccordion = section.items.length > 0;
 
@@ -754,7 +815,15 @@ function Header() {
                       setOpenSection(isSectionOpen ? null : section.title)
                     }
                   >
-                    {section.title}
+                    <span className="mobile-title">
+                      {section.title}
+
+                      {section.title === "집사 PICK" && (
+                        <span className="mobile-paw">
+                          <PawIcon />
+                        </span>
+                      )}
+                    </span>
 
                     <MobileChevron isOpen={isSectionOpen}>▾</MobileChevron>
                   </MobileAccordionHeader>
@@ -776,8 +845,60 @@ function Header() {
               );
             })}
 
-            <MobileMyShopHeading>MY SHOP</MobileMyShopHeading>
+            {!isLoggedIn && (
+              <div className="mobile-guest-area">
+                <img src={guestCat} alt="" className="mobile-guest-image" />
 
+                <strong className="mobile-guest-title">
+                  오묘한 생활에
+                  <br />
+                  놀러오세요!
+                </strong>
+
+                <span className="mobile-guest-text">
+                  로그인하고 더 많은 혜택을 만나보세요.
+                </span>
+
+                <div className="mobile-guest-buttons">
+                  {authButtons.map((btn) => (
+                    <MyShopButton
+                      key={btn.label}
+                      filled={btn.filled}
+                      onClick={() => handleNavigate(btn.path)}
+                    >
+                      {btn.label}
+                    </MyShopButton>
+                  ))}
+                </div>
+              </div>
+            )}
+            {isLoggedIn && (
+              <div className="mobile-user-area">
+                <div className="mobile-user-profile">
+                  <div className="mobile-user-image">
+                    <img src={myShopCat} alt="" />
+                  </div>
+
+                  <strong>{nickname} 님</strong>
+
+                  <span className="mobile-user-points">
+                    {points.toLocaleString()} P
+                  </span>
+                </div>
+
+                <div className="mobile-user-menu">
+                  <MyShopButton onClick={() => handleNavigate("/mypage")}>
+                    마이페이지
+                  </MyShopButton>
+
+                  <MyShopButton onClick={() => handleNavigate("/cart")}>
+                    장바구니
+                  </MyShopButton>
+
+                  <MyShopButton onClick={handleLogout}>로그아웃</MyShopButton>
+                </div>
+              </div>
+            )}
             <MobileCloseButton onClick={handleMenuClose} aria-label="메뉴 닫기">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

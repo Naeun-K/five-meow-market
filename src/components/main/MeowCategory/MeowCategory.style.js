@@ -20,12 +20,11 @@ export const categorySection = css({
     fontWeight: 600,
   },
 
-  ".paw-icon": {
-    width: "30px",
-    height: "30px",
-    marginLeft: "4px",
-    color: "#ebccb2",
-    verticalAlign: "middle",
+  ".section-title": {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "8px",
   },
 
   "@media (max-width: 1023px)": {

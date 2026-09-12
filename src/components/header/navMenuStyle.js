@@ -21,27 +21,59 @@ export const ModalRoot = styled.div({});
 export const MegaMenuWrapper = styled.div(({ isOpen }) => ({
   position: "absolute",
   top: 160,
-  left: 40,
-  right: 40,
+  left: "50%",
+
+  width: "calc(100% - 80px)",
+  maxWidth: "1300px",
+
+  transform: isOpen ? "translate(-50%, 0)" : "translate(-50%, -12px)",
+
   zIndex: 60,
 
   opacity: isOpen ? 1 : 0,
   visibility: isOpen ? "visible" : "hidden",
-  transform: isOpen ? "translateY(0)" : "translateY(-12px)",
+
   transition: "opacity .25s ease, transform .25s ease, visibility .25s",
 
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    width: "calc(100% - 0px)",
+    maxWidth: "none",
+
+    left: "50%",
+    right: "auto",
+
+    transform: isOpen
+      ? "translateX(-50%) translateY(0)"
+      : "translateX(-50%) translateY(-12px)",
+  },
+
   "@media (max-width: 767px)": {
+    position: "fixed",
+
     top: 80,
+    left: 0,
+    right: 0,
+
+    width: "100vw",
+    maxWidth: "none",
+
+    transform: isOpen ? "translateY(0)" : "translateY(-12px)",
   },
 }));
 
 export const MegaMenuCard = styled.div({
   position: "relative",
+  width: "100%",
+
   background: "#fff",
-  border: `1px solid ${colors.ink}`,
+  border: "1px solid #d4b59a",
+
   borderRadius: 28,
   boxShadow: "0 30px 50px -25px rgba(28,26,23,0.35)",
-  padding: "40px 48px",
+
+  padding: "60px 48px",
+  paddingBottom: "90px",
+  boxSizing: "border-box",
 
   "@media (max-width: 930px)": {
     padding: "28px 24px",
@@ -77,15 +109,28 @@ export const CloseButton = styled.div({
 });
 
 export const MegaInner = styled.div({
-  maxwidth: 1024,
-  width: "100%",
-  display: "flex",
-  justifyContent: "space-between",
-  gap: 32,
+  width: "fit-content",
+  maxWidth: "100%",
+  margin: "0 auto",
 
-  "@media (max-width: 1023px)": {
-    flexwrap: "wrap",
-    gap: 24,
+  display: "flex",
+  alignItems: "flex-start",
+  justifyContent: "center",
+
+  boxSizing: "border-box",
+
+  gap: "40px",
+
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    padding: "0 8px",
+    boxSizing: "border-box",
+
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center",
+
+    flexWrap: "nowrap",
+    gap: "10px",
   },
 
   "@media (max-width: 767px)": {
@@ -94,24 +139,28 @@ export const MegaInner = styled.div({
 });
 
 export const LeftGroup = styled.div({
-  flex: "1 1 auto",
-  display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
+  display: "flex",
+  alignItems: "flex-start",
+  justifyContent: "center",
+  flex: "0 0 auto",
 
-  gap: 28,
+  gap: "55px",
 
-  "@media (max-width: 1023px)": {
-    gridTemplateColumns: "repeat(3, 1fr)",
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    flex: "1 1 0",
+    minWidth: 0,
 
-    gridTemplateAreas: `
-    "pick category community"
-    "all  category community"
-  `,
-    gap: 10,
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+
+    columnGap: 50,
+    rowGap: 18,
   },
 
   "@media (max-width: 767px)": {
-    gridTemplateColumns: "repeat(2, 1fr)",
+    flexDirection: "column",
   },
 });
 
@@ -120,14 +169,24 @@ export const Divider = styled.div({
   background: colors.line,
   alignSelf: "stretch",
 
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    marginRight: "25px",
+  },
+
   "@media (max-width: 767px)": {
     display: "none",
   },
 });
 
+/* 메뉴 카테고리 */
+
 export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
   minWidth: 96,
-  tabletOffset: "none",
+
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  textAlign: "center",
 
   h3: {
     fontSize: 20,
@@ -135,6 +194,23 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     fontWeight: 700,
     color: colors.ink,
     whiteSpace: "nowrap",
+
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
+
+    ".mega-paw": {
+      width: "30px",
+      height: "30px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+
+      svg: {
+        width: "100%",
+        height: "100%",
+      },
+    },
   },
   ul: {
     listStyle: "none",
@@ -142,6 +218,7 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     padding: 0,
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
     gap: 10,
   },
   button: {
@@ -154,26 +231,10 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     },
   },
 
-  "@media (max-width: 1023px)": {
-    display: hideOnTablet ? "none" : undefined,
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    display: hideOnTablet ? "none" : "flex",
+    minWidth: 96,
 
-    minWidth: 0,
-
-    ...($title === "집사 PICK💗" && {
-      gridArea: "pick",
-    }),
-
-    ...($title === "카테고리" && {
-      gridArea: "category",
-    }),
-
-    ...($title === "전체상품" && {
-      gridArea: "all",
-    }),
-
-    ...($title === "COMMUNITY" && {
-      gridArea: "community",
-    }),
     h3: {
       fontSize: 18,
     },
@@ -181,6 +242,27 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     button: {
       fontSize: 17,
     },
+
+    ...($title === "집사 PICK" && {
+      order: 1,
+      flex: "0 0 auto",
+    }),
+
+    ...($title === "카테고리" && {
+      order: 2,
+      flex: "0 0 auto",
+    }),
+
+    ...($title === "COMMUNITY" && {
+      order: 3,
+      flex: "0 0 auto",
+    }),
+
+    ...($title === "전체상품" && {
+      order: 4,
+      flex: "0 0 auto",
+      marginTop: "-80px",
+    }),
   },
 }));
 
@@ -202,9 +284,128 @@ export const MyShopGrid = styled.div({
   gridTemplateColumns: "repeat(2, 1fr)",
   gap: 10,
   width: 180,
+  ".myshop-guest": {
+    width: "100%",
+    gridColumn: "1 / -1",
 
-  "@media (max-width: 1023px)": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    gap: 8,
+  },
+
+  ".myshop-guest-image": {
+    width: 100,
+    height: "auto",
+    objectFit: "contain",
+    display: "block",
+  },
+
+  ".myshop-guest-title": {
+    fontSize: 15,
+    fontWeight: 700,
+    lineHeight: 1.4,
+    color: colors.ink,
+  },
+
+  ".myshop-guest-text": {
+    fontSize: 12,
+    color: colors.muted,
+    whiteSpace: "nowrap",
+  },
+
+  ".myshop-guest-buttons": {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+    marginTop: 4,
+
+    button: {
+      width: "100%",
+    },
+  },
+
+  ".myshop-user": {
+    width: "100%",
+    gridColumn: "1 / -1",
+
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 10,
+  },
+
+  ".myshop-profile": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 4,
+  },
+
+  ".myshop-profile-image": {
+    width: 68,
+    height: "auto",
+    objectFit: "contain",
+    display: "block",
+  },
+  ".myshop-image-circle": {
+    width: 82,
+    height: 82,
+
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+    backgroundColor: "#F7EFE5",
+    borderRadius: "50%",
+
+    overflow: "visible",
+  },
+
+  ".myshop-nickname": {
+    fontSize: 15,
+    fontWeight: 600,
+    color: colors.ink,
+    whiteSpace: "nowrap",
+  },
+
+  ".myshop-points": {
+    padding: "4px 12px",
+    borderRadius: 20,
+    backgroundColor: "#F7EFE5",
+
+    fontSize: 13,
+    fontWeight: 600,
+    color: "#9A765B",
+    whiteSpace: "nowrap",
+  },
+
+  ".logout-button": {
+    width: "100%",
+  },
+
+  ".myshop-menu-buttons": {
+    width: "100%",
+
     display: "grid",
+    gridTemplateColumns: "1fr",
+    gap: 8,
+
+    button: {
+      minWidth: 0,
+      padding: "8px 6px",
+
+      "&:hover": {
+        backgroundColor: "#F2DFC6",
+        borderColor: "#D8BFA8",
+        color: colors.ink,
+      },
+    },
+  },
+  "@media (max-width: 1023px)": {
     gridTemplateColumns: "repeat(1, 1fr)",
   },
 });
@@ -219,21 +420,102 @@ export const MobileCard = styled.div({
   "@media (max-width: 767px)": {
     display: "block",
     position: "relative",
+
+    width: "100%",
+    margin: 0,
+    boxSizing: "border-box",
+
     background: colors.paper,
     border: `1px solid ${colors.line}`,
     borderRadius: 16,
     padding: "20px 20px 28px",
     boxShadow: "0 20px 40px -25px rgba(28,26,23,0.25)",
   },
-});
 
-export const MobileAuthRow = styled.div({
-  display: "flex",
-  gap: 10,
-  padding: "16px 0 20px",
+  ".mobile-user-area": {
+    paddingTop: 20,
+  },
 
-  button: {
-    flex: 1,
+  ".mobile-user-profile": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 16,
+  },
+
+  ".mobile-user-image": {
+    width: 76,
+    height: 76,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#F7EFE5",
+    borderRadius: "50%",
+
+    img: {
+      width: 62,
+      height: "auto",
+      display: "block",
+    },
+  },
+
+  ".mobile-user-points": {
+    padding: "5px 14px",
+    backgroundColor: "#F7EFE5",
+    borderRadius: 20,
+
+    fontSize: 13,
+    color: "#9A765B",
+    whiteSpace: "nowrap",
+  },
+
+  ".mobile-user-menu": {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+
+    button: {
+      width: "100%",
+    },
+  },
+
+  ".mobile-guest-area": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 8,
+    paddingTop: 20,
+    textAlign: "center",
+  },
+
+  ".mobile-guest-image": {
+    width: 90,
+    height: "auto",
+    display: "block",
+  },
+
+  ".mobile-guest-title": {
+    fontSize: 16,
+    fontWeight: 700,
+    lineHeight: 1.4,
+  },
+
+  ".mobile-guest-text": {
+    fontSize: 12,
+    color: colors.muted,
+  },
+
+  ".mobile-guest-buttons": {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+    marginTop: 8,
+
+    button: {
+      width: "100%",
+    },
   },
 });
 
@@ -246,14 +528,33 @@ export const MobileAccordionHeader = styled.button({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
+
   padding: "16px 2px",
   background: "none",
   border: "none",
+
   fontSize: 16,
   fontWeight: 700,
   color: colors.ink,
   cursor: "pointer",
   textAlign: "left",
+
+  "& .mobile-title": {
+    display: "flex",
+    alignItems: "center",
+    gap: "5px",
+  },
+
+  "& .mobile-paw": {
+    width: "25px",
+    height: "25px",
+    display: "flex",
+  },
+
+  svg: {
+    width: "100%",
+    height: "100%",
+  },
 });
 
 export const MobilePlainLink = styled.button({
@@ -290,13 +591,6 @@ export const MobileSubNavLink = styled.button({
   textDecoration: "none",
 });
 
-export const MobileMyShopHeading = styled.h3({
-  fontSize: 16,
-  fontWeight: 700,
-  color: colors.ink,
-  margin: "20px 2px 12px",
-});
-
 export const MobileCloseButton = styled.button({
   display: "flex",
   alignItems: "center",
@@ -311,6 +605,8 @@ export const MobileCloseButton = styled.button({
   color: colors.ink,
   cursor: "pointer",
 });
+
+/* 공통 버튼 */
 
 export const MyShopButton = styled.button({
   padding: "8px 10px",

@@ -37,6 +37,7 @@ import BasicPage from "../basicPage/BasicPage";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Loader from "../../components/loader/Loader";
+import myShopCat from "../../assets/logo-myshop.webp";
 
 function MyPage() {
   const { user, isLoggedIn, isAuthLoading } = useAuth();
@@ -65,69 +66,7 @@ function MyPage() {
         <section css={userCard}>
           <div className="profile-wrapper">
             <div className="profile-svg">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="100%"
-                height="100%"
-                viewBox="0 0 40 40"
-                fill="none"
-              >
-                {/* 바깥 원 */}
-                <circle
-                  cx="20"
-                  cy="20"
-                  r="18"
-                  stroke="#614832"
-                  strokeWidth="1.5"
-                />
-
-                {/* 고양이 얼굴 */}
-                <path
-                  d="M10 20
-       L10 12
-       L16 16
-       C18 15 22 15 24 16
-       L30 12
-       L30 20
-       C32 22 32 25 31 27
-       C29 31 25 33 20 33
-       C15 33 11 31 9 27
-       C8 25 8 22 10 20Z"
-                  stroke="#614832"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-
-                {/* 눈 */}
-                <circle cx="16" cy="23" r="1" fill="#614832" />
-                <circle cx="24" cy="23" r="1" fill="#614832" />
-
-                {/* 코 */}
-                <circle cx="20" cy="26" r="0.8" fill="#614832" />
-
-                {/* 입 */}
-                <path
-                  d="M20 27
-       C19 29 17.5 29 17 28
-       M20 27
-       C21 29 22.5 29 23 28"
-                  stroke="#614832"
-                  strokeWidth="1"
-                  strokeLinecap="round"
-                />
-
-                {/* 수염 */}
-                <path
-                  d="M14 26L10 25
-       M14 28L10 29
-       M26 26L30 25
-       M26 28L30 29"
-                  stroke="#614832"
-                  strokeWidth="1"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <img src={myShopCat} alt="" />
             </div>
             <div css={userInfo}>
               <span css={userName}>{user?.nickname}님</span>

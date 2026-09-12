@@ -589,8 +589,8 @@ export const HeaderStyle = styled.header({
 
       transform: "translateX(-50%)",
 
-      width: "120px",
-      maxWidth: "35vw",
+      width: "150px",
+      maxWidth: "55vw",
     },
 
     "& .svg-list": {
