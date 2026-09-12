@@ -16,6 +16,7 @@ import HeartButton from "../../components/product/HeartButton/HeartButton";
 import ProductBottomSheet from "../../components/product/ProductBottomSheet/ProductBottomSheet";
 import useAuth from "../../hooks/useAuth";
 import { addCartItem } from "../../services/cartServices";
+import CartSuccessModal from "../../components/cartui/CartSuccessModal";
 
 export default function DetailProduct() {
   const { isAuthLoading, isLoggedIn, accessToken } = useAuth();
@@ -26,6 +27,7 @@ export default function DetailProduct() {
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [bottomSheetType, setBottomSheetType] = useState(null);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
 
   const handleDecrease = () => {
     setQuantity((prev) => Math.max(1, prev - 1));
@@ -61,12 +63,12 @@ export default function DetailProduct() {
   // 실제 API 호출만 담당
   const handleAddCart = async (selectedQuantity) => {
     if (isAuthLoading) {
-      return;
+      return false;
     }
 
     if (!isLoggedIn || !accessToken) {
       showToast("로그인 후 장바구니를 이용해주세요.", false);
-      return;
+      return false;
     }
 
     try {
@@ -75,13 +77,11 @@ export default function DetailProduct() {
         selectedQuantity,
         accessToken,
       );
-
       if (!result.success) {
         throw new Error(result.message || "장바구니 담기에 실패했습니다.");
       }
 
-      showToast(result.message || "장바구니에 상품을 담았습니다.", true);
-
+      // 성공하면 호출한 쪽에서 모달을 열 수 있도록 true 반환
       return true;
     } catch (error) {
       console.error("장바구니 추가 실패:", error);
@@ -92,14 +92,20 @@ export default function DetailProduct() {
     }
   };
 
-  const handleBottomSheetSubmit = () => {
+  const handleBottomSheetSubmit = async () => {
     if (bottomSheetType === "cart") {
-      handleAddCart(quantity);
+      const success = await handleAddCart(quantity);
+
+      if (success) {
+        setBottomSheetType(null);
+        setIsCartModalOpen(true);
+      }
+
       return;
     }
 
     if (bottomSheetType === "buy") {
-      // 나중에 바로구매 연결
+      // 바로구매 로직
     }
   };
 
@@ -109,11 +115,15 @@ export default function DetailProduct() {
       return;
     }
   };
-  const handleCartClick = () => {
+  const handleCartClick = async () => {
     if (window.innerWidth <= 600) {
       setBottomSheetType("cart");
       return;
     }
+
+    const success = await handleAddCart(quantity);
+
+    if (success) setIsCartModalOpen(true);
   };
 
   if (isLoading) {
@@ -177,11 +187,11 @@ export default function DetailProduct() {
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-dash-lg"
+                      className="bi bi-dash-lg"
                       viewBox="0 0 16 16"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"
                       />
                     </svg>
@@ -197,11 +207,11 @@ export default function DetailProduct() {
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-plus-lg"
+                      className="bi bi-plus-lg"
                       viewBox="0 0 16 16"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
                       />
                     </svg>
@@ -275,6 +285,10 @@ export default function DetailProduct() {
         onDecrease={handleDecrease}
         onIncrease={handleIncrease}
         onSubmit={handleBottomSheetSubmit}
+      />
+      <CartSuccessModal
+        isOpen={isCartModalOpen}
+        onClose={() => setIsCartModalOpen(false)}
       />
     </>
   );
