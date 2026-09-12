@@ -6,11 +6,11 @@ function ChatIcon() {
 
   return (
     <TooltipWrapper className="btn-container">
-      <Tooltip $show={showTooltip}>상담사 연결</Tooltip>
+      <Tooltip $show={showTooltip}>고객 문의</Tooltip>
 
       <ChatIconStyle
         type="button"
-        aria-label="채팅"
+        aria-label="고객 문의"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         onFocus={() => setShowTooltip(true)}

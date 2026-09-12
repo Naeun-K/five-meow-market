@@ -32,7 +32,7 @@ function App() {
         {/* <Route path="/products/best" element={<ProductList />} /> */}
         <Route path="/products" element={<ProductList />}>
           <Route index element={<ProductList />} />
-          {/* <Route path="/products/best" element={<ProductList />} /> */}
+          {/* <Route path="/products/new" element={<ProductList />} /> */}
         </Route>
 
         {/* 회원 */}

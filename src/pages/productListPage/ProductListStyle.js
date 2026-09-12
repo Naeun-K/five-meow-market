@@ -5,14 +5,14 @@ export const ProductPage = styled.div({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: "80px",
+  gap: "150px",
 
   width: "100%",
 
   minHeight: "100vh",
   maxWidth: "1300px",
 
-  "@media  (max-width:767px)": { gap: "40px" },
+  "@media  (max-width:767px)": { gap: "80px" },
 });
 
 export const PageTitleContainer = styled.div({
@@ -50,20 +50,20 @@ export const CardContainer = styled.div({
   gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
   // alignItems: "start",
   alignItems: "start",
-  alignContent: "start", // ⭐ 추가
-  gap: "100px",
+  alignContent: "start",
+  gap: "150px 40px",
 
   padding: "0 50px",
-  minHeight: "1040px",
+  minHeight: "600px",
 
   "& .card-wrapper": {
-    maxWidth: "380px",
+    maxWidth: "300px",
     minWidth: "280px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    gap: "8px",
+    gap: "13px",
 
     cursor: "pointer",
   },
@@ -76,12 +76,14 @@ export const CardContainer = styled.div({
     fontSize: "18px",
   },
 
-  "@media (max-width:1280px)": { gap: "60px" },
-  "@media (max-width:1060px)": {
-    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-    gap: "80px 50px",
+  "@media (max-width:1290px)": {
+    // gap: "60px",
+    gridTemplateColumns: "repeat(3,  minmax(0, 1fr))",
   },
-  // gridTemplateColumns: "repeat(3,  minmax(0, 1fr))",
+  // "@media (max-width:1280px)": { gap: "60px" },
+  "@media (max-width:1030px)": {
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+  },
 
   "@media (max-width:1023px)": {
     padding: "0 30px",
@@ -95,15 +97,14 @@ export const CardContainer = styled.div({
   },
   "@media  (max-width:710px)": {
     // gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: "50px",
-
+    // gap: "50px",
     // "& strong": {
     //   fontSize: "16px",
     // },
   },
   "@media (min-width:320px) and (max-width:670px)": {
     gridTemplateColumns: "repeat(1, minmax(0, 1fr))",
-    // gap: "50px",
+    gap: "80px",
     padding: "0 20px",
     "& strong": {
       fontSize: "16px",

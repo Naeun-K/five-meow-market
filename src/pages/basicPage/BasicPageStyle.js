@@ -7,7 +7,7 @@ export const BasicPageStyle = styled.div({
   alignItems: "center",
 
   // gap: "80px",
-  gap: "50px",
+  gap: "80px",
 
   // padding: "50px",
 
@@ -15,10 +15,11 @@ export const BasicPageStyle = styled.div({
 
   "@media  (max-width: 1023px)": {
     // padding: "20px",
-    gap: "30px",
+    gap: "40px",
   },
   "@media (min-width: 320px) and (max-width: 767px)": {
     // padding: "20px",
-    // gap: "80px",
+    gap: "30px",
+    // gap: "0 40px 40px 40px",
   },
 });

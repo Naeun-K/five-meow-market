@@ -70,18 +70,21 @@ export const OrderCard = styled.article({
 
     padding: " 12px 18px",
 
-    backgroundColor: "var(--acent-beidge)",
-    color: "var(--text-primary)",
+    backgroundColor: "#F5E9DF",
+    color: "#4A3425",
+
+    fontWeight: 500,
     // opacity: 0.8,
 
     borderRadius: "20px",
 
     "& button.order-number": {
       textDecoration: "underline",
-      transition: "color 0.3s",
+      transition: "color 0.15s, font-weight 0.15s",
 
       "&:hover": {
         color: "#2B180D",
+        fontWeight: 700,
       },
     },
   },
@@ -711,7 +714,7 @@ export const orderCard = css({
     aspectRatio: "1 / 2",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     alignItems: "center",
 
     flexShrink: 0,
