@@ -10,7 +10,9 @@ import QnaPage from "./pages/communitypage/QnaPage";
 import ReviewPage from "./pages/communitypage/ReviewPage";
 import CartPage from "./pages/cartpage/CartPage";
 import ScrollToTop from "./routes/ScrollTop";
+import MyPage from "./pages/MyPage/MyPage";
 import CheckoutPage from "./pages/checkout/CheckoutPage";
+import DetailProduct from "./pages/detailProduct/DetailProduct";
 import PrivacyPolicyPage from "./pages/privacyPolicy/PrivacyPolicyPage";
 import TermsPage from "./pages/terms/TermsPage";
 import AboutPage from "./pages/about/AboutPage";
@@ -24,6 +26,9 @@ function App() {
         <Route path="/" element={<MainPage />} />
 
         {/* 상품 */}
+        <Route path="/products" element={<ProductList />} />
+        <Route path="/products/:productId" element={<DetailProduct />} />
+        {/* <Route path="/products/best" element={<ProductList />} /> */}
         <Route path="/products" element={<ProductList />}>
           <Route index element={<ProductList />} />
           {/* <Route path="/products/best" element={<ProductList />} /> */}
@@ -34,8 +39,9 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
 
         {/* 마이페이지 */}
-        {/* <Route path="/mypage" element={<MyPage />} /> */}
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/edit" element={<UpdatePage />} />
+        {/* <Route path="/mypage/reviews" element={<UpdatePage />} /> */}
         {/* <Route path="/mypage/wishlist" element={<Wishlist />} /> */}
         {/* <Route path="/mypage/orders" element={<OrderList />} /> */}
         {/* <Route path="/mypage/orders/detail" element={<OrderList />} /> */}

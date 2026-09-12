@@ -658,9 +658,9 @@ export const HeaderStyle = styled.header({
     },
 
     // 모바일 로그인 버튼은 숨김
-    "& .login-link": {
-      display: "none",
-    },
+    // "& .login-link": {
+    //   display: "none",
+    // },
 
     "& .user-nickname, & .user-nim": {
       display: "none",

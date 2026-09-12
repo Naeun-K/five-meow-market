@@ -33,6 +33,7 @@ import navCat3 from "../../assets/logo-rest.webp";
 import navCat4 from "../../assets/logo-high.webp";
 import navCat5 from "../../assets/logo-clean.webp";
 import { useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth.js";
 
 const leftColumns = [
   {
@@ -68,7 +69,7 @@ const leftColumns = [
 const myShopButtons = [
   { label: "로그인", path: "/login", filled: false },
   { label: "회원가입", path: "/signup", filled: true },
-  { label: "장바구니", path: "#", filled: false },
+  { label: "장바구니", path: "/cart", filled: false },
   { label: "마이페이지", path: "/mypage", filled: false },
 ];
 
@@ -88,15 +89,7 @@ function Header() {
   const closeTimerRef = useRef(null);
   const navigate = useNavigate();
   const { showToast } = useToast();
-
-  const [user, setUser] = useState(() => {
-    try {
-      const savedUser = localStorage.getItem("user");
-      return savedUser ? JSON.parse(savedUser) : null;
-    } catch {
-      return null;
-    }
-  });
+  const { user, isLoggedIn, isAuthLoading, logout } = useAuth();
 
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
@@ -190,14 +183,14 @@ function Header() {
       document.removeEventListener("pointerdown", handleOutsideClick);
   }, []);
 
-  useEffect(() => {
-    try {
-      const savedUser = localStorage.getItem("user");
-      setUser(savedUser ? JSON.parse(savedUser) : null);
-    } catch {
-      setUser(null);
-    }
-  }, [pathname]);
+  // useEffect(() => {
+  //   try {
+  //     const savedUser = localStorage.getItem("user");
+  //     setUser(savedUser ? JSON.parse(savedUser) : null);
+  //   } catch {
+  //     setUser(null);
+  //   }
+  // }, [pathname]);
 
   useEffect(() => {
     const handleUserMenuOutsideClick = (event) => {
@@ -242,13 +235,17 @@ function Header() {
 
   const handleMenuClose = () => setIsMenuOpen(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+  const handleLogout = async () => {
+    try {
+      await logout();
 
-    setUser(null);
-    setIsUserMenuOpen(false);
+      setIsUserMenuOpen(false);
+      navigate("/");
+      showToast("로그아웃되었습니다.", true);
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+      showToast("로그아웃 중 오류가 발생했습니다.", false);
+    }
   };
 
   //네비게이션 드롭다운 구현용 메뉴 데이터
@@ -321,73 +318,77 @@ function Header() {
           </div>
 
           <div className="svg-list">
-            {!user ? (
-              <Link to="/login" className="login-link">
-                로그인
-              </Link>
-            ) : (
-              <div className="user-area" ref={userMenuRef}>
+            {!isAuthLoading &&
+              (!isLoggedIn ? (
                 <button
-                  type="button"
-                  className="user-menu-button"
-                  aria-expanded={isUserMenuOpen}
-                  aria-haspopup="menu"
-                  onClick={() => setIsUserMenuOpen((isOpen) => !isOpen)}
+                  onClick={() => navigate("/login")}
+                  className="login-link"
                 >
-                  <span className="user-nickname">{nickname}</span>
-                  <span className="user-nim">님</span>
+                  로그인
+                </button>
+              ) : (
+                <div className="user-area" ref={userMenuRef}>
+                  <button
+                    type="button"
+                    className="user-menu-button"
+                    aria-expanded={isUserMenuOpen}
+                    aria-haspopup="menu"
+                    onClick={() => setIsUserMenuOpen((isOpen) => !isOpen)}
+                  >
+                    <span className="user-nickname">{nickname}</span>
+                    <span className="user-nim">님</span>
 
-                  <span className="user-icon svg-container">
-                    <svg
-                      width="100%"
-                      height="100%"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="12"
-                        cy="7"
-                        r="4"
-                        stroke="black"
-                        strokeWidth="1.5"
-                      />
+                    <span className="user-icon svg-container">
+                      <svg
+                        width="100%"
+                        height="100%"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="12"
+                          cy="7"
+                          r="4"
+                          stroke="black"
+                          strokeWidth="1.5"
+                        />
 
-                      <path
-                        d="M3 21
+                        <path
+                          d="M3 21
                         C3.6 16.5 7 14 12 14
                         C17 14 20.4 16.5 21 21
                         H3Z"
-                        stroke="black"
-                        strokeWidth="1.5"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </button>
-
-                <DropdownMenu
-                  $isOpen={isUserMenuOpen}
-                  $alignRight={true}
-                  className="user-dropdown"
-                >
-                  <div className="user-dropdown-info">
-                    <strong>{nickname}님</strong>
-                    <span>{points.toLocaleString()}P</span>
-                  </div>
-
-                  <div className="user-dropdown-divider" />
-
-                  <Link to="/mypage" onClick={() => setIsUserMenuOpen(false)}>
-                    마이페이지
-                  </Link>
-
-                  <button type="button" onClick={handleLogout}>
-                    로그아웃
+                          stroke="black"
+                          strokeWidth="1.5"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
                   </button>
-                </DropdownMenu>
-              </div>
-            )}
+
+                  <DropdownMenu
+                    $isOpen={isUserMenuOpen}
+                    $alignRight={true}
+                    className="user-dropdown"
+                  >
+                    <div className="user-dropdown-info">
+                      <strong>{nickname}님</strong>
+                      <span>{points.toLocaleString()}P</span>
+                    </div>
+
+                    <div className="user-dropdown-divider" />
+
+                    <Link to="/mypage" onClick={() => setIsUserMenuOpen(false)}>
+                      마이페이지
+                    </Link>
+
+                    <button type="button" onClick={handleLogout}>
+                      로그아웃
+                    </button>
+                  </DropdownMenu>
+                </div>
+              ))}
 
             <button
               type="button"
@@ -722,7 +723,7 @@ function Header() {
                 <MyShopButton
                   key={btn.label}
                   filled={btn.filled}
-                  onClick={handleMenuClose}
+                  onClick={() => handleNavigate(btn.path)}
                 >
                   {btn.label}
                 </MyShopButton>
@@ -740,7 +741,7 @@ function Header() {
                     <MobilePlainLink
                       onClick={() => handleNavigate(section.path)}
                     >
-                      {section.label}
+                      {section.title}
                     </MobilePlainLink>
                   </MobileAccordionSection>
                 );

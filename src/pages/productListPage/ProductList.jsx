@@ -12,7 +12,8 @@ import {
 import useToast from "../../hooks/useToast";
 import { useProductLimit } from "../../hooks/useProductLimit";
 import ChatIcon from "../../components/ChatIcon/ChatIcon";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+// import {  useNavigate } from "react-router-dom";
 
 const categoryNames = {
   "cat-eat": "먹묘",
@@ -88,18 +89,24 @@ export default function ProductList() {
 
         <CardContainer>
           {products.map((product) => (
-            <div key={product.productId} className="card-wrapper">
-              <ProductCard
-                image={product.thumbnail}
-                name={product.name}
-                badge=""
-                showHeart
-              />
+            <Link
+              to={`/products/${product.productId}`}
+              className="product-link"
+            >
+              {" "}
+              <div key={product.productId} className="card-wrapper">
+                <ProductCard
+                  image={product.thumbnail}
+                  name={product.name}
+                  badge=""
+                  showHeart
+                />
 
-              <p>{product.name}</p>
+                <p>{product.name}</p>
 
-              <strong>{product.price.toLocaleString()}원</strong>
-            </div>
+                <strong>{product.price.toLocaleString()}원</strong>
+              </div>
+            </Link>
           ))}
         </CardContainer>
         <ChatIcon />

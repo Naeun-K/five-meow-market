@@ -4,6 +4,10 @@ export const AuthBackgroundStyle = styled.div({
   minHeight: "100vh",
 
   background: "linear-gradient(to right, #F7F1E6 0 50%, var(--bg) 50% 100%)",
+
+  "@media (max-width:767px)": {
+    background: "var(--bg)",
+  },
 });
 
 export const AuthPageLayoutStyle = styled.div({

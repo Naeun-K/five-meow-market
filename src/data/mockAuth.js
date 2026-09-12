@@ -108,6 +108,7 @@ export function mockLogin(email, password) {
     accessToken: currentAccessToken,
     user: {
       nickname: mockUser.nickname,
+      email: mockUser.email,
     },
     message: "로그인이 정상적으로 완료되었습니다.",
   };
