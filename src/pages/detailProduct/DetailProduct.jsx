@@ -14,8 +14,11 @@ import Loader from "../../components/loader/Loader";
 import { getProduct } from "../../services/productServices";
 import HeartButton from "../../components/product/HeartButton/HeartButton";
 import ProductBottomSheet from "../../components/product/ProductBottomSheet/ProductBottomSheet";
+import useAuth from "../../hooks/useAuth";
+import { addCartItem } from "../../services/cartServices";
 
 export default function DetailProduct() {
+  const { isAuthLoading, isLoggedIn, accessToken } = useAuth();
   const { productId } = useParams();
   const { showToast } = useToast();
 
@@ -54,6 +57,64 @@ export default function DetailProduct() {
 
     fetchProduct();
   }, [productId, showToast]);
+
+  // 실제 API 호출만 담당
+  const handleAddCart = async (selectedQuantity) => {
+    if (isAuthLoading) {
+      return;
+    }
+
+    if (!isLoggedIn || !accessToken) {
+      showToast("로그인 후 장바구니를 이용해주세요.", false);
+      return;
+    }
+
+    try {
+      const result = await addCartItem(
+        productId,
+        selectedQuantity,
+        accessToken,
+      );
+
+      if (!result.success) {
+        throw new Error(result.message || "장바구니 담기에 실패했습니다.");
+      }
+
+      showToast(result.message || "장바구니에 상품을 담았습니다.", true);
+
+      return true;
+    } catch (error) {
+      console.error("장바구니 추가 실패:", error);
+
+      showToast(error.message || "장바구니 담기에 실패했습니다.", false);
+
+      return false;
+    }
+  };
+
+  const handleBottomSheetSubmit = () => {
+    if (bottomSheetType === "cart") {
+      handleAddCart(quantity);
+      return;
+    }
+
+    if (bottomSheetType === "buy") {
+      // 나중에 바로구매 연결
+    }
+  };
+
+  const handleBuyClick = () => {
+    if (window.innerWidth <= 600) {
+      setBottomSheetType("buy");
+      return;
+    }
+  };
+  const handleCartClick = () => {
+    if (window.innerWidth <= 600) {
+      setBottomSheetType("cart");
+      return;
+    }
+  };
 
   if (isLoading) {
     return (
@@ -154,10 +215,7 @@ export default function DetailProduct() {
               </div>
             </SummaryStyle>
             <ButtonContainer>
-              <button
-                className="btn btn-buy-now"
-                onClick={() => setBottomSheetType("buy")}
-              >
+              <button className="btn btn-buy-now" onClick={handleBuyClick}>
                 {" "}
                 <span className="button-text">바로 구매하기</span>
                 <span className="button-icon" aria-hidden="true">
@@ -165,10 +223,7 @@ export default function DetailProduct() {
                 </span>
               </button>
               <div className="button-wrapper">
-                <button
-                  className="btn btn-cart"
-                  onClick={() => setBottomSheetType("cart")}
-                >
+                <button className="btn btn-cart" onClick={handleCartClick}>
                   <span className="button-text">장바구니 담기</span>
 
                   <span className="button-icon" aria-hidden="true">
@@ -219,6 +274,7 @@ export default function DetailProduct() {
         quantity={quantity}
         onDecrease={handleDecrease}
         onIncrease={handleIncrease}
+        onSubmit={handleBottomSheetSubmit}
       />
     </>
   );

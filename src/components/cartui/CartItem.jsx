@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   CartItemRoot,
   CheckBox,
@@ -12,13 +11,6 @@ import {
   ItemPrice,
   RemoveButton,
 } from "./CartItemStyle";
-
-const defaultProduct = {
-  name: "깃털 장난감",
-  price: 9900,
-  quantity: 1,
-  thumbnail: "https://i.ibb.co/1t95sXZw/2.webp",
-};
 
 function QuantityIcon({ type }) {
   const path = type === "plus" ? "M12 5v14M5 12h14" : "M5 12h14";
@@ -42,48 +34,80 @@ function QuantityIcon({ type }) {
   );
 }
 
-function CartItem({ product = defaultProduct, onRemove, onQuantityChange }) {
-  const [quantity, setQuantity] = useState(product.quantity ?? 1);
+function CartItem({
+  item,
+  checked = false,
+  onCheck,
+  onRemove,
+  onQuantityChange,
+}) {
+  const { cartItemId, name, price, quantity, thumbnail } = item;
 
-  const updateQuantity = (nextQuantity) => {
-    if (nextQuantity < 1) return;
+  const handleDecrease = () => {
+    if (quantity <= 1) return;
 
-    setQuantity(nextQuantity);
-    onQuantityChange?.(nextQuantity);
+    onQuantityChange?.(cartItemId, quantity - 1);
+  };
+
+  const handleIncrease = () => {
+    onQuantityChange?.(cartItemId, quantity + 1);
   };
 
   return (
     <CartItemRoot>
-      <CheckBox type="checkbox" aria-label={`${product.name} 선택`} />
-      <ProductImage src={product.thumbnail} alt={product.name} />
+      <CheckBox
+        type="checkbox"
+        checked={checked}
+        onChange={(event) => onCheck?.(cartItemId, event.target.checked)}
+        aria-label={`${name} 선택`}
+      />
+
+      <ProductImage src={thumbnail} alt={name} />
+
       <ProductInfo>
-        <ProductName>{product.name}</ProductName>
-        <ProductPrice>{product.price.toLocaleString()}원</ProductPrice>
+        <ProductName>{name}</ProductName>
+
+        <ProductPrice>{price.toLocaleString()}원</ProductPrice>
       </ProductInfo>
+
       <QuantityControl aria-label="상품 수량 조절">
         <QuantityButton
           type="button"
           aria-label="수량 줄이기"
-          onClick={() => updateQuantity(quantity - 1)}
+          disabled={quantity <= 1}
+          onClick={handleDecrease}
         >
           <QuantityIcon type="minus" />
         </QuantityButton>
+
         <QuantityValue>{quantity}</QuantityValue>
+
         <QuantityButton
           type="button"
           aria-label="수량 늘리기"
-          onClick={() => updateQuantity(quantity + 1)}
+          onClick={handleIncrease}
         >
           <QuantityIcon type="plus" />
         </QuantityButton>
       </QuantityControl>
-      <ItemPrice>{(product.price * quantity).toLocaleString()}원</ItemPrice>
+
+      <ItemPrice>{(price * quantity).toLocaleString()}원</ItemPrice>
+
       <RemoveButton
         type="button"
-        aria-label={`${product.name} 삭제`}
-        onClick={() => onRemove?.(product)}
+        aria-label={`${name} 삭제`}
+        onClick={() => onRemove?.(cartItemId)}
       >
-        ×
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-x-lg"
+          viewBox="0 0 16 16"
+        >
+          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+        </svg>
       </RemoveButton>
     </CartItemRoot>
   );

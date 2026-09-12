@@ -1,16 +1,45 @@
+import { useNavigate } from "react-router-dom";
+import CartItem from "./CartItem";
 import * as S from "./CartUiStyle";
 
 const CartUI = ({
-  cartCount = 0,
-  productPrice = 0,
-  reward = 0,
-  shippingFee = 0,
-  totalPrice = 0,
+  cartItems = [],
+  selectedItems = [],
+  onCheck,
+  onQuantityChange,
+  onRemove,
+  onCheckout,
 }) => {
+  const navigate = useNavigate();
+
+  // 장바구니 전체 수량
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+  // 선택된 상품
+  const selectedCartItems = cartItems.filter((item) =>
+    selectedItems.includes(item.cartItemId),
+  );
+
+  // 선택된 상품 금액
+  const productPrice = selectedCartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+
+  // 예상 적립금
+  // 현재 비율은 Cart API 명세에 정의되어 있지 않으므로 일단 0
+  const reward = 0;
+
+  // 배송비
+  const shippingFee = productPrice === 0 ? 0 : productPrice >= 70000 ? 0 : 3000;
+
+  // 총 주문금액
+  const totalPrice = productPrice + shippingFee;
+
   return (
     <S.CartWrapper>
       {/* 쇼핑 계속하기 */}
-      <S.ContinueButton type="button">
+      <S.ContinueButton type="button" onClick={() => navigate("/products")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -32,6 +61,18 @@ const CartUI = ({
 
         <S.CartSubtitle>{cartCount}개의 상품이 담겨져있습니다.</S.CartSubtitle>
       </S.CartHeader>
+
+      {/* 장바구니 상품 */}
+      {cartItems.map((item) => (
+        <CartItem
+          key={item.cartItemId}
+          item={item}
+          checked={selectedItems.includes(item.cartItemId)}
+          onCheck={onCheck}
+          onQuantityChange={onQuantityChange}
+          onRemove={onRemove}
+        />
+      ))}
 
       {/* 주문 요약 */}
       <S.OrderSummary>
@@ -60,7 +101,13 @@ const CartUI = ({
             <span>{totalPrice.toLocaleString()}원</span>
           </S.TotalPrice>
 
-          <S.CheckoutButton type="button">주문하기</S.CheckoutButton>
+          <S.CheckoutButton
+            type="button"
+            disabled={selectedItems.length === 0}
+            onClick={onCheckout}
+          >
+            주문하기
+          </S.CheckoutButton>
         </S.TotalAndCheckout>
       </S.OrderSummary>
     </S.CartWrapper>

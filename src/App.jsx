@@ -21,6 +21,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
+
       <Routes>
         {/* 홈 */}
         <Route path="/" element={<MainPage />} />
