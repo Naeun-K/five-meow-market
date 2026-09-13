@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
 import BasicPage from "../basicPage/BasicPage";
 import {
@@ -7,11 +7,15 @@ import {
   DetailProductStyle,
   PhotoWrapper,
   SummaryStyle,
+  DetailBanner,
+  DetailSection,
+  RelatedGrid,
+  RelatedItem,
 } from "./detailProductStyle";
 import useToast from "../../hooks/useToast";
 import { useEffect, useState } from "react";
 import Loader from "../../components/loader/Loader";
-import { getProduct } from "../../services/productServices";
+import { getProduct, getRelatedProducts } from "../../services/productServices";
 import HeartButton from "../../components/product/HeartButton/HeartButton";
 import ProductBottomSheet from "../../components/product/ProductBottomSheet/ProductBottomSheet";
 import useAuth from "../../hooks/useAuth";
@@ -27,6 +31,7 @@ export default function DetailProduct() {
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [bottomSheetType, setBottomSheetType] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
 
   const handleDecrease = () => {
@@ -35,6 +40,14 @@ export default function DetailProduct() {
 
   const handleIncrease = () => {
     setQuantity((prev) => prev + 1);
+  };
+
+  const handleBannerClick = (event, sectionId) => {
+    event.preventDefault();
+    document.getElementById(sectionId)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   useEffect(() => {
@@ -275,6 +288,103 @@ export default function DetailProduct() {
             </ButtonContainer>
           </DescWrapper>
         </DetailProductStyle>
+
+        <DetailBanner aria-label="상품 상세 메뉴">
+          <a
+            href="#product-information"
+            onClick={(event) => handleBannerClick(event, "product-information")}
+          >
+            상세정보
+          </a>
+          <a
+            href="#related-products"
+            onClick={(event) => handleBannerClick(event, "related-products")}
+          >
+            관련상품
+          </a>
+          <a
+            href="#purchase-guide"
+            onClick={(event) => handleBannerClick(event, "purchase-guide")}
+          >
+            구매안내
+          </a>
+        </DetailBanner>
+
+        <DetailSection id="product-information">
+          <div className="section-heading">
+            <p>PRODUCT INFORMATION</p>
+            <h2>상세정보</h2>
+          </div>
+          <div className="information-content">
+            <p>오묘한 생활이 고른 상품을 일상 속에서 편안하게 사용해 보세요.</p>
+            <dl>
+              <div>
+                <dt>상품명</dt>
+                <dd>{product.name}</dd>
+              </div>
+              <div>
+                <dt>카테고리</dt>
+                <dd>{product.categoryId ?? "오묘한 생활 상품"}</dd>
+              </div>
+              <div>
+                <dt>상품 구성</dt>
+                <dd>상품 본품 1개</dd>
+              </div>
+            </dl>
+          </div>
+        </DetailSection>
+
+        <DetailSection id="related-products">
+          <div className="section-heading">
+            <p>YOU MAY ALSO LIKE</p>
+            <h2>관련상품</h2>
+          </div>
+          {relatedProducts.length > 0 ? (
+            <RelatedGrid>
+              {relatedProducts.map((relatedProduct) => (
+                <RelatedItem key={relatedProduct.productId}>
+                  <Link to={`/products/${relatedProduct.productId}`}>
+                    <ProductCard
+                      image={
+                        relatedProduct.images?.[0] ?? relatedProduct.thumbnail
+                      }
+                      name={relatedProduct.name}
+                      badge=""
+                      showHeart={false}
+                    />
+                    <strong>{relatedProduct.name}</strong>
+                    <span>{relatedProduct.price.toLocaleString()}원</span>
+                  </Link>
+                </RelatedItem>
+              ))}
+            </RelatedGrid>
+          ) : (
+            <div className="information-content">
+              <p>현재 함께 추천할 상품을 준비하고 있습니다.</p>
+            </div>
+          )}
+        </DetailSection>
+
+        <DetailSection id="purchase-guide">
+          <div className="section-heading">
+            <p>SHOPPING GUIDE</p>
+            <h2>구매안내</h2>
+          </div>
+          <div className="guide-content">
+            <p>
+              <strong>배송 안내</strong> 결제 완료 후 영업일 기준 2~5일 이내
+              배송됩니다.
+            </p>
+            <p>
+              <strong>교환 및 반품</strong> 상품 수령 후 7일 이내 고객센터를
+              통해 신청해 주세요.
+            </p>
+            <p>
+              <strong>주의사항</strong> 상품의 색상은 화면 설정에 따라 실제와
+              다르게 보일 수 있습니다.
+            </p>
+          </div>
+        </DetailSection>
       </BasicPage>
       <ProductBottomSheet
         isOpen={bottomSheetType !== null}
