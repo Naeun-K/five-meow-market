@@ -8,19 +8,20 @@ const MOBILE = "@media (max-width: 767px)";
 ───────────────────────────── */
 
 export const Page = styled.div({
-  maxWidth: 720,
-  margin: "0 auto",
-  padding: "24px 20px 60px",
+  maxWidth: 1300,
+  // margin: "0 auto",
+  padding: "0 50px 60px",
   color: "var(--text-color)",
+  width: "100%",
 
   [TABLET]: {
-    maxWidth: "640px",
-    padding: "20px 18px 50px",
+    // maxWidth: "640px",
+    padding: "0 30px 50px",
   },
 
   [MOBILE]: {
-    maxWidth: 480,
-    padding: "16px 16px 40px",
+    // maxWidth: 480,
+    padding: "16px 20px 40px",
   },
 });
 
@@ -55,7 +56,7 @@ export const Title = styled.h1({
 
 export const Subtitle = styled.p({
   margin: "6px 0 0",
-  
+
   fontSize: 18,
   color: "#6E6860",
 
@@ -98,7 +99,7 @@ export const FilterSelect = styled.select({
   fontSize: 16,
   cursor: "pointer",
 
-    [TABLET]: {
+  [TABLET]: {
     padding: "9px 10px",
     fontSize: 14,
   },
@@ -154,7 +155,6 @@ export const SearchIconButton = styled.button({
   background: "none",
   color: "#6E6860",
   cursor: "pointer",
-
 });
 
 /* ─────────────────────────────
@@ -180,9 +180,7 @@ export const TabList = styled.div({
 
 export const TabButton = styled.button(({ isActive }) => ({
   padding: "8px 14px",
-  border: isActive
-    ? "1px solid var(--border)"
-    : "1px solid #ddd",
+  border: isActive ? "1px solid var(--border)" : "1px solid #ddd",
   borderRadius: "var(--radius-md)",
 
   background: isActive ? "var(--bg-button)" : "#fff",
@@ -368,7 +366,7 @@ export const OrderIdText = styled.span({
   color: "var(--text-color)",
   whiteSpace: "nowrap",
 
-    [TABLET]: {
+  [TABLET]: {
     fontSize: 16,
   },
 

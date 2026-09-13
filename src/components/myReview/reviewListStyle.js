@@ -2,29 +2,27 @@ import styled from "@emotion/styled";
 
 const TABLET = "@media (max-width: 1023px)";
 
-const MOBILE =
-  "@media (min-width: 320px) and (max-width: 767px)";
+const MOBILE = "@media (min-width: 320px) and (max-width: 767px)";
 
 /* ─────────────────────────────
    Page
 ───────────────────────────── */
 
 export const Page = styled.div({
+  maxWidth: 1300,
   width: "100%",
-  padding: "40px 100px 80px",
+  padding: "0 50px 80px",
 
   color: "var(--text-color)",
 
-    [TABLET]: {
-    padding: "32px 60px 60px",
-    },
+  [TABLET]: {
+    padding: "0 30px 60px",
+  },
 
-      [MOBILE]: {
-    padding: "24px 28px 40px",
-    
+  [MOBILE]: {
+    padding: "0 20px 40px",
   },
 });
-
 
 /* ─────────────────────────────
    Header
@@ -33,11 +31,11 @@ export const Page = styled.div({
 export const Header = styled.div({
   marginBottom: "24px",
 
-    [TABLET]: {
+  [TABLET]: {
     marginBottom: "20px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     marginBottom: "18px",
   },
 });
@@ -47,11 +45,11 @@ export const Title = styled.h1({
   fontWeight: 700,
   lineHeight: 1.2,
 
-    [TABLET]: {
+  [TABLET]: {
     fontSize: "36px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     fontSize: "28px",
   },
 });
@@ -62,32 +60,31 @@ export const Subtitle = styled.p({
   color: "#6E6560",
   fontSize: "18px",
 
-    [TABLET]: {
+  [TABLET]: {
     fontSize: "16px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     fontSize: "15px",
   },
 });
-
 
 /* ─────────────────────────────
    Main Tabs
 ───────────────────────────── */
 
 export const TabSection = styled.div({
-    display: "flex",
-    flexDirection: "column",
+  display: "flex",
+  flexDirection: "column",
 
-    gap: "20px",
+  gap: "20px",
 
-    [TABLET]: {
-     gap: "18px",
+  [TABLET]: {
+    gap: "18px",
   },
 
-    [MOBILE]: {
-     gap: "16px",
+  [MOBILE]: {
+    gap: "16px",
   },
 });
 
@@ -99,87 +96,79 @@ export const MainTabList = styled.div({
 
   gap: "18px",
 
-    [TABLET]: {
+  [TABLET]: {
     gap: "14px",
   },
 
-    [MOBILE]: {
-
+  [MOBILE]: {
     gridTemplateColumns: "1fr",
 
     gap: "12px",
   },
 });
 
-export const MainTabButton = styled.button(
-  ({ isActive }) => ({
-    position: "relative",
+export const MainTabButton = styled.button(({ isActive }) => ({
+  position: "relative",
 
-    display: "flex",
+  display: "flex",
 
-    alignItems: "center",
-    justifyContent: "center",
+  alignItems: "center",
+  justifyContent: "center",
 
-    width: "100%",
-    height: "54px",
+  width: "100%",
+  height: "54px",
 
-    padding: 0,
+  padding: 0,
 
-    border: "1px solid var(--text-primary)",
-    borderRadius: "4px",
+  border: "1px solid var(--text-primary)",
+  borderRadius: "4px",
 
-    background: "#fff",
+  background: "#fff",
 
-    color: isActive
-      ? "#2b2724"
-      : "#6f6964",
+  color: isActive ? "#2b2724" : "#6f6964",
 
-    fontSize: "15px",
+  fontSize: "15px",
 
-    fontWeight: isActive
-      ? 700
-      : 500,
+  fontWeight: isActive ? 700 : 500,
 
-    cursor: "pointer",
+  cursor: "pointer",
 
-    "&::after": isActive
-      ? {
-          content: '""',
+  "&::after": isActive
+    ? {
+        content: '""',
 
-          position: "absolute",
+        position: "absolute",
 
-          left: "50%",
-          bottom: 0,
+        left: "50%",
+        bottom: 0,
 
-          width: "48px",
-          height: "3px",
+        width: "48px",
+        height: "3px",
 
-          background: "#2b2724",
+        background: "#2b2724",
 
-          transform:
-            "translateX(-50%)",
-        }
-      : {},
+        transform: "translateX(-50%)",
+      }
+    : {},
 
-      "&:hover": {
-        color: "#120801",
-      },
+  "&:hover": {
+    color: "#120801",
+  },
 
-    [TABLET]: {
-      fontSize: "14px",
+  [TABLET]: {
+    fontSize: "14px",
+  },
+
+  [MOBILE]: {
+    height: "44px",
+    border: "1px solid #eee9e4",
+    fontSize: "13px",
+
+    "&::after": {
+      display: "none",
     },
-
-    [MOBILE]: {
-      height: "44px",
-      border: "1px solid #eee9e4",
-      fontSize: "13px",
-
-      "&::after": {
-        display: "none",
-      },
-    },
-  })
-);
+  },
+}));
 
 /* ─────────────────────────────
    Review List
@@ -190,16 +179,15 @@ export const ReviewList = styled.div({
   flexDirection: "column",
 
   gap: "40px",
-  
-    [TABLET]: {
+
+  [TABLET]: {
     gap: "30px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     gap: "20px",
   },
 });
-
 
 /* ─────────────────────────────
    Review Card
@@ -219,14 +207,13 @@ export const ReviewCard = styled.article({
 
   background: "#fff",
 
-    [TABLET]: {
-
+  [TABLET]: {
     gap: "16px",
 
     padding: "20px 32px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     flexDirection: "column",
 
     gap: "10px",
@@ -234,7 +221,6 @@ export const ReviewCard = styled.article({
     padding: "10px",
   },
 });
-
 
 /* ─────────────────────────────
    Product Area
@@ -249,7 +235,7 @@ export const ProductArea = styled.div({
 
   minWidth: 0,
 
-    [MOBILE]: {
+  [MOBILE]: {
     flexDirection: "row",
     columnGap: "10px",
     width: "100%",
@@ -283,11 +269,11 @@ export const ProductImage = styled.div({
     objectFit: "cover",
   },
 
-    [TABLET]: {
+  [TABLET]: {
     width: "105px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     width: "70px",
     fontSize: "9px",
   },
@@ -307,7 +293,7 @@ export const ProductName = styled.p({
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
 
-    [TABLET]: {
+  [TABLET]: {
     fontSize: "17px",
   },
 
@@ -329,7 +315,7 @@ export const ProductInfo = styled.div({
 
     display: "flex",
     alignItems: "center",
-    
+
     height: "70px",
 
     flex: 1,
@@ -349,10 +335,8 @@ export const MobileActions = styled.div({
     alignItems: "center",
 
     gap: "3px",
-
   },
 });
-
 
 /* ─────────────────────────────
    Review Content
@@ -361,12 +345,11 @@ export const MobileActions = styled.div({
 export const ReviewContent = styled.div({
   display: "flex",
   flexDirection: "column",
-  
+
   flex: 1,
   minWidth: 0,
   height: "100%",
 });
-
 
 /* ─────────────────────────────
    Review Top
@@ -381,13 +364,13 @@ export const ReviewTop = styled.div({
 
   marginBottom: "10px",
 
-    [TABLET]: {
+  [TABLET]: {
     gap: "12px",
 
     marginBottom: "8px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     marginBottom: "8px",
   },
 });
@@ -400,17 +383,15 @@ export const ReviewMeta = styled.div({
 
   minWidth: 0,
 
-    [TABLET]: {
+  [TABLET]: {
     gap: "10px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     width: "100%",
     justifyContent: "space-between",
   },
 });
-
-
 
 export const StarRating = styled.div({
   display: "flex",
@@ -425,7 +406,7 @@ export const StarRating = styled.div({
     height: "16px",
   },
 
-    [TABLET]: {
+  [TABLET]: {
     gap: "3px",
 
     "& svg": {
@@ -434,7 +415,7 @@ export const StarRating = styled.div({
     },
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     gap: "2px",
 
     "& svg": {
@@ -452,11 +433,11 @@ export const ReviewDate = styled.span({
 
   whiteSpace: "nowrap",
 
-    [TABLET]: {
+  [TABLET]: {
     fontSize: "14px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     fontSize: "13px",
   },
 });
@@ -469,7 +450,7 @@ export const ReviewActions = styled.div({
 
   flexShrink: 0,
 
-    [MOBILE]: {
+  [MOBILE]: {
     display: "none",
   },
 });
@@ -493,28 +474,25 @@ export const ActionButton = styled.button({
     textDecoration: "underline",
   },
 
-    [TABLET]: {
+  [TABLET]: {
     fontSize: "15px",
-    },
- },
-);
+  },
+});
 
 export const ActionDivider = styled.span({
   color: "#aaa",
   fontSize: "15px",
 
-    [MOBILE]: {
+  [MOBILE]: {
     fontSize: "14px",
   },
 });
-
 
 /* ─────────────────────────────
    Review Text
 ───────────────────────────── */
 
 export const ReviewTextBox = styled.div({
-
   height: "140px",
 
   padding: "12px 14px",
@@ -525,13 +503,13 @@ export const ReviewTextBox = styled.div({
 
   background: "#fff",
 
-    [TABLET]: {
+  [TABLET]: {
     height: "110px",
 
     padding: "8px 10px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     height: "90px",
     padding: "8px",
   },
@@ -547,11 +525,11 @@ export const ReviewText = styled.p({
 
   wordBreak: "keep-all",
 
-    [TABLET]: {
+  [TABLET]: {
     fontSize: "17px",
   },
 
-    [MOBILE]: {
+  [MOBILE]: {
     fontSize: "15px",
 
     lineHeight: 1.45,

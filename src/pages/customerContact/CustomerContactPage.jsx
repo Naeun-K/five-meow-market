@@ -10,6 +10,7 @@ import logoPlay from "../../assets/logo-play.webp";
 import logoRest from "../../assets/logo-rest.webp";
 
 import styles from "./CustomerContactPageStyle";
+import FloatingIcon from "../../components/FloatingIcon/FloatingIcon";
 
 const CustomerContactPage = () => {
   return (
@@ -49,7 +50,7 @@ const CustomerContactPage = () => {
                 <img src={logoRest} alt="" />
               </div>
 
-              <Link to="/customer-inquiry" className="contact-inquiry-link">
+              <Link to="/support/inquiry" className="contact-inquiry-link">
                 <span>고객 문의</span>
                 <span className="contact-arrow">↗</span>
               </Link>
@@ -57,7 +58,7 @@ const CustomerContactPage = () => {
           </section>
         </div>
       </main>
-
+      <FloatingIcon />
       <Footer />
     </>
   );

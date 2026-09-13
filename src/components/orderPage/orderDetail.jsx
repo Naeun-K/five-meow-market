@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as S from "./orderStyle";
 
 function OrderRow({ label, children }) {
@@ -68,7 +68,9 @@ function ProductItem() {
 export default function OrderDetail() {
   return (
     <S.Page>
-      <S.Breadcrumb href="#">← 주문/배송내역으로 돌아가기</S.Breadcrumb>
+      <S.Breadcrumb href="/mypage/orders">
+        ← 주문/배송내역으로 돌아가기
+      </S.Breadcrumb>
 
       <S.Header>
         <S.Title>주문 상세보기</S.Title>

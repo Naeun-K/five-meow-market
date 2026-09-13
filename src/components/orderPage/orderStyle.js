@@ -1,19 +1,23 @@
-import styled from "@emotion/styled"
+import styled from "@emotion/styled";
 
-const TABLET= "@media (max-width: 1023px)";
-const MOBILE= "@media (max-width: 767px)";
+const TABLET = "@media (max-width: 1023px)";
+const MOBILE = "@media (max-width: 767px)";
 
 export const Page = styled.div({
-  maxWidth: 720,
-  margin: "0 auto",
-  padding: "24px 20px 60px",
+  maxWidth: 1300,
+  // margin: "0 auto",
+  width: "100%",
+  padding: "0 50px 60px",
   fontFamily: "-apple-system, 'Pretendard', sans-serif",
   color: "var(--text-color)",
-
+  [TABLET]: {
+    // maxWidth: "640px",
+    padding: "0 30px 50px",
+  },
   [MOBILE]: {
-    maxWidth: 480,
-    padding: "16px 16px 40px",
-  }
+    // maxWidth: 480,
+    padding: "0 20px 40px",
+  },
 });
 
 export const Breadcrumb = styled.a({
@@ -23,18 +27,18 @@ export const Breadcrumb = styled.a({
   textDecoration: "none",
   marginBottom: 16,
 
-  [MOBILE]: { marginBottom: 12},
+  [MOBILE]: { marginBottom: 12 },
 });
 
 export const Header = styled.header({
   marginBottom: 24,
-  [MOBILE]: { marginBottom: 16},
+  [MOBILE]: { marginBottom: 16 },
 });
 
 export const Title = styled.h1({
   fontSize: 24,
   fontWeight: 700,
-  [MOBILE]: { fontSize: 20},
+  [MOBILE]: { fontSize: 20 },
 });
 
 export const Subtitle = styled.p({
@@ -42,7 +46,7 @@ export const Subtitle = styled.p({
   color: "#6E6860",
   margin: "6px 0 0",
   minHeight: 18,
-  [MOBILE]: { fontSize: 13, margin: "4px 0 0"},
+  [MOBILE]: { fontSize: 13, margin: "4px 0 0" },
 });
 
 export const SummaryBar = styled.section({
@@ -83,7 +87,7 @@ export const InfoLabel = styled.span({
   fontSize: 14,
   color: "#66615e",
 
-  [MOBILE]: { fontSize: 13},
+  [MOBILE]: { fontSize: 13 },
 });
 
 export const InfoValue = styled.p({
@@ -92,8 +96,8 @@ export const InfoValue = styled.p({
   minHeight: 18,
 
   [MOBILE]: {
-    fontSize: 13, 
-    textAlign: "right"
+    fontSize: 13,
+    textAlign: "right",
   },
 });
 
@@ -108,12 +112,12 @@ export const InfoValueStrong = styled.p({
   fontSize: 15,
   lineHeight: 1.4,
   fontWeight: 700,
-  color:" #D97757",
+  color: " #D97757",
   margin: 0,
   textAlign: "right",
 
   [MOBILE]: {
-    fontSize: 14
+    fontSize: 14,
   },
 });
 
@@ -121,7 +125,7 @@ export const Section = styled.section({
   marginBottom: 32,
 
   [MOBILE]: {
-    marginBottom: 20
+    marginBottom: 20,
   },
 });
 
@@ -133,8 +137,8 @@ export const SectionTitle = styled.h2({
   borderBottom: "2px solid #222",
 
   [MOBILE]: {
-    fontSize: 15, 
-    margin: "0 0 12px"
+    fontSize: 15,
+    margin: "0 0 12px",
   },
 });
 
@@ -143,7 +147,7 @@ export const ProductList = styled.div({
   flexDirection: "column",
   gap: 20,
   [MOBILE]: {
-    gap: 12
+    gap: 12,
   },
 });
 
@@ -154,7 +158,7 @@ export const ProductItemWrap = styled.div({
   gap: 14,
   padding: "20px 16px",
   borderBottom: "1px solid #f0f0f0",
-  background:" #fffdf9",
+  background: " #fffdf9",
 
   [MOBILE]: {
     border: "1px solid #eee",
@@ -175,7 +179,8 @@ export const Thumb = styled.div({
   justifyContent: "center",
 
   [MOBILE]: {
-    width: 48, height: 48
+    width: 48,
+    height: 48,
   },
 });
 
@@ -185,7 +190,7 @@ export const ThumbText = styled.p({
   margin: 0,
 
   [MOBILE]: {
-    fontSize: 10
+    fontSize: 10,
   },
 });
 
@@ -217,7 +222,7 @@ export const ProductOption = styled.p({
   minHeight: 16,
 
   [MOBILE]: {
-    fontSize: 12
+    fontSize: 12,
   },
 });
 
@@ -241,7 +246,7 @@ export const ProductQty = styled.p({
   margin: 0,
   minHeight: 16,
   [MOBILE]: {
-    fontSize: 12
+    fontSize: 12,
   },
 });
 
@@ -268,7 +273,7 @@ export const StatusBadgeSmall = styled.span({
   display: "inline-block",
 
   [MOBILE]: {
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
   },
 });
 
@@ -286,7 +291,7 @@ export const ActionButtons = styled.div({
 export const GhostButton = styled.button({
   fontSize: 13,
   fontWeight: 600,
-  color:" #6E6860",
+  color: " #6E6860",
   padding: "6px 10px",
   border: "1px solid var(--border)",
   borderRadius: "var(--radius-md)",
@@ -303,7 +308,7 @@ export const GhostButton = styled.button({
     borderLeft: "1px solid #f0f0f0",
     borderRadius: 0,
     padding: "8px 0",
-    "&:first-of-type": { borderLeft: "none"},
+    "&:first-of-type": { borderLeft: "none" },
   },
 });
 
@@ -314,12 +319,12 @@ export const StatusBadge = styled.span({
   color: "#2563eb",
   minHeight: 18,
 
-    [MOBILE]: {
+  [MOBILE]: {
     fontSize: 13,
     background: "#fffdf9",
     padding: "2px 8px",
     borderRadius: "var(--radius-md)",
-    },
+  },
 });
 
 export const BottomGrid = styled.section({
@@ -344,7 +349,7 @@ export const Panel = styled.div({
 
   [TABLET]: {
     padding: 0,
-    height: "auto"
+    height: "auto",
   },
 });
 
@@ -389,7 +394,7 @@ export const PanelBody = styled.div(({ isOpen }) => ({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  justifyContent:"space-between",
+  justifyContent: "space-between",
   gap: 10,
 
   [TABLET]: {
@@ -415,7 +420,7 @@ export const LinkButton = styled.button({
   width: "fit-content",
 
   "&:hover": { background: "#f7f7f7" },
-  [MOBILE]: { fontSize: 11, padding: "4px 8px"},
+  [MOBILE]: { fontSize: 11, padding: "4px 8px" },
 });
 
 // 배송정보/결제정보 패널 전용 행 (라벨 좌, 값 우 정렬)
@@ -435,7 +440,7 @@ export const PanelLabel = styled.span({
 
   [MOBILE]: {
     fontSize: 13,
-    paddingTop: 0
+    paddingTop: 0,
   },
 });
 
@@ -455,7 +460,7 @@ export const PanelValue = styled.p({
   textAlign: "right",
 
   [MOBILE]: {
-    fontSize: 13
+    fontSize: 13,
   },
 });
 
@@ -468,7 +473,7 @@ export const PanelValueSub = styled.p({
   textAlign: "right",
 
   [MOBILE]: {
-    fontSize: 13
+    fontSize: 13,
   },
 });
 

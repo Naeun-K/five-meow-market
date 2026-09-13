@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./orderListStyle";
 
-{/* 주문 상태 데이터 */}
+{
+  /* 주문 상태 데이터 */
+}
 const TABS = [
   { key: "all", label: "전체" },
   { key: "paid", label: "결제완료" },
@@ -12,7 +14,9 @@ const TABS = [
   { key: "cancelExchange", label: "취소/교환/반품" },
 ];
 
-{/* 주문 목록 데이터 */}
+{
+  /* 주문 목록 데이터 */
+}
 const ORDERS = [
   {
     id: "202405012345",
@@ -66,7 +70,9 @@ const ORDERS = [
   },
 ];
 
-{/* 상품 박스 안에 들어간 아이콘 */}
+{
+  /* 상품 박스 안에 들어간 아이콘 */
+}
 function ProductBoxIcon() {
   return (
     <svg
@@ -83,7 +89,9 @@ function ProductBoxIcon() {
   );
 }
 
-{/* 상품 상세부분 오른쪽 화살표 SVG */}
+{
+  /* 상품 상세부분 오른쪽 화살표 SVG */
+}
 function ChevronRightIcon() {
   return (
     <svg
@@ -100,7 +108,9 @@ function ChevronRightIcon() {
   );
 }
 
-{/* 더보기 아래 화살표 SVG */}
+{
+  /* 더보기 아래 화살표 SVG */
+}
 function ChevronDownIcon() {
   return (
     <svg
@@ -117,7 +127,9 @@ function ChevronDownIcon() {
   );
 }
 
-{/* 검색창 돋보기 SVG */}
+{
+  /* 검색창 돋보기 SVG */
+}
 function SearchIcon() {
   return (
     <svg
@@ -135,71 +147,54 @@ function SearchIcon() {
   );
 }
 
-{/* 개별 주문 카드 창 컴포넌트 */}
+{
+  /* 개별 주문 카드 창 컴포넌트 */
+}
 function OrderCard({ order, onViewDetail }) {
   return (
     <S.OrderCard>
-
       {/* 상품 이미지 및 아이콘 영역 */}
       <S.Thumb>
         <S.ThumbIconWrap>
           <ProductBoxIcon />
         </S.ThumbIconWrap>
       </S.Thumb>
-      
+
       {/* 주문번호 전체 영역 */}
       <S.OrderInfo>
-
         {/* 주문 번호 및 주문 상태 영역*/}
         <S.OrderHeader>
-          <S.OrderLabelText>
-            {order.orderLabel}
-          </S.OrderLabelText>
+          <S.OrderLabelText>{order.orderLabel}</S.OrderLabelText>
 
-          <S.OrderIdText>
-            {order.id}
-          </S.OrderIdText>
+          <S.OrderIdText>{order.id}</S.OrderIdText>
 
           {/* 주문 상태에 따라 색상 변경하는 뱃지 */}
           <S.StatusBadge variant={order.statusVariant}>
             {order.statusLabel}
           </S.StatusBadge>
         </S.OrderHeader>
-        
+
         {/* 주문 날짜 및 주문자 정보 */}
         <S.MetaList>
-          <S.MetaRow>
-            주문일 {order.date}
-          </S.MetaRow>
+          <S.MetaRow>주문일 {order.date}</S.MetaRow>
 
           <S.MetaDivider>|</S.MetaDivider>
 
-          <S.MetaRow>
-            주문자 {order.buyer}
-          </S.MetaRow>
+          <S.MetaRow>주문자 {order.buyer}</S.MetaRow>
         </S.MetaList>
 
         {/* 총 상품 개수 및 총 주문 금액 */}
         <S.OrderSummaryRow>
-          <S.OrderCount>
-            총 {order.count}건
-          </S.OrderCount>
+          <S.OrderCount>총 {order.count}건</S.OrderCount>
 
-          <S.OrderTotal>
-            {order.total}
-          </S.OrderTotal>
+          <S.OrderTotal>{order.total}</S.OrderTotal>
         </S.OrderSummaryRow>
       </S.OrderInfo>
 
       {/* 주문 상세 페이지 이동 버튼 */}
-      <S.DetailButton
-        type="button"
-        onClick={() => onViewDetail(order.id)}
-      >
-        <S.DetailButtonText>
-          주문 상세보기
-        </S.DetailButtonText>
-        
+      <S.DetailButton type="button" onClick={() => onViewDetail(order.id)}>
+        <S.DetailButtonText>주문 상세보기</S.DetailButtonText>
+
         {/* 오른쪽 화살표 SVG */}
         <S.DetailArrow>
           <ChevronRightIcon />
@@ -209,38 +204,42 @@ function OrderCard({ order, onViewDetail }) {
   );
 }
 
-{/* 주문 목록 페이지 */}
+{
+  /* 주문 목록 페이지 */
+}
 export default function OrderList() {
-
-  {/* 현재 선택된 주문상태 탭 */}
+  {
+    /* 현재 선택된 주문상태 탭 */
+  }
   const [activeTab, setActiveTab] = useState("all");
 
-  {/* 페이지 이동 함수  */}
+  {
+    /* 페이지 이동 함수  */
+  }
   const navigate = useNavigate();
 
-  {/* 주문 상세 페이지로 이동  */}
+  {
+    /* 주문 상세 페이지로 이동  */
+  }
   const handleViewDetail = (orderId) => {
-    navigate(`/orders/${orderId}`);
+    navigate(`/mypage/orders/${orderId}`);
   };
 
-  {/* 주문 목록 필터링 (전체 탭, 특정 상태 탭 등)  */}
+  {
+    /* 주문 목록 필터링 (전체 탭, 특정 상태 탭 등)  */
+  }
   const filteredOrders =
     activeTab === "all"
       ? ORDERS
-      : ORDERS.filter(
-          (order) => order.statusVariant === activeTab
-        );
+      : ORDERS.filter((order) => order.statusVariant === activeTab);
 
   return (
     <S.Page>
-
       {/* 페이지 제목  */}
       <S.Header>
         <S.Title>주문/배송내역</S.Title>
 
-        <S.Subtitle>
-          고객님의 주문 내역을 확인해보세요.
-        </S.Subtitle>
+        <S.Subtitle>고객님의 주문 내역을 확인해보세요.</S.Subtitle>
       </S.Header>
 
       {/* 주문 검색 영역 */}
@@ -250,19 +249,14 @@ export default function OrderList() {
         </S.FilterSelect>
 
         <S.SearchInputWrap>
-          <S.SearchInput
-            placeholder="주문번호, 상품명 검색"
-          />
+          <S.SearchInput placeholder="주문번호, 상품명 검색" />
 
-          <S.SearchIconButton
-            type="button"
-            aria-label="검색"
-          >
+          <S.SearchIconButton type="button" aria-label="검색">
             <SearchIcon />
           </S.SearchIconButton>
         </S.SearchInputWrap>
       </S.SearchBar>
-      
+
       {/* 주문 상태 필터 탭 ( 탭 클릭시 해당 상태 필터링 ) */}
       <S.TabList>
         {TABS.map((tab) => (
@@ -287,7 +281,7 @@ export default function OrderList() {
           />
         ))}
       </S.OrderList>
-      
+
       {/* 더보기 버튼 및 SVG 영역 */}
       <S.LoadMoreWrap>
         <S.LoadMoreButton type="button">
