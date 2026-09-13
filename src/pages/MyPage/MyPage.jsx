@@ -135,7 +135,10 @@ function MyPage() {
           </div>
 
           <div css={summaryItem}>
-            <button className="svg-container">
+            <button
+              className="svg-container"
+              onClick={() => navigate("/mypage/wishlist")}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="100%"

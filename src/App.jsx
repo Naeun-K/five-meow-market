@@ -12,7 +12,6 @@ import CartPage from "./pages/cartpage/CartPage";
 import ScrollToTop from "./routes/ScrollTop";
 import MyPage from "./pages/MyPage/MyPage";
 // import CheckoutPage from "./pages/checkout/CheckoutPage";
-import DetailProduct from "./pages/detailProduct/DetailProduct";
 import PrivacyPolicyPage from "./pages/privacyPolicy/PrivacyPolicyPage";
 import TermsPage from "./pages/terms/TermsPage";
 import AboutPage from "./pages/about/AboutPage";
@@ -22,7 +21,8 @@ import CustomerInquiryPage from "./pages/customerInquiry/CustomerInquiryPage";
 import MyOrderList from "./pages/MyPage/order/MyOrderList";
 import MyOrderDetail from "./pages/MyPage/order/MyOrderDetail";
 import MyReviewPage from "./pages/MyPage/reviews/MyReviewPage";
-// import OrderDetail from "./components/orderPage/orderDetail";
+import WishlistPage from "./pages/wishlist/WishlistPage";
+import DetailProduct from "./pages/detailProduct/DetailProduct";
 
 function App() {
   return (
@@ -35,6 +35,7 @@ function App() {
 
         {/* 상품 */}
         <Route path="/products" element={<ProductList />} />
+        {/* <Route path="/products/:productId" element={<DetailProduct />} /> */}
         <Route path="/products/:productId" element={<DetailProduct />} />
         {/* <Route path="/products/best" element={<ProductList />} /> */}
         <Route path="/products" element={<ProductList />}>
@@ -51,7 +52,7 @@ function App() {
         <Route path="/mypage/edit" element={<UpdatePage />} />
         <Route path="/mypage/inquiry" element={<MyInquiry />} />
         <Route path="/mypage/reviews" element={<MyReviewPage />} />
-        {/* <Route path="/mypage/wishlist" element={<Wishlist />} /> */}
+        <Route path="/mypage/wishlist" element={<WishlistPage />} />
         <Route path="/mypage/orders" element={<MyOrderList />} />
         <Route path="/mypage/orders/:orderId" element={<MyOrderDetail />} />
 
