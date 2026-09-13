@@ -43,8 +43,6 @@ export const reviewCard = css({
 
   backgroundColor: "#fff",
 
-  boxSizing: "border-box",
-
   "@media (max-width: 767px)": {
     maxWidth: "400px",
     height: "auto",
@@ -54,8 +52,8 @@ export const reviewCard = css({
 
 /* 상품 이미지 */
 export const productImage = css({
-  width: "50%",
-  height: "100%",
+  // width: "50%",
+  // height: "100%",
 
   flexShrink: 0,
   aspectRatio: "1 / 1",
@@ -64,21 +62,17 @@ export const productImage = css({
   objectFit: "cover",
   objectPosition: "center center",
 
-  margin: 0,
+  "& img": { width: "100%", height: "100%", objectFit: "cover" },
 
   "@media (max-width: 767px)": {
     width: "100%",
     height: "auto",
-
-    // aspectRatio: "1 / 1",
-
-    // objectFit: "cover",
   },
 });
 
 /* 리뷰 내용 */
 export const reviewContent = css({
-  width: "50%",
+  width: "100%",
   minWidth: 0,
 
   display: "flex",
@@ -86,13 +80,14 @@ export const reviewContent = css({
 
   padding: "24px",
 
-  boxSizing: "border-box",
+  // boxSizing: "border-box",
 
   "@media (max-width: 767px)": {
     width: "100%",
     height: "auto",
 
     padding: "20px",
+    gap: "20px",
 
     textAlign: "left",
   },

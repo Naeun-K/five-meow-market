@@ -39,7 +39,10 @@ import guestCat from "../../assets/logo-guest.webp";
 const leftColumns = [
   {
     title: "집사 PICK",
-    items: [{ label: "베스트 상품", path: "/products/best" }],
+    items: [
+      { label: "베스트 상품", path: "/products/best" },
+      { label: "신 상 품", path: "/products/new" },
+    ],
   },
   {
     title: "카테고리",
@@ -252,7 +255,14 @@ function Header() {
 
   const navItems = [
     { label: "홈", path: "/", image: navCat1 },
-    { label: "베스트", path: "/products/best", image: navCat2 },
+    {
+      label: "집사 PICK",
+      image: navCat2,
+      children: [
+        { label: "베스트", path: "/products/best" },
+        { label: "신상품", path: "/products/new" },
+      ],
+    },
     {
       label: "카테고리",
       image: navCat3,
@@ -490,7 +500,12 @@ function Header() {
                       />
                     </div>
                   )}
-
+                  {/* 집사 PICK에만 SVG */}
+                  {menu.label === "집사 PICK" && (
+                    <span className="mobile-paw">
+                      <PawIcon />
+                    </span>
+                  )}
                   {menu.children ? (
                     <button
                       type="button"

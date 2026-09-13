@@ -24,9 +24,10 @@ export const categorySection = css({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: "8px",
+    gap: "12px",
   },
-  "& .header": {
+  ".paw-container": { aspectRatio: "1/1", width: "28px" },
+  ".header": {
     display: "flex",
     flexDirection: "column",
     gap: "10px",
