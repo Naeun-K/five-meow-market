@@ -70,13 +70,6 @@ const leftColumns = [
 ];
 // const communityLeft = ["제품후기", "Q&A", "공지사항"];
 
-const myShopButtons = [
-  { label: "로그인", path: "/login", filled: false },
-  { label: "회원가입", path: "/signup", filled: true },
-  { label: "장바구니", path: "/cart", filled: false },
-  { label: "마이페이지", path: "/mypage", filled: false },
-];
-
 const mobileSections = [...leftColumns.filter((col) => col.title !== "REVIEW")];
 
 function Header() {
@@ -91,6 +84,11 @@ function Header() {
   const navigate = useNavigate();
   const { showToast } = useToast();
   const { user, isLoggedIn, isAuthLoading, logout } = useAuth();
+
+  const authButtons = [
+    { label: "로그인", path: "/login", filled: false },
+    { label: "회원가입", path: "/signup", filled: true },
+  ];
 
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
@@ -241,9 +239,6 @@ function Header() {
   };
 
   //네비게이션 드롭다운 구현용 메뉴 데이터
-  const authButtons = myShopButtons.filter(
-    (b) => b.label === "로그인" || b.label === "회원가입",
-  );
 
   const handleNavigate = (path) => {
     if (!path || path === "#") return;
