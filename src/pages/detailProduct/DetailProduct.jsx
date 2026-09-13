@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
 import BasicPage from "../basicPage/BasicPage";
 import {
@@ -9,18 +9,25 @@ import {
   SummaryStyle,
   DetailBanner,
   DetailSection,
-  RelatedGrid,
-  RelatedItem,
 } from "./detailProductStyle";
 import useToast from "../../hooks/useToast";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Loader from "../../components/loader/Loader";
-import { getProduct, getRelatedProducts } from "../../services/productServices";
+import { getProduct } from "../../services/productServices";
 import HeartButton from "../../components/product/HeartButton/HeartButton";
 import ProductBottomSheet from "../../components/product/ProductBottomSheet/ProductBottomSheet";
 import useAuth from "../../hooks/useAuth";
 import { addCartItem } from "../../services/cartServices";
 import CartSuccessModal from "../../components/cartui/CartSuccessModal";
+import RelatedProducts from "../../components/product/RelateProduct/RelatedProduct";
+
+const categoryNames = {
+  "cat-eat": "먹묘",
+  "cat-play": "놀묘",
+  "cat-rest": "쉼묘",
+  "cat-high": "높묘",
+  "cat-clean": "깔묘",
+};
 
 export default function DetailProduct() {
   const { isAuthLoading, isLoggedIn, accessToken } = useAuth();
@@ -31,8 +38,10 @@ export default function DetailProduct() {
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [bottomSheetType, setBottomSheetType] = useState(null);
-  const [relatedProducts, setRelatedProducts] = useState([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [isDetailExpanded, setIsDetailExpanded] = useState(false);
+  const [isDetailOverflowing, setIsDetailOverflowing] = useState(false);
+  const detailImageContentRef = useRef(null);
 
   const handleDecrease = () => {
     setQuantity((prev) => Math.max(1, prev - 1));
@@ -49,6 +58,36 @@ export default function DetailProduct() {
       block: "start",
     });
   };
+
+  useEffect(() => {
+    const detailContent = detailImageContentRef.current;
+
+    if (!detailContent || !product?.detailImages?.length) {
+      setIsDetailOverflowing(false);
+      return;
+    }
+
+    const getCollapsedHeight = () => {
+      if (window.innerWidth <= 767) return 1200;
+      if (window.innerWidth <= 1023) return 1500;
+      return 1800;
+    };
+
+    const checkDetailHeight = () => {
+      setIsDetailOverflowing(detailContent.scrollHeight > getCollapsedHeight());
+    };
+
+    checkDetailHeight();
+
+    const resizeObserver = new ResizeObserver(checkDetailHeight);
+    resizeObserver.observe(detailContent);
+    window.addEventListener("resize", checkDetailHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", checkDetailHeight);
+    };
+  }, [product]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -156,13 +195,16 @@ export default function DetailProduct() {
   }
 
   const totalPrice = product.price * quantity;
+  const categoryName = product.categoryId
+    ? categoryNames[product.categoryId]
+    : "전체상품";
   return (
     <>
       <BasicPage>
         <DetailProductStyle>
           <PhotoWrapper>
             <ProductCard
-              image={product.images[0]}
+              image={product.thumbnail}
               name={product.name}
               badge=""
               showHeart
@@ -289,6 +331,14 @@ export default function DetailProduct() {
           </DescWrapper>
         </DetailProductStyle>
 
+        <DetailSection id="related-products">
+          <div className="section-heading">
+            <p>YOU MAY ALSO LIKE</p>
+            <h2>관련상품</h2>
+          </div>
+          <RelatedProducts productId={productId} />
+        </DetailSection>
+
         <DetailBanner aria-label="상품 상세 메뉴">
           <a
             href="#product-information"
@@ -296,12 +346,7 @@ export default function DetailProduct() {
           >
             상세정보
           </a>
-          <a
-            href="#related-products"
-            onClick={(event) => handleBannerClick(event, "related-products")}
-          >
-            관련상품
-          </a>
+
           <a
             href="#purchase-guide"
             onClick={(event) => handleBannerClick(event, "purchase-guide")}
@@ -324,7 +369,7 @@ export default function DetailProduct() {
               </div>
               <div>
                 <dt>카테고리</dt>
-                <dd>{product.categoryId ?? "오묘한 생활 상품"}</dd>
+                <dd>{categoryName ?? "오묘한 생활 상품"}</dd>
               </div>
               <div>
                 <dt>상품 구성</dt>
@@ -332,9 +377,57 @@ export default function DetailProduct() {
               </div>
             </dl>
           </div>
+
+          {product.detailImages?.length > 0 && (
+            <div className="detail-image-area">
+              <div
+                className={`detail-image-container${
+                  isDetailExpanded ? " is-expanded" : ""
+                }${isDetailOverflowing ? " is-overflowing" : ""}`}
+              >
+                <div
+                  className="detail-image-content"
+                  ref={detailImageContentRef}
+                >
+                  {product.detailImages.map((image, index) => (
+                    <img
+                      key={`${product.productId}-detail-${index}`}
+                      src={image}
+                      alt={`${product.name} 상세 이미지 ${index + 1}`}
+                    />
+                  ))}
+                </div>
+
+                {isDetailOverflowing && !isDetailExpanded && (
+                  <div className="detail-image-fade" aria-hidden="true" />
+                )}
+              </div>
+
+              {isDetailOverflowing && (
+                <button
+                  type="button"
+                  className="detail-more-button"
+                  onClick={() => setIsDetailExpanded((prev) => !prev)}
+                  aria-expanded={isDetailExpanded}
+                >
+                  <span>
+                    {isDetailExpanded ? "상세정보 접기" : "상세정보 더보기"}
+                  </span>
+                  <span
+                    className={`detail-more-arrow${
+                      isDetailExpanded ? " is-expanded" : ""
+                    }`}
+                    aria-hidden="true"
+                  >
+                    ↓
+                  </span>
+                </button>
+              )}
+            </div>
+          )}
         </DetailSection>
 
-        <DetailSection id="related-products">
+        {/* <DetailSection id="related-products">
           <div className="section-heading">
             <p>YOU MAY ALSO LIKE</p>
             <h2>관련상품</h2>
@@ -363,7 +456,7 @@ export default function DetailProduct() {
               <p>현재 함께 추천할 상품을 준비하고 있습니다.</p>
             </div>
           )}
-        </DetailSection>
+        </DetailSection> */}
 
         <DetailSection id="purchase-guide">
           <div className="section-heading">
