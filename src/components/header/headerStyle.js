@@ -155,6 +155,8 @@ export const HeaderStyle = styled.header({
     alignItems: "center",
 
     width: "100%",
+
+    gap: "70px",
   },
 
   "& .svg-list": {
@@ -168,7 +170,7 @@ export const HeaderStyle = styled.header({
   "& .navigation": {
     display: "flex",
     alignItems: "center",
-    gap: "40px",
+    gap: "50px",
 
     fontSize: "20px",
 
@@ -181,13 +183,18 @@ export const HeaderStyle = styled.header({
     height: "100%",
 
     display: "flex",
-    flexDirection: "column",
+    // flexDirection: "column",
+    flexDirection: "row", // 중요
     justifyContent: "center",
     alignItems: "center",
 
-    // gap: "5px",
-    gap: 0,
-
+    gap: "8px",
+    "& .mobile-paw": {
+      width: "20px",
+      aspectRatio: "1/1",
+      flexShrink: 0,
+      order: 1,
+    },
     "& > button": {
       padding: 0,
 
@@ -247,24 +254,6 @@ export const HeaderStyle = styled.header({
       transform: "scaleX(1)",
     },
   },
-
-  // "& .nav-item button": {
-  //   position: "relative",
-
-  //   "&::after": {
-  //     content: '""',
-
-  //     position: "absolute",
-  //     left: 0,
-  //     bottom: "-5px",
-  //     width: "100%",
-  //     height: "2px",
-  //     backgroundColor: "var(--text-primary)",
-  //     transform: "scaleX(0)",
-  //     transformOrigin: "center",
-  //     transition: "transform 0.2s ease",
-  //   },
-  // },
 
   // hover하면 밑줄
   "& .nav-item:hover > button::after": {
@@ -512,7 +501,7 @@ export const HeaderStyle = styled.header({
       display: "flex",
 
       fontSize: "17px",
-      gap: "28px",
+      gap: "70px",
 
       justifyContent: "center",
 

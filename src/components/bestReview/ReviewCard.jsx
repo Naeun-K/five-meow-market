@@ -56,12 +56,9 @@ function ReviewCard({ review }) {
 
   return (
     <article css={reviewCard}>
-      <img
-        css={productImage}
-        src={review.image}
-        alt={review.name}
-        loading="lazy"
-      />
+      <div css={productImage}>
+        <img src={review.image} alt={review.name} loading="lazy" />
+      </div>
 
       <div css={reviewContent}>
         <p css={productName}>{review.name}</p>

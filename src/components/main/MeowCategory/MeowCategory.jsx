@@ -53,7 +53,10 @@ const MeowCategory = () => {
     <section css={S.categorySection}>
       <header className="header">
         <h2 className="section-title">
-          오묘한 생활의 다섯고양이 <PawIcon />
+          오묘한 생활의 다섯고양이{" "}
+          <span className="paw-container">
+            <PawIcon />
+          </span>
         </h2>
 
         <span className="guide-message">

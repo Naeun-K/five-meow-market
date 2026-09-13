@@ -200,8 +200,9 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
     gap: "6px",
 
     ".mega-paw": {
-      width: "30px",
-      height: "30px",
+      width: "22px",
+      // height: "25px",
+      aspectRatio: "1/1",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -269,7 +270,7 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
 
       flex: "0 0 96px",
       // flex: "0 0 auto",
-      marginTop: "-80px",
+      marginTop: "-50px",
     }),
   },
 }));
@@ -568,8 +569,8 @@ export const MobileAccordionHeader = styled.button({
   },
 
   "& .mobile-paw": {
-    width: "25px",
-    height: "25px",
+    width: "18px",
+    height: "18px",
     display: "flex",
   },
 
