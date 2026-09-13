@@ -1,13 +1,18 @@
-import { BrandStyle } from "./UserBrandStyle";
+import { BrandStyle, HeaderStyle } from "./UserBrandStyle";
 import Logo from "../logo/Logo";
 import PawIcon from "../common/PawIcon/PawIcon";
+import ForwardButton from "../common/forwardBtn/ForwardButton";
 
 export default function UserBrandSection({ phrase, image, message }) {
   return (
     <BrandStyle>
-      <div className="logo-box">
-        <Logo />
-      </div>
+      <HeaderStyle>
+        <ForwardButton />
+
+        <div className="logo-box">
+          <Logo />
+        </div>
+      </HeaderStyle>
       <div className="brand-desc">
         <p className="phrase-wrapper">고양이와 함께하는 오묘한 일상</p>
 

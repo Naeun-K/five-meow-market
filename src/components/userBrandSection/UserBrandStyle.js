@@ -1,5 +1,18 @@
 import styled from "@emotion/styled";
 
+export const HeaderStyle = styled.header({
+  display: "flex",
+  flexDirection: "column",
+
+  alignItems: "center",
+  gap: "70px",
+
+  width: "100%",
+  "@media (max-width:767px)": {
+    gap: "30px",
+  },
+});
+
 export const BrandStyle = styled.div({
   display: "flex",
   flexDirection: "column",
