@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { ChatIconStyle, Tooltip, TooltipWrapper } from "./ChatIconStyle";
+import { useNavigate } from "react-router-dom";
 
 function ChatIcon() {
   const [showTooltip, setShowTooltip] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <TooltipWrapper className="btn-container">
-      <Tooltip $show={showTooltip}>고객 문의</Tooltip>
+      <Tooltip $show={showTooltip}>문의 하기</Tooltip>
 
       <ChatIconStyle
         type="button"
+        onClick={() => navigate("/support/inquiry")}
         aria-label="고객 문의"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}

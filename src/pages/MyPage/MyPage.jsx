@@ -39,11 +39,13 @@ import useAuth from "../../hooks/useAuth";
 import Loader from "../../components/loader/Loader";
 import myShopCat from "../../assets/logo-myshop.webp";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
+import ReviewModal from "../../components/reviewModal/ReviewModal";
 
 function MyPage() {
   const { user, isLoggedIn, isAuthLoading } = useAuth();
   const navigate = useNavigate();
   const [isPerchased, setIsPerchased] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const nickname =
     user?.nickname || user?.nickName || user?.username || user?.name || "회원";
@@ -112,7 +114,10 @@ function MyPage() {
         {/* 마이페이지 요약 */}
         <section css={summary}>
           <div css={summaryItem}>
-            <button className="svg-container">
+            <button
+              className="svg-container"
+              onClick={() => navigate("/mypage/orders")}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="100%"
@@ -148,7 +153,10 @@ function MyPage() {
           </div>
 
           <div css={summaryItem}>
-            <button className="svg-container">
+            <button
+              className="svg-container"
+              onClick={() => navigate("/mypage/reviews")}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="100%"
@@ -169,7 +177,10 @@ function MyPage() {
           </div>
 
           <div css={summaryItem}>
-            <button className="svg-container">
+            <button
+              className="svg-container"
+              onClick={() => navigate("/mypage/inquiry")}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="100%"
@@ -183,7 +194,7 @@ function MyPage() {
                 <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0" />
               </svg>
             </button>
-            <span css={summaryLabel}>나의 문의</span>
+            <span css={summaryLabel}>문의 내역</span>
             <strong css={summaryValue}>1</strong>
           </div>
         </section>
@@ -255,11 +266,6 @@ function MyPage() {
                   <div className="desc-wrapper">
                     <div className="product-wrapper">
                       <div className="img-container">
-                        {/* <img
-                          src="https://i.ibb.co/QjJZXCZv/4.webp"
-                          alt="냥이가 다 해먹"
-                          loading="lazy"
-                        /> */}
                         <ProductCard
                           image="https://i.ibb.co/QjJZXCZv/4.webp"
                           name="냥이가 다 해먹"
@@ -278,11 +284,17 @@ function MyPage() {
                     </div>
                   </div>
                   <div className="button-container">
-                    <div className="badge">배송완료</div>
+                    <div className="badge">
+                      {!isPerchased ? "배송완료" : "구매결정"}
+                    </div>
                     {!isPerchased ? (
-                      <button>구매결정</button>
+                      <button onClick={() => setIsPerchased(true)}>
+                        구매결정
+                      </button>
                     ) : (
-                      <button>리뷰작성</button>
+                      <button onClick={() => setIsModalOpen(true)}>
+                        리뷰작성
+                      </button>
                     )}
                   </div>
                 </div>
@@ -290,7 +302,12 @@ function MyPage() {
               <OrderCard>
                 <div className="order-banner">
                   <span className="order-date">2026.09.02(수)</span>
-                  <button className="order-number">OM123456789</button>
+                  <button
+                    className="order-number"
+                    onClick={() => navigate("/mypage/orders/:orderId")}
+                  >
+                    OM123456789
+                  </button>
                 </div>
                 <div className="order-content">
                   <div className="desc-wrapper">
@@ -314,13 +331,15 @@ function MyPage() {
                     </div>
                   </div>
                   <div className="button-container">
-                    <div className="badge">배송완료</div>
+                    <div className="badge">
+                      {!isPerchased ? "배송완료" : "구매결정"}
+                    </div>
                     {!isPerchased ? (
                       <button onClick={() => setIsPerchased(true)}>
                         구매결정
                       </button>
                     ) : (
-                      <button onClick={() => navigate("/community/review")}>
+                      <button onClick={() => setIsModalOpen(true)}>
                         리뷰작성
                       </button>
                     )}
@@ -449,6 +468,7 @@ function MyPage() {
           </div>
         </section>
       </main>
+      {isModalOpen && <ReviewModal onClose={() => setIsModalOpen(false)} />}
     </BasicPage>
   );
 }

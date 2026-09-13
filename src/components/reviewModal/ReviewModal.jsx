@@ -26,7 +26,7 @@ import {
   SubmitButton,
 } from "./ReviewModalStyle";
 
-function ReviewModal() {
+function ReviewModal({ onClose }) {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
@@ -39,6 +39,10 @@ function ReviewModal() {
     return "최고예요!";
   };
 
+  function handleSubmit() {
+    onClose();
+  }
+
   return (
     <ModalOverlay>
       <Modal>
@@ -46,7 +50,7 @@ function ReviewModal() {
           <ReviewHeader>
             <Title>리뷰 작성</Title>
 
-            <CloseButton type="button">
+            <CloseButton type="button" onClick={onClose}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -130,9 +134,13 @@ function ReviewModal() {
           </AttachmentButton>
 
           <ActionButtons>
-            <CancelButton type="button">취소</CancelButton>
+            <CancelButton type="button" onClick={onClose}>
+              취소
+            </CancelButton>
 
-            <SubmitButton type="button">등록</SubmitButton>
+            <SubmitButton type="button" onClick={handleSubmit}>
+              등록
+            </SubmitButton>
           </ActionButtons>
         </ReviewContent>
       </Modal>

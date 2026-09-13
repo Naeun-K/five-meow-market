@@ -10,6 +10,7 @@ import logoPlay from "../../assets/logo-play.webp";
 import logoRest from "../../assets/logo-rest.webp";
 
 import styles from "./CustomerInquiryPageStyle";
+import FloatingIcon from "../../components/FloatingIcon/FloatingIcon";
 
 const CustomerInquiryPage = () => {
   const navigate = useNavigate();
@@ -257,7 +258,7 @@ const CustomerInquiryPage = () => {
           </div>
         </section>
       </main>
-
+      <FloatingIcon />
       <Footer />
     </>
   );

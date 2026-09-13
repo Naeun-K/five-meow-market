@@ -39,7 +39,7 @@ function Footer() {
                 >
                   개인정보
                 </button>
-                <button onClick={() => navigate("/*")}>고객문의</button>
+                <button onClick={() => navigate("/support")}>고객문의</button>
                 <button onClick={() => navigate("/about")}>회사소개</button>
               </FooterLinks>
             </FooterTop>

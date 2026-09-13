@@ -1,19 +1,20 @@
 import { css } from "@emotion/react";
 
 export const container = css({
-  width: "calc(100% - 60px)",
-  maxWidth: "1200px",
-  margin: "0 auto",
-  padding: "30px 0 60px",
+  // width: "calc(100% - 60px)",
+  width: "100%",
+  maxWidth: "1300px",
+  // margin: "0 auto",
+  padding: "0 50px 60px",
 
   "@media (max-width: 1023px)": {
-    width: "calc(100% - 40px)",
-    padding: "24px 0 50px",
+    // width: "calc(100% - 40px)",
+    padding: "0px 30px 50px",
   },
 
   "@media (max-width: 767px)": {
-    width: "calc(100% - 32px)",
-    padding: "20px 0 40px",
+    // width: "calc(100% - 32px)",
+    padding: "0 20px  40px",
   },
 });
 

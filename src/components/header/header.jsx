@@ -64,7 +64,7 @@ const leftColumns = [
     items: [
       { label: "공지사항", path: "/community/notice" },
       { label: "제품후기", path: "/community/review" },
-      { label: "Q & A", path: "/community/qna" },
+      { label: "Q & A", path: "/community/inquiry" },
     ],
   },
 ];
@@ -276,7 +276,7 @@ function Header() {
       children: [
         { label: "공지사항", path: "/community/notice" },
         { label: "제품후기", path: "/community/review" },
-        { label: "Q & A", path: "/community/qna" },
+        { label: "Q & A", path: "/community/inquiry" },
       ],
     },
   ];
