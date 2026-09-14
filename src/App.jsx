@@ -23,6 +23,8 @@ import MyOrderDetail from "./pages/MyPage/order/MyOrderDetail";
 import MyReviewPage from "./pages/MyPage/reviews/MyReviewPage";
 import WishlistPage from "./pages/wishlist/WishlistPage";
 import DetailProduct from "./pages/detailProduct/DetailProduct";
+// import OrderDetail from "./components/orderPage/orderDetail";
+import PointPage from "./pages/PointPage/PointPage";
 
 function App() {
   return (
@@ -49,6 +51,7 @@ function App() {
 
         
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/points" element={<PointPage />} />
         <Route path="/mypage/edit" element={<UpdatePage />} />
         <Route path="/mypage/inquiry" element={<MyInquiry />} />
         <Route path="/mypage/reviews" element={<MyReviewPage />} />
