@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ForwardBtnStyle } from "./forwardBtnStyle";
 
-export default function ForwardButton() {
+export default function ForwardButton({ children }) {
   const navigate = useNavigate();
   return (
     <ForwardBtnStyle type="button" onClick={() => navigate(-1)}>
@@ -20,7 +20,7 @@ export default function ForwardButton() {
           />
         </svg>
       </span>
-      <span>뒤로가기</span>
+      <span>{children}</span>
     </ForwardBtnStyle>
   );
 }

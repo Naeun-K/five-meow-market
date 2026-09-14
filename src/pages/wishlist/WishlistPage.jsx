@@ -56,22 +56,22 @@ function WishlistPage() {
   const navigate = useNavigate();
   const [wishlist, setWishlist] = useState(initialWishlist);
 
-  // 찜 취소
+  
   const handleRemoveWishlist = (id) => {
     setWishlist((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // 상품 상세 페이지 이동
+  
   const handleProductClick = (id) => {
     navigate(`/products/${id}`);
   };
 
-  // 장바구니
+  
   const handleAddCart = (item) => {
     alert(`${item.name} 상품이 장바구니에 담겼습니다.`);
   };
 
-  // 바로구매
+  
   const handleBuy = (item) => {
     alert(`${item.name} 상품을 구매합니다.`);
   };

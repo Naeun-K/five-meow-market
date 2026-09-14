@@ -345,12 +345,7 @@ export const BoardRow = styled.div`
       overflow: hidden;
     }
 
-    /*
-      모바일 제목:
-      - 무조건 한 줄
-      - 길면 ... 표시
-      - 줄바꿈 방지
-    */
+    
     .title-text {
       display: block;
       min-width: 0;
@@ -451,7 +446,7 @@ export const BoardRow = styled.div`
   }
 `;
 
-/*상품 이미지 영역*/
+
 export const ProductInfo = styled.div`
   display: flex;
   align-items: center;

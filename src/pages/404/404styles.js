@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-/* 전체 404 페이지 */
+
 
 export const NotFoundPage = styled.main`
   width: 100%;
@@ -26,7 +26,7 @@ export const NotFoundPage = styled.main`
   }
 `;
 
-/* 전체 콘텐츠 */
+
 
 export const NotFoundContent = styled.div`
   width: 100%;
@@ -49,7 +49,7 @@ export const NotFoundContent = styled.div`
   }
 `;
 
-/* 404 숫자 */
+
 
 export const NotFoundNumber = styled.div`
   width: 100%;
@@ -82,7 +82,7 @@ export const NotFoundNumber = styled.div`
   }
 `;
 
-/* 제목 + 이미지 + 설명 */
+
 
 export const NotFoundMain = styled.div`
   width: 100%;
@@ -98,7 +98,7 @@ export const NotFoundMain = styled.div`
   }
 `;
 
-/* 제목 */
+
 
 export const NotFoundTitle = styled.h1`
   margin: 0;
@@ -125,7 +125,7 @@ export const NotFoundTitle = styled.h1`
   }
 `;
 
-/* 404 고양이 이미지 */
+
 
 export const NotFoundImage = styled.img`
   width: 420px;
@@ -146,7 +146,7 @@ export const NotFoundImage = styled.img`
   }
 `;
 
-/* 안내 문구 */
+
 
 export const NotFoundDescription = styled.p`
   margin: 0;
@@ -173,7 +173,7 @@ export const NotFoundDescription = styled.p`
   }
 `;
 
-/* 고양이 + 버튼 */
+
 
 export const NotFoundBottom = styled.div`
   width: 257px;
@@ -186,7 +186,7 @@ export const NotFoundBottom = styled.div`
   padding: 0;
 `;
 
-/* 고양이 5마리 전체 */
+
 
 export const NotFoundCats = styled.div`
   width: 257px;
@@ -205,7 +205,7 @@ export const NotFoundCats = styled.div`
   z-index: 5;
 `;
 
-/* 각각의 고양이 */
+
 
 export const Cat = styled.div`
   width: 48px;
@@ -242,7 +242,7 @@ export const CatPlay = styled(Cat)``;
 
 export const CatRest = styled(Cat)``;
 
-/* 홈으로 돌아가기 버튼 */
+
 
 export const NotFoundButton = styled.button`
   width: 257px;

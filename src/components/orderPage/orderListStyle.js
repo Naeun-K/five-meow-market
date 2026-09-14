@@ -3,31 +3,31 @@ import styled from "@emotion/styled";
 const TABLET = "@media (max-width: 1023px)";
 const MOBILE = "@media (max-width: 767px)";
 
-/* ─────────────────────────────
-   Page
-───────────────────────────── */
+
+
+
 
 export const Page = styled.div({
   maxWidth: 1300,
-  // margin: "0 auto",
+  
   padding: "0 50px 60px",
   color: "var(--text-color)",
   width: "100%",
 
   [TABLET]: {
-    // maxWidth: "640px",
+    
     padding: "0 30px 50px",
   },
 
   [MOBILE]: {
-    // maxWidth: 480,
+    
     padding: "16px 20px 40px",
   },
 });
 
-/* ─────────────────────────────
-   Header
-───────────────────────────── */
+
+
+
 
 export const Header = styled.header({
   marginBottom: 20,
@@ -70,9 +70,9 @@ export const Subtitle = styled.p({
   },
 });
 
-/* ─────────────────────────────
-   Search
-───────────────────────────── */
+
+
+
 
 export const SearchBar = styled.div({
   display: "flex",
@@ -157,9 +157,9 @@ export const SearchIconButton = styled.button({
   cursor: "pointer",
 });
 
-/* ─────────────────────────────
-   Tabs
-───────────────────────────── */
+
+
+
 
 export const TabList = styled.div({
   display: "flex",
@@ -205,9 +205,9 @@ export const TabButton = styled.button(({ isActive }) => ({
   },
 }));
 
-/* ─────────────────────────────
-   Order List
-───────────────────────────── */
+
+
+
 
 export const OrderList = styled.div({
   display: "flex",
@@ -223,9 +223,9 @@ export const OrderList = styled.div({
   },
 });
 
-/* ─────────────────────────────
-   Order Card
-───────────────────────────── */
+
+
+
 
 export const OrderCard = styled.div({
   display: "flex",
@@ -248,9 +248,9 @@ export const OrderCard = styled.div({
   },
 });
 
-/* ─────────────────────────────
-   Thumbnail
-───────────────────────────── */
+
+
+
 
 export const Thumb = styled.div({
   flexShrink: 0,
@@ -297,9 +297,9 @@ export const ThumbIconWrap = styled.div({
   },
 });
 
-/* ─────────────────────────────
-   Order Info
-───────────────────────────── */
+
+
+
 
 export const OrderInfo = styled.div({
   flex: 1,
@@ -318,7 +318,7 @@ export const OrderInfo = styled.div({
   },
 });
 
-/* 주문번호 / 상태 */
+
 
 export const OrderHeader = styled.div({
   display: "flex",
@@ -446,9 +446,9 @@ export const StatusBadge = styled.span(({ variant }) => {
   };
 });
 
-/* ─────────────────────────────
-   Meta
-───────────────────────────── */
+
+
+
 
 export const MetaList = styled.div({
   display: "flex",
@@ -496,9 +496,9 @@ export const MetaDivider = styled.span({
   },
 });
 
-/* ─────────────────────────────
-   Order Summary
-───────────────────────────── */
+
+
+
 
 export const OrderSummaryRow = styled.div({
   display: "flex",
@@ -542,9 +542,9 @@ export const OrderTotal = styled.span({
   },
 });
 
-/* ─────────────────────────────
-   Detail Button
-───────────────────────────── */
+
+
+
 
 export const DetailButton = styled.button({
   flexShrink: 0,
@@ -649,9 +649,9 @@ export const DetailArrow = styled.span({
   },
 });
 
-/* ─────────────────────────────
-   Load More
-───────────────────────────── */
+
+
+
 
 export const LoadMoreWrap = styled.div({
   display: "flex",
@@ -672,10 +672,10 @@ export const LoadMoreButton = styled.button({
   alignItems: "center",
   justifyContent: "center",
 
-  // 텍스트가 세로로 내려가지 않도록
+  
   whiteSpace: "nowrap",
 
-  // 버튼 자체가 내용에 맞게 유지되도록
+  
   width: "auto",
   minWidth: "auto",
   flexShrink: 0,
@@ -723,7 +723,7 @@ export const LoadMoreButton = styled.button({
     padding: "8px 16px",
     gap: 8,
 
-    // 모바일에서도 한 줄 고정
+    
     whiteSpace: "nowrap",
 
     "& svg": {

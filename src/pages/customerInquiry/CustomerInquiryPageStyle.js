@@ -93,20 +93,20 @@ const styles = `
     color: #b4ada6; 
   } 
  
-  /* 제목·문의내용 호버 */ 
+   
   .form-field input:hover, 
   .form-field textarea:hover { 
     border-color: #a98b70; 
   } 
  
-  /* 제목·문의내용 포커스 */ 
+   
   .form-field input:focus, 
   .form-field textarea:focus { 
     border-color: #8b6849; 
     box-shadow: 0 0 0 3px rgba(139, 104, 73, 0.1); 
   } 
  
-  /* 문의 유형 */ 
+   
   .select-wrapper { 
     position: relative; 
     width: 100%; 
@@ -175,7 +175,7 @@ const styles = `
     transform: translateY(-50%) rotate(180deg); 
   } 
 
-  /* 커스텀 드롭다운 옵션 영역 */ 
+   
   .custom-select-options { 
     position: absolute; 
     top: calc(100% + 6px); 
@@ -208,7 +208,7 @@ const styles = `
       color 0.15s ease; 
   } 
 
-  /* 옵션 호버 색상 - 연한 회색 */ 
+   
   .custom-select-option:hover { 
     background: #eeeeee; 
     color: #3a3032; 
@@ -224,7 +224,7 @@ const styles = `
     background: #eeeeee; 
   } 
  
-  /* 비밀글 */ 
+   
   .secret-check { 
     display: inline-flex; 
     align-items: center; 
@@ -267,7 +267,7 @@ const styles = `
     background: #8b6849; 
   } 
  
-  /* 자물쇠 SVG */ 
+   
   .lock-icon { 
     width: 14px; 
     height: 14px; 
@@ -279,7 +279,7 @@ const styles = `
     color: #614832; 
   } 
  
-  /* 버튼 */ 
+   
   .form-buttons { 
     display: flex; 
     justify-content: center; 
@@ -332,7 +332,7 @@ const styles = `
     background: #614832; 
   } 
  
-  /* 등록 버튼 위 고양이 */ 
+   
   .hover-cats { 
     position: absolute; 
     left: 50%; 

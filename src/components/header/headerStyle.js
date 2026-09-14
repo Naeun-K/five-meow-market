@@ -15,15 +15,15 @@ export const WholeStyle = styled.div({
 });
 
 export const HeaderStyle = styled.header({
-  // position: "sticky",
-  // top: 0
+  
+  
 
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
 
-  // zIndex: 20,
+  
 
   gap: "60px",
 
@@ -32,7 +32,7 @@ export const HeaderStyle = styled.header({
 
   padding: "80px 50px 20px 50px",
 
-  // borderRadius: "var(--radius-md)",
+  
 
   "& .logo-container": {
     width: "280px",
@@ -183,8 +183,8 @@ export const HeaderStyle = styled.header({
     height: "100%",
 
     display: "flex",
-    // flexDirection: "column",
-    flexDirection: "row", // 중요
+    
+    flexDirection: "row", 
     justifyContent: "center",
     alignItems: "center",
 
@@ -215,8 +215,8 @@ export const HeaderStyle = styled.header({
 
       position: "absolute",
 
-      // width: "40px",
-      // height: "40px",
+      
+      
 
       left: "50%",
       bottom: "calc(100% - 13px)",
@@ -255,12 +255,12 @@ export const HeaderStyle = styled.header({
     },
   },
 
-  // hover하면 밑줄
+  
   "& .nav-item:hover > button::after": {
     transform: "scaleX(1)",
   },
 
-  // 현재 페이지면 hover하지 않아도 밑줄
+  
   "& .nav-item.active > button::after": {
     transform: "scaleX(1)",
   },
@@ -462,7 +462,7 @@ export const HeaderStyle = styled.header({
     padding: "50px 30px 20px 30px",
     "& .user-icon": {
       width: "30px",
-      // display: "none",
+      
     },
     "& .search-button": {
       display: "block",
@@ -554,12 +554,12 @@ export const HeaderStyle = styled.header({
 
     padding: "40px 20px 20px 20px",
 
-    // 모바일에서는 로그인 버튼 숨김
+    
     "& .login-link": {
       display: "none",
     },
 
-    // 모바일 헤더는 왼쪽 / 가운데 / 오른쪽 영역을 나눠서 겹치지 않게 함
+    
     "& .menu-container": {
       position: "relative",
 
@@ -616,7 +616,7 @@ export const HeaderStyle = styled.header({
       display: "none",
     },
 
-    // 모바일에서는 장바구니와 기존 마이페이지 아이콘을 숨김
+    
     "& .svg-list .cart": {
       display: "none",
     },
@@ -653,10 +653,10 @@ export const HeaderStyle = styled.header({
       },
     },
 
-    // 모바일 로그인 버튼은 숨김
-    // "& .login-link": {
-    //   display: "none",
-    // },
+    
+    
+    
+    
 
     "& .user-nickname, & .user-nim": {
       display: "none",
@@ -671,7 +671,7 @@ export const HeaderStyle = styled.header({
     },
 
     "& .user-icon": {
-      // width: "27px",
+      
       display: "none",
     },
 

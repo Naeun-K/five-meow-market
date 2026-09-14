@@ -114,7 +114,7 @@ const CustomerInquiryPage = () => {
             </div>
 
             <form className="inquiry-form" onSubmit={handleSubmit}>
-              {/* 문의 유형 */}
+              
               <div className="form-field">
                 <label htmlFor="category">문의 유형</label>
 
@@ -172,7 +172,7 @@ const CustomerInquiryPage = () => {
                 </div>
               </div>
 
-              {/* 제목 */}
+              
               <div className="form-field">
                 <label htmlFor="title">제목</label>
 
@@ -186,7 +186,7 @@ const CustomerInquiryPage = () => {
                 />
               </div>
 
-              {/* 문의 내용 */}
+              
               <div className="form-field">
                 <label htmlFor="content">문의 내용</label>
 
@@ -199,7 +199,7 @@ const CustomerInquiryPage = () => {
                 />
               </div>
 
-              {/* 비밀글 */}
+              
               <label className="secret-check">
                 <input
                   type="checkbox"
@@ -230,7 +230,7 @@ const CustomerInquiryPage = () => {
                 <span>비밀글로 문의하기</span>
               </label>
 
-              {/* 버튼 */}
+              
               <div className="form-buttons">
                 <button
                   type="button"

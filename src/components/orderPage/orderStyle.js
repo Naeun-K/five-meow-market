@@ -5,17 +5,17 @@ const MOBILE = "@media (max-width: 767px)";
 
 export const Page = styled.div({
   maxWidth: 1300,
-  // margin: "0 auto",
+  
   width: "100%",
   padding: "0 50px 60px",
   fontFamily: "-apple-system, 'Pretendard', sans-serif",
   color: "var(--text-color)",
   [TABLET]: {
-    // maxWidth: "640px",
+    
     padding: "0 30px 50px",
   },
   [MOBILE]: {
-    // maxWidth: 480,
+    
     padding: "0 20px 40px",
   },
 });
@@ -423,7 +423,7 @@ export const LinkButton = styled.button({
   [MOBILE]: { fontSize: 11, padding: "4px 8px" },
 });
 
-// 배송정보/결제정보 패널 전용 행 (라벨 좌, 값 우 정렬)
+
 export const PanelRow = styled.div({
   display: "flex",
   justifyContent: "space-between",
@@ -477,7 +477,7 @@ export const PanelValueSub = styled.p({
   },
 });
 
-// 송장번호처럼 값 + 버튼이 같이 오른쪽에 붙는 경우
+
 export const TrackingGroup = styled.div({
   display: "flex",
   alignItems: "center",

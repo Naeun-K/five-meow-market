@@ -22,7 +22,6 @@ const SignupForm = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  // 비밀번호 보기/숨기기 상태
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
@@ -46,23 +45,19 @@ const SignupForm = () => {
 
   const inputRef = useRef(null);
 
-  // 닉네임 중복확인
   const handleCheckNickname = async () => {
     const trimmed = nickname.trim();
 
-    // 필수 입력
     if (!trimmed) {
       showToast("닉네임을 입력해주세요.", false);
       return;
     }
 
-    // 길이 검사
     if (trimmed.length < 2 || trimmed.length > 10) {
       showToast("닉네임은 2자 이상 10자 이하로 입력해주세요.", false);
       return;
     }
 
-    // 한글, 영문, 숫자 검사
     if (!/^[가-힣a-zA-Z0-9]+$/.test(trimmed)) {
       showToast("닉네임은 한글, 영문, 숫자만 사용할 수 있습니다.", false);
       return;
@@ -89,7 +84,6 @@ const SignupForm = () => {
     }
   };
 
-  // 이메일 중복확인
   const handleCheckEmail = async () => {
     const trimmed = email.trim();
     if (!trimmed) {
@@ -97,7 +91,6 @@ const SignupForm = () => {
       return;
     }
 
-    // 이메일 형식 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(trimmed)) {
@@ -124,9 +117,7 @@ const SignupForm = () => {
     }
   };
 
-  // 휴대폰번호처럼 화면에 보이기
   const formatPhoneNumber = (value) => {
-    // 숫자가 아닌 문자 제거
     const numbers = value.replace(/\D/g, "").slice(0, 11);
 
     if (numbers.length <= 3) {
@@ -140,7 +131,6 @@ const SignupForm = () => {
     return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7)}`;
   };
 
-  // 휴대폰 인증
   const handleVerifyPhone = async () => {
     const raw = phone.replace(/\D/g, "");
 
@@ -168,7 +158,6 @@ const SignupForm = () => {
     }
   };
 
-  // 주소 검색
   const handleSearchAddress = async () => {
     try {
       const result = await searchAddress();
@@ -179,13 +168,11 @@ const SignupForm = () => {
     }
   };
 
-  // 회원가입
   const handleSignup = async (event) => {
     event.preventDefault();
 
     const rawPhone = phone.replace(/\D/g, "");
 
-    // 필수 입력값 확인
     if (
       !nickname.trim() ||
       !email.trim() ||
@@ -199,7 +186,6 @@ const SignupForm = () => {
       return;
     }
 
-    // 중복 확인 / 인증 여부
     if (!isNicknameChecked) {
       showToast("닉네임 중복확인을 해주세요.", false);
       return;
@@ -210,7 +196,6 @@ const SignupForm = () => {
       return;
     }
 
-    // 비밀번호 확인
     if (password !== passwordConfirm) {
       showToast("비밀번호가 일치하지 않습니다.", false);
       return;
@@ -221,7 +206,6 @@ const SignupForm = () => {
       return;
     }
 
-    // 이용약관
     if (!agreed) {
       showToast("이용약관에 동의해주세요.", false);
       return;
@@ -272,11 +256,12 @@ const SignupForm = () => {
         <div className="subtitle">
           <span>집사 채용 공고</span>
 
-          <PawIcon />
+          <span className="paw-container">
+            <PawIcon />
+          </span>
         </div>
 
         <form onSubmit={handleSignup}>
-          {/* 닉네임 */}
           <FormGroup>
             <label>닉네임</label>
 
@@ -296,7 +281,6 @@ const SignupForm = () => {
             </Row>
           </FormGroup>
 
-          {/* 이메일 */}
           <FormGroup>
             <label>이메일</label>
 
@@ -316,7 +300,6 @@ const SignupForm = () => {
             </Row>
           </FormGroup>
 
-          {/* 비밀번호 */}
           <FormGroup>
             <div className="label-guide-container">
               <label>비밀번호</label>
@@ -350,7 +333,6 @@ const SignupForm = () => {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  // 🔴 비밀번호 보임 = 일반 눈
                   <svg
                     className="eye-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -364,7 +346,6 @@ const SignupForm = () => {
                     <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
                   </svg>
                 ) : (
-                  // 🔴 비밀번호 숨김 = 사선 눈
                   <svg
                     className="eye-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -383,7 +364,6 @@ const SignupForm = () => {
             </div>
           </FormGroup>
 
-          {/* 비밀번호 확인 */}
           <FormGroup>
             <div className="label-guide-container">
               <label>비밀번호 확인</label>
@@ -425,7 +405,6 @@ const SignupForm = () => {
                 onClick={() => setShowPasswordConfirm((prev) => !prev)}
               >
                 {showPasswordConfirm ? (
-                  // 🔴 비밀번호 보임 = 일반 눈
                   <svg
                     className="eye-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -439,7 +418,6 @@ const SignupForm = () => {
                     <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
                   </svg>
                 ) : (
-                  // 🔴 비밀번호 숨김 = 사선 눈
                   <svg
                     className="eye-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -458,7 +436,6 @@ const SignupForm = () => {
             </div>
           </FormGroup>
 
-          {/* 휴대폰번호 */}
           <FormGroup>
             <label>휴대폰번호</label>
 
@@ -479,7 +456,6 @@ const SignupForm = () => {
             </Row>
           </FormGroup>
 
-          {/* 주소 */}
           <FormGroup>
             <label>주소</label>
 
@@ -506,7 +482,6 @@ const SignupForm = () => {
             />
           </FormGroup>
 
-          {/* 이용약관 */}
           <Agreement>
             <input
               type="checkbox"
@@ -519,7 +494,6 @@ const SignupForm = () => {
             </span>
           </Agreement>
 
-          {/* 하단 */}
           <BottomArea>
             <button type="submit" className="signup-button">
               회원가입

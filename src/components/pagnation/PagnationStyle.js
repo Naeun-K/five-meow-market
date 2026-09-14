@@ -26,7 +26,7 @@ export const PaginationStyle = styled.nav({
     color: "var(--text-button)",
     fontWeight: 600,
   },
-  // hover가 가능한 기기에서만 적용
+  
   "@media (hover: hover) and (pointer: fine)": {
     "& button:hover:not(:disabled)": {
       backgroundColor: "#F6F2ED",
@@ -39,15 +39,15 @@ export const PaginationStyle = styled.nav({
     cursor: "default",
   },
   "@media (max-width:1023px)": {
-    // gap: "25px",
+    
     "& button.page-button": {
       width: "30px",
       height: "30px",
 
       fontSize: "16px",
     },
-    // "& button:not(.page-button)": { width: "18px", height: "18px" },
-    // "& button.page-button": { width: "36px", height: "36px" },
+    
+    
   },
   "@media (min-width:320px) and (max-width:767px)": {
     gap: "10px",

@@ -9,10 +9,10 @@ const mockUser = {
   agreements: true,
 };
 
-// 현재 유효한 Access Token
+
 let currentAccessToken = null;
 
-// Mock Refresh 세션
+
 const MOCK_REFRESH_SESSION_KEY = "mock-refresh-session";
 
 function getMockRefreshSession() {
@@ -30,14 +30,14 @@ function getMockRefreshSession() {
   }
 }
 
-// export function createMockRefreshSession(user) {
-//   const session = {
-//     refreshToken: "mock-refresh-token",
-//     email: user.email,
-//   };
 
-//   sessionStorage.setItem(MOCK_REFRESH_SESSION_KEY, JSON.stringify(session));
-// }
+
+
+
+
+
+
+
 
 export function createMockRefreshSession(user) {
   const session = {
@@ -88,7 +88,7 @@ export function mockSignup() {
   };
 }
 
-// 로그인
+
 export function mockLogin(email, password) {
   if (email !== mockUser.email || password !== mockUser.password) {
     return {
@@ -97,10 +97,10 @@ export function mockLogin(email, password) {
     };
   }
 
-  // Access Token 발급
+  
   currentAccessToken = `mock-access-token-${Date.now()}`;
 
-  // 실제 서버의 Refresh Token + HttpOnly Cookie 역할을 Mock에서 흉내냄
+  
   createMockRefreshSession(mockUser);
 
   return {
@@ -114,15 +114,15 @@ export function mockLogin(email, password) {
   };
 }
 
-// // 로그인 성공 시 Refresh 세션 생성
-// export function createMockRefreshSession(user) {
-//   mockRefreshSession = {
-//     refreshToken: "mock-refresh-token",
-//     email: user.email,
-//   };
-// }
 
-// Access Token 재발급
+
+
+
+
+
+
+
+
 export function mockRefreshAccessToken() {
   const refreshSession = getMockRefreshSession();
 
@@ -140,7 +140,7 @@ export function mockRefreshAccessToken() {
     accessToken: currentAccessToken,
   };
 }
-// 로그인 상태 조회
+
 export function mockCheckAuth(accessToken) {
   if (accessToken === currentAccessToken) {
     return {
@@ -159,7 +159,7 @@ export function mockCheckAuth(accessToken) {
   };
 }
 
-// 로그아웃
+
 export function mockLogout() {
   currentAccessToken = null;
   clearMockRefreshSession();
@@ -170,10 +170,10 @@ export function mockLogout() {
   };
 }
 
-// // Refresh 세션 삭제
-// export function clearMockRefreshSession() {
-//   mockRefreshSession = null;
-// }
+
+
+
+
 
 export function mockVerifyPassword(password) {
   const isMatched = password === mockUser.password;

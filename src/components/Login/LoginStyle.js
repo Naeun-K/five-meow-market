@@ -85,7 +85,7 @@ export const LoginStyle = styled.div({
     gap: "45px",
     "& .top-nav": {
       fontSize: "15px",
-      // marginTop: "90px",
+      
     },
     "& .header": {
       "& h2": {
@@ -106,7 +106,7 @@ export const LoginStyle = styled.div({
     gap: "15px",
 
     "& .top-nav": {
-      // order: 1,
+      
       marginTop: "20px",
     },
     "& .header": {
@@ -177,7 +177,7 @@ export const FormStyle = styled.form({
         border: "1px solid #bb9678",
       },
 
-      // 비밀번호 input 클릭했을 때
+      
       "&:focus-within": {
         borderColor: "#8a664a",
         boxShadow:

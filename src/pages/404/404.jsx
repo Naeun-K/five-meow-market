@@ -14,10 +14,10 @@ function NotFound() {
   return (
     <S.NotFoundPage>
       <S.NotFoundContent>
-        {/* 404 */}
+        
         <S.NotFoundNumber>404</S.NotFoundNumber>
 
-        {/* 제목 + 이미지 + 안내 문구 */}
+        
         <S.NotFoundMain>
           <S.NotFoundTitle>페이지를 찾을 수 없습니다</S.NotFoundTitle>
 
@@ -30,7 +30,7 @@ function NotFound() {
           </S.NotFoundDescription>
         </S.NotFoundMain>
 
-        {/* 고양이 + 버튼 */}
+        
         <S.NotFoundBottom>
           <S.NotFoundCats>
             <S.CatClean>

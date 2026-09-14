@@ -10,7 +10,7 @@ export const reviews = [
 
     content: "우리 고양이가 너무 좋아해요.",
 
-    // images: ["/images/review/review1.png"],
+    
 
     createdAt: new Date("2026-08-20"),
 

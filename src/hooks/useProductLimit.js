@@ -33,7 +33,7 @@ export function useProductLimit() {
     mobileQuery.addEventListener("change", handleChange);
     tabletQuery.addEventListener("change", handleChange);
 
-    // mount 시점에도 한 번 확인
+    
     handleChange();
 
     return () => {

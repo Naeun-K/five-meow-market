@@ -1,5 +1,5 @@
 const styles = ` 
-  /* 전체 페이지 */ 
+   
   .customer-contact-page { 
     min-height: calc(100vh - 160px); 
     background: #faf8f4; 
@@ -21,14 +21,14 @@ const styles = `
     position: relative; 
   } 
  
-  /* 왼쪽 영역 */ 
+   
   .contact-heading { 
     display: flex; 
     flex-direction: column; 
     align-items: flex-start; 
   } 
  
-  /* CONTACT 텍스트 */ 
+   
   .contact-label { 
     margin: 0 0 72px; 
     color: var(--text-primary, #614832); 
@@ -37,7 +37,7 @@ const styles = `
     letter-spacing: 0.08em; 
   } 
  
-  /* 메인 문구 */ 
+   
   .contact-heading h1 { 
     margin: 0; 
     color: var(--text-primary, #614832); 
@@ -47,14 +47,14 @@ const styles = `
     letter-spacing: -0.06em; 
   } 
  
-  /* 문의 버튼 전체 영역 */ 
+   
   .inquiry-button-wrapper { 
     position: relative; 
     width: 280px; 
     margin-top: 90px; 
   } 
  
-  /* 버튼 위에 나타나는 고양이 영역 */ 
+   
   .inquiry-cats { 
     position: absolute; 
     left: 50%; 
@@ -80,7 +80,7 @@ const styles = `
       transform 0.35s ease; 
   } 
  
-  /* 고양이 이미지 */ 
+   
   .inquiry-cats img { 
     display: block; 
     flex: 0 0 auto; 
@@ -91,7 +91,7 @@ const styles = `
     transform: none; 
   } 
  
-  /* 고객 문의 버튼 */ 
+   
   .contact-inquiry-link { 
     position: relative; 
     z-index: 2; 
@@ -121,32 +121,32 @@ const styles = `
       color 0.25s ease; 
   } 
  
-  /* 버튼 오른쪽 화살표 */ 
+   
   .contact-arrow { 
     font-size: 22px; 
     line-height: 1; 
     transition: transform 0.25s ease; 
   } 
  
-  /* 버튼 hover */ 
+   
   .inquiry-button-wrapper:hover .contact-inquiry-link { 
     border-color: var(--bg-button, #745a42); 
     background: var(--bg-button, #745a42); 
     color: var(--text-button, #fff); 
   } 
  
-  /* 화살표 hover */ 
+   
   .inquiry-button-wrapper:hover .contact-arrow { 
     transform: translate(3px, -3px); 
   } 
  
-  /* 고양이 hover */ 
+   
   .inquiry-button-wrapper:hover .inquiry-cats { 
     opacity: 1; 
     transform: translate(-50%, 0); 
   } 
  
-  /* 오른쪽 연락처 정보 */ 
+   
   .contact-information { 
     display: flex; 
     flex-direction: column; 
@@ -160,7 +160,7 @@ const styles = `
     transform: translateY(-50%); 
   } 
  
-  /* 이메일 */ 
+   
   .contact-email { 
     color: var(--text-primary, #614832); 
     font-size: 21px; 
@@ -173,7 +173,7 @@ const styles = `
     opacity: 0.6; 
   } 
  
-  /* 운영시간 / 전화번호 */ 
+   
   .contact-hours { 
     margin: 0; 
     color: var(--text-secondary, #66615e); 
@@ -181,7 +181,7 @@ const styles = `
     line-height: 1.6; 
   } 
  
-  /* 태블릿 */ 
+   
   @media (max-width: 1023px) { 
     .customer-contact-container { 
       min-height: calc(100vh - 150px); 
@@ -217,7 +217,7 @@ const styles = `
     } 
   } 
  
-  /* 모바일 */ 
+   
   @media (max-width: 767px) { 
     .customer-contact-page { 
       min-height: auto; 
@@ -251,7 +251,7 @@ const styles = `
       text-align: center; 
     } 
  
-    /* 모바일에서는 제목 아래로 배치 */ 
+     
     .contact-information { 
       position: static; 
       width: 100%; 
@@ -278,13 +278,13 @@ const styles = `
       text-align: center; 
     } 
 
-    /* 모바일에서도 화살표는 버튼 오른쪽에 고정 */ 
+     
     .contact-arrow { 
       position: absolute; 
       right: 20px; 
     }
  
-    /* 모바일 고양이 위치 */ 
+     
     .inquiry-cats { 
       left: 50%; 
       right: auto; 
@@ -316,14 +316,14 @@ const styles = `
     } 
   } 
  
-  /* 682px 이하 화면 */ 
+   
   @media (max-width: 683px) { 
     .inquiry-cats { 
       bottom: 48px; 
     } 
   } 
  
-  /* 작은 모바일 */ 
+   
   @media (max-width: 374px) { 
     .customer-contact-container { 
       padding-right: 20px; 
@@ -339,7 +339,7 @@ const styles = `
       margin-top: 54px; 
     } 
  
-    /* 작은 모바일에서는 고양이를 조금 위로 조정 */ 
+     
     .inquiry-cats { 
       left: 50%; 
       bottom: 52px; 
@@ -367,7 +367,7 @@ const styles = `
     } 
   } 
  
-  /* 터치 환경 */ 
+   
   @media (hover: none) { 
     .inquiry-button-wrapper:focus-within .inquiry-cats { 
       opacity: 1; 

@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 
-// 전체 감싸는 Wrapper
+
 export const Wrapper = styled.div({
   display: "flex",
 
-  // padding: "0 24px 240px",
+  
   flexDirection: "column",
   alignItems: "center",
   gap: "100px",
@@ -25,7 +25,7 @@ export const Wrapper = styled.div({
   },
 });
 
-// 타이틀(장바구니 / 0개상품) 묶는 Wrapper
+
 export const TitleWrapper = styled.div({
   display: "flex",
   width: "100%",
@@ -76,7 +76,7 @@ export const Subtitle = styled.p({
   },
 });
 
-// 아이콘 + 메시지/버튼 묶는 Wrapper
+
 export const EmptyStateWrapper = styled.div({
   display: "flex",
   height: "543px",
@@ -108,7 +108,7 @@ export const IconWrap = styled.svg({
   },
 });
 
-// 메시지 + 버튼 묶는 Wrapper
+
 export const MessageWrapper = styled.div({
   display: "flex",
   flexDirection: "column",
@@ -123,7 +123,7 @@ export const MessageWrapper = styled.div({
   },
 });
 
-// 텍스트 두 줄 묶는 Wrapper
+
 export const TextWrapper = styled.div({
   display: "flex",
   flexDirection: "column",
@@ -178,7 +178,7 @@ export const GoShopButton = styled.button({
   backgroundColor: "var(--bg-button)",
 
   width: "100%",
-  // height: "75px",
+  
 
   padding: "20px 30px",
 

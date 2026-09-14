@@ -92,7 +92,7 @@ export const BrandStyle = styled.div({
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     padding: "30px",
-    // gap: "40px",
+    
 
     "& .logo-box": {
       width: "260px",

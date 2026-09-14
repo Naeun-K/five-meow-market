@@ -15,25 +15,25 @@ const UpdateInfo = () => {
     user?.nickname || user?.nickName || user?.username || user?.name || "회원";
   const email = user?.email ?? "";
 
-  // 비밀번호
+  
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
-  // 휴대폰 번호
+  
   const [phone, setPhone] = useState("");
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  // 주소
+  
   const [zoneCode, setZoneCode] = useState("");
   const [address, setAddress] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
 
-  // 본인인증
+  
   const handleVerifyPhone = async () => {
     const raw = phone.replace(/\D/g, "");
 
@@ -60,9 +60,9 @@ const UpdateInfo = () => {
     }
   };
 
-  // 휴대폰번호처럼 화면에 보이기
+  
   const formatPhoneNumber = (value) => {
-    // 숫자가 아닌 문자 제거
+    
     const numbers = value.replace(/\D/g, "").slice(0, 11);
 
     if (numbers.length <= 3) {
@@ -75,7 +75,7 @@ const UpdateInfo = () => {
 
     return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7)}`;
   };
-  // 주소 검색
+  
   const handleSearchAddress = async () => {
     try {
       const result = await searchAddress();
@@ -91,7 +91,7 @@ const UpdateInfo = () => {
     }
   };
 
-  // 비밀번호 검증
+  
   const isValidPassword = (password) => {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
   };
@@ -99,7 +99,7 @@ const UpdateInfo = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // 비밀번호 입력했을 때만 형식 검사
+    
     if (password && !isValidPassword(password)) {
       showToast(
         "비밀번호는 8자 이상이며 영문 대/소문자와 숫자를 포함해야 합니다.",
@@ -107,7 +107,7 @@ const UpdateInfo = () => {
       );
       return;
     }
-    // 비밀번호 입력했을 때만 일치 여부 확인
+    
     if (password !== passwordConfirm) {
       showToast("새 비밀번호가 일치하지 않습니다.", false);
       return;
@@ -120,7 +120,7 @@ const UpdateInfo = () => {
     }
 
     const updateData = {};
-    // 변경된 값만 요청에 포함
+    
     if (password) {
       updateData.newPassword = password;
     }
@@ -152,7 +152,7 @@ const UpdateInfo = () => {
 
       showToast(result.message || "회원정보가 수정되었습니다.", true);
 
-      // 입력값 초기화
+      
       setPassword("");
       setPasswordConfirm("");
       setPhone("");

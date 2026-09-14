@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-/* ---------- 색상 토큰 ---------- */
+
 export const colors = {
   ink: "#1c1a17",
   paper: "#ffffff",
@@ -9,14 +9,14 @@ export const colors = {
   muted: "#9a8f83",
 };
 
-/* =======================================================
-   모달 전체를 감싸는 루트
-   ======================================================= */
+
+
+
 export const ModalRoot = styled.div({});
 
-/* =======================================================
-   둥근 테두리 카드형 메가메뉴 박스
-   ======================================================= */
+
+
+
 
 export const MegaMenuWrapper = styled.div(({ isOpen }) => ({
   position: "absolute",
@@ -73,7 +73,7 @@ export const MegaMenuCard = styled.div({
 
   padding: "60px 48px",
   paddingBottom: "90px",
-  // boxSizing: "border-box",
+  
 
   "@media (max-width: 930px)": {
     padding: "60px 24px",
@@ -117,13 +117,13 @@ export const MegaInner = styled.div({
   alignItems: "flex-start",
   justifyContent: "center",
 
-  // boxSizing: "border-box",
+  
 
   gap: "40px",
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     padding: "0 8px",
-    // boxSizing: "border-box",
+    
 
     display: "flex",
     alignItems: "flex-start",
@@ -178,7 +178,7 @@ export const Divider = styled.div({
   },
 });
 
-/* 메뉴 카테고리 */
+
 
 export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
   minWidth: 96,
@@ -201,7 +201,7 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
 
     ".mega-paw": {
       width: "22px",
-      // height: "25px",
+      
       aspectRatio: "1/1",
       display: "flex",
       alignItems: "center",
@@ -246,30 +246,30 @@ export const MegaCol = styled.div(({ hideOnTablet, $title }) => ({
 
     ...($title === "집사 PICK" && {
       order: 1,
-      // flex: "0 0 auto",
+      
       flex: "0 0 96px",
     }),
 
     ...($title === "카테고리" && {
       order: 2,
-      // flex: "0 0 auto",
+      
       flex: "0 0 96px",
     }),
 
     ...($title === "COMMUNITY" && {
       order: 3,
       flex: "0 0 96px",
-      // flex: "0 0 auto",
+      
     }),
 
     ...($title === "전체상품" && {
       order: 4,
 
-      // 강제로 다음 줄로 보내기
+      
       marginRight: "calc(100% - 96px)",
 
       flex: "0 0 96px",
-      // flex: "0 0 auto",
+      
       marginTop: "-50px",
     }),
   },
@@ -419,9 +419,9 @@ export const MyShopGrid = styled.div({
   },
 });
 
-/* =======================================================
-   모바일 전용 리스트형 카드
-   ======================================================= */
+
+
+
 
 export const MobileCard = styled.div({
   display: "none",
@@ -432,7 +432,7 @@ export const MobileCard = styled.div({
 
     width: "100%",
     margin: 0,
-    // boxSizing: "border-box",
+    
 
     background: colors.paper,
     border: `1px solid ${colors.line}`,
@@ -629,7 +629,7 @@ export const MobileCloseButton = styled.button({
   cursor: "pointer",
 });
 
-/* 공통 버튼 */
+
 
 export const MyShopButton = styled.button({
   padding: "8px 10px",
@@ -653,7 +653,7 @@ export const MyShopButton = styled.button({
   },
 });
 
-/* 바깥 클릭용 백드롭 */
+
 export const Backdrop = styled.div(({ isOpen }) => ({
   position: "fixed",
   inset: 0,

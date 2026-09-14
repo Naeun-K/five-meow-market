@@ -44,12 +44,12 @@ export const TopIconStyle = styled.button({
     height: "45%",
   },
 
-  /* 모바일 */
+  
   "@media (max-width: 767px)": {
     width: "50px",
   },
 
-  /* 태블릿 */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     width: "60px",
   },

@@ -12,9 +12,9 @@ export const products = [
 
     stock: 120,
 
-    // thumbnail: "/images/products/treat.png",
+    
 
-    // images: ["/images/products/treat1.png", "/images/products/treat2.png"],
+    
 
     soldCount: 32,
 

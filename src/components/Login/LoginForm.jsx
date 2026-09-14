@@ -3,7 +3,7 @@ import { LoginStyle, FormStyle } from "./LoginStyle";
 import useToast from "../../hooks/useToast";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import * as authService from "../../services/authService";
+// import * as authService from "../../services/authService";
 import PawIcon from "../common/PawIcon/PawIcon.jsx";
 
 export default function LoginForm() {
@@ -25,13 +25,11 @@ export default function LoginForm() {
 
     const trimmedEmail = email.trim();
 
-    // 이메일 작성 여부
     if (!trimmedEmail) {
       showToast("이메일을 입력해주세요.", false);
       return;
     }
 
-    // 이메일 형식
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(trimmedEmail)) {
@@ -39,24 +37,20 @@ export default function LoginForm() {
       return;
     }
 
-    // 비밀번호 작성 여부
     if (!password.trim()) {
       showToast("비밀번호를 입력해주세요.", false);
       return;
     }
 
     try {
-      // Mock API에서 email/password 비교
       const result = await login(trimmedEmail, password);
 
-      // 이메일 저장
       if (saveEmail) {
         localStorage.setItem("savedEmail", trimmedEmail);
       } else {
         localStorage.removeItem("savedEmail");
       }
 
-      // 로그인 완료
       showToast(result.message, true);
 
       navigate("/");

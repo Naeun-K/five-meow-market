@@ -2,9 +2,9 @@
 import * as S from "./reviewListStyle";
 
 
-/* ─────────────────────────────
-   리뷰 탭 데이터
-───────────────────────────── */
+
+
+
 
 const TABS = [
   {
@@ -18,9 +18,9 @@ const TABS = [
 ];
 
 
-/* ─────────────────────────────
-   리뷰 데이터
-───────────────────────────── */
+
+
+
 
 const REVIEWS = [
   {
@@ -55,9 +55,9 @@ const REVIEWS = [
 ];
 
 
-/* ─────────────────────────────
-   Star SVG
-───────────────────────────── */
+
+
+
 
 function StarIcon({ filled }) {
   return (
@@ -87,9 +87,9 @@ function StarIcon({ filled }) {
   );
 };
 
-/* ─────────────────────────────
-   별점 표시
-───────────────────────────── */
+
+
+
 
 function Rating({ rating }) {
   return (
@@ -105,15 +105,15 @@ function Rating({ rating }) {
 }
 
 
-/* ─────────────────────────────
-   개별 리뷰 카드
-───────────────────────────── */
+
+
+
 
 function ReviewCard({ review, onEdit, onDelete }) {
   return (
     <S.ReviewCard>
 
-      {/* 상품 이미지 / 상품명 */}
+      
       <S.ProductArea>
 
         <S.ProductImage>
@@ -152,10 +152,10 @@ function ReviewCard({ review, onEdit, onDelete }) {
       </S.ProductArea>
 
 
-      {/* 리뷰 영역 */}
+      
       <S.ReviewContent>
 
-        {/* 별점 / 날짜 / 수정 삭제 */}
+        
         <S.ReviewTop>
 
           <S.ReviewMeta>
@@ -194,7 +194,7 @@ function ReviewCard({ review, onEdit, onDelete }) {
         </S.ReviewTop>
 
 
-        {/* 리뷰 본문 */}
+        
         <S.ReviewTextBox>
 
           <S.ReviewText>
@@ -210,9 +210,9 @@ function ReviewCard({ review, onEdit, onDelete }) {
 }
 
 
-/* ─────────────────────────────
-   리뷰 목록 페이지
-───────────────────────────── */
+
+
+
 
 export default function ReviewList() {
 
@@ -220,13 +220,13 @@ export default function ReviewList() {
     useState("written");
 
 
-  /* 리뷰 수정 */
+  
   const handleEdit = (reviewId) => {
     console.log("리뷰 수정:", reviewId);
   };
 
 
-  /* 리뷰 삭제 */
+  
   const handleDelete = (reviewId) => {
 
     const isDelete =
@@ -243,7 +243,7 @@ export default function ReviewList() {
   return (
     <S.Page>
 
-      {/* 페이지 제목 */}
+      
       <S.Header>
 
         <S.Title>
@@ -257,7 +257,7 @@ export default function ReviewList() {
       </S.Header>
 
      
-      {/* 리뷰 탭 */}
+      
       <S.TabSection>
 
        <S.MainTabList>
@@ -280,7 +280,7 @@ export default function ReviewList() {
       </S.MainTabList>
 
 
-      {/* 리뷰 목록 */}
+      
       <S.ReviewList>
         {activeTab === "written" ? (
           REVIEWS.map((review) => (

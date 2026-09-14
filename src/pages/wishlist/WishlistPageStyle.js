@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-// 전체 페이지
+
 export const page = css({
   width: "100%",
   maxWidth: "1200px",
@@ -17,7 +17,7 @@ export const page = css({
   },
 });
 
-// 페이지 상단
+
 export const pageHeader = css({
   position: "relative",
   textAlign: "center",
@@ -40,7 +40,7 @@ export const pageHeader = css({
   },
 });
 
-// 마이페이지 돌아가기 버튼
+
 export const backButton = css({
   position: "absolute",
   top: "50%",
@@ -66,7 +66,7 @@ export const backButton = css({
   },
 });
 
-// 찜한 상품 개수
+
 export const wishlistCount = css({
   margin: "14px 0 0",
   color: "#777",
@@ -82,7 +82,7 @@ export const wishlistCount = css({
   },
 });
 
-// 상품 카드 그리드
+
 export const wishlistGrid = css({
   display: "grid",
   gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
@@ -99,7 +99,7 @@ export const wishlistGrid = css({
   },
 });
 
-// 상품 카드
+
 export const wishlistCard = css({
   minWidth: 0,
   overflow: "hidden",
@@ -115,7 +115,7 @@ export const wishlistCard = css({
   },
 });
 
-// 상품 이미지 영역
+
 export const imageWrapper = css({
   position: "relative",
   width: "100%",
@@ -124,7 +124,7 @@ export const imageWrapper = css({
   backgroundColor: "#F7F1E6",
 });
 
-// 상품 이미지
+
 export const productImage = css({
   display: "block",
   width: "100%",
@@ -138,7 +138,7 @@ export const productImage = css({
   },
 });
 
-// 하트 버튼
+
 export const heartButton = css({
   position: "absolute",
   top: "14px",
@@ -197,7 +197,7 @@ export const heartButton = css({
   },
 });
 
-// 상품 정보
+
 export const productInfo = css({
   padding: "24px",
 
@@ -210,7 +210,7 @@ export const productInfo = css({
   },
 });
 
-// 상품명
+
 export const productName = css({
   margin: 0,
   color: "#614832",
@@ -223,7 +223,7 @@ export const productName = css({
   },
 });
 
-// 상품 설명
+
 export const productDescription = css({
   minHeight: "42px",
   margin: "10px 0 18px",
@@ -236,7 +236,7 @@ export const productDescription = css({
   },
 });
 
-// 상품 가격
+
 export const productPrice = css({
   display: "block",
   marginBottom: "20px",
@@ -249,14 +249,14 @@ export const productPrice = css({
   },
 });
 
-// 버튼 영역
+
 export const buttonWrapper = css({
   display: "flex",
   gap: "8px",
   width: "100%",
 });
 
-// 공통 버튼
+
 const commonButton = {
   flex: 1,
   height: "42px",
@@ -267,7 +267,7 @@ const commonButton = {
   transition: "background-color 0.2s ease, color 0.2s ease",
 };
 
-// 장바구니 버튼
+
 export const cartButton = css({
   ...commonButton,
   border: "1px solid #D8CFC4",
@@ -284,7 +284,7 @@ export const cartButton = css({
   },
 });
 
-// 바로구매 버튼
+
 export const buyButton = css({
   ...commonButton,
   border: "1px solid #614832",
@@ -301,7 +301,7 @@ export const buyButton = css({
   },
 });
 
-// 찜한 상품이 없을 때
+
 export const emptyWrapper = css({
   display: "flex",
   flexDirection: "column",
@@ -311,7 +311,7 @@ export const emptyWrapper = css({
   textAlign: "center",
 });
 
-// 빈 하트 아이콘
+
 export const emptyIcon = css({
   marginBottom: "20px",
   color: "#D8CFC4",
@@ -319,7 +319,7 @@ export const emptyIcon = css({
   lineHeight: 1,
 });
 
-// 빈 상태 문구
+
 export const emptyText = css({
   margin: "0 0 24px",
   color: "#777",

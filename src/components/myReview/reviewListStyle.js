@@ -4,9 +4,9 @@ const TABLET = "@media (max-width: 1023px)";
 
 const MOBILE = "@media (min-width: 320px) and (max-width: 767px)";
 
-/* ─────────────────────────────
-   Page
-───────────────────────────── */
+
+
+
 
 export const Page = styled.div({
   maxWidth: 1300,
@@ -24,9 +24,9 @@ export const Page = styled.div({
   },
 });
 
-/* ─────────────────────────────
-   Header
-───────────────────────────── */
+
+
+
 
 export const Header = styled.div({
   marginBottom: "24px",
@@ -69,9 +69,9 @@ export const Subtitle = styled.p({
   },
 });
 
-/* ─────────────────────────────
-   Main Tabs
-───────────────────────────── */
+
+
+
 
 export const TabSection = styled.div({
   display: "flex",
@@ -170,9 +170,9 @@ export const MainTabButton = styled.button(({ isActive }) => ({
   },
 }));
 
-/* ─────────────────────────────
-   Review List
-───────────────────────────── */
+
+
+
 
 export const ReviewList = styled.div({
   display: "flex",
@@ -189,9 +189,9 @@ export const ReviewList = styled.div({
   },
 });
 
-/* ─────────────────────────────
-   Review Card
-───────────────────────────── */
+
+
+
 
 export const ReviewCard = styled.article({
   display: "flex",
@@ -222,9 +222,9 @@ export const ReviewCard = styled.article({
   },
 });
 
-/* ─────────────────────────────
-   Product Area
-───────────────────────────── */
+
+
+
 
 export const ProductArea = styled.div({
   display: "flex",
@@ -338,9 +338,9 @@ export const MobileActions = styled.div({
   },
 });
 
-/* ─────────────────────────────
-   Review Content
-───────────────────────────── */
+
+
+
 
 export const ReviewContent = styled.div({
   display: "flex",
@@ -351,9 +351,9 @@ export const ReviewContent = styled.div({
   height: "100%",
 });
 
-/* ─────────────────────────────
-   Review Top
-───────────────────────────── */
+
+
+
 
 export const ReviewTop = styled.div({
   display: "flex",
@@ -488,9 +488,9 @@ export const ActionDivider = styled.span({
   },
 });
 
-/* ─────────────────────────────
-   Review Text
-───────────────────────────── */
+
+
+
 
 export const ReviewTextBox = styled.div({
   height: "140px",

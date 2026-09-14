@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
-/* 전체 페이지 */
+
 export const page = css({
   display: "flex",
   flexDirection: "column",
@@ -11,12 +11,12 @@ export const page = css({
 
   width: "100%",
   maxWidth: "1300px",
-  // margin: "0 auto",
+  
   padding: "40px 50px 160px",
-  // boxSizing: "border-box",
-  // backgroundColor: "var(--bg)",
+  
+  
   color: "var(--text-color)",
-  // letterSpacing: "-0.01em",
+  
 
   "@media (max-width: 1023px)": {
     padding: "30px 35px 120px",
@@ -45,7 +45,7 @@ export const OrderCardWrapper = styled.article({
 
     scrollSnapType: "x mandatory",
 
-    // padding: "0 20px",
+    
 
     scrollbarWidth: "none",
 
@@ -74,7 +74,7 @@ export const OrderCard = styled.article({
     color: "#4A3425",
 
     fontWeight: 500,
-    // opacity: 0.8,
+    
 
     borderRadius: "20px",
 
@@ -93,7 +93,7 @@ export const OrderCard = styled.article({
     padding: " 0 20px 20px 20px",
 
     display: "flex",
-    // flexDirection: "column",
+    
     justifyContent: "space-between",
     alignItems: "center",
 
@@ -172,11 +172,11 @@ export const OrderCard = styled.article({
 
       "& .desc-wrapper": {
         display: "flex",
-        // flexDirection: "row",
+        
         justifyContent: "space-between",
         alignItems: "center",
 
-        // gap: "50px",
+        
         width: "100%",
         flexDirection: "column",
 
@@ -211,9 +211,9 @@ export const OrderCard = styled.article({
   },
 });
 
-/* MY PAGE 제목 */
+
 export const pageTitle = css({
-  // margin: "0 0 70px",
+  
   textAlign: "center",
   fontSize: "44px",
   fontWeight: 700,
@@ -222,19 +222,19 @@ export const pageTitle = css({
   color: "var(--text-primary)",
 
   "@media (max-width: 1023px)": {
-    // marginBottom: "60px",
+    
     fontSize: "36px",
     lineHeight: "1.35",
   },
 
   "@media (max-width: 767px)": {
-    // marginBottom: "45px",
+    
     fontSize: "28px",
     lineHeight: "1.4",
   },
 });
 
-/* 회원 정보 카드 */
+
 export const userCard = css({
   width: "100%",
   minHeight: "200px",
@@ -270,7 +270,7 @@ export const userCard = css({
     },
   },
 
-  /* 모바일 S/M/L */
+  
   "@media (max-width: 767px)": {
     flexDirection: "column",
     minHeight: "155px",
@@ -293,16 +293,16 @@ export const userCard = css({
 
       backgroundColor: "var(--border)",
     },
-    // alignItems: "flex-start",
+    
   },
 
-  /* 모바일 S */
+  
   "@media (max-width: 374px)": {
     gap: "30px",
   },
 });
 
-/* 닉네임 + 이메일 */
+
 export const userInfo = css({
   minWidth: 0,
   display: "flex",
@@ -327,17 +327,17 @@ export const userInfo = css({
     gap: "10px",
   },
 
-  /* 모바일 S */
-  // "@media (max-width: 374px)": {
-  // gap: "15px",
-  // },
+  
+  
+  
+  
 });
 
-/* 닉네임 */
+
 export const userName = css({
   display: "block",
   flexShrink: 0,
-  // margin: 0,
+  
   fontSize: "28px",
   fontWeight: 700,
   lineHeight: "1.4",
@@ -346,7 +346,7 @@ export const userName = css({
 
   "@media (max-width: 1023px)": {
     fontSize: "24px",
-    // lineHeight: "1.4",
+    
   },
 
   "@media (max-width: 767px)": {
@@ -354,23 +354,23 @@ export const userName = css({
     lineHeight: "28px",
   },
 
-  /* 모바일 S에서 닉네임 */
+  
   "@media (max-width: 374px)": {
     transform: "translateY(8px)",
   },
 });
 
-/* 이메일 */
+
 export const userEmail = css({
   display: "block",
   flexShrink: 0,
-  // margin: 0,
+  
   fontSize: "18px",
 
   lineHeight: "1.6",
   letterSpacing: "-0.01em",
   color: "var(--text-secondary)",
-  // opacity: 0.8,
+  
 
   "&.pointDeco": {
     display: "flex",
@@ -382,7 +382,7 @@ export const userEmail = css({
     borderRadius: "20px",
     backgroundColor: "#F7EFE5",
 
-    // color: "#9A765B",
+    
     color: "var(--text-primary)",
     whiteSpace: "nowrap",
     fontWeight: 600,
@@ -403,24 +403,24 @@ export const userEmail = css({
     lineHeight: "26px",
   },
 
-  /* 모바일 S */
+  
   "@media (max-width: 374px)": {
-    // fontSize: "16px",
+    
     lineHeight: "26px",
   },
 });
 
-/* 이메일 */
+
 export const userPoint = css({
   display: "block",
   flexShrink: 0,
-  // margin: 0,
+  
   fontSize: "18px",
   fontWeight: 600,
   lineHeight: "1.6",
   letterSpacing: "-0.01em",
   color: "var(--text-secondary)",
-  // opacity: 0.8,
+  
 
   "@media (max-width: 1023px)": {
     fontSize: "17px",
@@ -432,14 +432,14 @@ export const userPoint = css({
     lineHeight: "26px",
   },
 
-  /* 모바일 S */
+  
   "@media (max-width: 374px)": {
-    // fontSize: "16px",
+    
     lineHeight: "26px",
   },
 });
 
-/* 회원정보 수정 버튼 */
+
 export const editButton = css({
   flexShrink: 0,
   minWidth: "100px",
@@ -447,14 +447,14 @@ export const editButton = css({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  // alignSelf: "flex-end",
+  
 
   gap: "20px",
 
-  // border: "1px solid var(--text-secondary)",
+  
   border: "1px solid var(--border)",
   borderRadius: "var(--radius-md)",
-  // backgroundColor: "var(--bg-button)",
+  
   color: "var(--text-secondary)",
   fontSize: "20px",
 
@@ -481,8 +481,8 @@ export const editButton = css({
   },
 
   "@media (max-width: 1023px)": {
-    // minWidth: "120px",
-    // padding: "14px 20px",
+    
+    
     fontSize: "18px",
     padding: "8px 10px",
     "& .quick-arrow": {
@@ -496,22 +496,22 @@ export const editButton = css({
       width: "20px",
       height: "20px",
     },
-    // width: "92px",
-    // minWidth: "92px",
-    // padding: "10px 8px",
-    // marginTop: "2px",
-    // fontSize: "14px",
-    // lineHeight: "21px",
-    // wordBreak: "keep-all",
+    
+    
+    
+    
+    
+    
+    
   },
 });
 
-/* 요약 영역 */
+
 export const summary = css({
   width: "100%",
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
-  // marginTop: "50px",
+  
   backgroundColor: "#fff",
   border: "1px solid var(--border)",
   borderRadius: "var(--radius-md)",
@@ -519,7 +519,7 @@ export const summary = css({
 
   "@media (max-width: 767px)": {
     gridTemplateColumns: "repeat(2, 1fr)",
-    // marginTop: "40px",
+    
   },
 });
 
@@ -529,16 +529,16 @@ export const titleWrapper = css({
   alignItems: "center",
   padding: "30px 50px",
 
-  // backgroundColor: "#fff",
+  
 
   borderBottom: "1px solid var(--border)",
-  // borderRadius: "var(--radius-md)",
+  
   "@media (max-width:767px)": {
     padding: "20px",
   },
 });
 
-/* 요약 각각 */
+
 export const summaryItem = css({
   minHeight: "180px",
   display: "flex",
@@ -547,7 +547,7 @@ export const summaryItem = css({
   justifyContent: "center",
   gap: "20px",
   padding: "50px 30px",
-  // boxSizing: "border-box",
+  
   borderRight: "1px solid var(--border)",
 
   "&:last-child": {
@@ -598,7 +598,7 @@ export const summaryItem = css({
   },
 });
 
-/* 요약 라벨 */
+
 export const summaryLabel = css({
   fontSize: "20px",
   fontWeight: 400,
@@ -617,7 +617,7 @@ export const summaryLabel = css({
   },
 });
 
-/* 요약 숫자 */
+
 export const summaryValue = css({
   fontSize: "28px",
   fontWeight: 600,
@@ -636,10 +636,10 @@ export const summaryValue = css({
   },
 });
 
-/* 섹션 */
+
 export const section = css({
   width: "100%",
-  // marginTop: "85px",
+  
 
   backgroundColor: "#fff",
   border: "1px solid var(--border)",
@@ -674,29 +674,29 @@ export const section = css({
   },
 });
 
-/* 섹션 제목 */
+
 export const sectionTitle = css({
-  // margin: "0 0 30px",
+  
   fontSize: "28px",
   fontWeight: 600,
-  // lineHeight: "1.4",
+  
   letterSpacing: "-0.02em",
   color: "var(--text-primary)",
 
   "@media (max-width: 1023px)": {
-    // marginBottom: "25px",
+    
     fontSize: "34px",
-    // lineHeight: "1.4",
+    
   },
 
   "@media (max-width: 767px)": {
-    // marginBottom: "20px",
+    
     fontSize: "20px",
-    // lineHeight: "34px",
+    
   },
 });
 
-/* 최근 주문 카드 */
+
 export const orderCard = css({
   display: "flex",
   flexDirection: "row",
@@ -704,13 +704,13 @@ export const orderCard = css({
   alignItems: "center",
 
   width: "100%",
-  // padding: "30px",
+  
 
   gap: "20px",
 
   "& .item-wrapper": {
     width: "250px",
-    // height: "464px",
+    
     aspectRatio: "1 / 2",
     display: "flex",
     flexDirection: "column",
@@ -732,7 +732,7 @@ export const orderCard = css({
   "& .desc-wrapper": {
     display: "flex",
     flexDirection: "column",
-    // alignItems: "center",
+    
     gap: "10px",
 
     width: "100%",
@@ -746,7 +746,7 @@ export const orderCard = css({
     alignItems: "center",
 
     width: "100%",
-    // gap: "10px",
+    
     "& button": {
       padding: "10px 20px",
 
@@ -767,7 +767,7 @@ export const orderCard = css({
   },
 
   "@media (max-width: 1023px)": {
-    // padding: "20px",
+    
     gap: "15px",
     "& .item-wrapper": {
       width: "200px",
@@ -791,7 +791,7 @@ export const orderCard = css({
   },
 
   "@media (max-width: 735px)": {
-    // width: "100%",
+    
 
     justifyContent: "flex-start",
     gap: "30px",
@@ -801,7 +801,7 @@ export const orderCard = css({
 
     scrollSnapType: "x mandatory",
 
-    // padding: "0 20px",
+    
 
     scrollbarWidth: "none",
 
@@ -810,14 +810,14 @@ export const orderCard = css({
     },
   },
 
-  // /* 모바일 M/L */
-  // "@media (min-width: 375px) and (max-width: 767px)": {
-  //   // minHeight: "220px",
-  //   // padding: "28px 25px 70px",
-  // },
+  
+  
+  
+  
+  
 });
 
-/* 주문 상품 이미지 */
+
 export const orderImage = css({
   width: "120px",
   height: "120px",
@@ -837,14 +837,14 @@ export const orderImage = css({
     height: "84px",
   },
 
-  /* 모바일 M/L */
+  
   "@media (min-width: 375px) and (max-width: 767px)": {
     width: "96px",
     height: "96px",
   },
 });
 
-/* 주문 정보 */
+
 export const orderInfo = css({
   flex: 1,
 
@@ -860,31 +860,31 @@ export const orderInfo = css({
     gap: "10px",
   },
 
-  /* S */
+  
   "@media (max-width: 374px)": {
     minWidth: 0,
     marginLeft: "18px",
     gap: "6px",
   },
 
-  /* M */
+  
   "@media (min-width: 375px) and (max-width: 424px)": {
-    // flex: 1,
+    
     minWidth: 0,
     marginLeft: "20px",
     gap: "7px",
   },
 
-  /* L */
+  
   "@media (min-width: 425px) and (max-width: 767px)": {
-    // flex: 1,
+    
     minWidth: 0,
     marginLeft: "22px",
     gap: "7px",
   },
 });
 
-/* 상품명 */
+
 export const productName = css({
   display: "block",
   maxWidth: "100%",
@@ -909,7 +909,7 @@ export const productName = css({
   },
 });
 
-/* 주문일 */
+
 export const orderDate = css({
   display: "block",
   width: "100%",
@@ -935,7 +935,7 @@ export const orderDate = css({
   },
 });
 
-/* 주문번호 */
+
 export const orderNumber = css({
   display: "block",
   width: "100%",
@@ -961,7 +961,7 @@ export const orderNumber = css({
     lineHeight: "1.6",
   },
 
-  /* 모바일 S - 주문번호 */
+  
   "@media (max-width: 374px)": {
     fontSize: "14px",
     lineHeight: "21px",
@@ -982,7 +982,7 @@ export const orderNumber = css({
     },
   },
 
-  /* 모바일 M - 한 줄 */
+  
   "@media (min-width: 375px) and (max-width: 424px)": {
     fontSize: "14px",
     lineHeight: "21px",
@@ -1004,7 +1004,7 @@ export const orderNumber = css({
     },
   },
 
-  /* 모바일 L - 한 줄 */
+  
   "@media (min-width: 425px) and (max-width: 767px)": {
     fontSize: "14px",
     lineHeight: "21px",
@@ -1027,7 +1027,7 @@ export const orderNumber = css({
   },
 });
 
-/* 배송 상태 */
+
 export const orderStatus = css({
   marginLeft: "auto",
   flexShrink: 0,
@@ -1042,7 +1042,7 @@ export const orderStatus = css({
   letterSpacing: "-0.01em",
   textAlign: "center",
 
-  /* 태블릿 */
+  
   "@media (max-width: 1023px)": {
     minWidth: "110px",
     padding: "14px 24px",
@@ -1050,7 +1050,7 @@ export const orderStatus = css({
     borderRadius: "25px",
   },
 
-  /* 모바일 */
+  
   "@media (max-width: 767px)": {
     display: "block",
     position: "absolute",
@@ -1064,7 +1064,7 @@ export const orderStatus = css({
     borderRadius: "22px",
   },
 
-  /* 모바일 M/L */
+  
   "@media (min-width: 375px) and (max-width: 767px)": {
     right: "25px",
     bottom: "20px",
@@ -1073,13 +1073,13 @@ export const orderStatus = css({
   },
 });
 
-/* 바로가기 */
+
 export const quickMenu = css({
   width: "100%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  // gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+  
   gap: "40px",
   marginTop: "85px",
 
@@ -1092,32 +1092,32 @@ export const quickMenu = css({
     padding: "0 20px",
 
     order: -1,
-    // gridTemplateColumns: "1fr",
-    // gap: "20px",
-    // marginTop: "55px",
+    
+    
+    
   },
 });
 
-/* 바로가기 카드 */
+
 export const quickCard = css({
   width: "100%",
-  // height: "190px",
+  
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   padding: "40px 45px",
   boxSizing: "border-box",
   border: "1px solid var(--border)",
-  // border: "1px solid var(--text-primary)",
+  
   borderRadius: "12px",
-  // backgroundColor: "var(--bg)",
+  
   textAlign: "left",
 
-  // cursor: "pointer",
+  
 
-  // "&:hover .quick-arrow": {
-  //   transform: "translateX(5px) scale(1.5)",
-  // },
+  
+  
+  
 
   "& .svg-container": {
     display: "flex",
@@ -1142,7 +1142,7 @@ export const quickCard = css({
     flexDirection: "column",
     justifyContent: "center",
     gap: "20px",
-    // height: "170px",
+    
     padding: "35px 40px",
     "&:hover .quick-arrow": {
       transform: "translateX(20px) ",
@@ -1150,102 +1150,102 @@ export const quickCard = css({
   },
 
   "@media (max-width: 767px)": {
-    // borderRadius: "999px",
-    // width: "80px",
-    // height: "80px",
-    // "& .desc-wrapper": { display: "none" },
-    // height: "125px",
+    
+    
+    
+    
+    
     padding: "20px",
-    // "& .svg-container": {
+    
 
     border: "none",
-    // },
+    
   },
 });
 
-/* 바로가기 제목 */
+
 export const quickTitle = css({
   display: "block",
-  // alignSelf: "flex-start",
-  // marginBottom: "15px",
+  
+  
   fontSize: "18px",
   fontWeight: 600,
-  // lineHeight: "1.4",
-  // letterSpacing: "-0.02em",
+  
+  
   color: "var(--text-secondary)",
 
   "@media (max-width: 1023px)": {
-    // marginBottom: "12px",
+    
     fontSize: "17px",
-    // lineHeight: "1.4",
+    
   },
 
   "@media (max-width: 767px)": {
-    // marginBottom: "6px",
+    
     fontSize: "16px",
-    // lineHeight: "28px",
+    
   },
 });
 
-/* 바로가기 설명 */
-// export const quickText = css({
-//   // display: "block",
-//   display: "flex",
-//   gap: "4px",
-//   fontSize: "18px",
-//   fontWeight: 400,
-//   lineHeight: "1.6",
-//   letterSpacing: "-0.01em",
-//   color: "var(--text-secondary)",
 
-//   "& span": {
-//     display: "inline",
-//   },
 
-//   "@media (max-width: 1023px)": {
-//     fontSize: "17px",
-//     lineHeight: "1.6",
-//     flexDirection: "column",
-//     gap: 0,
-//   },
 
-//   "@media (max-width: 767px)": {
-//     // fontSize: "16px",
-//     display: "none",
-//     // lineHeight: "24px",
-//   },
-// });
 
-// /* 화살표 */
-// export const quickArrow = css({
-//   display: "inline-block",
-//   flexShrink: 0,
-//   width: "40px",
-//   height: "40px",
-//   // fontWeight: 400,
-//   // lineHeight: "1",
-//   color: "inherit",
-//   // color: "var(--text-primary)",
-//   transition: "transform 0.2s ease",
 
-// });
 
-/* 화살표 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const quickArrow = css({
   display: "inline-block",
   flexShrink: 0,
   width: "40px",
   height: "40px",
-  // fontWeight: 400,
-  // lineHeight: "1",
+  
+  
   color: "inherit",
-  // color: "var(--text-primary)",
+  
   transition: "transform 0.2s ease",
-  // "@media (max-width: 767px)": {
-  // fontSize: "16px",
-  // display: "none",
-  // lineHeight: "24px",
-  // },
+  
+  
+  
+  
+  
   "&:hover": {
     transform: "translateX(10px)",
   },
@@ -1266,5 +1266,5 @@ export const buttonStyle = css({
   "@media (max-width:1023px)": {
     fontSize: "18px",
   },
-  // "@media (max-width:767px)": {},
+  
 });

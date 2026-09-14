@@ -19,7 +19,7 @@ export default function CartPage() {
   const { isLoggedIn, accessToken, isAuthLoading } = useAuth();
   const { showToast } = useToast();
 
-  // 장바구니 조회
+  
   useEffect(() => {
     console.count("🔥 Cart useEffect 실행");
 
@@ -64,7 +64,7 @@ export default function CartPage() {
     fetchCart();
   }, [isAuthLoading, isLoggedIn, accessToken, showToast]);
 
-  // 체크박스
+  
   const handleCheck = (cartItemId, checked) => {
     if (checked) {
       setSelectedItems((prev) => {
@@ -81,7 +81,7 @@ export default function CartPage() {
     setSelectedItems((prev) => prev.filter((id) => id !== cartItemId));
   };
 
-  // 수량 변경
+  
   const handleQuantityChange = async (cartItemId, quantity) => {
     try {
       const result = await updateCartItem(cartItemId, quantity, accessToken);
@@ -109,7 +109,7 @@ export default function CartPage() {
     }
   };
 
-  // 개별 상품 삭제
+  
   const handleRemove = async (cartItemId) => {
     try {
       const result = await deleteCartItem(cartItemId, accessToken);
@@ -134,7 +134,7 @@ export default function CartPage() {
     }
   };
 
-  // 로그인하지 않은 경우
+  
   if (!isLoggedIn || !accessToken) {
     return (
       <BasicPage>
@@ -143,7 +143,7 @@ export default function CartPage() {
     );
   }
 
-  // 로그인한 상태에서 장바구니 조회 중
+  
   if (isLoading) {
     return (
       <BasicPage>
@@ -152,7 +152,7 @@ export default function CartPage() {
     );
   }
 
-  // 로그인했지만 장바구니가 비어있는 경우
+  
   if (cartItems.length === 0) {
     return (
       <BasicPage>

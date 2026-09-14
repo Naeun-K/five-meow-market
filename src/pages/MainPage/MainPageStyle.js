@@ -9,11 +9,11 @@ export const MainPageSytle = styled.div({
 
   width: "100%",
 
-  // padding: "80px 0",
+  
 
   minHeight: "100vh",
   maxWidth: "1300px",
-  // margin: " 0 auto",
+  
 
   margin: "100px 0",
 
@@ -34,7 +34,7 @@ export const BannerBackground = styled.div({
   width: "100%",
   overflow: "hidden",
 
-  // 기본 바탕은 이미지 벽지색
+  
   backgroundColor: "#F7EEE5",
 
   "&::before": {
@@ -42,7 +42,7 @@ export const BannerBackground = styled.div({
 
     position: "absolute",
 
-    // 실제 배너보다 좌우로만 조금 크게
+    
     width: "1300px",
     height: "100%",
 
@@ -51,20 +51,20 @@ export const BannerBackground = styled.div({
     transform: "translateX(-50%)",
 
     backgroundImage: "var(--desktop-banner)",
-    // backgroundPosition: "center",
+    
     backgroundPosition: "center bottom",
     backgroundRepeat: "no-repeat",
 
-    // ★ cover 절대 사용하지 않음
+    
     backgroundSize: "2560px 100%",
 
     filter: "blur(35px)",
   },
 
   "@media (max-width: 1023px)": {
-    // "&::before": {
-    //   display: "none",
-    // },
+    
+    
+    
     "&::before": {
       content: '""',
 
@@ -123,7 +123,7 @@ export const CardContainer = styled.div({
   gap: "30px",
 
   width: "100%",
-  // minWidth: 0,
+  
 
   padding: "0 50px",
 
@@ -164,9 +164,9 @@ export const CardContainer = styled.div({
     height: "18px",
     color: "var(--text-primary)",
 
-    // "& .bi-arrow-right-short": {
-    //   fill:
-    // },
+    
+    
+    
   },
 
   "& .card-wrapper": {
@@ -176,12 +176,12 @@ export const CardContainer = styled.div({
     maxWidth: "300px",
     minWidth: "260px",
   },
-  // 🔴 ADD - 기본적으로 더보기 버튼 숨김
+  
   "& .mobile-more-button": {
     display: "none",
   },
 
-  // 태블릿
+  
   "@media (max-width:1023px)": {
     padding: "0 30px",
 
@@ -198,7 +198,7 @@ export const CardContainer = styled.div({
     },
   },
 
-  // 모바일
+  
   "@media (min-width:320px) and (max-width:767px)": {
     padding: "0 20px",
     gap: "40px",
@@ -216,9 +216,9 @@ export const CardContainer = styled.div({
     },
     "& .product-item": {
       maxWidth: "400px",
-      // minWidth: "260px",
+      
     },
-    // 🔴 ADD - 모바일에서만 더보기 버튼 표시
+    
     "& .mobile-more-button": {
       width: "100%",
       maxWidth: "400px",
@@ -250,7 +250,7 @@ export const ProductListStyle = styled.div({
 
   width: "100%",
 
-  // minWidth: 0,
+  
 
   cursor: "pointer",
   "& .product-item": {
@@ -260,7 +260,7 @@ export const ProductListStyle = styled.div({
     alignItems: "center",
     gap: "5px",
 
-    // minWidth: 0,
+    
   },
 
   "& .product-info": {
@@ -289,9 +289,9 @@ export const ProductListStyle = styled.div({
     gap: "80px 40px ",
 
     justifyItems: "center",
-    // "& .product-item": {
-    //   // maxWidth: "300px",
-    // },
+    
+    
+    
   },
 
   "@media (max-width: 767px)": {
@@ -299,14 +299,14 @@ export const ProductListStyle = styled.div({
     gap: "40px",
     justifyItems: "center",
 
-    // "& .product-item": {
-    //   maxWidth: "400px",
-    // },
+    
+    
+    
 
-    // "& .product-info": {
+    
 
-    //   // maxWidth: "220px",
-    //   alignItems: "center",
-    // },
+    
+    
+    
   },
 });

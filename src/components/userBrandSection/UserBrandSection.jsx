@@ -7,7 +7,7 @@ export default function UserBrandSection({ phrase, image, message }) {
   return (
     <BrandStyle>
       <HeaderStyle>
-        <ForwardButton />
+        <ForwardButton>이전페이지로</ForwardButton>
 
         <div className="logo-box">
           <Logo />

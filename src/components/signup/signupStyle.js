@@ -1,19 +1,11 @@
 import styled from "@emotion/styled";
 
-/* ========================================
-   회원가입 전체 Layout
-======================================== */
-
 export const SignupLayout = styled.div({
   display: "flex",
   justifyContent: "center",
 
   width: "100%",
 });
-
-/* ========================================
-   회원가입 Container
-======================================== */
 
 export const SignupContainer = styled.div({
   display: "flex",
@@ -23,20 +15,12 @@ export const SignupContainer = styled.div({
 
   width: "100%",
 
-  /* ----------------------------------------
-     Title
-  ---------------------------------------- */
-
   "& h1": {
     color: "var(--text-color)",
 
     fontSize: "40px",
     fontWeight: 600,
   },
-
-  /* ----------------------------------------
-     Subtitle
-  ---------------------------------------- */
 
   "& .subtitle": {
     display: "flex",
@@ -48,7 +32,7 @@ export const SignupContainer = styled.div({
     fontSize: "20px",
   },
 
-  "& .paw-icon": {
+  "& .paw-container": {
     width: "24px",
     height: "24px",
 
@@ -56,10 +40,6 @@ export const SignupContainer = styled.div({
 
     flexShrink: 0,
   },
-
-  /* ----------------------------------------
-     Form
-  ---------------------------------------- */
 
   "& form": {
     display: "flex",
@@ -77,7 +57,6 @@ export const SignupContainer = styled.div({
     fontWeight: 500,
   },
 
-  /* checkbox를 제외한 input */
   '& input:not([type="checkbox"])': {
     width: "100%",
     height: "46px",
@@ -116,10 +95,6 @@ export const SignupContainer = styled.div({
         "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
     },
   },
-
-  /* ----------------------------------------
-     Password
-  ---------------------------------------- */
 
   "& .password-input": {
     position: "relative",
@@ -182,11 +157,6 @@ export const SignupContainer = styled.div({
     pointerEvents: "none",
   },
 
-  /* ========================================
-     Tablet
-     768px ~ 1024px
-  ======================================== */
-
   "@media (min-width: 768px) and (max-width: 1024px)": {
     width: "100%",
 
@@ -240,11 +210,6 @@ export const SignupContainer = styled.div({
       height: "16px",
     },
   },
-
-  /* ========================================
-     Mobile
-     320px ~ 767px
-  ======================================== */
 
   "@media (min-width: 320px) and (max-width: 767px)": {
     width: "100%",
@@ -331,10 +296,6 @@ export const SignupContainer = styled.div({
   },
 });
 
-/* ========================================
-   Form Group
-======================================== */
-
 export const FormGroup = styled.div({
   display: "flex",
   flexDirection: "column",
@@ -414,10 +375,6 @@ export const FormGroup = styled.div({
   },
 });
 
-/* ========================================
-   Input + Button Row
-======================================== */
-
 export const Row = styled.div({
   display: "flex",
   alignItems: "center",
@@ -463,10 +420,6 @@ export const Row = styled.div({
   },
 });
 
-/* ========================================
-   Agreement
-======================================== */
-
 export const Agreement = styled.div({
   display: "flex",
   alignItems: "center",
@@ -498,10 +451,6 @@ export const Agreement = styled.div({
     },
   },
 });
-
-/* ========================================
-   Bottom Area
-======================================== */
 
 export const BottomArea = styled.div({
   width: "100%",
