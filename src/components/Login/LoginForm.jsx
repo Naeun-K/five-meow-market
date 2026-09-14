@@ -17,12 +17,11 @@ export default function LoginForm() {
   const [saveEmail, setSaveEmail] = useState(
     () => !!localStorage.getItem("savedEmail"),
   );
-  const [showPassword, setShowPassword] = useState(false);
   const inputRef = useRef(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const trimmedEmail = email.trim();
 
     if (!trimmedEmail) {

@@ -6,34 +6,33 @@ import { UpdateStyle } from "./updateInfoStyle";
 import PawIcon from "../common/PawIcon/PawIcon";
 import useAuth from "../../hooks/useAuth";
 import { updateUser } from "../../services/userService";
+import { deleteUser } from "../../services/userService";
+import PasswordConfirmModal from "../passwordConfirmModal/PasswordConfirmModal";
 import { useNavigate } from "react-router-dom";
 
 const UpdateInfo = () => {
-  const { user } = useAuth();
+  const { user, accessToken, logout } = useAuth();
 
   const nickname =
     user?.nickname || user?.nickName || user?.username || user?.name || "회원";
   const email = user?.email ?? "";
 
-  
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
-  
   const [phone, setPhone] = useState("");
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  
   const [zoneCode, setZoneCode] = useState("");
   const [address, setAddress] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
-  
   const handleVerifyPhone = async () => {
     const raw = phone.replace(/\D/g, "");
 
@@ -60,9 +59,7 @@ const UpdateInfo = () => {
     }
   };
 
-  
   const formatPhoneNumber = (value) => {
-    
     const numbers = value.replace(/\D/g, "").slice(0, 11);
 
     if (numbers.length <= 3) {
@@ -75,7 +72,7 @@ const UpdateInfo = () => {
 
     return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7)}`;
   };
-  
+
   const handleSearchAddress = async () => {
     try {
       const result = await searchAddress();
@@ -91,7 +88,6 @@ const UpdateInfo = () => {
     }
   };
 
-  
   const isValidPassword = (password) => {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
   };
@@ -99,7 +95,6 @@ const UpdateInfo = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    
     if (password && !isValidPassword(password)) {
       showToast(
         "비밀번호는 8자 이상이며 영문 대/소문자와 숫자를 포함해야 합니다.",
@@ -107,7 +102,7 @@ const UpdateInfo = () => {
       );
       return;
     }
-    
+
     if (password !== passwordConfirm) {
       showToast("새 비밀번호가 일치하지 않습니다.", false);
       return;
@@ -120,7 +115,7 @@ const UpdateInfo = () => {
     }
 
     const updateData = {};
-    
+
     if (password) {
       updateData.newPassword = password;
     }
@@ -152,7 +147,6 @@ const UpdateInfo = () => {
 
       showToast(result.message || "회원정보가 수정되었습니다.", true);
 
-      
       setPassword("");
       setPasswordConfirm("");
       setPhone("");
@@ -169,11 +163,31 @@ const UpdateInfo = () => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    try {
+      const result = await deleteUser(accessToken);
+
+      if (!result.success) {
+        showToast(result.message || "회원탈퇴에 실패했습니다.", false);
+        return;
+      }
+
+      setIsPasswordModalOpen(false);
+      await logout();
+      navigate("/", { replace: true });
+      showToast(result.message || "회원탈퇴가 완료되었습니다.", true);
+    } catch (error) {
+      showToast(error.message || "회원탈퇴에 실패했습니다.", false);
+    }
+  };
+
   return (
     <UpdateStyle>
       <nav className="top-nav">
         <span>회원정보를 삭제하시겠습니다?</span>
-        <button>회원탈퇴</button>
+        <button type="button" onClick={() => setIsPasswordModalOpen(true)}>
+          회원탈퇴
+        </button>
       </nav>
       <header className="header">
         <h1>Update Info</h1>
@@ -361,6 +375,12 @@ const UpdateInfo = () => {
           <button type="submit">회원정보수정</button>
         </form>
       </div>
+      <PasswordConfirmModal
+        isOpen={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+        onSuccess={handleDeleteAccount}
+        purpose="회원탈퇴를 진행"
+      />
     </UpdateStyle>
   );
 };
