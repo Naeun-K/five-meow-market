@@ -40,6 +40,8 @@ jobs:
       # 4. Vite 빌드
       - name: Build
         run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{vars.VITE_API_BASE_URL}}
 
       # 5. dist 빌드 결과 확인
       # 현재 404 원인 확인을 위한 임시 디버깅 단계
