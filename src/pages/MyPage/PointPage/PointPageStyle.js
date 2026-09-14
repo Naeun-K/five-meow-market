@@ -3,24 +3,24 @@ import { css } from "@emotion/react";
 export const page = css({
   width: "100%",
   maxWidth: "1300px",
-  boxSizing: "border-box",
-  margin: "0 auto",
+  // boxSizing: "border-box",
+  // margin: "0 auto",
   padding: "16px 24px 72px",
   display: "flex",
   flexDirection: "column",
-  gap: "38px",
+  gap: "100px",
   color: "var(--text-primary)",
   background:
     "linear-gradient(180deg, rgba(255,255,255,0.38), rgba(255,255,255,0))",
   borderRadius: "28px",
   "@media (min-width: 768px) and (max-width: 1023px)": {
     padding: "24px 28px 64px",
-    gap: "32px",
+    gap: "60px",
     borderRadius: "24px",
   },
   "@media (max-width: 767px)": {
     padding: "8px 16px 48px",
-    gap: "28px",
+    gap: "50px",
     borderRadius: "0",
   },
 });

@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BasicPage from "../basicPage/BasicPage";
-import useAuth from "../../hooks/useAuth";
-import Loader from "../../components/loader/Loader";
-import { getPointHistory, getPoints } from "../../services/userService";
-import { mockGetMyPoint, mockGetPointHistory } from "../../data/mockUser";
+import BasicPage from "../../basicPage/BasicPage";
+import useAuth from "../../../hooks/useAuth";
+import Loader from "../../../components/loader/Loader";
+import { getPointHistory, getPoints } from "../../../services/userService";
+import { mockGetMyPoint, mockGetPointHistory } from "../../../data/mockUser";
 import {
   page,
   pageHeader,
@@ -38,6 +38,7 @@ import {
   emptyButton,
   loginNotice,
 } from "./PointPageStyle";
+import ForwardButton from "../../../components/common/forwardBtn/ForwardButton";
 
 const FILTERS = [
   { key: "ALL", label: "전체" },
@@ -79,10 +80,10 @@ function PointPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      setIsLoading(false);
-      return;
-    }
+    // if (!isLoggedIn) {
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     const loadPointData = async () => {
       try {
@@ -147,6 +148,7 @@ function PointPage() {
     <BasicPage>
       <main css={page}>
         <header css={pageHeader}>
+          <ForwardButton>마이페이지로</ForwardButton>
           <h1 css={pageTitle}>적립금</h1>
           <p css={pageSubtitle}>적립 및 사용 내역을 확인해보세요.</p>
         </header>
