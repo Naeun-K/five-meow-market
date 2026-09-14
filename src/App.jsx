@@ -4,14 +4,13 @@ import SignupPage from "./pages/AuthPage/SignupPage";
 import LoginPage from "./pages/AuthPage/LoginPage";
 import UpdatePage from "./pages/AuthPage/UpdatePage";
 import MainPage from "./pages/MainPage/MainPage";
-import ProductList from "./pages/productListPage/ProductList";
+import ProductList from "./pages/product/productListPage/ProductList";
 import NoticePage from "./pages/communitypage/NoticePage";
 import QnaPage from "./pages/communitypage/QnaPage";
 import ReviewPage from "./pages/communitypage/ReviewPage";
 import CartPage from "./pages/cartpage/CartPage";
 import ScrollToTop from "./routes/ScrollTop";
 import MyPage from "./pages/MyPage/MyPage";
-
 import PrivacyPolicyPage from "./pages/privacyPolicy/PrivacyPolicyPage";
 import TermsPage from "./pages/terms/TermsPage";
 import AboutPage from "./pages/about/AboutPage";
@@ -22,9 +21,9 @@ import MyOrderList from "./pages/MyPage/order/MyOrderList";
 import MyOrderDetail from "./pages/MyPage/order/MyOrderDetail";
 import MyReviewPage from "./pages/MyPage/reviews/MyReviewPage";
 import WishlistPage from "./pages/wishlist/WishlistPage";
-import DetailProduct from "./pages/detailProduct/DetailProduct";
-// import OrderDetail from "./components/orderPage/orderDetail";
 import PointPage from "./pages/MyPage/PointPage/PointPage";
+// import DetailProduct from "./pages/product/detailProduct/DetailProduct";
+import CopyDetailProduct from "./pages/product/detailProduct/CopyDetailProduct";
 
 function App() {
   return (
@@ -36,11 +35,8 @@ function App() {
 
         <Route path="/products" element={<ProductList />} />
 
-        <Route path="/products/:productId" element={<DetailProduct />} />
-
-        <Route path="/products" element={<ProductList />}>
-          <Route index element={<ProductList />} />
-        </Route>
+        {/* <Route path="/products/:productId" element={<DetailProduct />} /> */}
+        <Route path="/products/:productId" element={<CopyDetailProduct />} />
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

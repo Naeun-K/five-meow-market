@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import ProductCard from "../../components/product/ProductCard/ProductCard";
-import BasicPage from "../basicPage/BasicPage";
+import ProductCard from "../../../components/product/ProductCard/ProductCard";
+import BasicPage from "../../basicPage/BasicPage";
 import {
   ButtonContainer,
   DescWrapper,
@@ -10,16 +10,16 @@ import {
   DetailBanner,
   DetailSection,
 } from "./detailProductStyle";
-import useToast from "../../hooks/useToast";
+import useToast from "../../../hooks/useToast";
 import { useEffect, useRef, useState } from "react";
-import Loader from "../../components/loader/Loader";
-import { getProduct } from "../../services/productServices";
-import HeartButton from "../../components/product/HeartButton/HeartButton";
-import ProductBottomSheet from "../../components/product/ProductBottomSheet/ProductBottomSheet";
-import useAuth from "../../hooks/useAuth";
-import { addCartItem } from "../../services/cartServices";
-import CartSuccessModal from "../../components/cartui/CartSuccessModal";
-import RelatedProducts from "../../components/product/RelateProduct/RelatedProduct";
+import Loader from "../../../components/loader/Loader";
+import { getProduct } from "../../../services/productServices";
+import HeartButton from "../../../components/product/HeartButton/HeartButton";
+import ProductBottomSheet from "../../../components/product/ProductBottomSheet/ProductBottomSheet";
+import useAuth from "../../../hooks/useAuth";
+import { addCartItem } from "../../../services/cartServices";
+import CartSuccessModal from "../../../components/cartui/CartSuccessModal";
+import RelatedProducts from "../../../components/product/RelateProduct/RelatedProduct";
 
 const categoryNames = {
   "cat-eat": "먹묘",
@@ -112,7 +112,6 @@ export default function DetailProduct() {
     fetchProduct();
   }, [productId, showToast]);
 
-  
   const handleAddCart = async (selectedQuantity) => {
     if (isAuthLoading) {
       return false;
@@ -133,7 +132,6 @@ export default function DetailProduct() {
         throw new Error(result.message || "장바구니 담기에 실패했습니다.");
       }
 
-      
       return true;
     } catch (error) {
       console.error("장바구니 추가 실패:", error);
@@ -156,9 +154,9 @@ export default function DetailProduct() {
       return;
     }
 
-    if (bottomSheetType === "buy") {
-      
-    }
+    // if (bottomSheetType === "buy") {
+
+    // }
   };
 
   const handleBuyClick = () => {
@@ -426,8 +424,6 @@ export default function DetailProduct() {
             </div>
           )}
         </DetailSection>
-
-        
 
         <DetailSection id="purchase-guide">
           <div className="section-heading">
