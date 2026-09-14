@@ -1,12 +1,8 @@
 import styled from "@emotion/styled";
 
-
-
-
-
 export const PhotoWrapper = styled.div({
-  width: "48%",
-  maxWidth: "500px",
+  width: "100%",
+  maxWidth: "100%",
   minWidth: 0,
 
   aspectRatio: "1 / 1",
@@ -28,13 +24,6 @@ export const PhotoWrapper = styled.div({
     objectPosition: "center",
   },
 
-  
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    width: "46%",
-    maxWidth: "420px",
-  },
-
-  
   "@media (max-width: 767px)": {
     width: "100%",
     maxWidth: "100%",
@@ -42,10 +31,6 @@ export const PhotoWrapper = styled.div({
     aspectRatio: "1 / 1",
   },
 });
-
-
-
-
 
 export const DescWrapper = styled.div({
   display: "flex",
@@ -90,7 +75,6 @@ export const DescWrapper = styled.div({
     lineHeight: 1.5,
   },
 
-  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     width: "48%",
 
@@ -109,7 +93,6 @@ export const DescWrapper = styled.div({
     },
   },
 
-  
   "@media (max-width: 767px)": {
     width: "100%",
 
@@ -134,10 +117,6 @@ export const DescWrapper = styled.div({
     },
   },
 });
-
-
-
-
 
 export const SummaryStyle = styled.div({
   display: "flex",
@@ -220,7 +199,6 @@ export const SummaryStyle = styled.div({
     },
   },
 
-  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     gap: "24px",
 
@@ -235,22 +213,10 @@ export const SummaryStyle = styled.div({
     },
   },
 
-  
   "@media (max-width: 600px)": {
     display: "none",
   },
 });
-
-
-
-
-
-
-
-
-
-
-
 
 export const DetailProductStyle = styled.div({
   display: "flex",
@@ -264,38 +230,303 @@ export const DetailProductStyle = styled.div({
 
   gap: "70px",
 
-  padding: "0 50px 30px",
+  padding: "0 50px 40px",
 
-  "& strong": { color: "var(--text-primary)" },
+  "& strong": {
+    color: "var(--text-primary)",
+  },
 
-  
+  /* =====================================
+     상품 이미지 영역
+  ===================================== */
+
+  "& .product-photo-area": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+
+    width: "48%",
+    maxWidth: "500px",
+    minWidth: 0,
+  },
+
+  /* =====================================
+     관련상품 이동 버튼
+  ===================================== */
+
+  "& .related-scroll-button": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    width: "100%",
+    minHeight: "58px",
+
+    gap: "12px",
+
+    marginTop: "20px",
+    padding: "12px 24px",
+
+    border: "1px solid var(--border)",
+    borderRadius: "9999px",
+
+    backgroundColor: "#fff",
+
+    color: "var(--text-primary)",
+
+    fontSize: "17px",
+    fontWeight: 600,
+
+    cursor: "pointer",
+
+    transition:
+      "background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease",
+  },
+
+  /* =====================================
+     실제 JSX:
+     <span className="related-scroll-paw">
+       <PawIcon />
+     </span>
+  ===================================== */
+
+  "& .related-scroll-paw": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    width: "28px",
+    height: "28px",
+
+    flex: "0 0 28px",
+
+    color: "var(--bg-button)",
+  },
+
+  /*
+    PawIcon이 내부에서 어떤 wrapper를 반환하더라도
+    related-scroll-paw 크기 안에서 동작하도록 처리
+  */
+  "& .related-scroll-paw > *": {
+    display: "flex",
+
+    width: "100%",
+    height: "100%",
+  },
+
+  "& .related-scroll-paw svg": {
+    display: "block",
+
+    width: "100%",
+    height: "100%",
+  },
+
+  "& .related-scroll-text": {
+    lineHeight: 1.4,
+
+    whiteSpace: "nowrap",
+  },
+
+  /* =====================================
+     화살표 SVG
+  ===================================== */
+
+  "& .related-scroll-icon": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    width: "20px",
+    height: "20px",
+
+    flex: "0 0 20px",
+
+    animation: "relatedArrow 1.5s ease-in-out infinite",
+  },
+
+  "& .related-scroll-icon svg": {
+    display: "block",
+
+    width: "100%",
+    height: "100%",
+  },
+
+  /* =====================================
+     버튼 하단 설명
+  ===================================== */
+
+  "& .related-scroll-description": {
+    margin: "10px 0 0",
+
+    color: "var(--text-secondary)",
+
+    fontSize: "13px",
+    lineHeight: 1.5,
+
+    textAlign: "center",
+  },
+
+  "@keyframes relatedArrow": {
+    "0%, 100%": {
+      transform: "translateY(0)",
+    },
+
+    "50%": {
+      transform: "translateY(4px)",
+    },
+  },
+
+  /* PC hover */
+  "@media (hover: hover) and (pointer: fine)": {
+    "& .related-scroll-button:hover": {
+      borderColor: "var(--bg-button)",
+
+      backgroundColor: "var(--bg-notice)",
+
+      color: "#4F3927",
+    },
+
+    "& .related-scroll-button:hover .related-scroll-paw": {
+      color: "#4F3927",
+    },
+  },
+
+  "@media (prefers-reduced-motion: reduce)": {
+    "& .related-scroll-icon": {
+      animation: "none",
+    },
+  },
+
+  /* =====================================
+     태블릿
+  ===================================== */
+
   "@media (min-width: 768px) and (max-width: 1023px)": {
     gap: "40px",
 
-    padding: "0 30px 20px",
+    padding: "0 30px 30px",
+
+    "& .product-photo-area": {
+      width: "46%",
+      maxWidth: "420px",
+    },
+
+    "& .related-scroll-button": {
+      minHeight: "52px",
+
+      gap: "10px",
+
+      marginTop: "16px",
+      padding: "10px 16px",
+
+      fontSize: "15px",
+    },
+
+    "& .related-scroll-paw": {
+      width: "24px",
+      height: "24px",
+
+      flex: "0 0 24px",
+    },
+
+    "& .related-scroll-icon": {
+      width: "18px",
+      height: "18px",
+
+      flex: "0 0 18px",
+    },
+
+    "& .related-scroll-description": {
+      marginTop: "8px",
+
+      fontSize: "12px",
+    },
   },
 
-  
+  /* =====================================
+     모바일
+  ===================================== */
+
   "@media (max-width: 767px)": {
     flexDirection: "column",
 
     gap: "40px",
 
     padding: "0 20px 30px",
+
+    "& .product-photo-area": {
+      width: "100%",
+      maxWidth: "100%",
+    },
+
+    "& .related-scroll-button": {
+      minHeight: "50px",
+
+      gap: "8px",
+
+      marginTop: "14px",
+      padding: "10px 16px",
+
+      fontSize: "14px",
+    },
+
+    "& .related-scroll-paw": {
+      width: "22px",
+      height: "22px",
+
+      flex: "0 0 22px",
+    },
+
+    "& .related-scroll-icon": {
+      width: "17px",
+      height: "17px",
+
+      flex: "0 0 17px",
+    },
+
+    "& .related-scroll-description": {
+      marginTop: "8px",
+
+      fontSize: "12px",
+    },
+  },
+
+  "@media (max-width: 420px)": {
+    "& .related-scroll-button": {
+      gap: "6px",
+
+      padding: "9px 12px",
+
+      fontSize: "13px",
+    },
+
+    "& .related-scroll-paw": {
+      width: "20px",
+      height: "20px",
+
+      flex: "0 0 20px",
+    },
+
+    "& .related-scroll-icon": {
+      width: "16px",
+      height: "16px",
+
+      flex: "0 0 16px",
+    },
   },
 });
-
-
-
-
 
 export const ButtonContainer = styled.div({
   display: "flex",
   flexDirection: "column",
 
+  gap: "12px",
+
   width: "100%",
 
-  gap: "12px",
+  padding: "20px 0 10px",
+
+  backgroundColor: "var(--bg)",
 
   "& .button-wrapper": {
     display: "flex",
@@ -365,7 +596,6 @@ export const ButtonContainer = styled.div({
     display: "none",
   },
 
-  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     "& .btn": {
       minHeight: "48px",
@@ -376,12 +606,17 @@ export const ButtonContainer = styled.div({
     },
   },
 
-  
   "@media (max-width: 600px)": {
     flexDirection: "row",
     alignItems: "center",
 
     gap: "10px",
+
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+
+    zIndex: 30,
 
     "& .button-wrapper": {
       display: "contents",
@@ -450,17 +685,11 @@ export const ButtonContainer = styled.div({
   },
 });
 
-
-
-
-
 export const DetailBanner = styled.nav({
   display: "flex",
 
   width: "100%",
-  maxWidth: "1200px",
-
-  margin: "0 auto",
+  maxWidth: "1300px",
 
   borderTop: "1px solid var(--border)",
   borderBottom: "1px solid var(--border)",
@@ -468,6 +697,8 @@ export const DetailBanner = styled.nav({
   backgroundColor: "var(--bg)",
 
   boxShadow: "0 4px 12px rgba(0, 0, 0, 0.06)",
+
+  margin: "50px 0",
 
   "& a": {
     display: "flex",
@@ -499,7 +730,6 @@ export const DetailBanner = styled.nav({
     },
   },
 
-  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     "& a": {
       padding: "18px 10px",
@@ -508,7 +738,6 @@ export const DetailBanner = styled.nav({
     },
   },
 
-  
   "@media (max-width: 767px)": {
     "& a": {
       padding: "16px 6px",
@@ -518,19 +747,34 @@ export const DetailBanner = styled.nav({
   },
 });
 
-
-
-
-
 export const DetailSection = styled.section({
   width: "100%",
   maxWidth: "1300px",
 
-  
-
-  padding: "0 50px ",
+  padding: "0 50px",
 
   scrollMarginTop: "160px",
+
+  /* =====================================
+     관련상품
+  ===================================== */
+
+  "&#related-products": {
+    paddingTop: "20px",
+    paddingBottom: "20px",
+  },
+
+  "&#related-products .section-heading": {
+    marginBottom: "26px",
+  },
+
+  "&#related-products .section-heading h2": {
+    fontSize: "32px",
+  },
+
+  /* =====================================
+     공통 섹션
+  ===================================== */
 
   "& .section-heading": {
     paddingBottom: "18px",
@@ -554,10 +798,6 @@ export const DetailSection = styled.section({
 
     fontSize: "36px",
   },
-
-  
-
-
 
   "& .information-content, & .guide-content": {
     padding: "28px 0",
@@ -601,11 +841,9 @@ export const DetailSection = styled.section({
     margin: 0,
   },
 
-  
-
-
-
-
+  /* =====================================
+     상세 이미지
+  ===================================== */
 
   "& .detail-image-container": {
     position: "relative",
@@ -640,11 +878,11 @@ export const DetailSection = styled.section({
     height: "auto",
   },
 
-  
-
-
-
-  "& .detail-image-blur": {
+  /*
+    JSX의 실제 클래스명:
+    detail-image-fade
+  */
+  "& .detail-image-fade": {
     position: "absolute",
 
     left: 0,
@@ -661,10 +899,6 @@ export const DetailSection = styled.section({
     backdropFilter: "blur(2px)",
   },
 
-  
-
-
-
   "& .detail-more-button": {
     display: "flex",
     justifyContent: "center",
@@ -675,8 +909,6 @@ export const DetailSection = styled.section({
     height: "56px",
 
     gap: "10px",
-
-    margin: "0 auto",
 
     padding: "0 20px",
 
@@ -713,9 +945,9 @@ export const DetailSection = styled.section({
     transform: "rotate(180deg)",
   },
 
-  
-
-
+  /* =====================================
+     구매안내
+  ===================================== */
 
   "& .guide-content p": {
     margin: "0 0 12px",
@@ -733,12 +965,25 @@ export const DetailSection = styled.section({
     color: "var(--text-primary)",
   },
 
-  
-
-
+  /* =====================================
+     태블릿
+  ===================================== */
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
-    padding: "70px 30px 0",
+    padding: "0 30px",
+
+    "&#related-products": {
+      paddingTop: "15px",
+      paddingBottom: "15px",
+    },
+
+    "&#related-products .section-heading": {
+      marginBottom: "22px",
+    },
+
+    "&#related-products .section-heading h2": {
+      fontSize: "28px",
+    },
 
     "& .section-heading h2": {
       fontSize: "30px",
@@ -755,7 +1000,7 @@ export const DetailSection = styled.section({
       marginTop: "70px",
     },
 
-    "& .detail-image-blur": {
+    "& .detail-image-fade": {
       height: "200px",
     },
 
@@ -767,14 +1012,27 @@ export const DetailSection = styled.section({
     },
   },
 
-  
-
-
+  /* =====================================
+     모바일
+  ===================================== */
 
   "@media (max-width: 767px)": {
-    padding: "50px 20px 0",
+    padding: "0 20px",
 
     scrollMarginTop: "120px",
+
+    "&#related-products": {
+      paddingTop: "10px",
+      paddingBottom: "10px",
+    },
+
+    "&#related-products .section-heading": {
+      marginBottom: "18px",
+    },
+
+    "&#related-products .section-heading h2": {
+      fontSize: "24px",
+    },
 
     "& .section-heading": {
       paddingBottom: "14px",
@@ -802,10 +1060,6 @@ export const DetailSection = styled.section({
       width: "90px",
     },
 
-    
-
-
-
     "& .detail-image-container": {
       maxWidth: "100%",
       maxHeight: "1200px",
@@ -813,7 +1067,7 @@ export const DetailSection = styled.section({
       marginTop: "50px",
     },
 
-    "& .detail-image-blur": {
+    "& .detail-image-fade": {
       height: "160px",
     },
 

@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
-import Pagination from "../../components/pagnation/Pagnation";
-import BasicPage from "../basicPage/BasicPage";
-import Loader from "../../components/loader/Loader";
-import ProductCard from "../../components/product/ProductCard/ProductCard";
-import * as productService from "../../services/productServices";
+import Pagination from "../../../components/pagnation/Pagnation";
+import BasicPage from "../../basicPage/BasicPage";
+import Loader from "../../../components/loader/Loader";
+import ProductCard from "../../../components/product/ProductCard/ProductCard";
+import * as productService from "../../../services/productServices";
 import {
   CardContainer,
   PageTitleContainer,
   ProductPage,
 } from "./ProductListStyle";
-import useToast from "../../hooks/useToast";
-import { useProductLimit } from "../../hooks/useProductLimit";
+import useToast from "../../../hooks/useToast";
+import { useProductLimit } from "../../../hooks/useProductLimit";
 import { Link, useSearchParams } from "react-router-dom";
-
 
 const categoryNames = {
   "cat-eat": "먹묘",
@@ -23,11 +22,10 @@ const categoryNames = {
 };
 
 export default function ProductList() {
-  
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { showToast } = useToast();
   const [products, setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +33,8 @@ export default function ProductList() {
   const limit = useProductLimit();
   const keyword = searchParams.get("keyword") || "";
   const category = searchParams.get("category") || "";
+
+  const currentPage = Math.max(1, Number(searchParams.get("page")) || 1);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -77,6 +77,16 @@ export default function ProductList() {
 
   const pageTitle = category ? categoryNames[category] : "전체상품";
 
+  const handlePageChange = (page) => {
+    setSearchParams((prev) => {
+      const params = new URLSearchParams(prev);
+
+      params.set("page", String(page));
+
+      return params;
+    });
+  };
+
   return (
     <BasicPage>
       <ProductPage>
@@ -111,7 +121,7 @@ export default function ProductList() {
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={setCurrentPage}
+          onPageChange={handlePageChange}
         />
       </ProductPage>
     </BasicPage>

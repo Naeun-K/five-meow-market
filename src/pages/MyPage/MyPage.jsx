@@ -21,6 +21,7 @@ import {
   OrderCardWrapper,
   OrderCard,
 } from "./MyPageStyle";
+import buttonHover from "../../assets/buttonHover.webp";
 import BasicPage from "../basicPage/BasicPage";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
@@ -106,6 +107,14 @@ function MyPage() {
 
         <section css={summary}>
           <div css={summaryItem}>
+            <div className="btn-hover-container">
+              <img
+                src={buttonHover}
+                alt="버튼꾸미기용 고양이 이미지"
+                className="btn-hover"
+                aria-hidden="true"
+              />
+            </div>
             <button
               className="svg-container"
               onClick={() => navigate("/mypage/orders")}
@@ -122,11 +131,20 @@ function MyPage() {
                 <path d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293zm-.217 1.198.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118z" />
               </svg>
             </button>
+
             <span css={summaryLabel}>주문 내역</span>
             <strong css={summaryValue}>3</strong>
           </div>
 
           <div css={summaryItem}>
+            <div className="btn-hover-container">
+              <img
+                src={buttonHover}
+                alt="버튼꾸미기용 고양이 이미지"
+                className="btn-hover"
+                aria-hidden="true"
+              />
+            </div>
             <button
               className="svg-container"
               onClick={() => navigate("/mypage/wishlist")}
@@ -148,6 +166,14 @@ function MyPage() {
           </div>
 
           <div css={summaryItem}>
+            <div className="btn-hover-container">
+              <img
+                src={buttonHover}
+                alt="버튼꾸미기용 고양이 이미지"
+                className="btn-hover"
+                aria-hidden="true"
+              />
+            </div>
             <button
               className="svg-container"
               onClick={() => navigate("/mypage/reviews")}
@@ -172,6 +198,15 @@ function MyPage() {
           </div>
 
           <div css={summaryItem}>
+            <div className="btn-hover-container">
+              <img
+                src={buttonHover}
+                alt="버튼꾸미기용 고양이 이미지"
+                className="btn-hover"
+                aria-hidden="true"
+                loading="lazy"
+              />
+            </div>
             <button
               className="svg-container"
               onClick={() => navigate("/mypage/inquiry")}
