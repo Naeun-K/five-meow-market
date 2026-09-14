@@ -16,21 +16,9 @@ import {
   section,
   sectionTitle,
   orderCard,
-  
-  
-  
-  
-  
-  
-  
   titleWrapper,
-  
-  
   quickTitle,
   OrderCardWrapper,
-  
-  
-  
   OrderCard,
 } from "./MyPageStyle";
 import BasicPage from "../basicPage/BasicPage";
@@ -40,12 +28,14 @@ import Loader from "../../components/loader/Loader";
 import myShopCat from "../../assets/logo-myshop.webp";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
 import ReviewModal from "../../components/reviewModal/ReviewModal";
+import PasswordConfirmModal from "../../components/passwordConfirmModal/PasswordConfirmModal";
 
 function MyPage() {
   const { user, isLoggedIn, isAuthLoading } = useAuth();
   const navigate = useNavigate();
   const [isPerchased, setIsPerchased] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   const nickname =
     user?.nickname || user?.nickName || user?.username || user?.name || "회원";
@@ -67,10 +57,8 @@ function MyPage() {
   return (
     <BasicPage>
       <main css={page}>
-        
         <h1 css={pageTitle}>MY PAGE</h1>
 
-        
         <section css={userCard}>
           <div className="profile-wrapper">
             <div className="profile-svg">
@@ -95,7 +83,7 @@ function MyPage() {
           <button
             type="button"
             css={editButton}
-            onClick={() => navigate("/mypage/edit")}
+            onClick={() => setIsPasswordModalOpen(true)}
           >
             <strong css={quickTitle}>회원정보 수정</strong>
             <span className="quick-arrow">
@@ -116,7 +104,6 @@ function MyPage() {
           </button>
         </section>
 
-        
         <section css={summary}>
           <div css={summaryItem}>
             <button
@@ -207,7 +194,6 @@ function MyPage() {
           </div>
         </section>
 
-        
         <section css={section}>
           <div css={titleWrapper}>
             <h2 css={sectionTitle}>주문 내역</h2>
@@ -357,7 +343,7 @@ function MyPage() {
             </OrderCardWrapper>
           </div>
         </section>
-        
+
         <section css={section}>
           <div css={titleWrapper}>
             <h2 css={sectionTitle}>찜한 상품</h2>
@@ -477,6 +463,15 @@ function MyPage() {
         </section>
       </main>
       {isModalOpen && <ReviewModal onClose={() => setIsModalOpen(false)} />}
+      <PasswordConfirmModal
+        isOpen={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+        onSuccess={() => {
+          setIsPasswordModalOpen(false);
+          navigate("/mypage/edit");
+        }}
+        purpose="회원정보를 확인"
+      />
     </BasicPage>
   );
 }
