@@ -5,10 +5,8 @@ const product = [
     name: "고양이 츄르",
     price: 15900,
     thumbnail: "https://i.ibb.co/BK4RXnwT/1.webp",
-    images: [
-      "https://i.ibb.co/BK4RXnwT/1.webp",
-      "https://i.ibb.co/Q76T8xGm/1.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/Rk9DYFc3/1.webp",
     averageRating: 4.8,
     reviewCount: 128,
     qnaCount: 15,
@@ -19,10 +17,8 @@ const product = [
     name: "사료스타",
     price: 24900,
     thumbnail: "https://i.ibb.co/Q3LWBwVj/2.webp",
-    images: [
-      "https://i.ibb.co/Q3LWBwVj/2.webp",
-      "https://i.ibb.co/WpyZjby7/2.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/0jcL0Wmm/4.webp",
     averageRating: 4.2,
     reviewCount: 28,
     qnaCount: 4,
@@ -33,10 +29,8 @@ const product = [
     name: "자연 냥젤리",
     price: 23000,
     thumbnail: "https://i.ibb.co/8DZgkZB7/3.webp",
-    images: [
-      "https://i.ibb.co/8DZgkZB7/3.webp",
-      "https://i.ibb.co/PZpCpxg4/3.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/jkQmTtgJ/3.webp",
     averageRating: 4.1,
     reviewCount: 58,
     qnaCount: 13,
@@ -47,10 +41,8 @@ const product = [
     name: "캔디냥",
     price: 3000,
     thumbnail: "https://i.ibb.co/7xcZPrf4/4.webp",
-    images: [
-      "https://i.ibb.co/7xcZPrf4/4.webp",
-      "https://i.ibb.co/fGDF9g7j/5.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/ycLdJBCK/2.webp",
     averageRating: 4.4,
     reviewCount: 67,
     qnaCount: 9,
@@ -61,10 +53,8 @@ const product = [
     name: "고양이 시리얼",
     price: 14900,
     thumbnail: "https://i.ibb.co/BxmjVk6/5.webp",
-    images: [
-      "https://i.ibb.co/BxmjVk6/5.webp",
-      "https://i.ibb.co/7xWW2DcP/4.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/h1nCsJ7d/5.webp",
     averageRating: 4.0,
     reviewCount: 29,
     qnaCount: 5,
@@ -76,10 +66,8 @@ const product = [
     name: "고양이 낚시대",
     price: 12800,
     thumbnail: "https://i.ibb.co/zWVwGp1H/1.webp",
-    images: [
-      "https://i.ibb.co/zWVwGp1H/1.webp",
-      "https://i.ibb.co/sJ9mSMfk/4.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/rrr9yVm/4.webp",
     averageRating: 4.4,
     reviewCount: 25,
     qnaCount: 8,
@@ -91,10 +79,8 @@ const product = [
     name: "못잡겠쥐?",
     price: 11900,
     thumbnail: "https://i.ibb.co/1t95sXZw/2.webp",
-    images: [
-      "https://i.ibb.co/1t95sXZw/2.webp",
-      "https://i.ibb.co/rRmTX4Tz/3.webp",
-    ],
+    detailImage: 
+    "https://i.ibb.co/TxCRsp57/5.webp",
     averageRating: 4.2,
     reviewCount: 13,
     qnaCount: 5,
@@ -106,10 +92,8 @@ const product = [
     name: "버튼 꾹꾹이",
     price: 13800,
     thumbnail: "https://i.ibb.co/N6bjxkch/3.webp",
-    images: [
-      "https://i.ibb.co/N6bjxkch/3.webp",
-      "https://i.ibb.co/kdWgXFV/1.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/bxfLdCV/2.webp",
     averageRating: 3.9,
     reviewCount: 26,
     qnaCount: 7,
@@ -121,10 +105,8 @@ const product = [
     name: "고양이 스크래처",
     price: 19900,
     thumbnail: "https://i.ibb.co/1tgTRFVP/4.webp",
-    images: [
-      "https://i.ibb.co/1tgTRFVP/4.webp",
-      "https://i.ibb.co/fb9crh0/5.webp",
-    ],
+    detailImages: 
+      "https://i.ibb.co/mVvqr8yv/3.webp",
     averageRating: 4.2,
     reviewCount: 18,
     qnaCount: 6,
@@ -136,10 +118,8 @@ const product = [
     name: "집사말고 이거 물어",
     price: 8000,
     thumbnail: "https://i.ibb.co/9S3wZ3q/5.webp",
-    images: [
-      "https://i.ibb.co/9S3wZ3q/5.webp",
-      "https://i.ibb.co/jZ194CSs/2.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/3YsQLNh9/1.webp",
     averageRating: 4.5,
     reviewCount: 33,
     qnaCount: 14,
@@ -151,10 +131,8 @@ const product = [
     name: "고양이 털방석",
     price: 27000,
     thumbnail: "https://i.ibb.co/84DZMKkr/1.webp",
-    images: [
-      "https://i.ibb.co/84DZMKkr/1.webp",
-      "https://i.ibb.co/TxBp6t4F/4.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/fGtNgB3V/2.webp",
     averageRating: 4.4,
     reviewCount: 30,
     qnaCount: 8,
@@ -166,10 +144,8 @@ const product = [
     name: "고양이 쿠션",
     price: 21900,
     thumbnail: "https://i.ibb.co/V0kxWC1q/2.webp",
-    images: [
-      "https://i.ibb.co/V0kxWC1q/2.webp",
-      "https://i.ibb.co/23xNRvwV/5.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/9mzRs124/3.webp",
     averageRating: 4.3,
     reviewCount: 29,
     qnaCount: 10,
@@ -181,10 +157,8 @@ const product = [
     name: "텔레비전에 냥이 나왔으면",
     price: 31900,
     thumbnail: "https://i.ibb.co/XxKk3kHQ/3.webp",
-    images: [
-      "https://i.ibb.co/XxKk3kHQ/3.webp",
-      "https://i.ibb.co/hFJM1ZjP/3.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/QvL4QW8H/5.webp",
     averageRating: 4.8,
     reviewCount: 40,
     qnaCount: 19,
@@ -196,10 +170,8 @@ const product = [
     name: "냥이가 다 해먹",
     price: 23000,
     thumbnail: "https://i.ibb.co/QjJZXCZv/4.webp",
-    images: [
-      "https://i.ibb.co/QjJZXCZv/4.webp",
-      "https://i.ibb.co/whNGQBm0/2.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/bMwZgM8X/4.webp",
     averageRating: 4.3,
     reviewCount: 32,
     qnaCount: 11,
@@ -211,10 +183,8 @@ const product = [
     name: "창문 설치용 해먹",
     price: 22900,
     thumbnail: "https://i.ibb.co/Jj98Dv5X/5.webp",
-    images: [
-      "https://i.ibb.co/Jj98Dv5X/5.webp",
-      "https://i.ibb.co/q3xfzzwy/1.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/Y7TzM6Sp/1.webp",
     averageRating: 3.8,
     reviewCount: 28,
     qnaCount: 12,
@@ -226,10 +196,9 @@ const product = [
     name: "하우스 캣타워",
     price: 42000,
     thumbnail: "https://i.ibb.co/WW7CkQy6/1.webp",
-    images: [
-      "https://i.ibb.co/WW7CkQy6/1.webp",
-      "https://i.ibb.co/4gjq9MpM/1.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/ccyN1s2b/1.webp",
+
     averageRating: 4.1,
     reviewCount: 34,
     qnaCount: 16,
@@ -241,10 +210,8 @@ const product = [
     name: "선인장 캣타워",
     price: 37000,
     thumbnail: "https://i.ibb.co/Y77BXkG9/2.webp",
-    images: [
-      "https://i.ibb.co/Y77BXkG9/2.webp",
-      "https://i.ibb.co/ZzxTr4km/5.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/svvGmV6X/2.webp",
     averageRating: 4.7,
     reviewCount: 12,
     qnaCount: 3,
@@ -256,10 +223,8 @@ const product = [
     name: "사각 캣타워",
     price: 32900,
     thumbnail: "https://i.ibb.co/0p8xZ9BR/3.webp",
-    images: [
-      "https://i.ibb.co/0p8xZ9BR/3.webp",
-      "https://i.ibb.co/BSGKtmP/4.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/VchYPyPn/4.webp",
     averageRating: 4.0,
     reviewCount: 31,
     qnaCount: 7,
@@ -270,10 +235,8 @@ const product = [
     name: "미끄럼틀 캣타워",
     price: 129000,
     thumbnail: "https://i.ibb.co/dsm3wd0T/4.webp",
-    images: [
-      "https://i.ibb.co/dsm3wd0T/4.webp",
-      "https://i.ibb.co/79Q9N1S/2.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/YF56PLyH/5.webp",
     averageRating: 3.9,
     reviewCount: 36,
     qnaCount: 14,
@@ -284,10 +247,8 @@ const product = [
     name: "다용도 캣타워",
     price: 24900,
     thumbnail: "https://i.ibb.co/MyzQG5sx/5.webp",
-    images: [
-      "https://i.ibb.co/MyzQG5sx/5.webp",
-      "https://i.ibb.co/8nV4mQ0N/3.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/x8CdNtjz/3.webp",
     averageRating: 4.8,
     reviewCount: 27,
     qnaCount: 13,
@@ -298,10 +259,9 @@ const product = [
     name: "고양이 화장실",
     price: 26000,
     thumbnail: "https://i.ibb.co/TxRWwgMm/1.webp",
-    images: [
-      "https://i.ibb.co/TxRWwgMm/1.webp",
-      "https://i.ibb.co/0pPwczcK/1.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/LXPKYFYL/3.webp",
+      
     averageRating: 4.6,
     reviewCount: 38,
     qnaCount: 5,
@@ -313,10 +273,9 @@ const product = [
     name: "깨운한 냥장실 ",
     price: 22900,
     thumbnail: "https://i.ibb.co/8DRMYpLq/2.webp",
-    images: [
-      "https://i.ibb.co/8DRMYpLq/2.webp",
-      "https://i.ibb.co/XkJCv0tr/3.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/RG2JwyXb/2.webp",
+      
     averageRating: 4.6,
     reviewCount: 38,
     qnaCount: 5,
@@ -328,10 +287,8 @@ const product = [
     name: "고양이 이동형 화장실",
     price: 33000,
     thumbnail: "https://i.ibb.co/PZ4chFj0/3.webp",
-    images: [
-      "https://i.ibb.co/PZ4chFj0/3.webp",
-      "https://i.ibb.co/fGDF9g7j/5.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/1tSZTKZ4/4.webp",
     averageRating: 4.6,
     reviewCount: 32,
     qnaCount: 5,
@@ -343,10 +300,8 @@ const product = [
     name: "드럼세탁 화장실",
     price: 36000,
     thumbnail: "https://i.ibb.co/hFwrpHyd/4.webp",
-    images: [
-      "https://i.ibb.co/hFwrpHyd/4.webp",
-      "https://i.ibb.co/3mvXYrWs/2.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/wZmJ56X0/5.webp",
     averageRating: 4.2,
     reviewCount: 38,
     qnaCount: 9,
@@ -358,10 +313,8 @@ const product = [
     name: "산뜻한 냥장실",
     price: 32000,
     thumbnail: "https://i.ibb.co/4rKBbsd/5.webp",
-    images: [
-      "https://i.ibb.co/4rKBbsd/5.webp",
-      "https://i.ibb.co/fYw93WrV/4.webp",
-    ],
+    detailImage: 
+      "https://i.ibb.co/LdWsg3GD/1.webp",
     averageRating: 4.3,
     reviewCount: 30,
     qnaCount: 4,
