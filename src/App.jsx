@@ -24,7 +24,7 @@ import MyReviewPage from "./pages/MyPage/reviews/MyReviewPage";
 import WishlistPage from "./pages/wishlist/WishlistPage";
 import DetailProduct from "./pages/detailProduct/DetailProduct";
 // import OrderDetail from "./components/orderPage/orderDetail";
-import PointPage from "./pages/PointPage/PointPage";
+import PointPage from "./pages/MyPage/PointPage/PointPage";
 
 function App() {
   return (
@@ -32,24 +32,19 @@ function App() {
       <ScrollToTop />
 
       <Routes>
-        
         <Route path="/" element={<MainPage />} />
 
-        
         <Route path="/products" element={<ProductList />} />
-        
+
         <Route path="/products/:productId" element={<DetailProduct />} />
-        
+
         <Route path="/products" element={<ProductList />}>
           <Route index element={<ProductList />} />
-          
         </Route>
 
-        
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
 
-        
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/points" element={<PointPage />} />
         <Route path="/mypage/edit" element={<UpdatePage />} />
@@ -59,28 +54,20 @@ function App() {
         <Route path="/mypage/orders" element={<MyOrderList />} />
         <Route path="/mypage/orders/:orderId" element={<MyOrderDetail />} />
 
-        
         <Route path="/cart" element={<CartPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/about" element={<AboutPage />} />
-        
 
-        
         <Route path="/community/notice" element={<NoticePage />} />
-        
+
         <Route path="/community/inquiry" element={<QnaPage />} />
-        
+
         <Route path="/community/review" element={<ReviewPage />} />
 
-        
-        
-
-        
         <Route path="/support" element={<CustomerContactPage />} />
         <Route path="/support/inquiry" element={<CustomerInquiryPage />} />
 
-        
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
