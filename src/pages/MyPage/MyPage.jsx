@@ -80,7 +80,12 @@ function MyPage() {
               <span css={userName}>{nickname}님</span>
               <div className="info-wrapper">
                 <span css={userEmail}>{email}</span>
-                <button css={userEmail} className="pointDeco">
+                <button
+                  type="button"
+                  css={userEmail}
+                  className="pointDeco"
+                  onClick={() => navigate("/mypage/points")}
+                >
                   <span>적립금</span>
                   <span>{points.toLocaleString()} P</span>
                 </button>
