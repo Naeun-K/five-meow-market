@@ -12,33 +12,33 @@ const CartUI = ({
 }) => {
   const navigate = useNavigate();
 
-  // 장바구니 전체 수량
+  
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  // 선택된 상품
+  
   const selectedCartItems = cartItems.filter((item) =>
     selectedItems.includes(item.cartItemId),
   );
 
-  // 선택된 상품 금액
+  
   const productPrice = selectedCartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
 
-  // 예상 적립금
-  // 현재 비율은 Cart API 명세에 정의되어 있지 않으므로 일단 0
+  
+  
   const reward = 0;
 
-  // 배송비
+  
   const shippingFee = productPrice === 0 ? 0 : productPrice >= 70000 ? 0 : 3000;
 
-  // 총 주문금액
+  
   const totalPrice = productPrice + shippingFee;
 
   return (
     <S.CartWrapper>
-      {/* 쇼핑 계속하기 */}
+      
       <S.ContinueButton type="button" onClick={() => navigate("/products")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -55,14 +55,14 @@ const CartUI = ({
         쇼핑 계속하기
       </S.ContinueButton>
 
-      {/* 장바구니 제목 */}
+      
       <S.CartHeader>
         <S.CartTitle>장바구니</S.CartTitle>
 
         <S.CartSubtitle>{cartCount}개의 상품이 담겨져있습니다.</S.CartSubtitle>
       </S.CartHeader>
 
-      {/* 장바구니 상품 */}
+      
       {cartItems.map((item) => (
         <CartItem
           key={item.cartItemId}
@@ -74,7 +74,7 @@ const CartUI = ({
         />
       ))}
 
-      {/* 주문 요약 */}
+      
       <S.OrderSummary>
         <S.SummaryInfo>
           <S.SummaryTitle>주문 요약</S.SummaryTitle>

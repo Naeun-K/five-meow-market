@@ -112,7 +112,7 @@ export default function DetailProduct() {
     fetchProduct();
   }, [productId, showToast]);
 
-  // 실제 API 호출만 담당
+  
   const handleAddCart = async (selectedQuantity) => {
     if (isAuthLoading) {
       return false;
@@ -133,7 +133,7 @@ export default function DetailProduct() {
         throw new Error(result.message || "장바구니 담기에 실패했습니다.");
       }
 
-      // 성공하면 호출한 쪽에서 모달을 열 수 있도록 true 반환
+      
       return true;
     } catch (error) {
       console.error("장바구니 추가 실패:", error);
@@ -157,7 +157,7 @@ export default function DetailProduct() {
     }
 
     if (bottomSheetType === "buy") {
-      // 바로구매 로직
+      
     }
   };
 
@@ -427,36 +427,7 @@ export default function DetailProduct() {
           )}
         </DetailSection>
 
-        {/* <DetailSection id="related-products">
-          <div className="section-heading">
-            <p>YOU MAY ALSO LIKE</p>
-            <h2>관련상품</h2>
-          </div>
-          {relatedProducts.length > 0 ? (
-            <RelatedGrid>
-              {relatedProducts.map((relatedProduct) => (
-                <RelatedItem key={relatedProduct.productId}>
-                  <Link to={`/products/${relatedProduct.productId}`}>
-                    <ProductCard
-                      image={
-                        relatedProduct.images?.[0] ?? relatedProduct.thumbnail
-                      }
-                      name={relatedProduct.name}
-                      badge=""
-                      showHeart={false}
-                    />
-                    <strong>{relatedProduct.name}</strong>
-                    <span>{relatedProduct.price.toLocaleString()}원</span>
-                  </Link>
-                </RelatedItem>
-              ))}
-            </RelatedGrid>
-          ) : (
-            <div className="information-content">
-              <p>현재 함께 추천할 상품을 준비하고 있습니다.</p>
-            </div>
-          )}
-        </DetailSection> */}
+        
 
         <DetailSection id="purchase-guide">
           <div className="section-heading">

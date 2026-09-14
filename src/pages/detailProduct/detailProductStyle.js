@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-/* =========================================
-   상품 이미지
-========================================= */
+
+
+
 
 export const PhotoWrapper = styled.div({
   width: "48%",
@@ -28,13 +28,13 @@ export const PhotoWrapper = styled.div({
     objectPosition: "center",
   },
 
-  /* Tablet */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     width: "46%",
     maxWidth: "420px",
   },
 
-  /* Mobile */
+  
   "@media (max-width: 767px)": {
     width: "100%",
     maxWidth: "100%",
@@ -43,9 +43,9 @@ export const PhotoWrapper = styled.div({
   },
 });
 
-/* =========================================
-   상품 정보
-========================================= */
+
+
+
 
 export const DescWrapper = styled.div({
   display: "flex",
@@ -90,7 +90,7 @@ export const DescWrapper = styled.div({
     lineHeight: 1.5,
   },
 
-  /* Tablet */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     width: "48%",
 
@@ -109,7 +109,7 @@ export const DescWrapper = styled.div({
     },
   },
 
-  /* Mobile */
+  
   "@media (max-width: 767px)": {
     width: "100%",
 
@@ -135,9 +135,9 @@ export const DescWrapper = styled.div({
   },
 });
 
-/* =========================================
-   수량 / 총 금액
-========================================= */
+
+
+
 
 export const SummaryStyle = styled.div({
   display: "flex",
@@ -220,7 +220,7 @@ export const SummaryStyle = styled.div({
     },
   },
 
-  /* Tablet */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     gap: "24px",
 
@@ -235,22 +235,22 @@ export const SummaryStyle = styled.div({
     },
   },
 
-  /* 기존 모바일 BottomSheet 구조 유지 */
+  
   "@media (max-width: 600px)": {
     display: "none",
   },
 });
 
-/* =========================================
-   상단 상품 영역
 
-   Desktop / Tablet
-   이미지 | 상품정보
 
-   Mobile
-   이미지
-   상품정보
-========================================= */
+
+
+
+
+
+
+
+
 
 export const DetailProductStyle = styled.div({
   display: "flex",
@@ -268,14 +268,14 @@ export const DetailProductStyle = styled.div({
 
   "& strong": { color: "var(--text-primary)" },
 
-  /* Tablet */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     gap: "40px",
 
     padding: "0 30px 20px",
   },
 
-  /* Mobile */
+  
   "@media (max-width: 767px)": {
     flexDirection: "column",
 
@@ -285,9 +285,9 @@ export const DetailProductStyle = styled.div({
   },
 });
 
-/* =========================================
-   구매 버튼
-========================================= */
+
+
+
 
 export const ButtonContainer = styled.div({
   display: "flex",
@@ -365,7 +365,7 @@ export const ButtonContainer = styled.div({
     display: "none",
   },
 
-  /* Tablet */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     "& .btn": {
       minHeight: "48px",
@@ -376,7 +376,7 @@ export const ButtonContainer = styled.div({
     },
   },
 
-  /* Mobile */
+  
   "@media (max-width: 600px)": {
     flexDirection: "row",
     alignItems: "center",
@@ -450,9 +450,9 @@ export const ButtonContainer = styled.div({
   },
 });
 
-/* =========================================
-   상세정보 / 구매안내 메뉴
-========================================= */
+
+
+
 
 export const DetailBanner = styled.nav({
   display: "flex",
@@ -499,7 +499,7 @@ export const DetailBanner = styled.nav({
     },
   },
 
-  /* Tablet */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     "& a": {
       padding: "18px 10px",
@@ -508,7 +508,7 @@ export const DetailBanner = styled.nav({
     },
   },
 
-  /* Mobile */
+  
   "@media (max-width: 767px)": {
     "& a": {
       padding: "16px 6px",
@@ -518,15 +518,15 @@ export const DetailBanner = styled.nav({
   },
 });
 
-/* =========================================
-   상세정보 공통 Section
-========================================= */
+
+
+
 
 export const DetailSection = styled.section({
   width: "100%",
   maxWidth: "1300px",
 
-  // margin: "0 auto",
+  
 
   padding: "0 50px ",
 
@@ -555,9 +555,9 @@ export const DetailSection = styled.section({
     fontSize: "36px",
   },
 
-  /* =========================================
-     상품 기본 정보
-  ========================================= */
+  
+
+
 
   "& .information-content, & .guide-content": {
     padding: "28px 0",
@@ -601,11 +601,11 @@ export const DetailSection = styled.section({
     margin: 0,
   },
 
-  /* =========================================
-     상세 이미지
+  
 
-     평상시에는 좁고 긴 형태로 중앙 정렬
-  ========================================= */
+
+
+
 
   "& .detail-image-container": {
     position: "relative",
@@ -640,10 +640,10 @@ export const DetailSection = styled.section({
     height: "auto",
   },
 
-  /*
-   * 상세 이미지가 접혀 있을 때
-   * 하단 경계를 자연스럽게 흐리게 처리
-   */
+  
+
+
+
   "& .detail-image-blur": {
     position: "absolute",
 
@@ -661,9 +661,9 @@ export const DetailSection = styled.section({
     backdropFilter: "blur(2px)",
   },
 
-  /* =========================================
-     상세정보 더보기
-  ========================================= */
+  
+
+
 
   "& .detail-more-button": {
     display: "flex",
@@ -713,9 +713,9 @@ export const DetailSection = styled.section({
     transform: "rotate(180deg)",
   },
 
-  /* =========================================
-     구매안내
-  ========================================= */
+  
+
+
 
   "& .guide-content p": {
     margin: "0 0 12px",
@@ -733,9 +733,9 @@ export const DetailSection = styled.section({
     color: "var(--text-primary)",
   },
 
-  /* =========================================
-     Tablet
-  ========================================= */
+  
+
+
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     padding: "70px 30px 0",
@@ -767,9 +767,9 @@ export const DetailSection = styled.section({
     },
   },
 
-  /* =========================================
-     Mobile
-  ========================================= */
+  
+
+
 
   "@media (max-width: 767px)": {
     padding: "50px 20px 0",
@@ -802,10 +802,10 @@ export const DetailSection = styled.section({
       width: "90px",
     },
 
-    /*
-     * 모바일 상세 이미지는 화면 폭을 그대로 사용하면서
-     * 너무 긴 경우 1200px 지점에서 접음
-     */
+    
+
+
+
     "& .detail-image-container": {
       maxWidth: "100%",
       maxHeight: "1200px",

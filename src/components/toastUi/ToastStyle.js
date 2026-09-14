@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 
 export const ToastContainer = styled.div(({ $success }) => ({
-  // =========================
-  // PC : 1024px 이상 (기본)
-  // =========================
+  
+  
+  
 
   position: "fixed",
   top: "24px",
@@ -33,9 +33,9 @@ export const ToastContainer = styled.div(({ $success }) => ({
 
   overflowWrap: "break-word",
 
-  // =========================
-  // Tablet : 768px ~ 1023px
-  // =========================
+  
+  
+  
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     top: "20px",
@@ -48,9 +48,9 @@ export const ToastContainer = styled.div(({ $success }) => ({
     fontSize: "15px",
   },
 
-  // =========================
-  // Mobile : 320px ~ 767px
-  // =========================
+  
+  
+  
 
   "@media (min-width: 320px) and (max-width: 767px)": {
     top: "16px",

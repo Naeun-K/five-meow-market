@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-/* 채팅 아이콘 + 툴팁 기준 영역 */
+
 export const TooltipWrapper = styled.div({
   position: "relative",
 
@@ -9,13 +9,13 @@ export const TooltipWrapper = styled.div({
   alignItems: "center",
 });
 
-/* 채팅 아이콘 */
+
 export const ChatIconStyle = styled.button({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
 
-  /* 기존 크기 유지 */
+  
   width: "80px",
   aspectRatio: "1 / 1",
 
@@ -51,25 +51,25 @@ export const ChatIconStyle = styled.button({
   "& svg": {
     display: "block",
 
-    /* 버튼 전체가 아니라 내부 아이콘 크기 */
+    
     width: "45%",
     height: "45%",
 
     overflow: "visible",
   },
 
-  /* 모바일 */
+  
   "@media (max-width: 767px)": {
     width: "50px",
   },
 
-  /* 태블릿 */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     width: "60px",
   },
 });
 
-/* 툴팁 */
+
 export const Tooltip = styled.div(({ $show }) => ({
   position: "absolute",
 

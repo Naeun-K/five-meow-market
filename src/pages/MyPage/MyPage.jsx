@@ -16,21 +16,21 @@ import {
   section,
   sectionTitle,
   orderCard,
-  // orderImage,
-  // orderInfo,
-  // orderName,
-  // productName,
-  // orderDate,
-  // orderNumber,
-  // orderStatus,
+  
+  
+  
+  
+  
+  
+  
   titleWrapper,
-  // quickMenu,
-  // quickCard,
+  
+  
   quickTitle,
   OrderCardWrapper,
-  // quickText,
-  // quickArrow,
-  // buttonStyle,
+  
+  
+  
   OrderCard,
 } from "./MyPageStyle";
 import BasicPage from "../basicPage/BasicPage";
@@ -67,10 +67,10 @@ function MyPage() {
   return (
     <BasicPage>
       <main css={page}>
-        {/* 페이지 제목 */}
+        
         <h1 css={pageTitle}>MY PAGE</h1>
 
-        {/* 회원 기본 영역 */}
+        
         <section css={userCard}>
           <div className="profile-wrapper">
             <div className="profile-svg">
@@ -111,7 +111,7 @@ function MyPage() {
           </button>
         </section>
 
-        {/* 마이페이지 요약 */}
+        
         <section css={summary}>
           <div css={summaryItem}>
             <button
@@ -202,7 +202,7 @@ function MyPage() {
           </div>
         </section>
 
-        {/* 최근 주문 */}
+        
         <section css={section}>
           <div css={titleWrapper}>
             <h2 css={sectionTitle}>주문 내역</h2>
@@ -352,7 +352,7 @@ function MyPage() {
             </OrderCardWrapper>
           </div>
         </section>
-        {/* 찜한 상품 */}
+        
         <section css={section}>
           <div css={titleWrapper}>
             <h2 css={sectionTitle}>찜한 상품</h2>

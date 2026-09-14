@@ -1,16 +1,16 @@
 import styled from "@emotion/styled";
 
-// export const Backdrop = styled.div({
-//   position: "fixed",
-//   inset: 0,
-//   zIndex: 1000,
 
-//   display: "flex",
-//   justifyContent: "center",
-//   alignItems: "flex-end",
 
-//   backgroundColor: "rgba(0, 0, 0, 0.4)",
-// });
+
+
+
+
+
+
+
+
+
 
 export const Backdrop = styled.div({
   position: "fixed",

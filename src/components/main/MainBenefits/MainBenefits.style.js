@@ -28,13 +28,13 @@ export const benefits = css({
   "@media (max-width: 767px)": {
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
     gap: "50px",
-    // padding: "30px",
+    
   },
 
   "@media (max-width: 450px)": {
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
     gap: "30px",
-    // padding: "30px",
+    
   },
 });
 
@@ -66,7 +66,7 @@ export const textBox = css({
   strong: {
     fontSize: "16px",
     fontWeight: 600,
-    // whiteSpace: "nowrap",
+    
     wordBreak: "keep-all",
   },
 

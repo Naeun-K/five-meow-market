@@ -48,7 +48,7 @@ export const PageTitleContainer = styled.div({
 export const CardContainer = styled.div({
   display: "grid",
   gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
-  // alignItems: "start",
+  
   alignItems: "start",
   alignContent: "start",
   gap: "150px 40px",
@@ -77,10 +77,10 @@ export const CardContainer = styled.div({
   },
 
   "@media (max-width:1290px)": {
-    // gap: "60px",
+    
     gridTemplateColumns: "repeat(3,  minmax(0, 1fr))",
   },
-  // "@media (max-width:1280px)": { gap: "60px" },
+  
   "@media (max-width:1030px)": {
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
   },
@@ -96,11 +96,11 @@ export const CardContainer = styled.div({
     },
   },
   "@media  (max-width:710px)": {
-    // gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    // gap: "50px",
-    // "& strong": {
-    //   fontSize: "16px",
-    // },
+    
+    
+    
+    
+    
   },
   "@media (min-width:320px) and (max-width:670px)": {
     gridTemplateColumns: "repeat(1, minmax(0, 1fr))",

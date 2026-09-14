@@ -5,7 +5,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
   return (
     <PaginationStyle aria-label="페이지네이션">
-      {/* 맨 처음 페이지 */}
+      
       <button
         type="button"
         disabled={currentPage === 1}
@@ -85,7 +85,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         </svg>
       </button>
 
-      {/* 맨 마지막 페이지 */}
+      
       <button
         type="button"
         disabled={currentPage === totalPages}

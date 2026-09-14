@@ -3,9 +3,9 @@ import { css } from "@emotion/react";
 export const categorySection = css({
   width: "100%",
 
-  // width: "calc(100% - 60px)",
-  // color: "#543B2A",
-  // padding: "24px 15px",
+  
+  
+  
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -14,7 +14,7 @@ export const categorySection = css({
   padding: "0 50px",
   h2: {
     color: "var( --text-primary)",
-    // margin: "0 0 24px",
+    
     textAlign: "center",
     fontSize: "28px",
     fontWeight: 600,
@@ -43,7 +43,7 @@ export const categorySection = css({
     },
   },
   "@media (max-width: 767px)": {
-    // display: "none",
+    
     padding: 0,
     h2: {
       fontSize: "20px",
@@ -80,20 +80,20 @@ export const titleWrapper = css({
   },
 });
 export const categoryList = css({
-  // display: "grid",
-  // gridTemplateColumns: "repeat(5, 1fr)",
+  
+  
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   gap: "40px",
 
   width: "100%",
-  // maxWidth: "1000px",
-  // margin: "0 auto",
+  
+  
 
   "@media (max-width: 1023px)": { gap: 0 },
   "@media (max-width: 767px)": {
-    // width: "100%",
+    
 
     justifyContent: "flex-start",
     gap: "20px",
@@ -116,7 +116,7 @@ export const categoryList = css({
 export const categoryItem = css({
   minWidth: "136px",
   width: "136px",
-  // aspectRatio: "68 / 123",
+  
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -137,9 +137,9 @@ export const categoryItem = css({
 
     gap: "10px",
 
-    // strong: {
-    //   fontSize: "11px",
-    // },
+    
+    
+    
   },
 });
 
@@ -157,8 +157,8 @@ export const imageBox = css({
 
   "&:hover": {
     transform: "translateY(-3px)",
-    backgroundColor: "#F2DFC6", // 🔴 ADD
-    borderColor: "#9A806B", // 🔴 ADD
+    backgroundColor: "#F2DFC6", 
+    borderColor: "#9A806B", 
     boxShadow: "0 5px 12px rgba(0, 0, 0, 0.2)",
   },
 
@@ -170,19 +170,19 @@ export const imageBox = css({
 
   "@media (max-width: 767px)": {
     width: "100%",
-    // height: "48px",
+    
     height: "auto",
     aspectRatio: "1/1",
   },
 });
 
 export const tags = css({
-  // marginTop: "3px",
+  
   display: "flex",
-  // flexDirection: "column",
+  
   minWidth: 0,
 
-  // display: "flex",
+  
   justifyContent: "center",
   alignItems: "center",
   flexWrap: "wrap",
@@ -205,9 +205,9 @@ export const tags = css({
     textOverflow: "ellipsis",
   },
 
-  // "@media (max-width: 767px)": {
-  //   span: {
-  //     fontSize: "8px",
-  //   },
-  // },
+  
+  
+  
+  
+  
 });

@@ -1,19 +1,19 @@
 import { css } from "@emotion/react";
 
 export const container = css({
-  // width: "calc(100% - 60px)",
+  
   width: "100%",
   maxWidth: "1300px",
-  // margin: "0 auto",
+  
   padding: "0 50px 60px",
 
   "@media (max-width: 1023px)": {
-    // width: "calc(100% - 40px)",
+    
     padding: "0px 30px 50px",
   },
 
   "@media (max-width: 767px)": {
-    // width: "calc(100% - 32px)",
+    
     padding: "0 20px  40px",
   },
 });
@@ -320,7 +320,7 @@ export const table = css({
     },
   },
 
-  /* 태블릿 */
+  
   "@media (max-width: 1023px)": {
     ".table-header, .table-row": {
       gridTemplateColumns: "55px 180px minmax(180px, 1fr) 110px 95px 45px",
@@ -363,7 +363,7 @@ export const table = css({
     },
   },
 
-  /* 모바일 */
+  
   "@media (max-width: 767px)": {
     ".table-header": {
       display: "none",

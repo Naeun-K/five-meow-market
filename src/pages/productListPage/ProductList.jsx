@@ -12,7 +12,7 @@ import {
 import useToast from "../../hooks/useToast";
 import { useProductLimit } from "../../hooks/useProductLimit";
 import { Link, useSearchParams } from "react-router-dom";
-// import {  useNavigate } from "react-router-dom";
+
 
 const categoryNames = {
   "cat-eat": "먹묘",
@@ -23,7 +23,7 @@ const categoryNames = {
 };
 
 export default function ProductList() {
-  // const { categoryId } = useParams();
+  
   const [searchParams] = useSearchParams();
   const { showToast } = useToast();
   const [products, setProducts] = useState([]);

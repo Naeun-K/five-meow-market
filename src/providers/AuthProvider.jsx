@@ -9,13 +9,13 @@ export default function AuthProvider({ children }) {
 
   const isLoggedIn = !!accessToken && !!user;
 
-  // 인증 상태 초기화
+  
   const clearAuth = () => {
     setAccessToken(null);
     setUser(null);
   };
 
-  // 로그인
+  
   const login = async (email, password) => {
     try {
       setIsAuthLoading(true);
@@ -35,11 +35,11 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  // access token 복구
+  
   useEffect(() => {
     const restoreAuth = async () => {
       try {
-        // Refresh 인증으로 새로운 Access Token 발급
+        
         const refreshResult = await authService.refreshAccessToken();
 
         if (!refreshResult.success) {
@@ -49,7 +49,7 @@ export default function AuthProvider({ children }) {
         }
         const newAccessToken = refreshResult.accessToken;
 
-        // 새 Access Token으로 현재 사용자 조회
+        
         const meResult = await authService.getMe(newAccessToken);
 
         if (!meResult.success) {
@@ -61,8 +61,8 @@ export default function AuthProvider({ children }) {
         setAccessToken(newAccessToken);
         setUser(meResult.user);
       } catch {
-        // Refresh Session이 없거나 만료된 경우
-        // 정상적인 비로그인 상태로 처리
+        
+        
         setAccessToken(null);
         setUser(null);
       } finally {
@@ -73,7 +73,7 @@ export default function AuthProvider({ children }) {
     restoreAuth();
   }, []);
 
-  // 로그아웃
+  
   const logout = async () => {
     try {
       setIsAuthLoading(true);

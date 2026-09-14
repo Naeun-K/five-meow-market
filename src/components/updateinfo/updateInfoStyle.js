@@ -275,7 +275,7 @@ export const UpdateStyle = styled.div({
     gap: "35px",
     "& .top-nav": {
       fontSize: "15px",
-      // marginTop: "90px",
+      
     },
 
     "& .svg-container": {

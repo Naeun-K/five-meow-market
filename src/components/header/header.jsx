@@ -9,7 +9,7 @@ import {
   Divider,
   MegaCol,
   ExtraHeading,
-  // CommunityLists,
+  
   MyShopGrid,
   MyShopButton,
   Backdrop,
@@ -68,7 +68,7 @@ const leftColumns = [
     ],
   },
 ];
-// const communityLeft = ["제품후기", "Q&A", "공지사항"];
+
 
 const mobileSections = [...leftColumns.filter((col) => col.title !== "REVIEW")];
 
@@ -106,10 +106,10 @@ function Header() {
 
   const isBestPage = pathname === "/products/best";
 
-  // /products?category=cat-play 등
+  
   const isCategoryPage = pathname === "/products" && Boolean(category);
 
-  // 쿼리스트링에 category가 없는 /products
+  
   const isAllProductsPage = pathname === "/products" && !category;
 
   const isCommunityPage =
@@ -219,7 +219,7 @@ function Header() {
     setIsSearchOpen(false);
   };
 
-  const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen); //추가 끝
+  const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen); 
 
   const handleMenuToggle = () => setIsMenuOpen((isOpen) => !isOpen);
 
@@ -238,7 +238,7 @@ function Header() {
     }
   };
 
-  //네비게이션 드롭다운 구현용 메뉴 데이터
+  
 
   const handleNavigate = (path) => {
     if (!path || path === "#") return;
@@ -292,7 +292,7 @@ function Header() {
             className="svg-container"
             onClick={handleMenuToggle}
           >
-            {/* 햄버거 아이콘 1개 / 4줄 */}
+            
             <svg
               width="100%"
               height="100%"
@@ -340,7 +340,7 @@ function Header() {
                         viewBox="0 0 40 40"
                         fill="none"
                       >
-                        {/* 바깥 원 */}
+                        
                         <circle
                           cx="20"
                           cy="20"
@@ -349,7 +349,7 @@ function Header() {
                           strokeWidth="1.5"
                         />
 
-                        {/* 고양이 얼굴 */}
+                        
                         <path
                           d="M10 20
        L10 12
@@ -367,14 +367,14 @@ function Header() {
                           strokeLinejoin="round"
                         />
 
-                        {/* 눈 */}
+                        
                         <circle cx="16" cy="23" r="1" fill="#614832" />
                         <circle cx="24" cy="23" r="1" fill="#614832" />
 
-                        {/* 코 */}
+                        
                         <circle cx="20" cy="26" r="0.8" fill="#614832" />
 
-                        {/* 입 */}
+                        
                         <path
                           d="M20 27
        C19 29 17.5 29 17 28
@@ -385,7 +385,7 @@ function Header() {
                           strokeLinecap="round"
                         />
 
-                        {/* 수염 */}
+                        
                         <path
                           d="M14 26L10 25
        M14 28L10 29
@@ -495,7 +495,7 @@ function Header() {
                       />
                     </div>
                   )}
-                  {/* 집사 PICK에만 SVG */}
+                  
                   {menu.label === "집사 PICK" && (
                     <span className="mobile-paw">
                       <PawIcon />
@@ -573,7 +573,7 @@ function Header() {
           </form>
         </div>
 
-        {/* 검색모달 */}
+        
         <div
           className={`search-backdrop${isSearchOpen ? " is-open" : ""}`}
           aria-hidden={!isSearchOpen}
@@ -647,7 +647,7 @@ function Header() {
           </div>
         </div>
 
-        {/* 여기서부터 모달 */}
+        
         <MegaMenuWrapper isOpen={isMenuOpen}>
           <MegaMenuCard>
             <CloseButton onClick={handleMenuClose} aria-label="메뉴 닫기">
@@ -718,28 +718,11 @@ function Header() {
                   </MegaCol>
                 ))}
 
-                {/* 
-              <MegaCol $title="COMMUNITY">
-                <h3>COMMUNITY</h3> */}
+                
 
-                {/* <CommunityLists>
-                  <ul>
-                    {communityLeft.map((item) => (
-                      <li key={item}>
-                        <button
-                          type="button"
-                          onClick={() => handleNavigate(item.path)}
-                        >
-                          {item.label}
-                        </button> */}
-                {/* <a href="#" onClick={handleMenuClose}>
-                          {item}
-                        </a> */}
-                {/* </li>
-                    ))}
-                  </ul>
-                </CommunityLists>
-              </MegaCol> */}
+                
+                
+                
               </LeftGroup>
 
               <Divider />
@@ -749,7 +732,7 @@ function Header() {
 
                 <MyShopGrid>
                   {!isLoggedIn ? (
-                    // 로그아웃 상태
+                    
 
                     <div className="myshop-guest">
                       <img
@@ -781,7 +764,7 @@ function Header() {
                       </div>
                     </div>
                   ) : (
-                    // 로그인 상태
+                    
                     <div className="myshop-user">
                       <div className="myshop-profile">
                         <div className="myshop-image-circle">

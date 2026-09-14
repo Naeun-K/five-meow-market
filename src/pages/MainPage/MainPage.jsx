@@ -1,6 +1,6 @@
 import BasicPage from "../basicPage/BasicPage";
-// import MainBanner from "../../components/main/MainBanner/MainBanner";
-// import mainBanner from "../../assets/main-meow-pick-banner.webp";
+
+
 import tabletMainBanner from "../../assets/tablet-meow-main-banner.webp";
 import wideMainBanner from "../../assets/wide-main-banner.webp";
 import MeowCategory from "../../components/main/MeowCategory/MeowCategory";
@@ -12,7 +12,7 @@ import {
   BannerContainer,
   BannerBackground,
 } from "./MainPageStyle";
-// import MainProduct from "../../components/main/MainProduct/MainProduct";
+
 import useToast from "../../hooks/useToast";
 import { useEffect, useState } from "react";
 import { getMainProducts } from "../../services/productServices";
@@ -73,7 +73,7 @@ export default function MainPage() {
       </BannerBackground>
       <MainPageSytle>
         <MeowCategory />
-        {/* 베스트 상품 */}
+        
         <CardContainer>
           <div className="labeling-wrapper">
             <div className="labeling">
@@ -149,7 +149,7 @@ export default function MainPage() {
             </svg>
           </button>
         </CardContainer>
-        {/* 신상품 */}
+        
         <CardContainer>
           <div className="labeling-wrapper">
             <div className="labeling">
@@ -226,7 +226,7 @@ export default function MainPage() {
             </svg>
           </button>
         </CardContainer>
-        {/* 베스트 리뷰 */}
+        
         <CardContainer>
           <div className="labeling-wrapper">
             <div className="labeling">

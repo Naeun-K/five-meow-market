@@ -1,23 +1,23 @@
 import { css } from "@emotion/react";
 
-/* BEST REVIEW 전체 */
+
 export const reviewGrid = css({
   width: "100%",
 
   display: "grid",
   gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-  // justifyContent: "center",
-  // alignItems: "center",
+  
+  
   justifyContent: "space-between",
   alignContent: "space-between",
   gap: "60px",
 
-  // padding: "0 30px",
+  
 
   "@media (max-width: 1023px)": {
     padding: "0 20px",
-    // columnGap: "20px",
-    // rowGap: "30px",
+    
+    
     gridTemplateColumns: "1fr",
   },
 
@@ -31,7 +31,7 @@ export const reviewGrid = css({
   },
 });
 
-/* 리뷰 카드 */
+
 export const reviewCard = css({
   width: "100%",
   height: "240px",
@@ -50,10 +50,10 @@ export const reviewCard = css({
   },
 });
 
-/* 상품 이미지 */
+
 export const productImage = css({
-  // width: "50%",
-  // height: "100%",
+  
+  
 
   flexShrink: 0,
   aspectRatio: "1 / 1",
@@ -70,7 +70,7 @@ export const productImage = css({
   },
 });
 
-/* 리뷰 내용 */
+
 export const reviewContent = css({
   width: "100%",
   minWidth: 0,
@@ -80,7 +80,7 @@ export const reviewContent = css({
 
   padding: "24px",
 
-  // boxSizing: "border-box",
+  
 
   "@media (max-width: 767px)": {
     width: "100%",
@@ -93,7 +93,7 @@ export const reviewContent = css({
   },
 });
 
-/* 상품명 */
+
 export const productName = css({
   margin: "0 0 12px",
 
@@ -108,7 +108,7 @@ export const productName = css({
   whiteSpace: "nowrap",
 });
 
-/* 리뷰 내용 */
+
 export const reviewText = css({
   margin: 0,
 
@@ -125,7 +125,7 @@ export const reviewText = css({
   overflow: "hidden",
 });
 
-/* 별점 영역 */
+
 export const ratingArea = css({
   marginTop: "auto",
 
@@ -135,7 +135,7 @@ export const ratingArea = css({
   gap: "5px",
 });
 
-/* 점수 + 문구 + 닉네임 */
+
 export const ratingTop = css({
   display: "flex",
   alignItems: "center",
@@ -159,7 +159,7 @@ export const ratingText = css({
   color: "var(--text-secondary)",
 });
 
-/* 별 5개 */
+
 export const starRating = css({
   display: "flex",
   alignItems: "center",
@@ -170,7 +170,7 @@ export const starRating = css({
   height: "16px",
 });
 
-/* 채워진 별 */
+
 export const star = css({
   width: "16px",
   height: "16px",
@@ -182,7 +182,7 @@ export const star = css({
   fill: "var(--text-primary)",
 });
 
-/* 빈 별 */
+
 export const emptyStar = css({
   width: "16px",
   height: "16px",

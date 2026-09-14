@@ -14,7 +14,7 @@ export const RelatedProductList = styled.div({
   },
   "@media (max-width: 400px)": {
     flexDirection: "column",
-    // justifyContent: "space-between",
+    
   },
 });
 
@@ -77,7 +77,7 @@ export const RelatedProductCard = styled.article({
     gap: "10px",
   },
 
-  /* Tablet */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     padding: "20px",
 
@@ -95,14 +95,14 @@ export const RelatedProductCard = styled.article({
     },
   },
 
-  /* Mobile */
+  
   "@media (max-width: 767px)": {
     flexDirection: "column",
     alignItems: "stretch",
 
     padding: "16px",
 
-    // maxWidth: "300px",
+    
     "& .product-info": {
       flex: "none",
 
@@ -142,12 +142,12 @@ export const ProductImageWrapper = styled.div({
     width: "100%",
   },
 
-  /* Tablet */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     width: "160px",
   },
 
-  /* Mobile */
+  
   "@media (max-width: 767px)": {
     width: "100%",
     maxWidth: "300px",
@@ -174,12 +174,12 @@ const buttonStyle = {
 
   transition: "background-color 0.2s ease, color 0.2s ease",
 
-  /* Tablet */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     fontSize: "17px",
   },
 
-  /* Mobile */
+  
   "@media (max-width: 767px)": {
     width: "100%",
     minWidth: 0,

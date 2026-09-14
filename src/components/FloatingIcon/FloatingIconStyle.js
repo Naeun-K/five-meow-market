@@ -20,7 +20,7 @@ export const FloatingIconStyle = styled.div(({ $isVisible }) => ({
 
   transition: "opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease",
 
-  /* 모바일 */
+  
   "@media (max-width: 767px)": {
     right: "20px",
     bottom: "20px",
@@ -28,7 +28,7 @@ export const FloatingIconStyle = styled.div(({ $isVisible }) => ({
     gap: "8px",
   },
 
-  /* 태블릿 */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     right: "30px",
     bottom: "30px",

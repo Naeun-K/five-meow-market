@@ -21,7 +21,7 @@ const CustomerContactPage = () => {
 
       <main className="customer-contact-page">
         <div className="customer-contact-container">
-          {/* 왼쪽 영역 */}
+          
           <section className="contact-heading">
             <p className="contact-label">CONTACT</p>
 
@@ -31,7 +31,7 @@ const CustomerContactPage = () => {
               있나요?
             </h1>
 
-            {/* 모바일에서는 제목 아래, PC·태블릿에서는 오른쪽 */}
+            
             <section className="contact-information">
               <a href="mailto:help@omyo-life.example" className="contact-email">
                 help@omyo-life.example
@@ -40,7 +40,7 @@ const CustomerContactPage = () => {
               <p className="contact-hours">평일 10:00 - 17:00</p>
             </section>
 
-            {/* 문의 버튼 */}
+            
             <div className="inquiry-button-wrapper">
               <div className="inquiry-cats" aria-hidden="true">
                 <img src={logoEat} alt="" />

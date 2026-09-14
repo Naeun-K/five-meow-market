@@ -6,7 +6,7 @@ export const WholeStyle = styled.div({
   width: "100%",
 });
 
-/* Footer 전체 */
+
 export const FooterWrapper = styled.footer`
   width: 100%;
   display: flex;
@@ -26,7 +26,7 @@ export const FooterWrapper = styled.footer`
   }
 `;
 
-/* Footer 내부 */
+
 export const FooterInner = styled.div({
   width: "100%",
 
@@ -35,16 +35,16 @@ export const FooterInner = styled.div({
   alignItems: "flex-start",
   gap: "10px",
 
-  // "@media (max-width: 1023px)": {
-  //   // maxWidth: "768px",
-  // },
+  
+  
+  
 
-  // " @media (max-width: 767px) ": {
-  //   maxWidth: "320px",
-  // },
+  
+  
+  
 });
 
-/* 상단 영역 */
+
 export const FooterMain = styled.div`
   width: 100%;
 
@@ -61,7 +61,7 @@ export const FooterMain = styled.div`
   }
 `;
 
-/* 로고 */
+
 
 export const FooterLogo = styled.div({
   width: "150px",
@@ -83,7 +83,7 @@ export const FooterLogo = styled.div({
   },
 });
 
-/* 오른쪽 영역 */
+
 export const FooterTop = styled.div`
   width: 326px;
 
@@ -100,7 +100,7 @@ export const FooterTop = styled.div`
   }
 `;
 
-/* 고양이 그래픽 */
+
 export const CatGraphic = styled.div`
   width: 54px;
 
@@ -115,7 +115,7 @@ export const CatGraphic = styled.div`
   }
 `;
 
-/* Footer 링크 */
+
 export const FooterLinks = styled.nav`
   width: 100%;
 
@@ -161,7 +161,7 @@ export const FooterLinks = styled.nav`
   }
 `;
 
-/* 구분선 */
+
 export const FooterLine = styled.div`
   width: 100%;
   height: 1px;
@@ -171,7 +171,7 @@ export const FooterLine = styled.div`
   flex-shrink: 0;
 `;
 
-/* Copyright */
+
 export const FooterCopyright = styled.p`
   width: 100%;
 

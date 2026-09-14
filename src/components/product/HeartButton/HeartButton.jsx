@@ -17,7 +17,7 @@ const HeartButton = () => {
       aria-label={isLiked ? "찜 해제" : "찜하기"}
     >
       {isLiked ? (
-        // 채워진 하트
+        
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"

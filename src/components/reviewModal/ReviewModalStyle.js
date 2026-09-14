@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-/* =========================
-   전체 모달 배경
-========================= */
+
+
+
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -20,9 +20,9 @@ export const ModalOverlay = styled.div`
   z-index: 999;
 `;
 
-/* =========================
-   모달
-========================= */
+
+
+
 
 export const Modal = styled.div`
   position: relative;
@@ -46,9 +46,9 @@ export const Modal = styled.div`
   }
 `;
 
-/* =========================
-   전체 내용
-========================= */
+
+
+
 
 export const ReviewContent = styled.div`
   display: flex;
@@ -65,9 +65,9 @@ export const ReviewContent = styled.div`
   }
 `;
 
-/* =========================
-   헤더
-========================= */
+
+
+
 
 export const ReviewHeader = styled.div`
   display: flex;
@@ -95,9 +95,9 @@ export const Title = styled.h2`
   }
 `;
 
-/* =========================
-   닫기 버튼
-========================= */
+
+
+
 
 export const CloseButton = styled.button`
   position: absolute;
@@ -129,13 +129,13 @@ export const CloseButton = styled.button`
     height: 100%;
   }
 
-  /* 태블릿 */
+  
   @media (min-width: 768px) and (max-width: 1023px) {
     top: 15px;
     right: 15px;
   }
 
-  /* 모바일 */
+  
   @media (max-width: 767px) {
     top: 20px;
     right: 20px;
@@ -145,9 +145,9 @@ export const CloseButton = styled.button`
   }
 `;
 
-/* =========================
-   상품 + 별점 영역
-========================= */
+
+
+
 
 export const ProductRatingWrap = styled.div`
   display: flex;
@@ -176,9 +176,9 @@ export const ProductRatingWrap = styled.div`
   }
 `;
 
-/* =========================
-   상품 정보
-========================= */
+
+
+
 
 export const ProductInfo = styled.div`
   display: flex;
@@ -219,9 +219,9 @@ export const ProductName = styled.p`
   }
 `;
 
-/* =========================
-   별점 영역
-========================= */
+
+
+
 
 export const RatingSection = styled.div`
   display: flex;
@@ -307,9 +307,9 @@ export const StarButton = styled.button`
   }
 `;
 
-/* =========================
-   리뷰 입력 영역
-========================= */
+
+
+
 
 export const ReviewInputSection = styled.div`
   display: flex;
@@ -371,9 +371,9 @@ export const ReviewTextarea = styled.textarea`
   }
 `;
 
-/* =========================
-   사진 첨부 버튼
-========================= */
+
+
+
 
 export const AttachmentButton = styled.button`
   display: flex;
@@ -415,9 +415,9 @@ export const AttachmentButton = styled.button`
   }
 `;
 
-/* =========================
-   하단 버튼 영역
-========================= */
+
+
+
 
 export const ActionButtons = styled.div`
   display: flex;

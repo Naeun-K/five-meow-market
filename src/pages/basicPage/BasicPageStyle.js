@@ -6,20 +6,20 @@ export const BasicPageStyle = styled.div({
   justifyContent: "space-between",
   alignItems: "center",
 
-  // gap: "80px",
+  
   gap: "80px",
 
-  // padding: "50px",
+  
 
   width: "100%",
 
   "@media  (max-width: 1023px)": {
-    // padding: "20px",
+    
     gap: "40px",
   },
   "@media (min-width: 320px) and (max-width: 767px)": {
-    // padding: "20px",
+    
     gap: "30px",
-    // gap: "0 40px 40px 40px",
+    
   },
 });

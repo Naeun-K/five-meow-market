@@ -7,7 +7,7 @@ const MainBenefits = () => {
     <div css={S.whole}>
       <section css={S.benefits}>
         <div css={S.benefitItem}>
-          {/* 무료배송 */}
+          
           <svg
             css={S.icon}
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@ const MainBenefits = () => {
         </div>
 
         <div css={S.benefitItem}>
-          {/* 교환 / 반품 */}
+          
           <svg
             css={S.icon}
             xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,7 @@ const MainBenefits = () => {
         </div>
 
         <div css={S.benefitItem}>
-          {/* 안전한 결제 */}
+          
           <svg
             css={S.icon}
             xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@ const MainBenefits = () => {
         </div>
 
         <div css={S.benefitItem}>
-          {/* 고객센터 */}
+          
           <svg
             css={S.icon}
             xmlns="http://www.w3.org/2000/svg"

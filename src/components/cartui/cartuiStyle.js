@@ -7,13 +7,13 @@ export const CartWrapper = styled.section`
   padding: 0 30px;
   box-sizing: border-box;
 
-  /* 모바일 */
+  
   @media (max-width: 767px) {
     padding: 0 20px;
   }
 `;
 
-/* 쇼핑 계속하기 */
+
 export const ContinueButton = styled.button`
   display: flex;
   align-items: center;
@@ -34,7 +34,7 @@ export const ContinueButton = styled.button`
   }
 `;
 
-/* 장바구니 제목 영역 */
+
 export const CartHeader = styled.div`
   display: flex;
   flex-direction: column;
@@ -68,7 +68,7 @@ export const CartSubtitle = styled.p`
   }
 `;
 
-/* 주문 요약 */
+
 export const OrderSummary = styled.section`
   box-sizing: border-box;
 
@@ -82,12 +82,12 @@ export const OrderSummary = styled.section`
 
   background: var(--bg-notice);
 
-  /* 태블릿 */
+  
   @media (min-width: 768px) and (max-width: 1023px) {
     margin: 50px 0;
   }
 
-  /* 모바일 */
+  
   @media (max-width: 767px) {
     flex-direction: column;
     align-items: stretch;
@@ -98,7 +98,7 @@ export const OrderSummary = styled.section`
   }
 `;
 
-/* 주문 정보 */
+
 export const SummaryInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -142,21 +142,21 @@ export const SummaryRow = styled.div`
   }
 `;
 
-/* 총 주문금액 + 주문하기 버튼 */
+
 export const TotalAndCheckout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 20px;
 
-  /* 태블릿, 데스크탑, 와이드에서 아래로 */
+  
   margin-top: 60px;
 
   @media (max-width: 767px) {
     width: 100%;
     align-items: stretch;
 
-    /* 모바일은 기존 위치 유지 */
+    
     margin-top: 0;
   }
 `;
