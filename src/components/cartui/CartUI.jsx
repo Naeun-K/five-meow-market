@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
-import * as S from "./CartUiStyle";
+import * as S from "./cartuiStyle";
 
 const CartUI = ({
   cartItems = [],
@@ -12,33 +12,25 @@ const CartUI = ({
 }) => {
   const navigate = useNavigate();
 
-  
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  
   const selectedCartItems = cartItems.filter((item) =>
     selectedItems.includes(item.cartItemId),
   );
 
-  
   const productPrice = selectedCartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
 
-  
-  
   const reward = 0;
 
-  
   const shippingFee = productPrice === 0 ? 0 : productPrice >= 70000 ? 0 : 3000;
 
-  
   const totalPrice = productPrice + shippingFee;
 
   return (
     <S.CartWrapper>
-      
       <S.ContinueButton type="button" onClick={() => navigate("/products")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -55,14 +47,12 @@ const CartUI = ({
         쇼핑 계속하기
       </S.ContinueButton>
 
-      
       <S.CartHeader>
         <S.CartTitle>장바구니</S.CartTitle>
 
         <S.CartSubtitle>{cartCount}개의 상품이 담겨져있습니다.</S.CartSubtitle>
       </S.CartHeader>
 
-      
       {cartItems.map((item) => (
         <CartItem
           key={item.cartItemId}
@@ -74,7 +64,6 @@ const CartUI = ({
         />
       ))}
 
-      
       <S.OrderSummary>
         <S.SummaryInfo>
           <S.SummaryTitle>주문 요약</S.SummaryTitle>
