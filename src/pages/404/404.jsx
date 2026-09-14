@@ -1,0 +1,66 @@
+import { useNavigate } from "react-router-dom";
+import errorImage from "../../assets/404img.webp";
+
+import catClean from "../../assets/logo-clean.webp";
+import catEat from "../../assets/logo-eat.webp";
+import catHigh from "../../assets/logo-high.webp";
+import catPlay from "../../assets/logo-play.webp";
+import catRest from "../../assets/logo-rest.webp";
+
+import * as S from "./404styles";
+
+function NotFound() {
+  const navigate = useNavigate();
+  return (
+    <S.NotFoundPage>
+      <S.NotFoundContent>
+        
+        <S.NotFoundNumber>404</S.NotFoundNumber>
+
+        
+        <S.NotFoundMain>
+          <S.NotFoundTitle>페이지를 찾을 수 없습니다</S.NotFoundTitle>
+
+          <S.NotFoundImage src={errorImage} alt="404 페이지" />
+
+          <S.NotFoundDescription>
+            요청하신 페이지가 존재하지 않거나
+            <br />
+            주소가 변경되었을 수도 있습니다.
+          </S.NotFoundDescription>
+        </S.NotFoundMain>
+
+        
+        <S.NotFoundBottom>
+          <S.NotFoundCats>
+            <S.CatClean>
+              <img src={catClean} alt="" />
+            </S.CatClean>
+
+            <S.CatEat>
+              <img src={catEat} alt="" />
+            </S.CatEat>
+
+            <S.CatHigh>
+              <img src={catHigh} alt="" />
+            </S.CatHigh>
+
+            <S.CatPlay>
+              <img src={catPlay} alt="" />
+            </S.CatPlay>
+
+            <S.CatRest>
+              <img src={catRest} alt="" />
+            </S.CatRest>
+          </S.NotFoundCats>
+
+          <S.NotFoundButton type="button" onClick={() => navigate("/")}>
+            홈으로 돌아가기
+          </S.NotFoundButton>
+        </S.NotFoundBottom>
+      </S.NotFoundContent>
+    </S.NotFoundPage>
+  );
+}
+
+export default NotFound;

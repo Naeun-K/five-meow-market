@@ -1,0 +1,368 @@
+import { useState } from "react";
+import { verifyPhone } from "../../services/authService";
+import { searchAddress } from "../../services/addressService";
+import useToast from "../../hooks/useToast";
+import { UpdateStyle } from "./updateInfoStyle";
+import PawIcon from "../common/PawIcon/PawIcon";
+import useAuth from "../../hooks/useAuth";
+import { updateUser } from "../../services/userService";
+import { useNavigate } from "react-router-dom";
+
+const UpdateInfo = () => {
+  const { user } = useAuth();
+
+  const nickname =
+    user?.nickname || user?.nickName || user?.username || user?.name || "회원";
+  const email = user?.email ?? "";
+
+  
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
+  
+  const [phone, setPhone] = useState("");
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const { showToast } = useToast();
+  const navigate = useNavigate();
+
+  
+  const [zoneCode, setZoneCode] = useState("");
+  const [address, setAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
+
+  
+  const handleVerifyPhone = async () => {
+    const raw = phone.replace(/\D/g, "");
+
+    if (!raw) {
+      showToast("휴대폰번호를 입력해주세요.", false);
+      return;
+    }
+
+    if (!/^01[016789]\d{8}$/.test(raw)) {
+      showToast("올바른 휴대폰번호를 입력해주세요.", false);
+      return;
+    }
+
+    try {
+      const result = await verifyPhone(raw);
+      setIsPhoneVerified(result.success);
+      showToast(result.message, result.success);
+    } catch (error) {
+      console.error(error.message);
+      showToast(
+        "휴대폰 인증 처리 중 오류가 발생했습니다. 다시 시도해주세요",
+        false,
+      );
+    }
+  };
+
+  
+  const formatPhoneNumber = (value) => {
+    
+    const numbers = value.replace(/\D/g, "").slice(0, 11);
+
+    if (numbers.length <= 3) {
+      return numbers;
+    }
+
+    if (numbers.length <= 7) {
+      return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    }
+
+    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7)}`;
+  };
+  
+  const handleSearchAddress = async () => {
+    try {
+      const result = await searchAddress();
+
+      console.log("주소 검색 결과:", result);
+
+      setZoneCode(result.zoneCode);
+      setAddress(result.address);
+    } catch (error) {
+      console.error("주소 검색 실패:", error);
+
+      showToast("주소 검색에 실패했습니다. 다시 시도해주세요.", false);
+    }
+  };
+
+  
+  const isValidPassword = (password) => {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    
+    if (password && !isValidPassword(password)) {
+      showToast(
+        "비밀번호는 8자 이상이며 영문 대/소문자와 숫자를 포함해야 합니다.",
+        false,
+      );
+      return;
+    }
+    
+    if (password !== passwordConfirm) {
+      showToast("새 비밀번호가 일치하지 않습니다.", false);
+      return;
+    }
+    const rawPhone = phone.replace(/\D/g, "");
+
+    if (rawPhone && !isPhoneVerified) {
+      showToast("휴대폰 인증을 완료해주세요.", false);
+      return;
+    }
+
+    const updateData = {};
+    
+    if (password) {
+      updateData.newPassword = password;
+    }
+
+    if (rawPhone) {
+      updateData.phone = rawPhone;
+    }
+
+    if (zoneCode && address) {
+      updateData.zipcode = zoneCode;
+      updateData.address = address;
+      updateData.detailAddress = detailAddress.trim();
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      showToast("수정할 정보를 입력해주세요.", false);
+      return;
+    }
+
+    try {
+      const result = await updateUser(updateData);
+
+      console.log("회원정보 수정 결과:", result);
+
+      if (!result.success) {
+        showToast(result.message || "회원정보 수정에 실패했습니다.", false);
+        return;
+      }
+
+      showToast(result.message || "회원정보가 수정되었습니다.", true);
+
+      
+      setPassword("");
+      setPasswordConfirm("");
+      setPhone("");
+      setIsPhoneVerified(false);
+      setZoneCode("");
+      setAddress("");
+      setDetailAddress("");
+
+      navigate("/mypage");
+    } catch (error) {
+      console.error("회원정보 수정 실패:", error);
+
+      showToast(error.message || "회원정보 수정에 실패했습니다.", false);
+    }
+  };
+
+  return (
+    <UpdateStyle>
+      <nav className="top-nav">
+        <span>회원정보를 삭제하시겠습니다?</span>
+        <button>회원탈퇴</button>
+      </nav>
+      <header className="header">
+        <h1>Update Info</h1>
+        <div className="header-wrapper">
+          <p>집사가 변했어</p>
+          <span className="svg-container">
+            <PawIcon />
+          </span>
+        </div>
+      </header>
+
+      <div className="main">
+        <div className="info-container">
+          <span>닉네임</span>
+          <p>{nickname}</p>
+        </div>
+
+        <div className="info-container">
+          <span>이메일</span>
+          <p>{email}</p>
+        </div>
+
+        <form className="form-style" onSubmit={handleSubmit}>
+          <div className="input-container mobile-input-container">
+            <div className="label-guide-container">
+              <label>새 비밀번호</label>
+
+              <p
+                className={`password-guide ${
+                  !password
+                    ? "guide-hidden"
+                    : isValidPassword(password)
+                      ? "password-check"
+                      : "password-error"
+                }`}
+              >
+                {isValidPassword(password)
+                  ? "사용 가능한 비밀번호입니다."
+                  : "새 비밀번호는 영문, 숫자, 대문자를 포함해야 합니다."}
+              </p>
+            </div>
+            <div className="password-container">
+              <input
+                className="password-input"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="새 비밀번호를 입력해주세요."
+              />
+
+              <span
+                className={`svg-container show-password ${showPassword ? `${showPassword}  active` : showPassword}`}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    height="100%"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    height="100%"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z" />
+                    <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829" />
+                    <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z" />
+                  </svg>
+                )}
+              </span>
+            </div>
+          </div>
+          <div className="input-container  mobile-input-container">
+            <div className="label-guide-container">
+              <label>새 비밀번호 확인</label>
+
+              <p
+                className={`password-guide ${
+                  !passwordConfirm
+                    ? "guide-hidden"
+                    : password === passwordConfirm
+                      ? "password-check"
+                      : "password-error"
+                }`}
+              >
+                {passwordConfirm
+                  ? password !== passwordConfirm
+                    ? "비밀번호가 일치하지 않습니다."
+                    : "비밀번호가 일치합니다."
+                  : ""}
+              </p>
+            </div>
+
+            <div className="password-container">
+              <input
+                className="password-input"
+                type={showPasswordConfirm ? "text" : "password"}
+                value={passwordConfirm}
+                onChange={(event) => setPasswordConfirm(event.target.value)}
+                placeholder="새 비밀번호를 다시 입력해주세요."
+              />
+              <span
+                className={`svg-container showPasswordConfirm ${showPasswordConfirm ? `${showPasswordConfirm} active` : showPasswordConfirm}`}
+                onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}
+              >
+                {showPasswordConfirm ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    height="100%"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    height="100%"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7 7 0 0 0-2.79.588l.77.771A6 6 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755q-.247.248-.517.486z" />
+                    <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829" />
+                    <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z" />
+                  </svg>
+                )}
+              </span>
+            </div>
+          </div>
+          <div className="input-container">
+            <label>휴대폰 번호</label>
+            <div className="phone-container">
+              <input
+                type="tel"
+                placeholder="휴대폰번호를 입력해주세요"
+                value={phone}
+                maxLength={13}
+                onChange={(event) => {
+                  setPhone(formatPhoneNumber(event.target.value));
+                  setIsPhoneVerified(false);
+                }}
+              />
+
+              <button type="button" onClick={handleVerifyPhone}>
+                본인인증
+              </button>
+            </div>
+          </div>
+          <div className="input-container">
+            <label>주소</label>
+
+            <div className="zip-container">
+              <input
+                type="text"
+                value={zoneCode}
+                readOnly
+                placeholder="우편번호"
+              />
+              <button type="button" onClick={handleSearchAddress}>
+                우편번호 검색
+              </button>
+            </div>
+
+            <input type="text" value={address} readOnly placeholder="주소" />
+            <input
+              type="text"
+              value={detailAddress}
+              onChange={(event) => setDetailAddress(event.target.value)}
+              placeholder="상세 주소를 입력해주세요.   "
+            />
+          </div>
+
+          <button type="submit">회원정보수정</button>
+        </form>
+      </div>
+    </UpdateStyle>
+  );
+};
+
+export default UpdateInfo;

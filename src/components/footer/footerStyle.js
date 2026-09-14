@@ -1,0 +1,188 @@
+import styled from "@emotion/styled";
+export const WholeStyle = styled.div({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+});
+
+
+export const FooterWrapper = styled.footer`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding: 50px;
+
+  max-width: 1300px;
+
+  @media (max-width: 1023px) {
+    padding: 30px;
+  }
+  @media (min-width: 320px) and (max-width: 767px) {
+    justify-content: center;
+    padding: 20px;
+  }
+`;
+
+
+export const FooterInner = styled.div({
+  width: "100%",
+
+  display: " flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "10px",
+
+  
+  
+  
+
+  
+  
+  
+});
+
+
+export const FooterMain = styled.div`
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+  }
+`;
+
+
+
+export const FooterLogo = styled.div({
+  width: "150px",
+
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
+  "&, & *": {
+    cursor: "default",
+  },
+
+  "@media (max-width: 1023px)": {
+    width: "140px",
+  },
+
+  " @media (max-width: 767px)": {
+    width: " 132px",
+  },
+});
+
+
+export const FooterTop = styled.div`
+  width: 326px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 8px;
+
+  @media (max-width: 767px) {
+    width: 228px;
+
+    justify-content: center;
+  }
+`;
+
+
+export const CatGraphic = styled.div`
+  width: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
+
+
+export const FooterLinks = styled.nav`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 16px;
+
+  button {
+    color: var(--text-secondary);
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  .desktop-text {
+    display: inline;
+  }
+
+  .mobile-text {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+
+    justify-content: center;
+    font-size: 15px;
+    gap: 10px 16px;
+
+    button {
+      font-size: 14px;
+    }
+  }
+  @media (max-width: 374px) {
+    .desktop-text {
+      display: none;
+    }
+
+    .mobile-text {
+      display: inline;
+    }
+  }
+`;
+
+
+export const FooterLine = styled.div`
+  width: 100%;
+  height: 1px;
+
+  background: var(--border);
+
+  flex-shrink: 0;
+`;
+
+
+export const FooterCopyright = styled.p`
+  width: 100%;
+
+  color: var(--text-secondary);
+
+  font-size: 16px;
+
+  @media (max-width: 767px) {
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: center;
+    word-break: keep-all;
+  }
+`;

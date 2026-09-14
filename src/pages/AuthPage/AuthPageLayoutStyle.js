@@ -1,0 +1,60 @@
+import styled from "@emotion/styled";
+export const AuthBackgroundStyle = styled.div({
+  width: "100%",
+  minHeight: "100vh",
+
+  background: "linear-gradient(to right, #F7F1E6 0 50%, var(--bg) 50% 100%)",
+
+  "@media (max-width:767px)": {
+    background: "var(--bg)",
+  },
+});
+
+export const AuthPageLayoutStyle = styled.div({
+  display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+
+  width: "100%",
+  minHeight: "100vh",
+  maxWidth: "1300px",
+  margin: "0 auto",
+
+  "& .brand-part": {
+    display: "flex",
+
+    width: "100%",
+    minWidth: 0,
+  },
+
+  "& .form-part": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    width: "100%",
+    minWidth: 0,
+
+    padding: "50px",
+  },
+
+  
+  "@media (min-width: 768px) and (max-width: 1024px)": {
+    "& .form-part": {
+      padding: "30px",
+    },
+  },
+
+  
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    gridTemplateColumns: "1fr",
+
+    "& .brand-part": {
+      width: "100%",
+    },
+
+    "& .form-part": {
+      width: "100%",
+      padding: "20px",
+    },
+  },
+});

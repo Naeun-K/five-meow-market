@@ -1,0 +1,511 @@
+import styled from "@emotion/styled";
+
+export const SignupLayout = styled.div({
+  display: "flex",
+  justifyContent: "center",
+
+  width: "100%",
+});
+
+export const SignupContainer = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "14px",
+
+  width: "100%",
+
+  "& h1": {
+    color: "var(--text-color)",
+
+    fontSize: "40px",
+    fontWeight: 600,
+  },
+
+  "& .subtitle": {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+
+    color: "var(--text-color)",
+
+    fontSize: "20px",
+  },
+
+  "& .paw-container": {
+    width: "24px",
+    height: "24px",
+
+    color: "var(--acent-beidge)",
+
+    flexShrink: 0,
+  },
+
+  "& form": {
+    display: "flex",
+    flexDirection: "column",
+    gap: "15px",
+
+    width: "100%",
+  },
+
+  "& label": {
+    color: "var(--text-color)",
+
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "17px",
+    fontWeight: 500,
+  },
+
+  '& input:not([type="checkbox"])': {
+    width: "100%",
+    height: "46px",
+
+    padding: "12px 10px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+
+    border: "1px solid var(--border)",
+    borderRadius: "var(--radius-md)",
+
+    backgroundColor: "#fff",
+    color: "var(--text-color)",
+
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "17px",
+    fontWeight: 500,
+
+    "&::placeholder": {
+      color: "var(--text-secondary)",
+
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
+
+    "&:hover": {
+      borderColor: "#bb9678",
+    },
+
+    "&:focus": {
+      borderColor: "#8a664a",
+
+      boxShadow:
+        "0 0 0 2px rgba(201, 143, 120, 0.22), 0 0 0 4px rgba(217, 184, 166, 0.12)",
+    },
+  },
+
+  "& .password-input": {
+    position: "relative",
+
+    width: "100%",
+
+    "& input": {
+      paddingRight: "50px",
+    },
+  },
+
+  "& .eye-button": {
+    position: "absolute",
+
+    top: "50%",
+    right: "12px",
+
+    transform: "translateY(-50%)",
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    width: "32px",
+    height: "32px",
+
+    padding: 0,
+
+    border: "none",
+    borderRadius: "50%",
+
+    backgroundColor: "transparent",
+    color: "var(--text-secondary)",
+
+    cursor: "pointer",
+
+    zIndex: 2,
+
+    transition: "color 0.2s ease",
+
+    "&:hover": {
+      color: "#000",
+      backgroundColor: "transparent",
+    },
+
+    "&.active": {
+      color: "#000",
+      backgroundColor: "transparent",
+    },
+  },
+
+  "& .eye-icon": {
+    display: "block",
+
+    width: "16px",
+    height: "16px",
+
+    color: "currentColor",
+
+    pointerEvents: "none",
+  },
+
+  "@media (min-width: 768px) and (max-width: 1024px)": {
+    width: "100%",
+
+    gap: "10px",
+
+    "& h1": {
+      fontSize: "28px",
+    },
+
+    "& .subtitle": {
+      gap: "10px",
+
+      fontSize: "16px",
+    },
+
+    "& .paw-icon": {
+      width: "20px",
+      height: "20px",
+    },
+
+    "& form": {
+      gap: "10px",
+    },
+
+    "& label": {
+      fontSize: "14px",
+    },
+    "& .signup-button": {
+      height: "41px",
+      fontSize: "14px",
+    },
+
+    "& .login-area": {
+      marginTop: "20px",
+      gap: "10px",
+      fontSize: "13px",
+    },
+    "& span": {
+      fontSize: "14px",
+    },
+    '& input:not([type="checkbox"])': {
+      height: "42px",
+
+      padding: "8px 10px",
+
+      fontSize: "14px",
+    },
+
+    "& .eye-icon": {
+      width: "16px",
+      height: "16px",
+    },
+  },
+
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    width: "100%",
+    maxWidth: "320px",
+
+    padding: "20px",
+
+    gap: "15px",
+
+    "& h1": {
+      fontSize: "24px",
+    },
+
+    "& .subtitle": {
+      gap: "10px",
+
+      fontSize: "16px",
+    },
+
+    "& .paw-icon": {
+      width: "20px",
+      height: "20px",
+    },
+
+    "& form": {
+      gap: "15px",
+    },
+
+    "& label": {
+      fontSize: "12px",
+    },
+
+    '& input:not([type="checkbox"])': {
+      height: "33px",
+
+      padding: "8px 10px",
+
+      fontSize: "12px",
+    },
+
+    "& button": {
+      height: "33px",
+
+      padding: "8px 10px",
+
+      fontSize: "12px",
+    },
+
+    '& input[type="checkbox"]': {
+      width: "14px",
+      height: "16px",
+
+      flexShrink: 0,
+    },
+
+    "& span": {
+      fontSize: "15px",
+      whiteSpace: "nowrap",
+    },
+
+    "& .signup-button": {
+      width: "100%",
+      height: "35px",
+
+      margin: "0 auto",
+      padding: 0,
+
+      fontSize: "16px",
+    },
+
+    "& .eye-button": {
+      width: "28px",
+      height: "28px",
+
+      right: "8px",
+
+      padding: 0,
+    },
+
+    "& .eye-icon": {
+      width: "14px",
+      height: "14px",
+    },
+  },
+});
+
+export const FormGroup = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+
+  width: "100%",
+
+  "& .label-guide-container": {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "30px",
+    "& label": {
+      flexShrink: 0,
+      whiteSpace: "nowrap",
+    },
+
+    "& .password-guide": {
+      minWidth: 0,
+      height: "20px",
+      lineHeight: "20px",
+
+      flexShrink: 0,
+    },
+    "& .guide-hidden": {
+      visibility: "hidden",
+    },
+
+    "& .password-error-input": {
+      borderColor: "#eb2d2d",
+    },
+
+    "& .password-error": {
+      fontSize: "16px",
+      color: "var(--acent-error)",
+    },
+    "& .password-check": {
+      color: "#2E7D32",
+      fontSize: "16px",
+    },
+  },
+
+  "@media (max-width:1023px)": {
+    "& .label-guide-container": {
+      gap: "15px",
+      "& .password-error": {
+        fontSize: "13.5px",
+      },
+      "& .password-check": {
+        fontSize: "13.5px",
+      },
+    },
+  },
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    display: "flex",
+    flexDirection: "column",
+
+    "& .label-guide-container": {
+      display: "contents",
+      "& .password-guide": {
+        order: 3,
+      },
+      "& .password-error": {
+        fontSize: "12px",
+      },
+      "& .password-check": {
+        fontSize: "12px",
+      },
+      "& label": {
+        order: 1,
+      },
+    },
+
+    "& .password-input": {
+      order: 2,
+    },
+  },
+});
+
+export const Row = styled.div({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+
+  width: "100%",
+
+  "& input": {
+    flex: 1,
+    minWidth: 0,
+  },
+
+  "& button": {
+    flexShrink: 0,
+
+    height: "42px",
+
+    padding: "8px 10px",
+
+    borderRadius: "var(--radius-md)",
+
+    backgroundColor: "var(--acent-beidge)",
+    color: "var(--text-primary)",
+
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "15px",
+    fontWeight: 500,
+  },
+
+  "@media (max-width: 1023px)": {
+    "& button": {
+      height: "fit-content",
+    },
+  },
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    "& button": {
+      height: "33px",
+
+      padding: "8px 10px",
+
+      fontSize: "12px",
+    },
+  },
+});
+
+export const Agreement = styled.div({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+
+  width: "100%",
+
+  "& input": {
+    width: "14px",
+    height: "16px",
+
+    flexShrink: 0,
+  },
+
+  "& span": {
+    fontSize: "16px",
+  },
+
+  "& strong": {
+    color: "var(--text-primary)",
+
+    fontWeight: 600,
+  },
+
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    "& span": {
+      fontSize: "12px",
+      whiteSpace: "normal",
+    },
+  },
+});
+
+export const BottomArea = styled.div({
+  width: "100%",
+
+  "& .signup-button": {
+    width: "100%",
+    height: "52px",
+
+    borderRadius: "var(--radius-md)",
+
+    backgroundColor: "var(--bg-button)",
+    color: "var(--text-button)",
+
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "17px",
+    fontWeight: 600,
+  },
+
+  "& .login-area": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "15px",
+
+    marginTop: "20px",
+
+    color: "var(--text-secondary)",
+
+    fontFamily: '"Pretendard", sans-serif',
+    fontSize: "16px",
+
+    "& a": {
+      color: "var(--text-primary)",
+
+      fontWeight: 500,
+
+      textDecoration: "underline",
+      textUnderlineOffset: "6px",
+    },
+  },
+
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    "& .signup-button": {
+      width: "100%",
+      height: "35px",
+
+      fontSize: "16px",
+    },
+
+    "& .login-area": {
+      marginTop: "15px",
+
+      gap: "10px",
+
+      fontSize: "12px",
+    },
+  },
+});
