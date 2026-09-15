@@ -3,33 +3,183 @@ import styled from "@emotion/styled";
 const TABLET = "@media (max-width: 1023px)";
 const MOBILE = "@media (max-width: 767px)";
 
+export const EmptyOrderStyle = styled.div({
+  width: "100%",
+  maxWidth: "1300px",
+  minHeight: "680px",
 
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
 
+  gap: "44px",
 
+  padding: "60px 50px",
+
+  textAlign: "center",
+
+  "& .empty-image-container": {
+    width: "220px",
+    height: "220px",
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  "& .empty-image": {
+    display: "block",
+
+    width: "100%",
+    height: "100%",
+
+    objectFit: "contain",
+  },
+
+  "& .empty-text-container": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+
+    gap: "16px",
+
+    "& strong": {
+      fontSize: "30px",
+      fontWeight: 700,
+      lineHeight: 1.4,
+
+      color: "var(--text-primary)",
+    },
+
+    "& p": {
+      fontSize: "18px",
+      fontWeight: 400,
+      lineHeight: 1.7,
+
+      color: "var(--text-secondary)",
+    },
+  },
+
+  "& > button": {
+    // width: "260px",
+    width: "340px",
+    height: "60px",
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    padding: 0,
+
+    border: "none",
+    borderRadius: "30px",
+
+    backgroundColor: "#ebccb2",
+    color: "var(--text-primary)",
+
+    fontSize: "18px",
+    fontWeight: 600,
+
+    cursor: "pointer",
+
+    transition: "background-color 0.2s ease, color 0.2s ease",
+
+    "&:hover": {
+      backgroundColor: "#4F3927",
+      color: "#fff",
+    },
+  },
+
+  /* 태블릿 */
+  "@media (min-width: 768px) and (max-width: 1023px)": {
+    minHeight: "620px",
+
+    gap: "38px",
+
+    padding: "50px 30px",
+
+    "& .empty-image-container": {
+      width: "180px",
+      height: "180px",
+    },
+
+    "& .empty-text-container": {
+      gap: "14px",
+
+      "& strong": {
+        fontSize: "26px",
+      },
+
+      "& p": {
+        fontSize: "17px",
+      },
+    },
+
+    "& > button": {
+      width: "300px",
+      // width: "240px",
+      height: "56px",
+
+      fontSize: "17px",
+    },
+  },
+
+  /* 모바일 */
+  "@media (max-width: 767px)": {
+    minHeight: "520px",
+
+    gap: "32px",
+
+    padding: "40px 20px",
+
+    "& .empty-image-container": {
+      width: "140px",
+      height: "140px",
+    },
+
+    "& .empty-text-container": {
+      gap: "12px",
+
+      "& strong": {
+        fontSize: "22px",
+      },
+
+      "& p": {
+        fontSize: "16px",
+        lineHeight: 1.6,
+      },
+    },
+
+    "& > button": {
+      // width: "220px",
+      width: "260px",
+      height: "52px",
+
+      fontSize: "16px",
+    },
+  },
+});
 
 export const Page = styled.div({
   maxWidth: 1300,
-  
+
   padding: "0 50px 60px",
   color: "var(--text-color)",
   width: "100%",
 
   [TABLET]: {
-    
     padding: "0 30px 50px",
   },
 
   [MOBILE]: {
-    
     padding: "16px 20px 40px",
   },
 });
 
-
-
-
-
 export const Header = styled.header({
+  // alignSelf: "flex-start",
+
   marginBottom: 20,
 
   [TABLET]: {
@@ -42,37 +192,33 @@ export const Header = styled.header({
 });
 
 export const Title = styled.h1({
-  fontSize: 24,
+  fontSize: 44,
   fontWeight: 700,
 
   [TABLET]: {
-    fontSize: "22px",
+    fontSize: "36px",
   },
 
   [MOBILE]: {
-    fontSize: 20,
+    fontSize: 28,
   },
 });
 
 export const Subtitle = styled.p({
   margin: "6px 0 0",
 
-  fontSize: 18,
+  fontSize: 22,
   color: "#6E6860",
 
   [TABLET]: {
-    fontSize: "16px",
+    fontSize: "20px",
   },
 
   [MOBILE]: {
     marginTop: 4,
-    fontSize: "15px",
+    fontSize: "18px",
   },
 });
-
-
-
-
 
 export const SearchBar = styled.div({
   display: "flex",
@@ -157,10 +303,6 @@ export const SearchIconButton = styled.button({
   cursor: "pointer",
 });
 
-
-
-
-
 export const TabList = styled.div({
   display: "flex",
   flexWrap: "wrap",
@@ -205,10 +347,6 @@ export const TabButton = styled.button(({ isActive }) => ({
   },
 }));
 
-
-
-
-
 export const OrderList = styled.div({
   display: "flex",
   flexDirection: "column",
@@ -222,10 +360,6 @@ export const OrderList = styled.div({
     gap: 8,
   },
 });
-
-
-
-
 
 export const OrderCard = styled.div({
   display: "flex",
@@ -247,10 +381,6 @@ export const OrderCard = styled.div({
     padding: "12px 14px",
   },
 });
-
-
-
-
 
 export const Thumb = styled.div({
   flexShrink: 0,
@@ -297,10 +427,6 @@ export const ThumbIconWrap = styled.div({
   },
 });
 
-
-
-
-
 export const OrderInfo = styled.div({
   flex: 1,
   minWidth: 0,
@@ -317,8 +443,6 @@ export const OrderInfo = styled.div({
     gap: 2,
   },
 });
-
-
 
 export const OrderHeader = styled.div({
   display: "flex",
@@ -446,10 +570,6 @@ export const StatusBadge = styled.span(({ variant }) => {
   };
 });
 
-
-
-
-
 export const MetaList = styled.div({
   display: "flex",
   alignItems: "center",
@@ -496,10 +616,6 @@ export const MetaDivider = styled.span({
   },
 });
 
-
-
-
-
 export const OrderSummaryRow = styled.div({
   display: "flex",
   alignItems: "baseline",
@@ -541,10 +657,6 @@ export const OrderTotal = styled.span({
     fontSize: 13,
   },
 });
-
-
-
-
 
 export const DetailButton = styled.button({
   flexShrink: 0,
@@ -649,10 +761,6 @@ export const DetailArrow = styled.span({
   },
 });
 
-
-
-
-
 export const LoadMoreWrap = styled.div({
   display: "flex",
   justifyContent: "center",
@@ -672,10 +780,8 @@ export const LoadMoreButton = styled.button({
   alignItems: "center",
   justifyContent: "center",
 
-  
   whiteSpace: "nowrap",
 
-  
   width: "auto",
   minWidth: "auto",
   flexShrink: 0,
@@ -723,7 +829,6 @@ export const LoadMoreButton = styled.button({
     padding: "8px 16px",
     gap: 8,
 
-    
     whiteSpace: "nowrap",
 
     "& svg": {
