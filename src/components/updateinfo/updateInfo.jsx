@@ -184,7 +184,7 @@ const UpdateInfo = () => {
   return (
     <UpdateStyle>
       <nav className="top-nav">
-        <span>회원정보를 삭제하시겠습니다?</span>
+        <span>회원정보를 삭제하시겠습니까?</span>
         <button type="button" onClick={() => setIsPasswordModalOpen(true)}>
           회원탈퇴
         </button>

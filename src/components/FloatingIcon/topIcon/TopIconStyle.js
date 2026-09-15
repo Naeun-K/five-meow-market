@@ -5,7 +5,7 @@ export const TopIconStyle = styled.button({
   justifyContent: "center",
   alignItems: "center",
 
-  width: "80px",
+  width: "55px",
   aspectRatio: "1 / 1",
 
   flexShrink: 0,
@@ -43,14 +43,11 @@ export const TopIconStyle = styled.button({
     width: "45%",
     height: "45%",
   },
+  // "@media (max-width: 767px)": {
+  //   width: "40px",
+  // },
 
-  
-  "@media (max-width: 767px)": {
+  "@media  (max-width: 1023px)": {
     width: "50px",
-  },
-
-  
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    width: "60px",
   },
 });
