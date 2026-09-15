@@ -13,11 +13,10 @@ const HeartButton = () => {
     <button
       type="button"
       css={S.heartButton(isLiked)}
-      onClick={() => setIsLiked(!isLiked)}
+      onClick={handleClick}
       aria-label={isLiked ? "찜 해제" : "찜하기"}
     >
       {isLiked ? (
-        
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"

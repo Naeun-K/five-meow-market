@@ -206,6 +206,7 @@ export default function DetailProduct() {
               name={product.name}
               badge=""
               showHeart
+              hover={false}
             />
           </PhotoWrapper>
           <DescWrapper>
