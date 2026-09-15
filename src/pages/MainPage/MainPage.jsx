@@ -63,19 +63,19 @@ export default function MainPage() {
           <source
             media="(max-width: 767px)"
             srcSet={mobileMainBanner}
-            fetchpriority="high"
+            fetchPriority="high"
           />
 
           <source
             media="(max-width: 1023px)"
             srcSet={tabletMainBanner}
-            fetchpriority="high"
+            fetchPriority="high"
           />
 
           <img
             src={wideMainBanner}
             alt="메인 배너 - 다섯 고양이가 고른 묘한 PICK"
-            fetchpriority="high"
+            fetchPriority="high"
           />
         </BannerContainer>
       </BannerBackground>
@@ -168,7 +168,7 @@ export default function MainPage() {
             </div>
             <button
               className="see-more labeling"
-              onClick={() => naviagate("/products")}
+              onClick={() => naviagate("/products/new")}
             >
               <p>전체보기</p>
               <span className="arrow-container">
@@ -216,7 +216,7 @@ export default function MainPage() {
           <button
             type="button"
             className="mobile-more-button"
-            onClick={() => naviagate("/products")}
+            onClick={() => naviagate("/products/new")}
           >
             더보기
             <svg

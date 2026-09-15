@@ -6,6 +6,13 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/Footer";
 
+import logoEat from "../../assets/logo-eat.webp";
+import logoClean from "../../assets/logo-clean.webp";
+import logoHigh from "../../assets/logo-high.webp";
+import logoPlay from "../../assets/logo-play.webp";
+import logoRest from "../../assets/logo-rest.webp";
+import wishlistImage from "../../assets/wish-logo.webp";
+
 import {
   page,
   pageHeader,
@@ -24,8 +31,11 @@ import {
   cartButton,
   buyButton,
   emptyWrapper,
-  emptyIcon,
   emptyText,
+  emptyButtonWrapper,
+  emptyMessageWrapper,
+  emptyWishlistImage,
+  emptyBrowseButton,
 } from "./WishlistPageStyle";
 
 const initialWishlist = [
@@ -56,22 +66,18 @@ function WishlistPage() {
   const navigate = useNavigate();
   const [wishlist, setWishlist] = useState(initialWishlist);
 
-  
   const handleRemoveWishlist = (id) => {
     setWishlist((prev) => prev.filter((item) => item.id !== id));
   };
 
-  
   const handleProductClick = (id) => {
     navigate(`/products/${id}`);
   };
 
-  
   const handleAddCart = (item) => {
     alert(`${item.name} 상품이 장바구니에 담겼습니다.`);
   };
 
-  
   const handleBuy = (item) => {
     alert(`${item.name} 상품을 구매합니다.`);
   };
@@ -82,15 +88,10 @@ function WishlistPage() {
 
       <main css={page}>
         <div css={pageHeader}>
-          <button
-            type="button"
-            css={backButton}
-            onClick={() => navigate("/mypage")}
-          >
-            ← 마이페이지
+          <button css={backButton} onClick={() => navigate("/mypage")}>
+            <span className="back-arrow">←</span> 마이페이지
           </button>
-
-          <h1>WISHLIST</h1>
+          <h1>찜한상품</h1>
 
           <p css={wishlistCount}>
             찜한 상품 <strong>{wishlist.length}</strong>개
@@ -99,17 +100,34 @@ function WishlistPage() {
 
         {wishlist.length === 0 ? (
           <div css={emptyWrapper}>
-            <div css={emptyIcon}>♡</div>
+            <div css={emptyMessageWrapper}>
+              <img
+                src={wishlistImage}
+                alt="찜한 상품이 없는 고양이"
+                css={emptyWishlistImage}
+              />
 
-            <p css={emptyText}>찜한 상품이 아직 없어요.</p>
+              <p css={emptyText}>찜한 상품이 아직 없어요.</p>
+              <p css={emptyText}>마음에 드는 상품을 찜해보세요!</p>
+            </div>
 
-            <button
-              type="button"
-              css={buyButton}
-              onClick={() => navigate("/products")}
-            >
-              상품 둘러보기
-            </button>
+            <div css={emptyButtonWrapper}>
+              <div className="hover-cats" aria-hidden="true">
+                <img src={logoEat} alt="" />
+                <img src={logoClean} alt="" />
+                <img src={logoHigh} alt="" />
+                <img src={logoPlay} alt="" />
+                <img src={logoRest} alt="" />
+              </div>
+
+              <button
+                type="button"
+                css={[buyButton, emptyBrowseButton]}
+                onClick={() => navigate("/products")}
+              >
+                상품 둘러보기
+              </button>
+            </div>
           </div>
         ) : (
           <div css={wishlistGrid}>

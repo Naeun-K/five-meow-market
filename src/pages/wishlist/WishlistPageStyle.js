@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 
-
 export const page = css({
   width: "100%",
   maxWidth: "1200px",
@@ -16,7 +15,6 @@ export const page = css({
     padding: "40px 20px 80px",
   },
 });
-
 
 export const pageHeader = css({
   position: "relative",
@@ -40,10 +38,9 @@ export const pageHeader = css({
   },
 });
 
-
 export const backButton = css({
   position: "absolute",
-  top: "50%",
+  top: "25%",
   left: 0,
   transform: "translateY(-50%)",
   border: "none",
@@ -53,8 +50,17 @@ export const backButton = css({
   cursor: "pointer",
   padding: 0,
 
+  ".back-arrow": {
+    display: "inline-block",
+    transition: "transform 0.2s ease",
+  },
+
   "&:hover": {
     color: "#614832",
+  },
+
+  "&:hover .back-arrow": {
+    transform: "translateX(-4px)",
   },
 
   "@media (max-width: 767px)": {
@@ -66,11 +72,10 @@ export const backButton = css({
   },
 });
 
-
 export const wishlistCount = css({
   margin: "14px 0 0",
   color: "#777",
-  fontSize: "15px",
+  fontSize: "19px",
 
   strong: {
     color: "#614832",
@@ -81,7 +86,6 @@ export const wishlistCount = css({
     fontSize: "14px",
   },
 });
-
 
 export const wishlistGrid = css({
   display: "grid",
@@ -99,7 +103,6 @@ export const wishlistGrid = css({
   },
 });
 
-
 export const wishlistCard = css({
   minWidth: 0,
   overflow: "hidden",
@@ -115,7 +118,6 @@ export const wishlistCard = css({
   },
 });
 
-
 export const imageWrapper = css({
   position: "relative",
   width: "100%",
@@ -123,7 +125,6 @@ export const imageWrapper = css({
   overflow: "hidden",
   backgroundColor: "#F7F1E6",
 });
-
 
 export const productImage = css({
   display: "block",
@@ -137,7 +138,6 @@ export const productImage = css({
     transform: "scale(1.04)",
   },
 });
-
 
 export const heartButton = css({
   position: "absolute",
@@ -197,7 +197,6 @@ export const heartButton = css({
   },
 });
 
-
 export const productInfo = css({
   padding: "24px",
 
@@ -209,7 +208,6 @@ export const productInfo = css({
     padding: "20px",
   },
 });
-
 
 export const productName = css({
   margin: 0,
@@ -223,7 +221,6 @@ export const productName = css({
   },
 });
 
-
 export const productDescription = css({
   minHeight: "42px",
   margin: "10px 0 18px",
@@ -235,7 +232,6 @@ export const productDescription = css({
     fontSize: "13px",
   },
 });
-
 
 export const productPrice = css({
   display: "block",
@@ -249,24 +245,21 @@ export const productPrice = css({
   },
 });
 
-
 export const buttonWrapper = css({
   display: "flex",
   gap: "8px",
   width: "100%",
 });
 
-
 const commonButton = {
   flex: 1,
   height: "42px",
-  borderRadius: "6px",
+  borderRadius: "30px",
   fontSize: "13px",
   fontWeight: 600,
   cursor: "pointer",
   transition: "background-color 0.2s ease, color 0.2s ease",
 };
-
 
 export const cartButton = css({
   ...commonButton,
@@ -284,7 +277,6 @@ export const cartButton = css({
   },
 });
 
-
 export const buyButton = css({
   ...commonButton,
   border: "1px solid #614832",
@@ -301,8 +293,9 @@ export const buyButton = css({
   },
 });
 
-
 export const emptyWrapper = css({
+  position: "relative",
+  top: "-35px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -311,7 +304,6 @@ export const emptyWrapper = css({
   textAlign: "center",
 });
 
-
 export const emptyIcon = css({
   marginBottom: "20px",
   color: "#D8CFC4",
@@ -319,13 +311,119 @@ export const emptyIcon = css({
   lineHeight: 1,
 });
 
-
 export const emptyText = css({
   margin: "0 0 24px",
   color: "#777",
-  fontSize: "16px",
+  fontSize: "23px",
+  fontWeight: 500,
 
   "@media (max-width: 767px)": {
     fontSize: "14px",
+  },
+});
+
+export const emptyButtonWrapper = css({
+  position: "relative",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
+  ".hover-cats": {
+    position: "absolute",
+    zIndex: 1,
+    left: "50%",
+    bottom: "33px",
+    transform: "translateX(-50%)",
+
+    display: "flex",
+    alignItems: "flex-end",
+    justifyContent: "center",
+
+    width: "230px",
+    height: "68px",
+    opacity: 0,
+    pointerEvents: "none",
+
+    transition: "opacity 0.25s ease, transform 0.25s ease",
+
+    img: {
+      display: "block",
+      width: "41px",
+      height: "68px",
+      flex: "0 0 41px",
+      objectFit: "contain",
+      objectPosition: "bottom center",
+    },
+  },
+
+  "&:hover .hover-cats": {
+    opacity: 1,
+    transform: "translateX(-50%) translateY(-4px)",
+  },
+
+  "@media (max-width: 767px)": {
+    ".hover-cats": {
+      bottom: "25px",
+      width: "100%",
+      height: "58px",
+
+      img: {
+        width: "20%",
+        maxWidth: "39px",
+        height: "58px",
+        flex: "0 0 20%",
+      },
+    },
+  },
+});
+
+export const emptyMessageWrapper = css({
+  position: "relative",
+  top: "-35px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+});
+
+export const emptyWishlistImage = css({
+  display: "block",
+  width: "220px",
+  height: "220px",
+  objectFit: "contain",
+  marginBottom: "20px",
+  marginTop: "20px",
+
+  "@media (max-width: 1023px)": {
+    width: "240px",
+    height: "240px",
+  },
+
+  "@media (max-width: 767px)": {
+    width: "150px",
+    height: "150px",
+    marginBottom: "20px",
+  },
+});
+
+export const emptyBrowseButton = css({
+  flex: "0 0 auto",
+  width: "230px",
+  height: "50px",
+  fontSize: "15px",
+  backgroundColor: "var(--acent-beidge)",
+  color: "var(--text-color)",
+  border: "1px solid var(--acent-beidge)",
+  transition: "background-color 0.2s ease, color 0.2s ease",
+
+  "&:hover": {
+    backgroundColor: "var(--bg-button)",
+    color: "var(--text-button)",
+    borderColor: "var(--bg-button)",
+  },
+
+  "@media (max-width: 767px)": {
+    width: "196px",
+    height: "40px",
+    fontSize: "12px",
   },
 });

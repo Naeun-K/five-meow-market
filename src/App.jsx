@@ -24,6 +24,8 @@ import WishlistPage from "./pages/wishlist/WishlistPage";
 import PointPage from "./pages/MyPage/PointPage/PointPage";
 // import DetailProduct from "./pages/product/detailProduct/DetailProduct";
 import CopyDetailProduct from "./pages/product/detailProduct/CopyDetailProduct";
+import BestProductList from "./pages/product/best/BestProductList";
+import NewProductList from "./pages/product/new/NewProductList";
 
 function App() {
   return (
@@ -34,8 +36,8 @@ function App() {
         <Route path="/" element={<MainPage />} />
 
         <Route path="/products" element={<ProductList />} />
-
-        {/* <Route path="/products/:productId" element={<DetailProduct />} /> */}
+        <Route path="/products/best" element={<BestProductList />} />
+        <Route path="/products/new" element={<NewProductList />} />
         <Route path="/products/:productId" element={<CopyDetailProduct />} />
 
         <Route path="/login" element={<LoginPage />} />

@@ -1,34 +1,59 @@
 import { apiRequest } from "./apiClient";
 
-
-export function getProducts({ category, keyword, page = 1, limit = 8 } = {}) {
+// 상품 목록 / 검색 / 카테고리 / 해시태그 조회
+export function getProducts({
+  categoryId,
+  keyword,
+  tag,
+  page = 1,
+  limit = 8,
+  token,
+} = {}) {
   const params = new URLSearchParams();
 
-  if (category) {
-    params.set("category", category);
+  if (categoryId) {
+    params.set("categoryId", categoryId);
   }
 
-  if (keyword) {
+  if (keyword?.trim()) {
     params.set("keyword", keyword.trim());
   }
 
-  params.set("page", page);
-  params.set("limit", limit);
+  if (tag?.trim()) {
+    params.set("tag", tag.trim());
+  }
 
-  return apiRequest(`/products?${params.toString()}`);
+  params.set("page", String(page));
+  params.set("limit", String(limit));
+
+  return apiRequest(`/products?${params.toString()}`, {
+    token,
+  });
 }
 
-
-export function getProduct(productId) {
-  return apiRequest(`/products/${productId}`);
+// 상품 상세 조회
+export function getProduct(productId, token) {
+  return apiRequest(`/products/${productId}`, {
+    token,
+  });
 }
 
-
-export function getMainProducts() {
-  return apiRequest("/products/main");
-}
-
-
+// 관련 상품 조회
 export function getRelatedProducts(productId) {
   return apiRequest(`/products/${productId}/related`);
+}
+
+// 베스트 상품 조회
+export function getBestProducts() {
+  return apiRequest("/products/best");
+}
+
+// 신상품 조회
+export function getNewProducts() {
+  return apiRequest("/products/new");
+}
+
+// 메인 상품 조회
+export function getMainProducts() {
+  return apiRequest("/products/main");
 }
