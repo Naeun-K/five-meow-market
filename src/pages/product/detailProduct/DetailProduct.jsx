@@ -96,11 +96,13 @@ export default function DetailProduct() {
 
         const result = await getProduct(productId);
 
+        console.log("상세 API 전체:", result);
+        console.log("저장할 상품:", result.data.product);
         if (!result.success) {
           throw new Error("상품 상세 조회에 실패했습니다.");
         }
 
-        setProduct(result.product);
+        setProduct(result.data.product);
       } catch (error) {
         console.error("상품 상세 조회 실패:", error);
         showToast("상품 정보를 불러오지 못했습니다.", false);
