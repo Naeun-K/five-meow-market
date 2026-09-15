@@ -1,6 +1,6 @@
     import React, { useState } from "react";
 import * as S from "./reviewListStyle";
-
+import EmptyReviewCat from "../../assets/empty-review-cat.webp";
 
 
 
@@ -23,7 +23,7 @@ const TABS = [
 
 
 const REVIEWS = [
-  {
+{
     id: 1,
     productName: "고양이 캣타워",
     image: null,
@@ -209,7 +209,44 @@ function ReviewCard({ review, onEdit, onDelete }) {
   );
 }
 
+function EmptyReview({ activeTab }) {
+  const isWritten = activeTab === "written";
 
+  return (
+   <S.EmptyReview>
+    <S.EmptyImage
+    src={EmptyReviewCat}
+    alt= "리뷰 내역 없음"
+    />
+
+    <S.EmptyTitle>
+      {isWritten
+      ? "리뷰내역이 없습니다."
+      : "작성 가능한 리뷰가 없습니다."}
+    </S.EmptyTitle>
+   
+    <S.EmptyDescription>
+      {isWritten ? (
+        <>
+        아직 작성한 리뷰가 없어요.
+        <br />
+        상품을 구매하고 소중한 후기를 남겨주세요!
+        </>
+      ) : (
+        <>
+        아직 작성 가능한 리뷰가 없어요.
+        <br />
+        상품을 구매하고 리뷰를 작성해보세요!
+        </>
+      )}
+    </S.EmptyDescription>
+
+    <S.ProductButton type="button">
+      상품보러가기
+    </S.ProductButton>
+    </S.EmptyReview>
+  );
+}
 
 
 
@@ -218,6 +255,14 @@ export default function ReviewList() {
 
   const [activeTab, setActiveTab] =
     useState("written");
+
+    const availableReviews = [];
+  const writtenReviews = REVIEWS;
+
+  const currentReviews =
+    activeTab === "written"
+      ? writtenReviews
+      : availableReviews;
 
 
   
@@ -281,22 +326,21 @@ export default function ReviewList() {
 
 
       
-      <S.ReviewList>
-        {activeTab === "written" ? (
-          REVIEWS.map((review) => (
-            <ReviewCard
-              key={review.id}
-              review={review}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))
-        ) : (
-          <S.ReviewText>
-            작성 가능한 리뷰가 없습니다.
-          </S.ReviewText>
-        )}
-      </S.ReviewList>
+      {/* [수정] 리뷰가 없으면 EmptyReview, 있으면 ReviewCard */}
+<S.ReviewList>
+  {currentReviews.length === 0 ? (
+    <EmptyReview activeTab={activeTab} />
+  ) : (
+    currentReviews.map((review) => (
+      <ReviewCard
+        key={review.id}
+        review={review}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+    ))
+  )}
+</S.ReviewList>
     </S.TabSection>
 
     </S.Page>
