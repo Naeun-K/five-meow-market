@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { ForwardBtnStyle } from "./forwardBtnStyle";
 
-export default function ForwardButton({ children }) {
-  const navigate = useNavigate();
+export default function ForwardButton({ children, onClick }) {
   return (
-    <ForwardBtnStyle type="button" onClick={() => navigate(-1)}>
+    <ForwardBtnStyle type="button" onClick={onClick}>
       <span className="forward-svg">
         <svg
           xmlns="http://www.w3.org/2000/svg"

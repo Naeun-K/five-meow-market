@@ -61,7 +61,7 @@ export const EmptyOrderStyle = styled.div({
     },
   },
 
-  "& > button": {
+  "& > .navProduct": {
     // width: "260px",
     width: "340px",
     height: "60px",

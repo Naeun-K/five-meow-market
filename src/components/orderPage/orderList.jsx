@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./orderListStyle";
 import EmptyOrder from "../../assets/EmptyOrder.webp";
+import ForwardButton from "../common/forwardBtn/ForwardButton";
 
 const TABS = [
   { key: "all", label: "전체" },
@@ -142,6 +143,9 @@ export default function OrderList() {
   if (ORDERS.length === 0) {
     return (
       <S.EmptyOrderStyle>
+        <ForwardButton onClick={() => navigate("/mypage")}>
+          마이페이지로
+        </ForwardButton>
         <S.Header>
           <S.Title>주문/배송내역</S.Title>
 
@@ -160,7 +164,11 @@ export default function OrderList() {
           <p>마음에 드는 상품을 찾아보러 가볼까요?</p>
         </div>
 
-        <button type="button" onClick={() => navigate("/products")}>
+        <button
+          type="button"
+          className="navProduct"
+          onClick={() => navigate("/products")}
+        >
           상품 보러가기
         </button>
       </S.EmptyOrderStyle>
@@ -168,6 +176,9 @@ export default function OrderList() {
   }
   return (
     <S.Page>
+      <ForwardButton onClick={() => navigate("/mypage")}>
+        마이페이지로
+      </ForwardButton>
       <S.Header>
         <S.Title>주문/배송내역</S.Title>
 
