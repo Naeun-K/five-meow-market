@@ -67,13 +67,16 @@ const SignupForm = () => {
       const result = await authService.checkNickname(trimmed);
 
       if (result.isDuplicate) {
-        showToast(result.message, result.success);
+        showToast(
+          result.message || "이미 사용 중인 닉네임입니다.",
+          result.success,
+        );
       }
       const isAvailable = result.success && !result.isDuplicate;
 
       setIsNicknameChecked(isAvailable);
 
-      showToast(result.message, isAvailable);
+      showToast(result.message || "사용 가능한 닉네임입니다.", isAvailable);
     } catch (error) {
       console.error(error.message);
 
@@ -102,12 +105,15 @@ const SignupForm = () => {
       const result = await authService.checkEmail(trimmed);
 
       if (result.isDuplicate) {
-        showToast(result.message, result.success);
+        showToast(
+          result.message || "이미 사용 중인 이메일입니다.",
+          result.success,
+        );
       }
 
       const isAvailable = result.success && !result.isDuplicate;
       setIsEmailChecked(isAvailable);
-      showToast(result.message, isAvailable);
+      showToast(result.message || "사용 가능한 이메일입니다.", isAvailable);
     } catch (error) {
       console.error(error.message);
       showToast(
@@ -148,7 +154,10 @@ const SignupForm = () => {
     try {
       const result = await authService.verifyPhone(trimmed);
       setIsPhoneVerified(result.success);
-      showToast(result.message, result.success);
+      showToast(
+        result.message || "휴대폰 인증이 완료되었습니다.",
+        result.success,
+      );
     } catch (error) {
       console.error(error.message);
       showToast(

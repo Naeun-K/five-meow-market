@@ -168,7 +168,7 @@ export default function MainPage() {
             </div>
             <button
               className="see-more labeling"
-              onClick={() => naviagate("/products")}
+              onClick={() => naviagate("/products/new")}
             >
               <p>전체보기</p>
               <span className="arrow-container">
@@ -216,7 +216,7 @@ export default function MainPage() {
           <button
             type="button"
             className="mobile-more-button"
-            onClick={() => naviagate("/products")}
+            onClick={() => naviagate("/products/new")}
           >
             더보기
             <svg

@@ -466,9 +466,8 @@ export default function DetailProduct() {
               </div>
             </dl>
           </div>
-
           {/* 상품 상세 이미지 */}
-          {product.detailImages?.length > 0 && (
+          {product.images?.[1] && (
             <div className="detail-image-area">
               <div
                 className={`detail-image-container${
@@ -479,13 +478,10 @@ export default function DetailProduct() {
                   className="detail-image-content"
                   ref={detailImageContentRef}
                 >
-                  {product.detailImages.map((image, index) => (
-                    <img
-                      key={`${product.productId}-detail-${index}`}
-                      src={image}
-                      alt={`${product.name} 상세 이미지 ${index + 1}`}
-                    />
-                  ))}
+                  <img
+                    src={product.images[1]}
+                    alt={`${product.name} 상세 이미지`}
+                  />
                 </div>
 
                 {isDetailOverflowing && !isDetailExpanded && (

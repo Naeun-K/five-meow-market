@@ -2,12 +2,17 @@ import { BrandStyle, HeaderStyle } from "./UserBrandStyle";
 import Logo from "../logo/Logo";
 import PawIcon from "../common/PawIcon/PawIcon";
 import ForwardButton from "../common/forwardBtn/ForwardButton";
+import { useNavigate } from "react-router-dom";
 
 export default function UserBrandSection({ phrase, image, message }) {
+  const navigate = useNavigate();
+
   return (
     <BrandStyle>
       <HeaderStyle>
-        <ForwardButton>이전페이지로</ForwardButton>
+        <ForwardButton onClick={() => navigate("/")}>
+          메인 페이지로
+        </ForwardButton>
 
         <div className="logo-box">
           <Logo />
