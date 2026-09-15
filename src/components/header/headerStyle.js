@@ -15,15 +15,10 @@ export const WholeStyle = styled.div({
 });
 
 export const HeaderStyle = styled.header({
-  
-  
-
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
-
-  
 
   gap: "60px",
 
@@ -31,8 +26,6 @@ export const HeaderStyle = styled.header({
   maxWidth: "1300px",
 
   padding: "80px 50px 20px 50px",
-
-  
 
   "& .logo-container": {
     width: "280px",
@@ -183,8 +176,8 @@ export const HeaderStyle = styled.header({
     height: "100%",
 
     display: "flex",
-    
-    flexDirection: "row", 
+
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
 
@@ -212,23 +205,29 @@ export const HeaderStyle = styled.header({
     "& .nav-cat-container": {
       width: "45px",
       aspectRatio: "1/1",
-
       position: "absolute",
 
-      
-      
-
       left: "50%",
-      bottom: "calc(100% - 13px)",
+      bottom: "calc(100% - 8px)",
 
-      transform: "translateX(-50%)",
+      opacity: 0,
+      transform: "translateX(-50%) translateY(10px) scale(0.8)",
 
-      objectFit: "contain",
+      transition: "opacity 0.2s ease, transform 0.25s ease",
 
       pointerEvents: "none",
     },
-  },
 
+    "& .nav-cat-container.active": {
+      opacity: 1,
+      transform: "translateX(-50%) translateY(0) scale(1)",
+    },
+
+    "&:hover .nav-cat-container": {
+      opacity: 1,
+      transform: "translateX(-50%) translateY(-3px) scale(1.08)",
+    },
+  },
   "& .navigation .nav-item > button": {
     position: "relative",
 
@@ -255,12 +254,10 @@ export const HeaderStyle = styled.header({
     },
   },
 
-  
   "& .nav-item:hover > button::after": {
     transform: "scaleX(1)",
   },
 
-  
   "& .nav-item.active > button::after": {
     transform: "scaleX(1)",
   },
@@ -462,7 +459,6 @@ export const HeaderStyle = styled.header({
     padding: "50px 30px 20px 30px",
     "& .user-icon": {
       width: "30px",
-      
     },
     "& .search-button": {
       display: "block",
@@ -554,12 +550,10 @@ export const HeaderStyle = styled.header({
 
     padding: "40px 20px 20px 20px",
 
-    
     "& .login-link": {
       display: "none",
     },
 
-    
     "& .menu-container": {
       position: "relative",
 
@@ -616,7 +610,6 @@ export const HeaderStyle = styled.header({
       display: "none",
     },
 
-    
     "& .svg-list .cart": {
       display: "none",
     },
@@ -653,11 +646,6 @@ export const HeaderStyle = styled.header({
       },
     },
 
-    
-    
-    
-    
-
     "& .user-nickname, & .user-nim": {
       display: "none",
     },
@@ -671,7 +659,6 @@ export const HeaderStyle = styled.header({
     },
 
     "& .user-icon": {
-      
       display: "none",
     },
 

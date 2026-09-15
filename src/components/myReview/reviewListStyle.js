@@ -535,3 +535,130 @@ export const ReviewText = styled.p({
     lineHeight: 1.45,
   },
 });
+
+// ========================================
+// [추가] 리뷰가 없을 때 Empty 화면
+// ========================================
+
+export const EmptyReview = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+
+  width: "100%",
+  minHeight: "520px",
+
+  padding: "50px 20px",
+
+  textAlign: "center",
+
+  [TABLET]: {
+    minHeight: "450px",
+    padding: "40px 20px",
+  },
+
+  [MOBILE]: {
+    minHeight: "400px",
+    padding: "35px 10px",
+  },
+});
+
+
+// [추가] 고양이 이미지
+export const EmptyImage = styled.img({
+  width: "180px",
+  height: "auto",
+
+  marginBottom: "20px",
+
+  objectFit: "contain",
+
+  [TABLET]: {
+    width: "150px",
+  },
+
+  [MOBILE]: {
+    width: "110px",
+    marginBottom: "14px",
+  },
+});
+
+
+// [추가] 리뷰내역이 없습니다.
+export const EmptyTitle = styled.h2({
+  color: "var(--text-color)",
+
+  fontSize: "28px",
+  fontWeight: 700,
+  lineHeight: 1.3,
+
+  [TABLET]: {
+    fontSize: "24px",
+  },
+
+  [MOBILE]: {
+    fontSize: "20px",
+  },
+});
+
+
+// [추가] 설명 문구
+export const EmptyDescription = styled.p({
+  margin: "16px 0 0",
+
+  color: "#8B817A",
+
+  fontSize: "18px",
+  fontWeight: 400,
+  lineHeight: 1.5,
+
+  [TABLET]: {
+    fontSize: "16px",
+  },
+
+  [MOBILE]: {
+    marginTop: "10px",
+    fontSize: "14px",
+  },
+});
+
+
+// [추가] 상품보러가기 버튼
+export const ProductButton = styled.button({
+  width: "380px",
+  height: "58px",
+
+  marginTop: "30px",
+
+  border: "none",
+  borderRadius: "30px",
+
+  background: "var(--acent-beidge)",
+  color: "var(--bg-button)",
+
+  fontSize: "20px",
+  fontWeight: 700,
+
+  cursor: "pointer",
+
+  "&:hover": {
+    background: "var(--bg-button)",
+    color: "var(--text-button)",
+  },
+
+  [TABLET]: {
+    width: "320px",
+    height: "54px",
+  },
+
+  [MOBILE]: {
+    width: "100%",
+    height: "48px",
+
+    marginTop: "18px",
+
+
+    fontSize: "15px",
+  },
+});

@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
-
 export const page = css({
   display: "flex",
   flexDirection: "column",
@@ -11,12 +10,10 @@ export const page = css({
 
   width: "100%",
   maxWidth: "1300px",
-  
+
   padding: "40px 50px 160px",
-  
-  
+
   color: "var(--text-color)",
-  
 
   "@media (max-width: 1023px)": {
     padding: "30px 35px 120px",
@@ -45,8 +42,6 @@ export const OrderCardWrapper = styled.article({
 
     scrollSnapType: "x mandatory",
 
-    
-
     scrollbarWidth: "none",
 
     "&::-webkit-scrollbar": {
@@ -74,7 +69,6 @@ export const OrderCard = styled.article({
     color: "#4A3425",
 
     fontWeight: 500,
-    
 
     borderRadius: "20px",
 
@@ -93,7 +87,7 @@ export const OrderCard = styled.article({
     padding: " 0 20px 20px 20px",
 
     display: "flex",
-    
+
     justifyContent: "space-between",
     alignItems: "center",
 
@@ -137,7 +131,7 @@ export const OrderCard = styled.article({
       padding: "10px 20px",
       fontSize: "17px",
       fontWeight: 500,
-      letterSpacing: "5px",
+      // letterSpacing: "5px",
       color: "var(--text-primary)",
       border: "1px solid var(--text-primary)",
       borderRadius: "var(--radius-md)",
@@ -172,11 +166,10 @@ export const OrderCard = styled.article({
 
       "& .desc-wrapper": {
         display: "flex",
-        
+
         justifyContent: "space-between",
         alignItems: "center",
 
-        
         width: "100%",
         flexDirection: "column",
 
@@ -211,9 +204,7 @@ export const OrderCard = styled.article({
   },
 });
 
-
 export const pageTitle = css({
-  
   textAlign: "center",
   fontSize: "44px",
   fontWeight: 700,
@@ -222,18 +213,15 @@ export const pageTitle = css({
   color: "var(--text-primary)",
 
   "@media (max-width: 1023px)": {
-    
     fontSize: "36px",
     lineHeight: "1.35",
   },
 
   "@media (max-width: 767px)": {
-    
     fontSize: "28px",
     lineHeight: "1.4",
   },
 });
-
 
 export const userCard = css({
   width: "100%",
@@ -270,7 +258,6 @@ export const userCard = css({
     },
   },
 
-  
   "@media (max-width: 767px)": {
     flexDirection: "column",
     minHeight: "155px",
@@ -293,15 +280,12 @@ export const userCard = css({
 
       backgroundColor: "var(--border)",
     },
-    
   },
 
-  
   "@media (max-width: 374px)": {
     gap: "30px",
   },
 });
-
 
 export const userInfo = css({
   minWidth: 0,
@@ -326,18 +310,12 @@ export const userInfo = css({
     justifyContent: "center",
     gap: "10px",
   },
-
-  
-  
-  
-  
 });
-
 
 export const userName = css({
   display: "block",
   flexShrink: 0,
-  
+
   fontSize: "28px",
   fontWeight: 700,
   lineHeight: "1.4",
@@ -346,7 +324,6 @@ export const userName = css({
 
   "@media (max-width: 1023px)": {
     fontSize: "24px",
-    
   },
 
   "@media (max-width: 767px)": {
@@ -354,23 +331,20 @@ export const userName = css({
     lineHeight: "28px",
   },
 
-  
   "@media (max-width: 374px)": {
     transform: "translateY(8px)",
   },
 });
 
-
 export const userEmail = css({
   display: "block",
   flexShrink: 0,
-  
+
   fontSize: "18px",
 
   lineHeight: "1.6",
   letterSpacing: "-0.01em",
   color: "var(--text-secondary)",
-  
 
   "&.pointDeco": {
     display: "flex",
@@ -382,7 +356,6 @@ export const userEmail = css({
     borderRadius: "20px",
     backgroundColor: "#F7EFE5",
 
-    
     color: "var(--text-primary)",
     whiteSpace: "nowrap",
     fontWeight: 600,
@@ -403,24 +376,20 @@ export const userEmail = css({
     lineHeight: "26px",
   },
 
-  
   "@media (max-width: 374px)": {
-    
     lineHeight: "26px",
   },
 });
 
-
 export const userPoint = css({
   display: "block",
   flexShrink: 0,
-  
+
   fontSize: "18px",
   fontWeight: 600,
   lineHeight: "1.6",
   letterSpacing: "-0.01em",
   color: "var(--text-secondary)",
-  
 
   "@media (max-width: 1023px)": {
     fontSize: "17px",
@@ -432,13 +401,10 @@ export const userPoint = css({
     lineHeight: "26px",
   },
 
-  
   "@media (max-width: 374px)": {
-    
     lineHeight: "26px",
   },
 });
-
 
 export const editButton = css({
   flexShrink: 0,
@@ -447,14 +413,12 @@ export const editButton = css({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  
 
   gap: "20px",
 
-  
   border: "1px solid var(--border)",
   borderRadius: "var(--radius-md)",
-  
+
   color: "var(--text-secondary)",
   fontSize: "20px",
 
@@ -481,8 +445,6 @@ export const editButton = css({
   },
 
   "@media (max-width: 1023px)": {
-    
-    
     fontSize: "18px",
     padding: "8px 10px",
     "& .quick-arrow": {
@@ -496,22 +458,14 @@ export const editButton = css({
       width: "20px",
       height: "20px",
     },
-    
-    
-    
-    
-    
-    
-    
   },
 });
-
 
 export const summary = css({
   width: "100%",
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
-  
+
   backgroundColor: "#fff",
   border: "1px solid var(--border)",
   borderRadius: "var(--radius-md)",
@@ -519,7 +473,6 @@ export const summary = css({
 
   "@media (max-width: 767px)": {
     gridTemplateColumns: "repeat(2, 1fr)",
-    
   },
 });
 
@@ -529,32 +482,59 @@ export const titleWrapper = css({
   alignItems: "center",
   padding: "30px 50px",
 
-  
-
   borderBottom: "1px solid var(--border)",
-  
+
   "@media (max-width:767px)": {
     padding: "20px",
   },
 });
 
-
 export const summaryItem = css({
+  position: "relative",
+
   minHeight: "180px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
   gap: "20px",
-  padding: "50px 30px",
-  
+  padding: "60px 30px",
+
   borderRight: "1px solid var(--border)",
 
   "&:last-child": {
     borderRight: 0,
   },
+  // 고양이
+  "& .btn-hover-container": {
+    position: "absolute",
 
+    left: "50%",
+    // top: "25px",
+    // top: "0",
+
+    top: "28%",
+
+    width: "50px",
+    aspectRatio: "1 / 1",
+
+    opacity: 0,
+
+    transform: "translate(-50%, 30px)",
+    // transform: "translate(-50%, -20%)",
+    pointerEvents: "none",
+    transition:
+      "transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease",
+
+    "& .btn-hover": {
+      display: "block",
+      width: "100%",
+      height: "100%",
+      objectFit: "contain",
+    },
+  },
   "& .svg-container": {
+    position: "relative",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -571,21 +551,33 @@ export const summaryItem = css({
 
     boxShadow: "var(--shadow)",
 
-    transition: "transform 0.3s",
+    zIndex: 1,
+    // transition: "transform 0.3s",
+    transition: "background-color 0.5s, color 0.5s",
   },
+  // 버튼에 hover했을 때
+  "&:has(.svg-container:hover) .btn-hover-container": {
+    opacity: 1,
+
+    // 위로 65px 이동
+    transform: "translate(-50%, calc(-20% - 65px))",
+  },
+
   "& .svg-container:hover": {
-    transform: "scale(1.1)",
+    // transform: "scale(1.1)",
+    backgroundColor: "var(--bg-button)",
+    color: "var(--text-button)",
   },
 
   "@media (max-width: 1023px)": {
     minHeight: "165px",
-    padding: "30px 18px",
+    padding: "60px 18px",
     gap: "18px",
   },
 
   "@media (max-width: 767px)": {
     minHeight: "140px",
-    padding: "25px 15px",
+    padding: "60px 15px",
     gap: "15px",
 
     "&:nth-of-type(2)": {
@@ -597,7 +589,6 @@ export const summaryItem = css({
     },
   },
 });
-
 
 export const summaryLabel = css({
   fontSize: "20px",
@@ -617,7 +608,6 @@ export const summaryLabel = css({
   },
 });
 
-
 export const summaryValue = css({
   fontSize: "28px",
   fontWeight: 600,
@@ -636,10 +626,8 @@ export const summaryValue = css({
   },
 });
 
-
 export const section = css({
   width: "100%",
-  
 
   backgroundColor: "#fff",
   border: "1px solid var(--border)",
@@ -674,28 +662,21 @@ export const section = css({
   },
 });
 
-
 export const sectionTitle = css({
-  
   fontSize: "28px",
   fontWeight: 600,
-  
+
   letterSpacing: "-0.02em",
   color: "var(--text-primary)",
 
   "@media (max-width: 1023px)": {
-    
     fontSize: "34px",
-    
   },
 
   "@media (max-width: 767px)": {
-    
     fontSize: "20px",
-    
   },
 });
-
 
 export const orderCard = css({
   display: "flex",
@@ -704,13 +685,12 @@ export const orderCard = css({
   alignItems: "center",
 
   width: "100%",
-  
 
   gap: "20px",
 
   "& .item-wrapper": {
     width: "250px",
-    
+
     aspectRatio: "1 / 2",
     display: "flex",
     flexDirection: "column",
@@ -732,7 +712,7 @@ export const orderCard = css({
   "& .desc-wrapper": {
     display: "flex",
     flexDirection: "column",
-    
+
     gap: "10px",
 
     width: "100%",
@@ -742,17 +722,18 @@ export const orderCard = css({
   },
   "& .btn-wrapper": {
     display: "flex",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     alignItems: "center",
+    gap: "15px",
 
     width: "100%",
-    
+
     "& button": {
       padding: "10px 20px",
-
+      flex: 1,
       fontSize: "17px",
       fontWeight: 500,
-      letterSpacing: "5px",
+      // letterSpacing: "5px",
 
       color: "var(--text-primary)",
       border: "1px solid var(--text-primary)",
@@ -767,7 +748,6 @@ export const orderCard = css({
   },
 
   "@media (max-width: 1023px)": {
-    
     gap: "15px",
     "& .item-wrapper": {
       width: "200px",
@@ -791,8 +771,6 @@ export const orderCard = css({
   },
 
   "@media (max-width: 735px)": {
-    
-
     justifyContent: "flex-start",
     gap: "30px",
 
@@ -801,22 +779,13 @@ export const orderCard = css({
 
     scrollSnapType: "x mandatory",
 
-    
-
     scrollbarWidth: "none",
 
     "&::-webkit-scrollbar": {
       display: "none",
     },
   },
-
-  
-  
-  
-  
-  
 });
-
 
 export const orderImage = css({
   width: "120px",
@@ -837,13 +806,11 @@ export const orderImage = css({
     height: "84px",
   },
 
-  
   "@media (min-width: 375px) and (max-width: 767px)": {
     width: "96px",
     height: "96px",
   },
 });
-
 
 export const orderInfo = css({
   flex: 1,
@@ -860,30 +827,24 @@ export const orderInfo = css({
     gap: "10px",
   },
 
-  
   "@media (max-width: 374px)": {
     minWidth: 0,
     marginLeft: "18px",
     gap: "6px",
   },
 
-  
   "@media (min-width: 375px) and (max-width: 424px)": {
-    
     minWidth: 0,
     marginLeft: "20px",
     gap: "7px",
   },
 
-  
   "@media (min-width: 425px) and (max-width: 767px)": {
-    
     minWidth: 0,
     marginLeft: "22px",
     gap: "7px",
   },
 });
-
 
 export const productName = css({
   display: "block",
@@ -908,7 +869,6 @@ export const productName = css({
     lineHeight: "26px",
   },
 });
-
 
 export const orderDate = css({
   display: "block",
@@ -935,7 +895,6 @@ export const orderDate = css({
   },
 });
 
-
 export const orderNumber = css({
   display: "block",
   width: "100%",
@@ -961,7 +920,6 @@ export const orderNumber = css({
     lineHeight: "1.6",
   },
 
-  
   "@media (max-width: 374px)": {
     fontSize: "14px",
     lineHeight: "21px",
@@ -982,7 +940,6 @@ export const orderNumber = css({
     },
   },
 
-  
   "@media (min-width: 375px) and (max-width: 424px)": {
     fontSize: "14px",
     lineHeight: "21px",
@@ -1004,7 +961,6 @@ export const orderNumber = css({
     },
   },
 
-  
   "@media (min-width: 425px) and (max-width: 767px)": {
     fontSize: "14px",
     lineHeight: "21px",
@@ -1027,7 +983,6 @@ export const orderNumber = css({
   },
 });
 
-
 export const orderStatus = css({
   marginLeft: "auto",
   flexShrink: 0,
@@ -1042,7 +997,6 @@ export const orderStatus = css({
   letterSpacing: "-0.01em",
   textAlign: "center",
 
-  
   "@media (max-width: 1023px)": {
     minWidth: "110px",
     padding: "14px 24px",
@@ -1050,7 +1004,6 @@ export const orderStatus = css({
     borderRadius: "25px",
   },
 
-  
   "@media (max-width: 767px)": {
     display: "block",
     position: "absolute",
@@ -1064,7 +1017,6 @@ export const orderStatus = css({
     borderRadius: "22px",
   },
 
-  
   "@media (min-width: 375px) and (max-width: 767px)": {
     right: "25px",
     bottom: "20px",
@@ -1073,13 +1025,12 @@ export const orderStatus = css({
   },
 });
 
-
 export const quickMenu = css({
   width: "100%",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  
+
   gap: "40px",
   marginTop: "85px",
 
@@ -1092,32 +1043,22 @@ export const quickMenu = css({
     padding: "0 20px",
 
     order: -1,
-    
-    
-    
   },
 });
 
-
 export const quickCard = css({
   width: "100%",
-  
+
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   padding: "40px 45px",
   boxSizing: "border-box",
   border: "1px solid var(--border)",
-  
+
   borderRadius: "12px",
-  
+
   textAlign: "left",
-
-  
-
-  
-  
-  
 
   "& .svg-container": {
     display: "flex",
@@ -1142,7 +1083,7 @@ export const quickCard = css({
     flexDirection: "column",
     justifyContent: "center",
     gap: "20px",
-    
+
     padding: "35px 40px",
     "&:hover .quick-arrow": {
       transform: "translateX(20px) ",
@@ -1150,102 +1091,39 @@ export const quickCard = css({
   },
 
   "@media (max-width: 767px)": {
-    
-    
-    
-    
-    
     padding: "20px",
-    
 
     border: "none",
-    
   },
 });
-
 
 export const quickTitle = css({
   display: "block",
-  
-  
+
   fontSize: "18px",
   fontWeight: 600,
-  
-  
+
   color: "var(--text-secondary)",
 
   "@media (max-width: 1023px)": {
-    
     fontSize: "17px",
-    
   },
 
   "@media (max-width: 767px)": {
-    
     fontSize: "16px",
-    
   },
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export const quickArrow = css({
   display: "inline-block",
   flexShrink: 0,
   width: "40px",
   height: "40px",
-  
-  
+
   color: "inherit",
-  
+
   transition: "transform 0.2s ease",
-  
-  
-  
-  
-  
+
   "&:hover": {
     transform: "translateX(10px)",
   },
@@ -1256,7 +1134,7 @@ export const buttonStyle = css({
   flex: 1,
   fontSize: "17px",
   fontWeight: 500,
-  letterSpacing: "5px",
+  // letterSpacing: "5px",
 
   backgroundColor: "var(--bg-button)",
   color: "var(--text-button)",
@@ -1266,5 +1144,4 @@ export const buttonStyle = css({
   "@media (max-width:1023px)": {
     fontSize: "18px",
   },
-  
 });

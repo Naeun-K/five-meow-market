@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./orderListStyle";
-
+import EmptyOrder from "../../assets/EmptyOrder.webp";
+import ForwardButton from "../common/forwardBtn/ForwardButton";
 
 const TABS = [
   { key: "all", label: "전체" },
@@ -12,60 +13,7 @@ const TABS = [
   { key: "cancelExchange", label: "취소/교환/반품" },
 ];
 
-
-const ORDERS = [
-  {
-    id: "202405012345",
-    orderLabel: "주문번호",
-    statusLabel: "배송완료",
-    statusVariant: "delivered",
-    date: "2024.05.01",
-    buyer: "홍길동",
-    count: 3,
-    total: "45,200원",
-  },
-  {
-    id: "202404281234",
-    orderLabel: "주문번호",
-    statusLabel: "배송중",
-    statusVariant: "shipping",
-    date: "2024.04.28",
-    buyer: "홍길동",
-    count: 2,
-    total: "32,800원",
-  },
-  {
-    id: "202404210987",
-    orderLabel: "주문번호",
-    statusLabel: "상품준비중",
-    statusVariant: "preparing",
-    date: "2024.04.21",
-    buyer: "홍길동",
-    count: 1,
-    total: "12,900원",
-  },
-  {
-    id: "202404150456",
-    orderLabel: "주문번호",
-    statusLabel: "배송완료",
-    statusVariant: "delivered",
-    date: "2024.04.15",
-    buyer: "홍길동",
-    count: 4,
-    total: "78,600원",
-  },
-  {
-    id: "202404080123",
-    orderLabel: "주문번호",
-    statusLabel: "결제완료",
-    statusVariant: "paid",
-    date: "2024.04.08",
-    buyer: "홍길동",
-    count: 2,
-    total: "25,800원",
-  },
-];
-
+const ORDERS = [];
 
 function ProductBoxIcon() {
   return (
@@ -83,7 +31,6 @@ function ProductBoxIcon() {
   );
 }
 
-
 function ChevronRightIcon() {
   return (
     <svg
@@ -100,7 +47,6 @@ function ChevronRightIcon() {
   );
 }
 
-
 function ChevronDownIcon() {
   return (
     <svg
@@ -116,7 +62,6 @@ function ChevronDownIcon() {
     </svg>
   );
 }
-
 
 function SearchIcon() {
   return (
@@ -135,32 +80,26 @@ function SearchIcon() {
   );
 }
 
-
 function OrderCard({ order, onViewDetail }) {
   return (
     <S.OrderCard>
-      
       <S.Thumb>
         <S.ThumbIconWrap>
           <ProductBoxIcon />
         </S.ThumbIconWrap>
       </S.Thumb>
 
-      
       <S.OrderInfo>
-        
         <S.OrderHeader>
           <S.OrderLabelText>{order.orderLabel}</S.OrderLabelText>
 
           <S.OrderIdText>{order.id}</S.OrderIdText>
 
-          
           <S.StatusBadge variant={order.statusVariant}>
             {order.statusLabel}
           </S.StatusBadge>
         </S.OrderHeader>
 
-        
         <S.MetaList>
           <S.MetaRow>주문일 {order.date}</S.MetaRow>
 
@@ -169,7 +108,6 @@ function OrderCard({ order, onViewDetail }) {
           <S.MetaRow>주문자 {order.buyer}</S.MetaRow>
         </S.MetaList>
 
-        
         <S.OrderSummaryRow>
           <S.OrderCount>총 {order.count}건</S.OrderCount>
 
@@ -177,11 +115,9 @@ function OrderCard({ order, onViewDetail }) {
         </S.OrderSummaryRow>
       </S.OrderInfo>
 
-      
       <S.DetailButton type="button" onClick={() => onViewDetail(order.id)}>
         <S.DetailButtonText>주문 상세보기</S.DetailButtonText>
 
-        
         <S.DetailArrow>
           <ChevronRightIcon />
         </S.DetailArrow>
@@ -190,35 +126,65 @@ function OrderCard({ order, onViewDetail }) {
   );
 }
 
-
 export default function OrderList() {
-  
   const [activeTab, setActiveTab] = useState("all");
 
-  
   const navigate = useNavigate();
 
-  
   const handleViewDetail = (orderId) => {
     navigate(`/mypage/orders/${orderId}`);
   };
 
-  
   const filteredOrders =
     activeTab === "all"
       ? ORDERS
       : ORDERS.filter((order) => order.statusVariant === activeTab);
 
+  if (ORDERS.length === 0) {
+    return (
+      <S.EmptyOrderStyle>
+        <ForwardButton onClick={() => navigate("/mypage")}>
+          마이페이지로
+        </ForwardButton>
+        <S.Header>
+          <S.Title>주문/배송내역</S.Title>
+
+          <S.Subtitle>고객님의 주문 내역을 확인해보세요.</S.Subtitle>
+        </S.Header>
+        <div className="empty-image-container">
+          <img
+            src={EmptyOrder}
+            alt="주문 내역이 없는 상태를 나타내는 고양이"
+            className="empty-image"
+          />
+        </div>
+
+        <div className="empty-text-container">
+          <strong>아직 주문 내역이 없어요</strong>
+          <p>마음에 드는 상품을 찾아보러 가볼까요?</p>
+        </div>
+
+        <button
+          type="button"
+          className="navProduct"
+          onClick={() => navigate("/products")}
+        >
+          상품 보러가기
+        </button>
+      </S.EmptyOrderStyle>
+    );
+  }
   return (
     <S.Page>
-      
+      <ForwardButton onClick={() => navigate("/mypage")}>
+        마이페이지로
+      </ForwardButton>
       <S.Header>
         <S.Title>주문/배송내역</S.Title>
 
         <S.Subtitle>고객님의 주문 내역을 확인해보세요.</S.Subtitle>
       </S.Header>
 
-      
       <S.SearchBar>
         <S.FilterSelect>
           <option value="all">주문 전체</option>
@@ -233,7 +199,6 @@ export default function OrderList() {
         </S.SearchInputWrap>
       </S.SearchBar>
 
-      
       <S.TabList>
         {TABS.map((tab) => (
           <S.TabButton
@@ -247,7 +212,6 @@ export default function OrderList() {
         ))}
       </S.TabList>
 
-      
       <S.OrderList>
         {filteredOrders.map((order) => (
           <OrderCard
@@ -258,7 +222,6 @@ export default function OrderList() {
         ))}
       </S.OrderList>
 
-      
       <S.LoadMoreWrap>
         <S.LoadMoreButton type="button">
           더 보기

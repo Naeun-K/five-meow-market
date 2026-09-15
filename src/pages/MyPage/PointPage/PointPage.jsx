@@ -39,6 +39,7 @@ import {
   loginNotice,
 } from "./PointPageStyle";
 import ForwardButton from "../../../components/common/forwardBtn/ForwardButton";
+import emptyPoint from "../../../assets/empty-point-cat.webp";
 
 const FILTERS = [
   { key: "ALL", label: "전체" },
@@ -179,12 +180,23 @@ function PointPage() {
             <div css={historyContainer}>불러오는 중입니다...</div>
           ) : filteredHistory.length === 0 ? (
             <div css={emptyState}>
-              <div css={emptyIcon}>🐾</div>
-              <h3 css={emptyTitle}>아직 적립금 내역이 없습니다.</h3>
+              <img
+                css={emptyIcon}
+                src={emptyPoint}
+                alt="적립금 내역 없음"
+                loading="lazy"
+              />
+              <h3 css={emptyTitle}>
+                아직 적립금 내역이
+                <br className="mobile-break" />
+                없습니다.
+              </h3>
               <p css={emptyText}>
                 상품을 구매하면
                 <br />
-                적립된 내역을 여기에서 확인할 수 있어요.
+                적립된 내역을 여기에서
+                <br className="mobile-break" />
+                확인할 수 있어요.
               </p>
               <button
                 type="button"

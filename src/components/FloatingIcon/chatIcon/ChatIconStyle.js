@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 
-
 export const TooltipWrapper = styled.div({
   position: "relative",
 
@@ -9,14 +8,12 @@ export const TooltipWrapper = styled.div({
   alignItems: "center",
 });
 
-
 export const ChatIconStyle = styled.button({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
 
-  
-  width: "80px",
+  width: "55px",
   aspectRatio: "1 / 1",
 
   flexShrink: 0,
@@ -51,24 +48,20 @@ export const ChatIconStyle = styled.button({
   "& svg": {
     display: "block",
 
-    
     width: "45%",
     height: "45%",
 
     overflow: "visible",
   },
 
-  
-  "@media (max-width: 767px)": {
+  // "@media (max-width: 767px)": {
+  //   width: "40px",
+  // },
+
+  "@media  (max-width: 1023px)": {
     width: "50px",
   },
-
-  
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    width: "60px",
-  },
 });
-
 
 export const Tooltip = styled.div(({ $show }) => ({
   position: "absolute",

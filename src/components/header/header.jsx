@@ -9,7 +9,6 @@ import {
   Divider,
   MegaCol,
   ExtraHeading,
-  
   MyShopGrid,
   MyShopButton,
   Backdrop,
@@ -69,7 +68,6 @@ const leftColumns = [
   },
 ];
 
-
 const mobileSections = [...leftColumns.filter((col) => col.title !== "REVIEW")];
 
 function Header() {
@@ -106,10 +104,8 @@ function Header() {
 
   const isBestPage = pathname === "/products/best";
 
-  
   const isCategoryPage = pathname === "/products" && Boolean(category);
 
-  
   const isAllProductsPage = pathname === "/products" && !category;
 
   const isCommunityPage =
@@ -219,7 +215,7 @@ function Header() {
     setIsSearchOpen(false);
   };
 
-  const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen); 
+  const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen);
 
   const handleMenuToggle = () => setIsMenuOpen((isOpen) => !isOpen);
 
@@ -237,8 +233,6 @@ function Header() {
       showToast("로그아웃 중 오류가 발생했습니다.", false);
     }
   };
-
-  
 
   const handleNavigate = (path) => {
     if (!path || path === "#") return;
@@ -292,7 +286,6 @@ function Header() {
             className="svg-container"
             onClick={handleMenuToggle}
           >
-            
             <svg
               width="100%"
               height="100%"
@@ -340,7 +333,6 @@ function Header() {
                         viewBox="0 0 40 40"
                         fill="none"
                       >
-                        
                         <circle
                           cx="20"
                           cy="20"
@@ -349,7 +341,6 @@ function Header() {
                           strokeWidth="1.5"
                         />
 
-                        
                         <path
                           d="M10 20
        L10 12
@@ -367,14 +358,11 @@ function Header() {
                           strokeLinejoin="round"
                         />
 
-                        
                         <circle cx="16" cy="23" r="1" fill="#614832" />
                         <circle cx="24" cy="23" r="1" fill="#614832" />
 
-                        
                         <circle cx="20" cy="26" r="0.8" fill="#614832" />
 
-                        
                         <path
                           d="M20 27
        C19 29 17.5 29 17 28
@@ -385,7 +373,6 @@ function Header() {
                           strokeLinecap="round"
                         />
 
-                        
                         <path
                           d="M14 26L10 25
        M14 28L10 29
@@ -485,17 +472,17 @@ function Header() {
                   onMouseEnter={() => handleMenuEnter(menu)}
                   onMouseLeave={handleMenuLeave}
                 >
-                  {isActive && (
-                    <div className="nav-cat-container">
-                      <img
-                        src={menu.image}
-                        alt="화면 네비게이션용 고양이 이미지"
-                        className="nav-cat"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  )}
-                  
+                  <div
+                    className={`nav-cat-container${isActive ? " active" : ""}`}
+                  >
+                    <img
+                      src={menu.image}
+                      alt=""
+                      className="nav-cat"
+                      aria-hidden="true"
+                    />
+                  </div>
+
                   {menu.label === "집사 PICK" && (
                     <span className="mobile-paw">
                       <PawIcon />
@@ -573,7 +560,6 @@ function Header() {
           </form>
         </div>
 
-        
         <div
           className={`search-backdrop${isSearchOpen ? " is-open" : ""}`}
           aria-hidden={!isSearchOpen}
@@ -647,7 +633,6 @@ function Header() {
           </div>
         </div>
 
-        
         <MegaMenuWrapper isOpen={isMenuOpen}>
           <MegaMenuCard>
             <CloseButton onClick={handleMenuClose} aria-label="메뉴 닫기">
@@ -717,12 +702,6 @@ function Header() {
                     )}
                   </MegaCol>
                 ))}
-
-                
-
-                
-                
-                
               </LeftGroup>
 
               <Divider />
@@ -732,8 +711,6 @@ function Header() {
 
                 <MyShopGrid>
                   {!isLoggedIn ? (
-                    
-
                     <div className="myshop-guest">
                       <img
                         src={guestCat}
@@ -764,7 +741,6 @@ function Header() {
                       </div>
                     </div>
                   ) : (
-                    
                     <div className="myshop-user">
                       <div className="myshop-profile">
                         <div className="myshop-image-circle">

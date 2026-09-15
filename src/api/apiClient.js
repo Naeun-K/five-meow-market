@@ -1,28 +1,9 @@
-import { mockApiRequest } from "../data/mockApi";
-
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-
-const MOCK_AUTH_ENDPOINTS = [
-  "/auth/login",
-  "/auth/refresh",
-  "/auth/me",
-  "/auth/logout",
-];
 
 export async function apiRequest(
   endpoint,
   { method = "GET", body, token } = {},
 ) {
-  
-  if (MOCK_AUTH_ENDPOINTS.includes(endpoint)) {
-    return mockApiRequest(endpoint, {
-      method,
-      body,
-      token,
-    });
-  }
-
   const headers = {
     Accept: "application/json",
   };
