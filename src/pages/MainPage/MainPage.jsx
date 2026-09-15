@@ -1,6 +1,5 @@
 import BasicPage from "../basicPage/BasicPage";
 
-
 import tabletMainBanner from "../../assets/tablet-meow-main-banner.webp";
 import wideMainBanner from "../../assets/wide-main-banner.webp";
 import MeowCategory from "../../components/main/MeowCategory/MeowCategory";
@@ -61,19 +60,28 @@ export default function MainPage() {
         }}
       >
         <BannerContainer>
-          <source media="(max-width: 767px)" srcSet={mobileMainBanner} />
+          <source
+            media="(max-width: 767px)"
+            srcSet={mobileMainBanner}
+            fetchpriority="high"
+          />
 
-          <source media="(max-width: 1023px)" srcSet={tabletMainBanner} />
+          <source
+            media="(max-width: 1023px)"
+            srcSet={tabletMainBanner}
+            fetchpriority="high"
+          />
 
           <img
             src={wideMainBanner}
             alt="메인 배너 - 다섯 고양이가 고른 묘한 PICK"
+            fetchpriority="high"
           />
         </BannerContainer>
       </BannerBackground>
       <MainPageSytle>
         <MeowCategory />
-        
+
         <CardContainer>
           <div className="labeling-wrapper">
             <div className="labeling">
@@ -149,7 +157,7 @@ export default function MainPage() {
             </svg>
           </button>
         </CardContainer>
-        
+
         <CardContainer>
           <div className="labeling-wrapper">
             <div className="labeling">
@@ -226,7 +234,7 @@ export default function MainPage() {
             </svg>
           </button>
         </CardContainer>
-        
+
         <CardContainer>
           <div className="labeling-wrapper">
             <div className="labeling">

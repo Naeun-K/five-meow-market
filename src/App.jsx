@@ -24,12 +24,10 @@ import WishlistPage from "./pages/wishlist/WishlistPage";
 import PointPage from "./pages/MyPage/PointPage/PointPage";
 // import DetailProduct from "./pages/product/detailProduct/DetailProduct";
 import CopyDetailProduct from "./pages/product/detailProduct/CopyDetailProduct";
-import ReviewList from "./components/myReview/reviewList";
 
 function App() {
   return (
     <>
-    <ReviewList/>
       <ScrollToTop />
 
       <Routes>
