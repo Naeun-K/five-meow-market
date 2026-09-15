@@ -387,11 +387,31 @@ export const emptyState = css({
   padding: "56px 20px",
   gap: "16px",
   color: "var(--text-primary)",
+  ".mobile-break": {
+    display: "none",
+  },
+
+  "@media (max-width: 767px)": {
+    ".mobile-break": {
+      display: "block",
+    },
+  },
 });
 
 export const emptyIcon = css({
-  fontSize: "42px",
-  lineHeight: 1,
+  width: "220px",
+  height: "auto",
+  objectFit: "contain",
+
+  marginBottom: "24px",
+
+  "@media (max-width: 1023px)": {
+    width: "180px",
+  },
+
+  "@media (max-width: 767px)": {
+    width: "140px",
+  },
 });
 
 export const emptyTitle = css({
@@ -410,15 +430,40 @@ export const emptyText = css({
 });
 
 export const emptyButton = css({
-  marginTop: "8px",
-  backgroundColor: "var(--bg-button)",
-  color: "#fff",
-  borderRadius: "999px",
-  padding: "12px 22px",
+  // 🔴 SIZE
+  width: "260px",
+  height: "60px",
+  padding: 0,
+
+  border: 0,
+  borderRadius: "30px",
+
+  backgroundColor: "var(--acent-beidge)",
+  color: "var(--text-primary)",
+
+  fontSize: "18px",
   fontWeight: 600,
+  cursor: "pointer",
+
+  transition: "background-color 0.2s ease, color 0.2s ease",
+
+  "&:hover": {
+    backgroundColor: "var(--bg-button)",
+    color: "var(--text-button)",
+  },
+
+  "@media (max-width: 1023px)": {
+    width: "230px",
+    height: "54px",
+    borderRadius: "27px",
+    fontSize: "17px",
+  },
+
   "@media (max-width: 767px)": {
-    width: "100%",
-    maxWidth: "220px",
+    width: "220px",
+    height: "48px",
+    borderRadius: "24px",
+    fontSize: "16px",
   },
 });
 
