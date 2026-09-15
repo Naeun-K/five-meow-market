@@ -9,13 +9,11 @@ export default function AuthProvider({ children }) {
 
   const isLoggedIn = !!accessToken && !!user;
 
-  
   const clearAuth = () => {
     setAccessToken(null);
     setUser(null);
   };
 
-  
   const login = async (email, password) => {
     try {
       setIsAuthLoading(true);
@@ -26,8 +24,8 @@ export default function AuthProvider({ children }) {
         throw new Error(result.message || "로그인에 실패했습니다.");
       }
 
-      setAccessToken(result.accessToken);
-      setUser(result.user);
+      setAccessToken(result.data.accessToken);
+      setUser(result.data.user);
 
       return result;
     } finally {
@@ -35,11 +33,9 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  
   useEffect(() => {
     const restoreAuth = async () => {
       try {
-        
         const refreshResult = await authService.refreshAccessToken();
 
         if (!refreshResult.success) {
@@ -47,9 +43,8 @@ export default function AuthProvider({ children }) {
           setUser(null);
           return;
         }
-        const newAccessToken = refreshResult.accessToken;
+        const newAccessToken = refreshResult.data.accessToken;
 
-        
         const meResult = await authService.getMe(newAccessToken);
 
         if (!meResult.success) {
@@ -61,8 +56,6 @@ export default function AuthProvider({ children }) {
         setAccessToken(newAccessToken);
         setUser(meResult.user);
       } catch {
-        
-        
         setAccessToken(null);
         setUser(null);
       } finally {
@@ -73,7 +66,6 @@ export default function AuthProvider({ children }) {
     restoreAuth();
   }, []);
 
-  
   const logout = async () => {
     try {
       setIsAuthLoading(true);

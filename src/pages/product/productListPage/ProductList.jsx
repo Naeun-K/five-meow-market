@@ -52,7 +52,7 @@ export default function ProductList() {
           throw new Error("상품 목록 조회에 실패했습니다.");
         }
 
-        setProducts(result.products);
+        setProducts(result.data.products);
         setTotalPages(result.totalPages);
         setTotalCount(result.totalCount);
       } catch (error) {
@@ -99,11 +99,11 @@ export default function ProductList() {
         <CardContainer>
           {products.map((product) => (
             <Link
+              key={product.productId}
               to={`/products/${product.productId}`}
               className="product-link"
             >
-              {" "}
-              <div key={product.productId} className="card-wrapper">
+              <div className="card-wrapper">
                 <ProductCard
                   image={product.thumbnail}
                   name={product.name}
