@@ -389,6 +389,7 @@ export default function ProductList() {
             >
               <div className="card-wrapper">
                 <ProductCard
+                  productId={product.productId}
                   image={product.thumbnail}
                   name={product.name}
                   badge=""

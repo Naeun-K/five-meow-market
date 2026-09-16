@@ -69,6 +69,7 @@ export default function NewProductList() {
             >
               <div className="card-wrapper">
                 <ProductCard
+                  productId={product.productId}
                   image={product.thumbnail}
                   name={product.name}
                   badge="new"
