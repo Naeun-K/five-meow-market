@@ -5,6 +5,7 @@ import * as checkoutService from "../../services/checkOutServices";
 import useAuth from "../../hooks/useAuth";
 import useToast from "../../hooks/useToast";
 import Loader from "../../components/loader/Loader";
+import { createOrder } from "../../services/orderServices";
 
 const cardCompanies = [
   "신한카드",
@@ -407,19 +408,23 @@ function CheckoutPage() {
   const handlePayment = async () => {
     if (!isAgreed) {
       showToast("주문 상품 및 결제정보 구매 동의가 필요합니다.", false);
-
       return;
     }
 
     if (!checkout?.shippingAddress) {
       showToast("배송지를 선택해주세요.", false);
-
       return;
     }
 
+    // 카드 결제를 선택한 경우에만 카드사 검사
     if (paymentMethod === "card" && !selectedCardCompany) {
       showToast("카드사를 선택해주세요.", false);
+      return;
+    }
 
+    // 무통장입금을 선택한 경우에만 은행 검사
+    if (paymentMethod === "bank" && !selectedBank) {
+      showToast("은행을 선택해주세요.", false);
       return;
     }
 
@@ -443,15 +448,21 @@ function CheckoutPage() {
         return;
       }
 
-      // 결제 완료 토스트
-      showToast("결제가 완료되었습니다.", true);
+      // 주문 생성
+      const orderResult = await createOrder(checkoutId, accessToken);
 
-      // 메인 페이지 이동
+      if (!orderResult.success) {
+        throw new Error(orderResult.message || "주문 생성에 실패했습니다.");
+      }
+
+      // 주문 생성 성공 후에만 완료 처리
+      showToast("결제가 완료되었습니다. 주문해주셔서 감사합니다.", true);
+
       navigate("/");
     } catch (error) {
-      console.error("Checkout 검증 실패:", error);
+      console.error("주문 처리 실패:", error);
 
-      showToast(error.message || "주문 정보를 확인하지 못했습니다.", false);
+      showToast(error.message || "주문 처리 중 문제가 발생했습니다.", false);
     }
   };
 

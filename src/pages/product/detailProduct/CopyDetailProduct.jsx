@@ -857,6 +857,7 @@ export default function DetailProduct() {
           <div className="product-photo-area">
             <PhotoWrapper>
               <ProductCard
+                productId={product.productId}
                 image={product.thumbnail}
                 name={product.name}
                 badge=""
