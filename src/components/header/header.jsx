@@ -102,7 +102,8 @@ function Header() {
 
   const isHomePage = pathname === "/";
 
-  const isBestPage = pathname === "/products/best";
+  const isPickPage =
+    pathname === "/products/best" || pathname === "/products/new";
 
   const isCategoryPage = pathname === "/products" && Boolean(category);
 
@@ -118,8 +119,8 @@ function Header() {
       case "홈":
         return isHomePage;
 
-      case "베스트":
-        return isBestPage;
+      case "집사 PICK":
+        return isPickPage;
 
       case "카테고리":
         return isCategoryPage;
@@ -468,7 +469,9 @@ function Header() {
               return (
                 <div
                   key={menu.label}
-                  className={`nav-item${isActive ? " active" : ""}`}
+                  className={`nav-item ${
+                    isActive ? "active" : ""
+                  } ${menu.label === "집사 PICK" ? "pick-item" : ""}`}
                   onMouseEnter={() => handleMenuEnter(menu)}
                   onMouseLeave={handleMenuLeave}
                 >

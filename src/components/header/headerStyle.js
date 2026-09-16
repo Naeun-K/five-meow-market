@@ -203,7 +203,7 @@ export const HeaderStyle = styled.header({
     },
 
     "& .nav-cat-container": {
-      width: "45px",
+      width: "52px",
       aspectRatio: "1/1",
       position: "absolute",
 
@@ -252,6 +252,10 @@ export const HeaderStyle = styled.header({
     "&:hover::after": {
       transform: "scaleX(1)",
     },
+  },
+
+  "& .navigation .nav-item.pick-item > button::after": {
+    width: "calc(100% + 28px)",
   },
 
   "& .nav-item:hover > button::after": {
