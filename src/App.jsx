@@ -27,6 +27,7 @@ import CopyDetailProduct from "./pages/product/detailProduct/CopyDetailProduct";
 import BestProductList from "./pages/product/best/BestProductList";
 import NewProductList from "./pages/product/new/NewProductList";
 import CheckoutPage from "./pages/checkout/CheckoutPage";
+import CancelPage from "./pages/cancelPage/CancelPage";
 
 function App() {
   return (
@@ -55,14 +56,17 @@ function App() {
 
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+
+        <Route path="/claims/cancel" element={<CancelPage />} />
+        {/* <Route path="/claims/exchange" element={<ExchangePage />} /> */}
+        {/* <Route path="/claims/return" element={<ReturnPage />} /> */}
+
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/about" element={<AboutPage />} />
 
         <Route path="/community/notice" element={<NoticePage />} />
-
         <Route path="/community/inquiry" element={<QnaPage />} />
-
         <Route path="/community/review" element={<ReviewPage />} />
 
         <Route path="/support" element={<CustomerContactPage />} />
