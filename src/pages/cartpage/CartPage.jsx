@@ -19,41 +19,28 @@ export default function CartPage() {
   const { isLoggedIn, accessToken, isAuthLoading } = useAuth();
   const { showToast } = useToast();
 
-  
+  // 장바구니 조회
   useEffect(() => {
-    console.count("🔥 Cart useEffect 실행");
-
-    console.log("Cart effect dependencies:", {
-      isLoggedIn,
-      accessToken,
-      showToast,
-    });
-
     if (isAuthLoading || !isLoggedIn || !accessToken) {
       return;
     }
 
     const fetchCart = async () => {
-      console.count("🌐 GET /cart 실제 호출");
-
       try {
         const result = await getCart(accessToken);
-
-        console.log("✅ GET /cart 응답:", result);
 
         if (!result.success) {
           throw new Error(result.message || "장바구니 조회에 실패했습니다.");
         }
 
-        const items = result.data?.cartItems ?? [];
-
-        console.log("📦 cartItems:", items);
+        const items = result.items ?? [];
 
         setCartItems(items);
 
+        // 처음 조회했을 때 전체 상품 선택
         setSelectedItems(items.map((item) => item.cartItemId));
       } catch (error) {
-        console.error("❌ 장바구니 조회 실패:", error);
+        console.error("장바구니 조회 실패:", error);
 
         showToast(error.message || "장바구니 조회에 실패했습니다.", false);
       } finally {
@@ -64,7 +51,7 @@ export default function CartPage() {
     fetchCart();
   }, [isAuthLoading, isLoggedIn, accessToken, showToast]);
 
-  
+  // 상품 선택 / 선택 해제
   const handleCheck = (cartItemId, checked) => {
     if (checked) {
       setSelectedItems((prev) => {
@@ -81,7 +68,7 @@ export default function CartPage() {
     setSelectedItems((prev) => prev.filter((id) => id !== cartItemId));
   };
 
-  
+  // 상품 수량 변경
   const handleQuantityChange = async (cartItemId, quantity) => {
     try {
       const result = await updateCartItem(cartItemId, quantity, accessToken);
@@ -90,14 +77,13 @@ export default function CartPage() {
         throw new Error(result.message || "상품 수량 변경에 실패했습니다.");
       }
 
-      const updatedItem = result.data.cartItem;
-
       setCartItems((prev) =>
         prev.map((item) =>
-          item.cartItemId === updatedItem.cartItemId
+          item.cartItemId === result.cartItemId
             ? {
                 ...item,
-                quantity: updatedItem.quantity,
+                quantity: result.quantity,
+                itemAmount: result.itemAmount,
               }
             : item,
         ),
@@ -109,7 +95,7 @@ export default function CartPage() {
     }
   };
 
-  
+  // 상품 개별 삭제
   const handleRemove = async (cartItemId) => {
     try {
       const result = await deleteCartItem(cartItemId, accessToken);
@@ -118,15 +104,13 @@ export default function CartPage() {
         throw new Error(result.message || "상품 삭제에 실패했습니다.");
       }
 
-      const deletedCartItemId = result.data.deletedCartItemId;
-
       setCartItems((prev) =>
-        prev.filter((item) => item.cartItemId !== deletedCartItemId),
+        prev.filter((item) => item.cartItemId !== cartItemId),
       );
 
-      setSelectedItems((prev) => prev.filter((id) => id !== deletedCartItemId));
+      setSelectedItems((prev) => prev.filter((id) => id !== cartItemId));
 
-      showToast("장바구니에서 상품을 삭제했습니다.", true);
+      showToast(result.message || "장바구니에서 상품을 삭제했습니다.", true);
     } catch (error) {
       console.error("장바구니 상품 삭제 실패:", error);
 
@@ -134,7 +118,7 @@ export default function CartPage() {
     }
   };
 
-  
+  // 로그인하지 않은 경우
   if (!isLoggedIn || !accessToken) {
     return (
       <BasicPage>
@@ -143,7 +127,7 @@ export default function CartPage() {
     );
   }
 
-  
+  // 장바구니 조회 중
   if (isLoading) {
     return (
       <BasicPage>
@@ -152,7 +136,7 @@ export default function CartPage() {
     );
   }
 
-  
+  // 장바구니가 비어있는 경우
   if (cartItems.length === 0) {
     return (
       <BasicPage>

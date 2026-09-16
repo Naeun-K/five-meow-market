@@ -23,7 +23,8 @@ const CartUI = ({
     0,
   );
 
-  const reward = 0;
+  const reward = Math.floor(productPrice * 0.05);
+  // const reward = 0;
 
   const shippingFee = productPrice === 0 ? 0 : productPrice >= 70000 ? 0 : 3000;
 
