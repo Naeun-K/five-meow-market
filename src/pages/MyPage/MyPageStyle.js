@@ -49,32 +49,547 @@ export const OrderCardWrapper = styled.article({
     },
   },
 });
+
+// export const OrderCard = styled.article({
+//   display: "flex",
+//   flexDirection: "column",
+//   gap: "24px",
+
+//   width: "100%",
+//   padding: "20px 0",
+
+//   "& .order-banner": {
+//     display: "flex",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     gap: "20px",
+
+//     width: "100%",
+//     padding: "12px 20px",
+
+//     color: "#4A3425",
+//     backgroundColor: "#F5E9DF",
+
+//     fontWeight: 500,
+
+//     borderRadius: "999px",
+
+//     "& .order-date": {
+//       flexShrink: 0,
+//     },
+
+//     "& button.order-number": {
+//       minWidth: 0,
+
+//       color: "inherit",
+
+//       textDecoration: "underline",
+//       textUnderlineOffset: "3px",
+
+//       overflow: "hidden",
+//       textOverflow: "ellipsis",
+//       whiteSpace: "nowrap",
+
+//       transition: "color 0.15s, font-weight 0.15s",
+
+//       "&:hover": {
+//         color: "#2B180D",
+//         fontWeight: 700,
+//       },
+//     },
+//   },
+
+//   "& .order-content": {
+//     display: "flex",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     gap: "40px",
+
+//     width: "100%",
+//     minWidth: 0,
+
+//     padding: "5px 20px 24px",
+
+//     borderBottom: "1px solid var(--border)",
+//   },
+
+//   "& .order-product-summary": {
+//     display: "flex",
+//     alignItems: "center",
+//     gap: "28px",
+
+//     flex: 1,
+//     minWidth: 0,
+//   },
+
+//   "& .img-container": {
+//     flexShrink: 0,
+
+//     width: "110px",
+//     height: "110px",
+
+//     border: "1px solid var(--border)",
+//     borderRadius: "8px",
+
+//     overflow: "hidden",
+
+//     "& > *": {
+//       width: "100%",
+//       height: "100%",
+//     },
+
+//     "& article": {
+//       width: "100%",
+//       height: "100%",
+//     },
+
+//     "& img": {
+//       display: "block",
+
+//       width: "100%",
+//       height: "100%",
+
+//       objectFit: "cover",
+//       objectPosition: "center",
+//     },
+//   },
+
+//   "& .product-summary-info": {
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "flex-start",
+//     gap: "10px",
+
+//     flex: 1,
+//     minWidth: 0,
+
+//     "& > strong": {
+//       display: "block",
+
+//       width: "100%",
+
+//       color: "var(--text-primary)",
+
+//       fontSize: "18px",
+//       fontWeight: 600,
+//       lineHeight: 1.4,
+
+//       overflow: "hidden",
+//       textOverflow: "ellipsis",
+//       whiteSpace: "nowrap",
+//     },
+
+//     "& > span": {
+//       color: "var(--text-secondary)",
+
+//       fontSize: "15px",
+//       lineHeight: 1.5,
+//     },
+
+//     "& > p": {
+//       display: "flex",
+//       alignItems: "center",
+//       gap: "6px",
+
+//       margin: 0,
+
+//       color: "var(--text-secondary)",
+
+//       fontSize: "16px",
+//       lineHeight: 1.5,
+
+//       "& strong": {
+//         color: "var(--text-primary)",
+
+//         fontSize: "18px",
+//         fontWeight: 700,
+//       },
+//     },
+//   },
+
+//   /*
+//    * 데스크톱
+//    *
+//    * 주문 상품 정보 | 주문 상태 | 버튼
+//    *
+//    * 주문 상태는 버튼 묶음 전체의 세로 중앙에 고정된다.
+//    */
+//   "& .button-container": {
+//     position: "relative",
+
+//     display: "flex",
+//     flexDirection: "column",
+//     justifyContent: "center",
+//     alignItems: "flex-end",
+//     gap: "12px",
+
+//     flexShrink: 0,
+
+//     /*
+//      * 주문 상태 100px
+//      * 영역 사이 간격 24px
+//      * 버튼 160px
+//      */
+//     width: "284px",
+//     minHeight: "44px",
+//     paddingLeft: "124px",
+
+//     "& .badge": {
+//       position: "absolute",
+//       top: "50%",
+//       left: 0,
+
+//       display: "flex",
+//       justifyContent: "center",
+//       alignItems: "center",
+
+//       width: "100px",
+//       minHeight: "44px",
+
+//       color: "var(--text-primary)",
+
+//       fontSize: "15px",
+//       fontWeight: 700,
+//       lineHeight: 1.4,
+//       textAlign: "center",
+
+//       whiteSpace: "nowrap",
+
+//       transform: "translateY(-50%)",
+//     },
+
+//     "& button": {
+//       flexShrink: 0,
+
+//       width: "160px",
+//       minHeight: "44px",
+
+//       padding: "10px 16px",
+
+//       color: "var(--text-primary)",
+//       backgroundColor: "#fff",
+
+//       fontSize: "15px",
+//       fontWeight: 500,
+//       lineHeight: 1.4,
+
+//       border: "1px solid var(--text-primary)",
+//       borderRadius: "var(--radius-md)",
+
+//       whiteSpace: "nowrap",
+
+//       transition:
+//         "background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease",
+
+//       "&:hover": {
+//         color: "var(--text-button)",
+//         backgroundColor: "var(--bg-button)",
+//         borderColor: "var(--bg-button)",
+//       },
+//     },
+
+//     "& .confirm-button": {
+//       color: "#fff",
+//       backgroundColor: "var(--text-primary)",
+//     },
+//   },
+
+//   /*
+//    * 태블릿
+//    */
+//   "@media (max-width: 1023px)": {
+//     gap: "20px",
+
+//     "& .order-content": {
+//       gap: "24px",
+
+//       padding: "5px 15px 22px",
+//     },
+
+//     "& .order-product-summary": {
+//       gap: "20px",
+//     },
+
+//     "& .img-container": {
+//       width: "96px",
+//       height: "96px",
+//     },
+
+//     "& .product-summary-info": {
+//       gap: "8px",
+
+//       "& > strong": {
+//         fontSize: "17px",
+//       },
+
+//       "& > span": {
+//         fontSize: "14px",
+//       },
+
+//       "& > p": {
+//         fontSize: "15px",
+
+//         "& strong": {
+//           fontSize: "17px",
+//         },
+//       },
+//     },
+
+//     "& .button-container": {
+//       /*
+//        * 주문 상태 80px
+//        * 영역 사이 간격 16px
+//        * 버튼 140px
+//        */
+//       width: "236px",
+//       paddingLeft: "96px",
+//       gap: "10px",
+
+//       "& .badge": {
+//         left: 0,
+
+//         width: "80px",
+//         minHeight: "42px",
+
+//         fontSize: "14px",
+//       },
+
+//       "& button": {
+//         width: "140px",
+//         minHeight: "42px",
+
+//         padding: "9px 10px",
+
+//         fontSize: "14px",
+//       },
+//     },
+//   },
+
+//   /*
+//    * 모바일
+//    *
+//    * 주문 상품 정보
+//    * 주문 상태
+//    * 버튼
+//    */
+//   "@media (min-width: 320px) and (max-width: 767px)": {
+//     flexShrink: 0,
+
+//     width: "100%",
+//     minWidth: "290px",
+
+//     gap: "20px",
+//     padding: "15px 0",
+
+//     scrollSnapAlign: "start",
+
+//     "& .order-banner": {
+//       gap: "12px",
+
+//       padding: "10px 14px",
+
+//       fontSize: "13px",
+
+//       borderRadius: "16px",
+//     },
+
+//     "& .order-content": {
+//       flexDirection: "column",
+//       alignItems: "stretch",
+//       gap: "24px",
+
+//       padding: "0 10px 22px",
+//     },
+
+//     "& .order-product-summary": {
+//       alignItems: "center",
+//       gap: "16px",
+
+//       width: "100%",
+//     },
+
+//     "& .img-container": {
+//       width: "88px",
+//       height: "88px",
+//     },
+
+//     "& .product-summary-info": {
+//       gap: "6px",
+
+//       "& > strong": {
+//         display: "-webkit-box",
+
+//         fontSize: "16px",
+//         whiteSpace: "normal",
+
+//         WebkitBoxOrient: "vertical",
+//         WebkitLineClamp: 2,
+
+//         overflow: "hidden",
+//       },
+
+//       "& > span": {
+//         fontSize: "13px",
+//       },
+
+//       "& > p": {
+//         flexWrap: "wrap",
+
+//         fontSize: "14px",
+
+//         "& strong": {
+//           fontSize: "16px",
+//         },
+//       },
+//     },
+
+//     "& .button-container": {
+//       position: "static",
+
+//       display: "grid",
+//       gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+//       gap: "10px",
+
+//       width: "100%",
+//       minHeight: 0,
+//       paddingLeft: 0,
+
+//       "& .badge": {
+//         position: "static",
+
+//         gridColumn: "1 / -1",
+
+//         justifyContent: "flex-start",
+
+//         width: "100%",
+//         minHeight: "auto",
+
+//         padding: "0 0 4px",
+
+//         fontSize: "14px",
+//         textAlign: "left",
+
+//         transform: "none",
+//       },
+
+//       "& button": {
+//         width: "100%",
+//         minWidth: 0,
+//         minHeight: "42px",
+
+//         padding: "9px 8px",
+
+//         fontSize: "13px",
+//       },
+
+//       "& button:only-of-type": {
+//         gridColumn: "1 / -1",
+//       },
+//     },
+//   },
+
+//   /*
+//    * 소형 모바일
+//    */
+//   "@media (max-width: 374px)": {
+//     "& .order-banner": {
+//       alignItems: "flex-start",
+
+//       "& button.order-number": {
+//         maxWidth: "160px",
+//       },
+//     },
+
+//     "& .order-product-summary": {
+//       alignItems: "flex-start",
+//       gap: "12px",
+//     },
+
+//     "& .img-container": {
+//       width: "76px",
+//       height: "76px",
+//     },
+
+//     "& .product-summary-info": {
+//       "& > strong": {
+//         fontSize: "15px",
+//       },
+
+//       "& > span": {
+//         fontSize: "12px",
+//       },
+
+//       "& > p": {
+//         flexDirection: "column",
+//         alignItems: "flex-start",
+//         gap: "2px",
+
+//         fontSize: "13px",
+
+//         "& strong": {
+//           fontSize: "15px",
+//         },
+//       },
+//     },
+
+//     "& .button-container": {
+//       gridTemplateColumns: "1fr",
+
+//       "& .badge": {
+//         gridColumn: "auto",
+//       },
+
+//       "& button": {
+//         gridColumn: "auto",
+//       },
+
+//       "& button:only-of-type": {
+//         gridColumn: "auto",
+//       },
+//     },
+//   },
+// });
 export const OrderCard = styled.article({
   display: "flex",
   flexDirection: "column",
-  gap: "30px",
+  gap: "24px",
 
   width: "100%",
-
   padding: "20px 0",
 
   "& .order-banner": {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    gap: "20px",
 
-    padding: " 12px 18px",
+    width: "100%",
+    padding: "12px 20px",
 
-    backgroundColor: "#F5E9DF",
     color: "#4A3425",
+    backgroundColor: "#F5E9DF",
 
     fontWeight: 500,
 
-    borderRadius: "20px",
+    borderRadius: "999px",
+
+    "& .order-date": {
+      flexShrink: 0,
+    },
 
     "& button.order-number": {
+      minWidth: 0,
+
+      color: "inherit",
+
       textDecoration: "underline",
-      transition: "color 0.15s, font-weight 0.15s",
+      textUnderlineOffset: "3px",
+
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+
+      transition: "color 0.15s ease, font-weight 0.15s ease",
 
       "&:hover": {
         color: "#2B180D",
@@ -82,124 +597,450 @@ export const OrderCard = styled.article({
       },
     },
   },
+
+  /*
+   * 데스크톱 배치
+   *
+   * 주문 상품 정보 | 주문 상태 | 버튼
+   */
   "& .order-content": {
-    borderBottom: "1px solid var(--border)",
-    padding: " 0 20px 20px 20px",
-
+    // display: "grid",
+    // gridTemplateColumns: "minmax(0, 1fr) 120px 160px",
     display: "flex",
-
     justifyContent: "space-between",
     alignItems: "center",
+    // columnGap: "30px",
 
-    "& .desc-wrapper": {
-      display: "contents",
-    },
+    width: "100%",
+    minWidth: 0,
+
+    padding: "5px 20px 24px",
+
+    borderBottom: "1px solid var(--border)",
   },
-  "& .product-wrapper": {
-    display: "contents",
-  },
-  "& .product-desc-wrapper": {
-    display: "contents",
-  },
-  "& .price-wrapper": {
-    display: "contents",
+
+  "& .order-product-summary": {
+    display: "flex",
+    alignItems: "center",
+    gap: "28px",
+
+    width: "40%",
+    minWidth: 0,
   },
 
   "& .img-container": {
+    flexShrink: 0,
+
     width: "110px",
-    aspectRatio: "1/1",
+    height: "110px",
 
     border: "1px solid var(--border)",
     borderRadius: "8px",
+
     overflow: "hidden",
 
-    "& img": { objectFit: "cover" },
+    "& > *": {
+      width: "100%",
+      height: "100%",
+    },
+
+    "& article": {
+      width: "100%",
+      height: "100%",
+    },
+
+    "& img": {
+      display: "block",
+
+      width: "100%",
+      height: "100%",
+
+      objectFit: "cover",
+      objectPosition: "center",
+    },
+  },
+
+  "& .product-summary-info": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "10px",
+
+    flex: 1,
+    minWidth: 0,
+
+    "& > strong": {
+      display: "block",
+
+      width: "100%",
+
+      color: "var(--text-primary)",
+
+      fontSize: "18px",
+      fontWeight: 600,
+      lineHeight: 1.4,
+
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
+
+    "& > span": {
+      color: "var(--text-secondary)",
+
+      fontSize: "15px",
+      lineHeight: 1.5,
+    },
+
+    "& > p": {
+      display: "flex",
+      alignItems: "center",
+      gap: "6px",
+
+      margin: 0,
+
+      color: "var(--text-secondary)",
+
+      fontSize: "16px",
+      lineHeight: 1.5,
+
+      "& strong": {
+        color: "var(--text-primary)",
+
+        fontSize: "18px",
+        fontWeight: 700,
+      },
+    },
+  },
+  "& .payment-status-wrapper": {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "50px",
+
+    "& .payments": {
+      whiteSpace: "nowrap",
+      "& strong": { color: "var(--text-primary)" },
+    },
+    /*
+     * 주문 상품 정보와 버튼 사이에 있는
+     * 독립적인 주문 상태 영역
+     */
+    "& .order-status": {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+
+      width: "100%",
+      minWidth: 0,
+      minHeight: "44px",
+
+      color: "var(--text-primary)",
+
+      fontSize: "15px",
+      fontWeight: 700,
+      lineHeight: 1.4,
+      textAlign: "center",
+
+      whiteSpace: "nowrap",
+    },
   },
 
   "& .button-container": {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
-    gap: "20px",
-    flexShrink: 0,
-    "& .badge": {
-      color: "var(--text-primary)",
-      fontWeight: 700,
-    },
+    alignItems: "stretch",
+    gap: "12px",
+
+    width: "160px",
+
     "& button": {
-      padding: "10px 20px",
-      fontSize: "17px",
-      fontWeight: 500,
-      // letterSpacing: "5px",
+      width: "100%",
+      minHeight: "44px",
+
+      padding: "10px 16px",
+
       color: "var(--text-primary)",
+      backgroundColor: "#fff",
+
+      fontSize: "15px",
+      fontWeight: 500,
+      lineHeight: 1.4,
+
       border: "1px solid var(--text-primary)",
       borderRadius: "var(--radius-md)",
 
-      transition: " background-color 0.3s, color 0.3s",
-    },
-    "& button:hover": {
-      backgroundColor: "var(--bg-button)",
-      color: "var(--text-button)",
-    },
-  },
+      whiteSpace: "nowrap",
 
-  "@media (max-width:1023px)": {
-    "& .product-desc-wrapper": {
-      display: "flex",
-      flexDirection: "column",
-      gap: "10px",
-    },
-  },
-  "@media (min-width:320px) and (max-width:767px)": {
-    minWidth: "300px",
+      transition:
+        "background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease",
 
-    "& .order-content": {
-      borderBottom: "none",
-
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      gap: "30px",
-
-      padding: "0 20px",
-
-      "& .desc-wrapper": {
-        display: "flex",
-
-        justifyContent: "space-between",
-        alignItems: "center",
-
-        width: "100%",
-        flexDirection: "column",
-
-        gap: "30px",
-
-        padding: 0,
+      "&:hover": {
+        color: "var(--text-button)",
+        backgroundColor: "var(--bg-button)",
+        borderColor: "var(--bg-button)",
       },
     },
 
-    "& .product-desc-wrapper": {
-      alignItems: "flex-end",
+    "& .confirm-button": {
+      color: "#fff",
+      backgroundColor: "var(--text-primary)",
     },
-    "& .product-wrapper": {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
+  },
 
-      width: "100%",
-    },
-    "& .price-wrapper": {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
+  /*
+   * 태블릿
+   */
+  "@media (max-width: 1023px)": {
+    gap: "20px",
 
-      width: "100%",
+    "& .order-content": {
+      gridTemplateColumns: "minmax(0, 1fr) 90px 140px",
+      columnGap: "20px",
+
+      padding: "5px 15px 22px",
     },
+
+    "& .order-product-summary": {
+      gap: "20px",
+    },
+
+    "& .img-container": {
+      width: "96px",
+      height: "96px",
+    },
+
+    "& .product-summary-info": {
+      gap: "8px",
+
+      "& > strong": {
+        fontSize: "17px",
+      },
+
+      "& > span": {
+        fontSize: "14px",
+      },
+
+      "& > p": {
+        fontSize: "15px",
+
+        "& strong": {
+          fontSize: "17px",
+        },
+      },
+    },
+
+    "& .payment-status-wrapper": {
+      flexDirection: "column",
+      gap: "10px",
+
+      "& .payments": {
+        order: 1,
+      },
+    },
+    "& .order-status": {
+      minHeight: "42px",
+
+      fontSize: "14px",
+    },
+
     "& .button-container": {
+      width: "140px",
+      gap: "10px",
+
+      "& button": {
+        minHeight: "42px",
+
+        padding: "9px 10px",
+
+        fontSize: "14px",
+      },
+    },
+  },
+
+  /*
+   * 모바일
+   *
+   * 주문 상품 정보
+   * 주문 상태
+   * 버튼
+   */
+  "@media (min-width: 320px) and (max-width: 767px)": {
+    flexShrink: 0,
+
+    width: "100%",
+    minWidth: "290px",
+
+    gap: "20px",
+    padding: "15px 0",
+
+    scrollSnapAlign: "start",
+
+    "& .order-banner": {
+      gap: "12px",
+
+      padding: "10px 14px",
+
+      fontSize: "13px",
+
+      borderRadius: "16px",
+    },
+
+    "& .order-content": {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "stretch",
+      gap: "20px",
+
+      padding: "0 10px 22px",
+    },
+
+    "& .order-product-summary": {
+      alignItems: "center",
+      gap: "16px",
+
+      width: "100%",
+    },
+
+    "& .img-container": {
+      width: "88px",
+      height: "88px",
+    },
+
+    "& .product-summary-info": {
+      gap: "6px",
+
+      "& > strong": {
+        display: "-webkit-box",
+
+        fontSize: "16px",
+        whiteSpace: "normal",
+
+        WebkitBoxOrient: "vertical",
+        WebkitLineClamp: 2,
+
+        overflow: "hidden",
+      },
+
+      "& > span": {
+        fontSize: "13px",
+      },
+
+      "& > p": {
+        flexWrap: "wrap",
+
+        fontSize: "14px",
+
+        "& strong": {
+          fontSize: "16px",
+        },
+      },
+    },
+    "& .payment-status-wrapper": {
+      // display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
+      alignItems: "center",
+      // gap: "16px",
+    },
+    // "& .order-status": {
+    //   justifyContent: "flex-start",
+
+    //   width: "100%",
+    //   minHeight: "auto",
+
+    //   padding: "2px 0",
+
+    //   fontSize: "14px",
+    //   textAlign: "left",
+    // },
+
+    "& .button-container": {
+      display: "grid",
+      gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+      gap: "10px",
+
       width: "100%",
+
+      "& button": {
+        width: "100%",
+        minWidth: 0,
+        minHeight: "42px",
+
+        padding: "9px 8px",
+
+        fontSize: "13px",
+      },
+
+      "& button:only-child": {
+        gridColumn: "1 / -1",
+      },
+    },
+  },
+
+  /*
+   * 소형 모바일
+   */
+  "@media (max-width: 374px)": {
+    "& .order-banner": {
+      alignItems: "flex-start",
+
+      "& button.order-number": {
+        maxWidth: "160px",
+      },
+    },
+
+    "& .order-content": {
+      gap: "16px",
+    },
+
+    "& .order-product-summary": {
+      alignItems: "flex-start",
+      gap: "12px",
+    },
+
+    "& .img-container": {
+      width: "76px",
+      height: "76px",
+    },
+
+    "& .product-summary-info": {
+      "& > strong": {
+        fontSize: "15px",
+      },
+
+      "& > span": {
+        fontSize: "12px",
+      },
+
+      "& > p": {
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: "2px",
+
+        fontSize: "13px",
+
+        "& strong": {
+          fontSize: "15px",
+        },
+      },
+    },
+
+    "& .order-status": {
+      fontSize: "13px",
+    },
+
+    "& .button-container": {
+      gridTemplateColumns: "1fr",
+
+      "& button": {
+        gridColumn: "auto",
+      },
+
+      "& button:only-child": {
+        gridColumn: "auto",
+      },
     },
   },
 });
