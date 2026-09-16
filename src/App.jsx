@@ -26,6 +26,7 @@ import PointPage from "./pages/MyPage/PointPage/PointPage";
 import CopyDetailProduct from "./pages/product/detailProduct/CopyDetailProduct";
 import BestProductList from "./pages/product/best/BestProductList";
 import NewProductList from "./pages/product/new/NewProductList";
+import CheckoutPage from "./pages/checkout/CheckoutPage";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="/mypage/orders/:orderId" element={<MyOrderDetail />} />
 
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/about" element={<AboutPage />} />
