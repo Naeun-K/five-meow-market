@@ -77,6 +77,18 @@ export default function CartPage() {
     setSelectedItems((prev) => prev.filter((id) => id !== cartItemId));
   };
 
+  // 상품 전체 선택 / 전체 해제
+  const handleCheckAll = (event) => {
+    const checked = event.target.checked;
+
+    if (checked) {
+      setSelectedItems(cartItems.map((item) => item.cartItemId));
+      return;
+    }
+
+    setSelectedItems([]);
+  };
+
   // 상품 수량 변경
   const handleQuantityChange = async (cartItemId, quantity) => {
     try {
@@ -207,6 +219,7 @@ export default function CartPage() {
         cartItems={cartItems}
         selectedItems={selectedItems}
         onCheck={handleCheck}
+        onCheckAll={handleCheckAll}
         onQuantityChange={handleQuantityChange}
         onRemove={handleRemove}
         onCheckout={handleCheckout}
