@@ -1,1044 +1,5 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import * as S from "./orderListStyle";
 import * as orderService from "../../services/orderServices";
@@ -1088,6 +49,8 @@ const STATUS_LABELS = {
   DELIVERED: "배송완료",
   CONFIRMED: "구매확정",
   CANCELED: "주문취소",
+  EXCHANGED: "교환완료",
+  RETURNED: "반품완료",
 };
 
 const CLAIM_TYPE_LABELS = {
@@ -1099,7 +62,7 @@ const CLAIM_TYPE_LABELS = {
 const CLAIM_STATUS_LABELS = {
   REQUESTED: "신청완료",
   PROCESSING: "처리중",
-  COMPLETED: "처리완료",
+  COMPLETED: "완료",
   REJECTED: "처리불가",
 };
 
@@ -1213,21 +176,21 @@ function getClaimStatusLabel(claimSummary) {
   const statusLabel =
     CLAIM_STATUS_LABELS[claimSummary.status] ?? claimSummary.status;
 
-  return `${typeLabel} ${statusLabel}`;
+  return `${typeLabel}${statusLabel}`;
 }
 
 function getOrderStatusInfo(order) {
-  if (order.status === "CANCELED") {
-    return {
-      label: "주문취소",
-      variant: "CANCELED",
-    };
-  }
-
   if (order.claimSummary) {
     return {
       label: getClaimStatusLabel(order.claimSummary),
       variant: "CLAIM",
+    };
+  }
+
+  if (order.status === "CANCELED") {
+    return {
+      label: "주문취소",
+      variant: "CANCELED",
     };
   }
 
@@ -1244,7 +207,11 @@ function filterOrdersByTab(orders, activeTab) {
 
   if (activeTab === "CLAIM") {
     return orders.filter(
-      (order) => Boolean(order.claimSummary) || order.status === "CANCELED",
+      (order) =>
+        Boolean(order.claimSummary) ||
+        order.status === "CANCELED" ||
+        order.status === "EXCHANGED" ||
+        order.status === "RETURNED",
     );
   }
 
@@ -1317,6 +284,116 @@ function filterMockOrdersByPeriod(orders, period) {
   });
 }
 
+function applyMockClaimToOrders(mockOrders, claimState) {
+  if (
+    !claimState?.claimCreated ||
+    !claimState?.isMock ||
+    !claimState?.orderId ||
+    !claimState?.claimType
+  ) {
+    return mockOrders;
+  }
+
+  const { orderId, claimType, scope, claim } = claimState;
+
+  return mockOrders.map((mockOrder) => {
+    if (String(mockOrder.orderId) !== String(orderId)) {
+      return mockOrder;
+    }
+
+    const claimScope = scope ?? claim?.scope ?? "ALL";
+
+    const claimSummary = {
+      claimId: claim?.claimId ?? `MOCK-${claimType}-${String(orderId)}`,
+      type: claimType,
+      scope: claimScope,
+      status: "COMPLETED",
+      reason: claim?.reason ?? "",
+      detailReason: claim?.detailReason ?? null,
+      createdAt: claim?.createdAt ?? new Date().toISOString(),
+    };
+
+    const selectedProductIds = new Set(
+      (claim?.items ?? []).map((item) => String(item.productId)),
+    );
+
+    const isAllClaim = claimScope === "ALL";
+
+    const isTargetItem = (item) =>
+      isAllClaim || selectedProductIds.has(String(item.productId));
+
+    const nextItems =
+      mockOrder.items?.map((item) => {
+        if (!isTargetItem(item)) {
+          return item;
+        }
+
+        if (claimType === "CANCEL") {
+          return {
+            ...item,
+            status: "CANCELED",
+          };
+        }
+
+        if (claimType === "EXCHANGE") {
+          return {
+            ...item,
+            status: "EXCHANGED",
+          };
+        }
+
+        if (claimType === "RETURN") {
+          return {
+            ...item,
+            status: "RETURNED",
+          };
+        }
+
+        return item;
+      }) ?? [];
+
+    let nextStatus = mockOrder.status;
+    let nextStatusLabel = mockOrder.statusLabel;
+
+    if (isAllClaim) {
+      if (claimType === "CANCEL") {
+        nextStatus = "CANCELED";
+        nextStatusLabel = "취소완료";
+      }
+
+      if (claimType === "EXCHANGE") {
+        nextStatus = "EXCHANGED";
+        nextStatusLabel = "교환완료";
+      }
+
+      if (claimType === "RETURN") {
+        nextStatus = "RETURNED";
+        nextStatusLabel = "반품완료";
+      }
+    }
+
+    const claimItems = nextItems.filter(isTargetItem).map((item) => ({
+      productId: item.productId,
+      quantity: item.quantity,
+    }));
+
+    return {
+      ...mockOrder,
+      status: nextStatus,
+      statusLabel: nextStatusLabel,
+      items: nextItems,
+      claimSummary,
+      claims: [
+        ...(mockOrder.claims ?? []),
+        {
+          ...claimSummary,
+          items: claimItems,
+        },
+      ],
+    };
+  });
+}
+
 function OrderCard({
   order,
   onViewDetail,
@@ -1371,6 +448,7 @@ function OrderCard({
         </S.OrderSummaryRow>
       </S.OrderInfo>
 
+    <S.OrderButtonGroup>
       <S.DetailButton
         type="button"
         className="order-action-button"
@@ -1386,7 +464,7 @@ function OrderCard({
       {canCancel && (
         <S.DetailButton
           type="button"
-          className="order-action-button"
+          className="order-action-button cancel-button"
           onClick={() => onClaim(order, "CANCEL")}
         >
           <S.DetailButtonText>취소신청</S.DetailButtonText>
@@ -1453,6 +531,8 @@ function OrderCard({
           </S.DetailArrow>
         </S.DetailButton>
       )}
+
+      </S.OrderButtonGroup>
     </S.OrderCard>
   );
 }
@@ -1462,7 +542,6 @@ export default function OrderList() {
 
   const [orders, setOrders] = useState([]);
 
-  
   const [realOrderCount, setRealOrderCount] = useState(0);
 
   const [mockOrders, setMockOrders] = useState(() => mockOrderData);
@@ -1486,6 +565,8 @@ export default function OrderList() {
   const [reviewOrder, setReviewOrder] = useState(null);
 
   const navigate = useNavigate();
+
+  const location = useLocation();
 
   const { accessToken, isAuthLoading } = useAuth();
 
@@ -1527,7 +608,6 @@ export default function OrderList() {
           ]);
         }
 
-        
         setRealOrderCount(
           result.pagination?.totalCount ?? result.orders?.length ?? 0,
         );
@@ -1564,45 +644,41 @@ export default function OrderList() {
     showToast,
   ]);
 
-  
+  const mockOrdersWithClaim = applyMockClaimToOrders(
+    mockOrders,
+    location.state,
+  );
+
   const sortedRealOrders = [...orders].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 
-  
   const realOrderIds = new Set(sortedRealOrders.map((order) => order.orderId));
 
-  let filteredMockOrders = mockOrders.filter(
+  let filteredMockOrders = mockOrdersWithClaim.filter(
     (order) => !realOrderIds.has(order.orderId),
   );
 
-  
   filteredMockOrders = filterMockOrdersByPeriod(filteredMockOrders, period);
 
-  
   filteredMockOrders = filterMockOrdersByKeyword(
     filteredMockOrders,
     searchKeyword,
   );
 
-  
   filteredMockOrders = [...filteredMockOrders].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 
-  
   const shouldShowMockOrders = realOrderCount >= 3;
 
-  
   const hasLoadedAllRealOrders = currentPage >= totalPages;
 
-  
   const combinedOrders =
     shouldShowMockOrders && hasLoadedAllRealOrders
       ? [...sortedRealOrders, ...filteredMockOrders]
       : sortedRealOrders;
 
-  
   const filteredOrders = filterOrdersByTab(combinedOrders, activeTab);
 
   const handleViewDetail = (order) => {
@@ -1672,7 +748,6 @@ export default function OrderList() {
 
     setIsConfirming(order.orderId);
 
-    
     if (order.isMock) {
       setMockOrders((previousOrders) =>
         previousOrders.map((mockOrder) => {
@@ -1682,10 +757,8 @@ export default function OrderList() {
 
           return {
             ...mockOrder,
-
             status: "CONFIRMED",
             statusLabel: "구매확정",
-
             items: mockOrder.items?.map((item) => ({
               ...item,
               status: "CONFIRMED",
@@ -1701,7 +774,6 @@ export default function OrderList() {
       return;
     }
 
-    
     try {
       const result = await orderService.confirmOrder(
         order.orderId,
@@ -1720,10 +792,8 @@ export default function OrderList() {
 
           return {
             ...currentOrder,
-
             status: "CONFIRMED",
             statusLabel: "구매확정",
-
             items: currentOrder.items?.map((item) => ({
               ...item,
               status: "CONFIRMED",
@@ -1780,10 +850,7 @@ export default function OrderList() {
 
     setIsLoading(true);
     setOrders([]);
-
-    
     setRealOrderCount(0);
-
     setPeriod(nextPeriod);
     setCurrentPage(1);
   };
@@ -1797,10 +864,7 @@ export default function OrderList() {
 
     setIsLoading(true);
     setOrders([]);
-
-    
     setRealOrderCount(0);
-
     setSearchKeyword(nextKeyword);
     setCurrentPage(1);
   };

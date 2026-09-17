@@ -7,7 +7,7 @@ export default function BasicPage({ children }) {
   return (
     <BasicPageStyle>
       <Header />
-      {children}
+      <main>{children}</main>
       <FloatingIcon />
       <Footer />
     </BasicPageStyle>

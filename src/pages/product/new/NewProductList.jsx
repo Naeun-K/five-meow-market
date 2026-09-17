@@ -1,295 +1,32 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import BasicPage from "../../basicPage/BasicPage";
 import Loader from "../../../components/loader/Loader";
 import ProductCard from "../../../components/product/ProductCard/ProductCard";
+import EmptyResult from "../../../components/productStatus/EmptyResult";
 import * as productService from "../../../services/productServices";
 import * as wishlistService from "../../../services/wishlistServices";
+
 import {
   CardContainer,
   PageTitleContainer,
   ProductPage,
   HomeButton,
 } from "../productListPage/ProductListStyle";
+
 import useToast from "../../../hooks/useToast";
 import useAuth from "../../../hooks/useAuth";
+import ApiErrorPage from "../../errorPage/ApiErrorPage";
 
 export default function NewProductList() {
   const { showToast } = useToast();
-
   const { accessToken, isLoggedIn, isAuthLoading } = useAuth();
 
   const [products, setProducts] = useState([]);
-
+  const [apiError, setApiError] = useState(null);
   const [loadedRequestKey, setLoadedRequestKey] = useState("");
 
-  
   const currentRequestKey = isAuthLoading
     ? ""
     : accessToken
@@ -312,10 +49,6 @@ export default function NewProductList() {
 
     const fetchNewProducts = async () => {
       try {
-        
-        
-        
-
         const productResult = await productService.getNewProducts();
 
         if (!productResult.success) {
@@ -330,28 +63,18 @@ export default function NewProductList() {
 
         const newProducts = productResult.products ?? [];
 
-        
-        
-        
-
         if (!isLoggedIn || !accessToken) {
-          
           const productsWithWishlist = newProducts.map((product) => ({
             ...product,
             isLiked: false,
           }));
 
           setProducts(productsWithWishlist);
-
+          setApiError(null);
           setLoadedRequestKey(requestKey);
 
           return;
         }
-
-        
-        
-        
-        
 
         const wishlistResult = await wishlistService.getWishlist(
           {
@@ -371,28 +94,24 @@ export default function NewProductList() {
           return;
         }
 
-        
         const wishlistProducts =
           wishlistResult.products ?? wishlistResult.wishlistItems ?? [];
 
-        
         const wishlistProductIds = new Set(
           wishlistProducts
             .map((item) => item.productId ?? item.product?.productId)
             .filter(Boolean),
         );
 
-        
         const productsWithWishlist = newProducts.map((product) => ({
           ...product,
-
           isLiked:
             wishlistProductIds.has(product.productId) ||
             product.isLiked === true,
         }));
 
         setProducts(productsWithWishlist);
-
+        setApiError(null);
         setLoadedRequestKey(requestKey);
       } catch (error) {
         if (isCancelled) {
@@ -401,10 +120,12 @@ export default function NewProductList() {
 
         console.error("신상품 조회 실패:", error);
 
-        showToast(error.message || "신상품 조회에 실패했습니다.", false);
+        const errorMessage = error?.message || "신상품 조회에 실패했습니다.";
+
+        showToast(errorMessage, false);
 
         setProducts([]);
-
+        setApiError(error);
         setLoadedRequestKey(requestKey);
       }
     };
@@ -416,7 +137,6 @@ export default function NewProductList() {
     };
   }, [accessToken, isLoggedIn, isAuthLoading, showToast]);
 
-  
   const handleWishlistChange = (productId, isLiked) => {
     if (!productId) {
       return;
@@ -442,15 +162,25 @@ export default function NewProductList() {
     );
   }
 
+  if (apiError) {
+    return <ApiErrorPage />;
+  }
+
+  if (products.length === 0) {
+    return (
+      <BasicPage>
+        <EmptyResult />
+      </BasicPage>
+    );
+  }
+
   return (
     <BasicPage>
       <ProductPage>
-        {}
         <HomeButton to="/">← 홈으로 이동</HomeButton>
 
         <PageTitleContainer>
           <h2>신상품</h2>
-
           <p>총 {products.length}개의 상품</p>
         </PageTitleContainer>
 
