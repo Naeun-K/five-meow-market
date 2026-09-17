@@ -1234,6 +1234,10 @@ export const userEmail = css({
     textOverflow: "ellipsis",
 
     transform: "translateX(-60px)",
+
+    "@media (min-width: 768px)": {
+      transform: "none",
+    },
   },
 
   "&.pointDeco:hover": {
