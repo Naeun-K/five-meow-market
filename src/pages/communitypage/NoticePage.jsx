@@ -76,6 +76,7 @@ export default function NoticePage() {
       .home-button-wrapper {
         display: block;
         width: 100%;
+        max-width: 1450px;
         margin-bottom: 0;
         text-align: left;
         padding-left: 120px;
