@@ -609,6 +609,10 @@ export const ButtonContainer = styled.div({
     backgroundColor: "var(--bg-button)",
 
     color: "var(--text-button)",
+
+    "&:hover": {
+      backgroundColor: "#583e28",
+    },
   },
 
   "& .button-text": {

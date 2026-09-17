@@ -1,42 +1,65 @@
 import styled from "@emotion/styled";
 
 export const PhotoWrapper = styled.div({
-  width: "48%",
-  maxWidth: "500px",
+  width: "100%",
   minWidth: 0,
 
-  aspectRatio: "1 / 1",
-
-  borderRadius: "8px",
-
-  overflow: "hidden",
-
-  "& > article": {
+  "& .main-product-image": {
     width: "100%",
-    height: "100%",
+    aspectRatio: "1 / 1",
+    overflow: "hidden",
+    borderRadius: "8px",
   },
 
-  "& img": {
+  "& .main-product-image img": {
+    display: "block",
     width: "100%",
     height: "100%",
-
     objectFit: "cover",
-    objectPosition: "center",
   },
 
-  "@media (min-width: 768px) and (max-width: 1023px)": {
-    width: "46%",
-    maxWidth: "420px",
+  "& .product-thumbnail-list": {
+    display: "flex",
+    gap: "8px",
+
+    width: "100%",
+    marginTop: "10px",
+  },
+
+  "& .product-thumbnail": {
+    width: "80px",
+    height: "80px",
+
+    padding: 0,
+
+    overflow: "hidden",
+
+    border: "1px solid var(--border)",
+    borderRadius: "4px",
+
+    backgroundColor: "#fff",
+
+    cursor: "pointer",
+  },
+
+  "& .product-thumbnail.is-active": {
+    border: "2px solid var(--text-primary)",
+  },
+
+  "& .product-thumbnail img": {
+    display: "block",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
 
   "@media (max-width: 767px)": {
-    width: "100%",
-    maxWidth: "100%",
-
-    aspectRatio: "1 / 1",
+    "& .product-thumbnail": {
+      width: "64px",
+      height: "64px",
+    },
   },
 });
-
 export const DescWrapper = styled.div({
   display: "flex",
   flexDirection: "column",
