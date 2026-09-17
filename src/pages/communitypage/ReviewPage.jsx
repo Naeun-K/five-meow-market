@@ -411,6 +411,7 @@ export default function ReviewPage() {
           display: block;
           width: 100%;
           margin-bottom: 0;
+          max-width: 1450px;
           text-align: left;
           padding-left: 120px;
           box-sizing: border-box;

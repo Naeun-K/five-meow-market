@@ -189,6 +189,12 @@ export const UpdateStyle = styled.div({
       flexDirection: "row",
       alignItems: "center",
       gap: "30px",
+      width: "100%",
+
+      "& label": {
+        flexShrink: 0,
+        whiteSpace: "nowrap",
+      },
 
       "& .password-guide": {
         height: "20px",
@@ -275,7 +281,6 @@ export const UpdateStyle = styled.div({
     gap: "35px",
     "& .top-nav": {
       fontSize: "15px",
-      
     },
 
     "& .svg-container": {
