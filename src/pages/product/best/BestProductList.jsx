@@ -167,6 +167,7 @@ import {
   CardContainer,
   PageTitleContainer,
   ProductPage,
+  HomeButton,
 } from "../productListPage/ProductListStyle";
 
 import useToast from "../../../hooks/useToast";
@@ -419,6 +420,9 @@ export default function BestProductList() {
   return (
     <BasicPage>
       <ProductPage>
+        {/* 홈으로 이동 */}
+        <HomeButton to="/">← 홈으로 이동</HomeButton>
+
         <PageTitleContainer>
           <h2>베스트 상품</h2>
 
