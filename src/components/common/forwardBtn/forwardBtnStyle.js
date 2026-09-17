@@ -5,7 +5,7 @@ export const ForwardBtnStyle = styled.button({
   gap: "10px",
   alignItems: "center",
   alignSelf: "flex-start",
-  paddingLeft: "70px",
+  paddingLeft: 0,
 
   fontSize: "17px",
   color: "var(--text-secondary)",

@@ -1232,6 +1232,7 @@ import { useNavigate } from "react-router-dom";
 
 import * as S from "./reviewListStyle";
 import EmptyReviewCat from "../../assets/empty-review-cat.webp";
+import ForwardButton from "../common/forwardBtn/ForwardButton";
 
 import {
   deleteReview,
@@ -1503,6 +1504,8 @@ function LoginRequiredReview() {
 }
 
 export default function ReviewList({ onOpenWriteModal, onOpenEditModal }) {
+  const navigate = useNavigate();
+
   const { accessToken } = useAuth();
 
   const { showToast } = useToast();
@@ -1789,9 +1792,15 @@ export default function ReviewList({ onOpenWriteModal, onOpenEditModal }) {
   return (
     <S.Page>
       <S.Header>
-        <S.Title>리뷰내역</S.Title>
+        <ForwardButton onClick={() => navigate("/mypage")}>
+          마이페이지로
+        </ForwardButton>
 
-        <S.Subtitle>고객님의 리뷰 내역을 확인해보세요.</S.Subtitle>
+        <div>
+          <S.Title>리뷰내역</S.Title>
+
+          <S.Subtitle>고객님의 리뷰 내역을 확인해보세요.</S.Subtitle>
+        </div>
       </S.Header>
 
       <S.TabSection>
