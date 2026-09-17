@@ -5,7 +5,6 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 import PawIcon from "../common/PawIcon/PawIcon.jsx";
-import FindPasswordForm from "../findPassword/FindPasswordForm";
 
 export default function LoginForm() {
   const { login, isAuthLoading } = useAuth();
@@ -20,7 +19,6 @@ export default function LoginForm() {
   );
   const inputRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [isFindPasswordOpen, setIsFindPasswordOpen] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -160,10 +158,6 @@ export default function LoginForm() {
               />
               <label>이메일 저장</label>
             </div>
-
-            <button type="button" onClick={() => setIsFindPasswordOpen(true)}>
-              비밀번호 찾기
-            </button>
           </div>
 
           <button
@@ -175,10 +169,6 @@ export default function LoginForm() {
           </button>
         </FormStyle>
       </LoginStyle>
-
-      {isFindPasswordOpen && (
-        <FindPasswordForm onClose={() => setIsFindPasswordOpen(false)} />
-      )}
     </>
   );
 }

@@ -1,165 +1,11 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import BasicPage from "../../basicPage/BasicPage";
 import Loader from "../../../components/loader/Loader";
 import ProductCard from "../../../components/product/ProductCard/ProductCard";
-
+import EmptyResult from "../../../components/productStatus/EmptyResult";
+import ApiErrorPage from "../../errorPage/ApiErrorPage";
 import * as productService from "../../../services/productServices";
 import * as wishlistService from "../../../services/wishlistServices";
 
@@ -175,16 +21,13 @@ import useAuth from "../../../hooks/useAuth";
 
 export default function BestProductList() {
   const { showToast } = useToast();
-
   const { accessToken, isLoggedIn, isAuthLoading } = useAuth();
 
   const [products, setProducts] = useState([]);
-
   const [wishlist, setWishlist] = useState([]);
-
+  const [apiError, setApiError] = useState(null);
   const [loadedRequestKey, setLoadedRequestKey] = useState("");
 
-  
   const currentRequestKey = isAuthLoading
     ? ""
     : accessToken
@@ -207,10 +50,6 @@ export default function BestProductList() {
 
     const fetchBestProducts = async () => {
       try {
-        
-        
-        
-
         const productResult = await productService.getBestProducts();
 
         if (!productResult.success) {
@@ -225,31 +64,19 @@ export default function BestProductList() {
 
         const bestProducts = productResult.products ?? [];
 
-        
         const productLikedIds = bestProducts
           .filter((product) => product.isLiked)
           .map((product) => product.productId)
           .filter(Boolean);
 
-        
-        
-        
-
         if (!isLoggedIn || !accessToken) {
           setProducts(bestProducts);
-
-          
           setWishlist([]);
-
+          setApiError(null);
           setLoadedRequestKey(requestKey);
 
           return;
         }
-
-        
-        
-        
-        
 
         const wishlistResult = await wishlistService.getWishlist(
           {
@@ -269,24 +96,20 @@ export default function BestProductList() {
           return;
         }
 
-        
         const wishlistProducts =
           wishlistResult.wishlistItems ?? wishlistResult.products ?? [];
 
-        
         const wishlistProductIds = wishlistProducts
           .map((item) => item.productId ?? item.product?.productId)
           .filter(Boolean);
 
-        
         const likedProductIds = [
           ...new Set([...productLikedIds, ...wishlistProductIds]),
         ];
 
         setProducts(bestProducts);
-
         setWishlist(likedProductIds);
-
+        setApiError(null);
         setLoadedRequestKey(requestKey);
       } catch (error) {
         if (isCancelled) {
@@ -295,12 +118,14 @@ export default function BestProductList() {
 
         console.error("베스트 상품 조회 실패:", error);
 
-        showToast(error.message || "베스트 상품 조회에 실패했습니다.", false);
+        const errorMessage =
+          error?.message || "베스트 상품 조회에 실패했습니다.";
+
+        showToast(errorMessage, false);
 
         setProducts([]);
-
         setWishlist([]);
-
+        setApiError(error);
         setLoadedRequestKey(requestKey);
       }
     };
@@ -312,19 +137,13 @@ export default function BestProductList() {
     };
   }, [accessToken, isLoggedIn, isAuthLoading, showToast]);
 
-  
   const handleWishlistChange = (productId, isLiked) => {
     if (!productId) {
       return;
     }
 
     setWishlist((previousWishlist) => {
-      
-      
-      
-
       if (isLiked) {
-        
         if (previousWishlist.includes(productId)) {
           return previousWishlist;
         }
@@ -332,14 +151,9 @@ export default function BestProductList() {
         return [...previousWishlist, productId];
       }
 
-      
-      
-      
-
       return previousWishlist.filter((id) => id !== productId);
     });
 
-    
     setProducts((previousProducts) =>
       previousProducts.map((product) =>
         product.productId === productId
@@ -360,21 +174,30 @@ export default function BestProductList() {
     );
   }
 
+  if (apiError) {
+    return <ApiErrorPage />;
+  }
+
+  if (products.length === 0) {
+    return (
+      <BasicPage>
+        <EmptyResult />
+      </BasicPage>
+    );
+  }
+
   return (
     <BasicPage>
       <ProductPage>
-        {}
         <HomeButton to="/">← 홈으로 이동</HomeButton>
 
         <PageTitleContainer>
           <h2>베스트 상품</h2>
-
           <p>총 {products.length}개의 상품</p>
         </PageTitleContainer>
 
         <CardContainer>
           {products.map((product) => {
-            
             const isLiked = wishlist.includes(product.productId);
 
             return (
