@@ -532,9 +532,9 @@ export const TitleArea = styled.div({
   width: "100%",
 
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-end",
-  gap: "24px",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "16px",
 
   marginBottom: "42px",
 
@@ -579,6 +579,28 @@ export const TitleArea = styled.div({
     "& h1": {
       fontSize: "25px",
     },
+  },
+});
+
+export const MyPageButton = styled.button({
+  flexShrink: 0,
+  padding: "10px 18px",
+
+  color: colors.text,
+  backgroundColor: colors.accent,
+
+  fontSize: "14px",
+  fontWeight: 600,
+
+  border: `1px solid ${colors.border}`,
+  borderRadius: "999px",
+  cursor: "pointer",
+
+  transition: "background-color 0.2s ease, color 0.2s ease",
+
+  "&:hover": {
+    color: "#FFFFFF",
+    backgroundColor: colors.text,
   },
 });
 

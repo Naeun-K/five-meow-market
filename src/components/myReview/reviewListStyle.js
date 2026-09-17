@@ -4,10 +4,6 @@ const TABLET = "@media (max-width: 1023px)";
 
 const MOBILE = "@media (min-width: 320px) and (max-width: 767px)";
 
-
-
-
-
 export const Page = styled.div({
   maxWidth: 1300,
   width: "100%",
@@ -23,10 +19,6 @@ export const Page = styled.div({
     padding: "0 20px 40px",
   },
 });
-
-
-
-
 
 export const Header = styled.div({
   marginBottom: "24px",
@@ -69,9 +61,27 @@ export const Subtitle = styled.p({
   },
 });
 
+export const MyPageButton = styled.button({
+  flexShrink: 0,
+  padding: "10px 18px",
 
+  color: "#4A3425",
+  backgroundColor: "#F5E9DF",
 
+  fontSize: "14px",
+  fontWeight: 600,
 
+  border: "1px solid #DCC8B8",
+  borderRadius: "999px",
+  cursor: "pointer",
+
+  transition: "background-color 0.2s ease, color 0.2s ease",
+
+  "&:hover": {
+    color: "#FFFFFF",
+    backgroundColor: "#4A3425",
+  },
+});
 
 export const TabSection = styled.div({
   display: "flex",
@@ -170,10 +180,6 @@ export const MainTabButton = styled.button(({ isActive }) => ({
   },
 }));
 
-
-
-
-
 export const ReviewList = styled.div({
   display: "flex",
   flexDirection: "column",
@@ -188,10 +194,6 @@ export const ReviewList = styled.div({
     gap: "20px",
   },
 });
-
-
-
-
 
 export const ReviewCard = styled.article({
   display: "flex",
@@ -221,10 +223,6 @@ export const ReviewCard = styled.article({
     padding: "10px",
   },
 });
-
-
-
-
 
 export const ProductArea = styled.div({
   display: "flex",
@@ -338,10 +336,6 @@ export const MobileActions = styled.div({
   },
 });
 
-
-
-
-
 export const ReviewContent = styled.div({
   display: "flex",
   flexDirection: "column",
@@ -350,10 +344,6 @@ export const ReviewContent = styled.div({
   minWidth: 0,
   height: "100%",
 });
-
-
-
-
 
 export const ReviewTop = styled.div({
   display: "flex",
@@ -488,10 +478,6 @@ export const ActionDivider = styled.span({
   },
 });
 
-
-
-
-
 export const ReviewTextBox = styled.div({
   height: "140px",
 
@@ -564,7 +550,6 @@ export const EmptyReview = styled.div({
   },
 });
 
-
 // [추가] 고양이 이미지
 export const EmptyImage = styled.img({
   width: "180px",
@@ -584,7 +569,6 @@ export const EmptyImage = styled.img({
   },
 });
 
-
 // [추가] 리뷰내역이 없습니다.
 export const EmptyTitle = styled.h2({
   color: "var(--text-color)",
@@ -601,7 +585,6 @@ export const EmptyTitle = styled.h2({
     fontSize: "20px",
   },
 });
-
 
 // [추가] 설명 문구
 export const EmptyDescription = styled.p({
@@ -622,7 +605,6 @@ export const EmptyDescription = styled.p({
     fontSize: "14px",
   },
 });
-
 
 // [추가] 상품보러가기 버튼
 export const ProductButton = styled.button({
@@ -657,7 +639,6 @@ export const ProductButton = styled.button({
     height: "48px",
 
     marginTop: "18px",
-
 
     fontSize: "15px",
   },

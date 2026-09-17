@@ -252,6 +252,7 @@ import Header from "../../components/header/header";
 import Footer from "../../components/footer/Footer";
 import Loader from "../../components/loader/Loader";
 import ProductCard from "../../components/product/ProductCard/ProductCard";
+import ForwardButton from "../../components/common/forwardBtn/ForwardButton";
 
 import useAuth from "../../hooks/useAuth";
 import useToast from "../../hooks/useToast";
@@ -270,7 +271,6 @@ import wishlistImage from "../../assets/wish-logo.webp";
 import {
   page,
   pageHeader,
-  backButton,
   wishlistCount,
   wishlistGrid,
   wishlistCard,
@@ -626,13 +626,9 @@ function WishlistPage() {
 
       <main css={page}>
         <div css={pageHeader}>
-          <button
-            type="button"
-            css={backButton}
-            onClick={() => navigate("/mypage")}
-          >
-            <span className="back-arrow">←</span> 마이페이지
-          </button>
+          <ForwardButton onClick={() => navigate("/mypage")}>
+            마이페이지로
+          </ForwardButton>
 
           <h1>찜한상품</h1>
 
