@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import * as S from "./orderStyle";
 import * as orderService from "../../services/orderServices";
@@ -9,6 +9,7 @@ import useToast from "../../hooks/useToast";
 
 import Loader from "../loader/Loader";
 
+import { mockOrderData } from "../../mock/mockOrder";
 
 const STATUS_LABELS = {
   PAYMENT_COMPLETED: "결제완료",
@@ -17,17 +18,16 @@ const STATUS_LABELS = {
   DELIVERED: "배송완료",
   CONFIRMED: "구매결정",
   CANCELED: "주문취소",
+  EXCHANGED: "교환완료",
+  RETURNED: "반품완료",
 };
-
 
 const PAYMENT_METHOD_LABELS = {
   CARD: "카드",
   BANK: "무통장입금",
 };
 
-
 const ACTIVE_CLAIM_STATUSES = ["REQUESTED", "PROCESSING"];
-
 
 function formatDate(dateString) {
   if (!dateString) {
@@ -37,11 +37,186 @@ function formatDate(dateString) {
   return new Date(dateString).toLocaleString("ko-KR");
 }
 
-
 function formatPrice(price) {
   return `${Number(price ?? 0).toLocaleString("ko-KR")}원`;
 }
 
+function convertMockOrderToDetail(mockOrder) {
+  if (!mockOrder) {
+    return null;
+  }
+
+  return {
+    ...mockOrder,
+
+    ordererName: mockOrder.ordererName ?? "오묘한 집사",
+
+    shippingInfo: mockOrder.shippingInfo ?? {
+      recipientName: "오묘한 집사",
+      recipientPhone: "010-1234-5678",
+      zipCode: "00000",
+      address: "서울특별시 오묘구 고양이로 5",
+      detailAddress: "오묘한 생활",
+      deliveryRequest: "문 앞에 놓아주세요.",
+    },
+
+    payment: mockOrder.payment ?? {
+      productAmount: mockOrder.productAmount ?? 0,
+      shippingFee: mockOrder.shippingFee ?? 0,
+      discountAmount: 0,
+      appliedPoints: mockOrder.appliedPoints ?? 0,
+      finalAmount: mockOrder.finalAmount ?? 0,
+      paymentMethod: "CARD",
+      paidAt: mockOrder.createdAt,
+    },
+
+    items: (mockOrder.items ?? []).map((item) => ({
+      ...item,
+
+      itemAmount:
+        item.itemAmount ?? Number(item.price ?? 0) * Number(item.quantity ?? 1),
+
+      status: item.status ?? mockOrder.status,
+    })),
+
+    claims: Array.isArray(mockOrder.claims) ? mockOrder.claims : [],
+
+    isMock: true,
+  };
+}
+
+function applyMockClaim(mockOrder, claimState) {
+  if (!mockOrder) {
+    return null;
+  }
+
+  const convertedOrder = convertMockOrderToDetail(mockOrder);
+
+  if (
+    !claimState?.claimCreated ||
+    !claimState?.isMock ||
+    String(claimState?.orderId) !== String(mockOrder.orderId)
+  ) {
+    return convertedOrder;
+  }
+
+  const claimType = claimState.claimType ?? claimState.claim?.type;
+
+  if (
+    claimType !== "EXCHANGE" &&
+    claimType !== "RETURN" &&
+    claimType !== "CANCEL"
+  ) {
+    return convertedOrder;
+  }
+
+  const claim = claimState.claim ?? {};
+
+  const claimScope = claimState.scope ?? claim.scope ?? "ALL";
+
+  const requestedProductIds = new Set(
+    (claim.items ?? []).map((item) =>
+      String(item.productId ?? item.product?.productId),
+    ),
+  );
+
+  if (claimState.productId) {
+    requestedProductIds.add(String(claimState.productId));
+  }
+
+  const isAllClaim = claimScope === "ALL";
+
+  const isTargetProduct = (product) => {
+    if (isAllClaim) {
+      return true;
+    }
+
+    return requestedProductIds.has(String(product.productId));
+  };
+
+  const completedClaim = {
+    claimId: claim.claimId ?? `MOCK-${claimType}-${mockOrder.orderId}`,
+    orderId: mockOrder.orderId,
+    type: claimType,
+    scope: claimScope,
+    status: "COMPLETED",
+    reason: claim.reason ?? "",
+    detailReason: claim.detailReason ?? null,
+    createdAt: claim.createdAt ?? new Date().toISOString(),
+
+    items: convertedOrder.items.filter(isTargetProduct).map((product) => ({
+      productId: product.productId,
+      quantity: product.quantity,
+    })),
+  };
+
+  const nextItems = convertedOrder.items.map((product) => {
+    if (!isTargetProduct(product)) {
+      return product;
+    }
+
+    if (claimType === "EXCHANGE") {
+      return {
+        ...product,
+        status: "EXCHANGED",
+      };
+    }
+
+    if (claimType === "RETURN") {
+      return {
+        ...product,
+        status: "RETURNED",
+      };
+    }
+
+    if (claimType === "CANCEL") {
+      return {
+        ...product,
+        status: "CANCELED",
+      };
+    }
+
+    return product;
+  });
+
+  let nextStatus = convertedOrder.status;
+
+  let nextStatusLabel = convertedOrder.statusLabel;
+
+  if (isAllClaim) {
+    if (claimType === "EXCHANGE") {
+      nextStatus = "EXCHANGED";
+      nextStatusLabel = "교환완료";
+    }
+
+    if (claimType === "RETURN") {
+      nextStatus = "RETURNED";
+      nextStatusLabel = "반품완료";
+    }
+
+    if (claimType === "CANCEL") {
+      nextStatus = "CANCELED";
+      nextStatusLabel = "취소완료";
+    }
+  }
+
+  return {
+    ...convertedOrder,
+
+    status: nextStatus,
+    statusLabel: nextStatusLabel,
+
+    items: nextItems,
+
+    claimSummary: {
+      type: claimType,
+      scope: claimScope,
+      status: "COMPLETED",
+    },
+
+    claims: [...(convertedOrder.claims ?? []), completedClaim],
+  };
+}
 
 function getCancelClaims(order) {
   if (!Array.isArray(order?.claims)) {
@@ -50,7 +225,6 @@ function getCancelClaims(order) {
 
   return order.claims.filter((claim) => claim.type === "CANCEL");
 }
-
 
 function findAllCancelClaim(order) {
   const cancelClaims = getCancelClaims(order);
@@ -66,23 +240,19 @@ function findAllCancelClaim(order) {
   );
 }
 
-
 function isProductIncludedInClaim(claim, productId) {
   if (!claim || productId == null) {
     return false;
   }
 
-  
-  if (claim.type === "CANCEL" && claim.scope === "ALL") {
+  if (claim.scope === "ALL") {
     return true;
   }
 
-  
   if (claim.productId != null) {
     return String(claim.productId) === String(productId);
   }
 
-  
   if (Array.isArray(claim.items)) {
     return claim.items.some((item) => {
       const claimProductId = item.productId ?? item.product?.productId;
@@ -94,7 +264,6 @@ function isProductIncludedInClaim(claim, productId) {
   return false;
 }
 
-
 function findProductCancelClaim(order, productId) {
   const cancelClaims = getCancelClaims(order);
 
@@ -103,7 +272,6 @@ function findProductCancelClaim(order, productId) {
     null
   );
 }
-
 
 function findProductClaim(order, productId) {
   if (!Array.isArray(order?.claims)) {
@@ -118,7 +286,6 @@ function findProductClaim(order, productId) {
     ) ?? null
   );
 }
-
 
 function getCancelStatusLabel(claim) {
   if (!claim) {
@@ -143,7 +310,6 @@ function getCancelStatusLabel(claim) {
   }
 }
 
-
 function getExchangeStatusLabel(claim) {
   if (!claim) {
     return null;
@@ -166,7 +332,6 @@ function getExchangeStatusLabel(claim) {
       return null;
   }
 }
-
 
 function getReturnStatusLabel(claim) {
   if (!claim) {
@@ -191,11 +356,23 @@ function getReturnStatusLabel(claim) {
   }
 }
 
-
 function getOrderStatusLabel(order) {
+  if (order.isMock && order.claimSummary?.status === "COMPLETED") {
+    if (order.claimSummary.type === "EXCHANGE") {
+      return "교환완료";
+    }
+
+    if (order.claimSummary.type === "RETURN") {
+      return "반품완료";
+    }
+
+    if (order.claimSummary.type === "CANCEL") {
+      return "취소완료";
+    }
+  }
+
   const allCancelClaim = findAllCancelClaim(order);
 
-  
   if (allCancelClaim) {
     const cancelStatus = getCancelStatusLabel(allCancelClaim);
 
@@ -204,7 +381,6 @@ function getOrderStatusLabel(order) {
     }
   }
 
-  
   if (
     order.status === "CANCELED" &&
     !getCancelClaims(order).some((claim) => claim.scope === "PARTIAL")
@@ -212,7 +388,6 @@ function getOrderStatusLabel(order) {
     return "주문취소";
   }
 
-  
   if (
     order.status === "CANCELED" &&
     getCancelClaims(order).some((claim) => claim.scope === "PARTIAL")
@@ -223,11 +398,9 @@ function getOrderStatusLabel(order) {
   return STATUS_LABELS[order.status] ?? order.status;
 }
 
-
 function getProductStatusLabel(order, product) {
   const productId = product.productId;
 
-  
   const cancelClaim = findProductCancelClaim(order, productId);
 
   if (cancelClaim) {
@@ -238,7 +411,6 @@ function getProductStatusLabel(order, product) {
     }
   }
 
-  
   const productClaim = findProductClaim(order, productId);
 
   if (productClaim) {
@@ -259,12 +431,10 @@ function getProductStatusLabel(order, product) {
     }
   }
 
-  
   if (product.status) {
     return STATUS_LABELS[product.status] ?? product.status;
   }
 
-  
   if (order.status === "CANCELED") {
     const hasPartialCancel = getCancelClaims(order).some(
       (claim) => claim.scope === "PARTIAL",
@@ -275,22 +445,18 @@ function getProductStatusLabel(order, product) {
     }
   }
 
-  
   if (order.status === "DELIVERED") {
     return "배송완료";
   }
 
-  
   return STATUS_LABELS[order.status] ?? order.status;
 }
-
 
 function hasActiveAllCancelClaim(order) {
   const claim = findAllCancelClaim(order);
 
   return Boolean(claim && ACTIVE_CLAIM_STATUSES.includes(claim.status));
 }
-
 
 function hasActiveProductClaim(order, productId) {
   const cancelClaim = findProductCancelClaim(order, productId);
@@ -306,7 +472,6 @@ function hasActiveProductClaim(order, productId) {
   );
 }
 
-
 function isProductCancelClaimed(order, productId) {
   const cancelClaim = findProductCancelClaim(order, productId);
 
@@ -317,7 +482,6 @@ function isProductCancelClaimed(order, productId) {
   return ["REQUESTED", "PROCESSING", "COMPLETED"].includes(cancelClaim.status);
 }
 
-
 function OrderRow({ label, children }) {
   return (
     <S.InfoRow>
@@ -327,7 +491,6 @@ function OrderRow({ label, children }) {
     </S.InfoRow>
   );
 }
-
 
 function Chevron({ isOpen }) {
   return (
@@ -342,7 +505,6 @@ function Chevron({ isOpen }) {
     </S.ChevronIcon>
   );
 }
-
 
 function CollapsiblePanel({ title, children }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -363,7 +525,6 @@ function CollapsiblePanel({ title, children }) {
   );
 }
 
-
 function ProductItem({
   product,
   statusLabel,
@@ -371,7 +532,8 @@ function ProductItem({
   canRequestClaim,
   showCancelButton,
   onReview,
-  onClaim,
+  onExchange,
+  onReturn,
   onCancel,
 }) {
   return (
@@ -410,12 +572,21 @@ function ProductItem({
           )}
 
           {canRequestClaim && (
-            <S.GhostButton
-              type="button"
-              onClick={() => onClaim(product.productId)}
-            >
-              반품/교환
-            </S.GhostButton>
+            <>
+              <S.GhostButton
+                type="button"
+                onClick={() => onExchange(product.productId)}
+              >
+                교환
+              </S.GhostButton>
+
+              <S.GhostButton
+                type="button"
+                onClick={() => onReturn(product.productId)}
+              >
+                반품
+              </S.GhostButton>
+            </>
           )}
 
           {showCancelButton && (
@@ -438,13 +609,28 @@ export default function OrderDetail() {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   const { accessToken, isAuthLoading } = useAuth();
 
   const { showToast } = useToast();
 
-  
+  const mockOrder =
+    mockOrderData.find((item) => String(item.orderId) === String(orderId)) ??
+    null;
+
+  const isMockOrder = Boolean(mockOrder);
+
   useEffect(() => {
-    if (isAuthLoading || !accessToken || !orderId) {
+    if (!orderId) {
+      return;
+    }
+
+    if (isMockOrder) {
+      return;
+    }
+
+    if (isAuthLoading || !accessToken) {
       return;
     }
 
@@ -481,9 +667,14 @@ export default function OrderDetail() {
     return () => {
       isCancelled = true;
     };
-  }, [orderId, accessToken, isAuthLoading, showToast]);
+  }, [orderId, accessToken, isAuthLoading, showToast, isMockOrder]);
 
-  
+  const currentOrder = isMockOrder
+    ? applyMockClaim(mockOrder, location.state)
+    : order;
+
+  const currentIsLoading = !isMockOrder && (isAuthLoading || isLoading);
+
   const handleReview = (productId) => {
     const searchParams = new URLSearchParams({
       orderId: String(orderId),
@@ -493,54 +684,105 @@ export default function OrderDetail() {
     navigate(`/reviews?${searchParams.toString()}`);
   };
 
-  
-  const handleClaim = (productId) => {
+  const handleExchange = (productId) => {
     const searchParams = new URLSearchParams({
       orderId: String(orderId),
       productId: String(productId),
     });
 
-    navigate(`/claims?${searchParams.toString()}`);
+    if (isMockOrder) {
+      searchParams.set("mock", "true");
+
+      navigate(`/claims/exchange?${searchParams.toString()}`, {
+        state: {
+          isMock: true,
+          mockOrder: currentOrder,
+          returnTo: `/mypage/orders/${orderId}`,
+          productId,
+        },
+      });
+
+      return;
+    }
+
+    navigate(`/claims/exchange?${searchParams.toString()}`);
   };
 
-  
+  const handleReturn = (productId) => {
+    const searchParams = new URLSearchParams({
+      orderId: String(orderId),
+      productId: String(productId),
+    });
+
+    if (isMockOrder) {
+      searchParams.set("mock", "true");
+
+      navigate(`/claims/return?${searchParams.toString()}`, {
+        state: {
+          isMock: true,
+          mockOrder: currentOrder,
+          returnTo: `/mypage/orders/${orderId}`,
+          productId,
+        },
+      });
+
+      return;
+    }
+
+    navigate(`/claims/return?${searchParams.toString()}`);
+  };
+
   const handleCancel = () => {
     const searchParams = new URLSearchParams({
       orderId: String(orderId),
     });
 
-    navigate(`/claims/cancel?${searchParams.toString()}`);
+    if (isMockOrder) {
+      searchParams.set("mock", "true");
+    }
+
+    navigate(
+      `/claims/cancel?${searchParams.toString()}`,
+      isMockOrder
+        ? {
+            state: {
+              isMock: true,
+              mockOrder: currentOrder,
+              returnTo: `/mypage/orders/${orderId}`,
+            },
+          }
+        : undefined,
+    );
   };
 
-  if (isAuthLoading || isLoading) {
+  if (currentIsLoading) {
     return <Loader />;
   }
 
-  if (!order) {
+  if (!currentOrder) {
     return null;
   }
 
-  const { shippingInfo, payment } = order;
+  const { shippingInfo, payment } = currentOrder;
 
-  
-  const orderStatusLabel = getOrderStatusLabel(order);
+  const orderStatusLabel = getOrderStatusLabel(currentOrder);
 
-  
-  const activeAllCancelClaim = hasActiveAllCancelClaim(order);
+  const activeAllCancelClaim = hasActiveAllCancelClaim(currentOrder);
 
-  
   const hasCancelableProduct =
-    order.items?.some(
-      (product) => !isProductCancelClaimed(order, product.productId),
+    currentOrder.items?.some(
+      (product) => !isProductCancelClaimed(currentOrder, product.productId),
     ) ?? false;
 
-  
   const canCancelOrder =
+    !isMockOrder &&
     !activeAllCancelClaim &&
     hasCancelableProduct &&
-    (order.status === "PAYMENT_COMPLETED" ||
-      (order.status === "CANCELED" &&
-        getCancelClaims(order).some((claim) => claim.scope === "PARTIAL")));
+    (currentOrder.status === "PAYMENT_COMPLETED" ||
+      (currentOrder.status === "CANCELED" &&
+        getCancelClaims(currentOrder).some(
+          (claim) => claim.scope === "PARTIAL",
+        )));
 
   return (
     <S.Page>
@@ -556,15 +798,15 @@ export default function OrderDetail() {
 
       <S.SummaryBar>
         <OrderRow label="주문일">
-          <S.InfoValue>{formatDate(order.createdAt)}</S.InfoValue>
+          <S.InfoValue>{formatDate(currentOrder.createdAt)}</S.InfoValue>
         </OrderRow>
 
         <OrderRow label="주문번호">
-          <S.InfoValue>{order.orderId}</S.InfoValue>
+          <S.InfoValue>{currentOrder.orderId}</S.InfoValue>
         </OrderRow>
 
         <OrderRow label="주문자">
-          <S.InfoValue>{order.ordererName}</S.InfoValue>
+          <S.InfoValue>{currentOrder.ordererName}</S.InfoValue>
         </OrderRow>
 
         <OrderRow label="주문상태">
@@ -582,24 +824,24 @@ export default function OrderDetail() {
         <S.SectionTitle>주문 상품</S.SectionTitle>
 
         <S.ProductList>
-          {order.items?.map((product, index) => {
-            
+          {currentOrder.items?.map((product, index) => {
             const activeProductClaim = hasActiveProductClaim(
-              order,
+              currentOrder,
               product.productId,
             );
 
-            
-            const productStatusLabel = getProductStatusLabel(order, product);
+            const productStatusLabel = getProductStatusLabel(
+              currentOrder,
+              product,
+            );
 
-            
             const cancelClaim = findProductCancelClaim(
-              order,
+              currentOrder,
               product.productId,
             );
 
             const exchangeOrReturnClaim = findProductClaim(
-              order,
+              currentOrder,
               product.productId,
             );
 
@@ -607,10 +849,14 @@ export default function OrderDetail() {
               cancelClaim || exchangeOrReturnClaim,
             );
 
-            
-            const baseProductStatus = product.status ?? order.status;
+            const baseProductStatus = product.status ?? currentOrder.status;
 
             const canUseDeliveredActions =
+              baseProductStatus === "CONFIRMED" &&
+              !hasProductClaim &&
+              !activeProductClaim;
+
+            const canUseClaimedActions =
               baseProductStatus === "DELIVERED" &&
               !hasProductClaim &&
               !activeProductClaim;
@@ -621,10 +867,11 @@ export default function OrderDetail() {
                 product={product}
                 statusLabel={productStatusLabel}
                 canWriteReview={canUseDeliveredActions}
-                canRequestClaim={canUseDeliveredActions}
+                canRequestClaim={canUseClaimedActions}
                 showCancelButton={canCancelOrder && index === 0}
                 onReview={handleReview}
-                onClaim={handleClaim}
+                onExchange={handleExchange}
+                onReturn={handleReturn}
                 onCancel={handleCancel}
               />
             );

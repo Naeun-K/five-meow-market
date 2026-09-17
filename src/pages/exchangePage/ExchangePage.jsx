@@ -1,395 +1,20 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
+import Header from "../../components/header/header";
 import Footer from "../../components/footer/Footer";
-import Loader from "../../components/loader/Loader";
 
-import styles from "./ExchangePageStyle";
+import useToast from "../../hooks/useToast";
+
+import styles from "../cancelPage/CancelPageStyle";
 
 import logoEat from "../../assets/logo-eat.webp";
 import logoPlay from "../../assets/logo-play.webp";
 import logoRest from "../../assets/logo-rest.webp";
 import logoHigh from "../../assets/logo-high.webp";
 import logoClean from "../../assets/logo-clean.webp";
-import logoMyshop from "../../assets/logo-myshop.webp";
 
-import { getOrder } from "../../services/orderServices";
-import { createClaim } from "../../services/claimServices";
-
-import useAuth from "../../hooks/useAuth";
-import useToast from "../../hooks/useToast";
-import Header from "../../components/header/header";
+import { mockOrderData } from "../../mock/mockOrder";
 
 const exchangeReasons = [
   "교환 사유 선택",
@@ -402,117 +27,46 @@ const exchangeReasons = [
 
 const catImages = [logoEat, logoPlay, logoRest, logoHigh, logoClean];
 
+const getItemKey = (item, index) => {
+  return item.orderItemId ?? item.itemId ?? item.productId ?? String(index);
+};
+
 function ExchangePage() {
   const navigate = useNavigate();
-
   const [searchParams] = useSearchParams();
-
-  const { isLoggedIn, accessToken, isAuthLoading } = useAuth();
-
   const { showToast } = useToast();
 
   const orderId = searchParams.get("orderId");
 
-  const [products, setProducts] = useState([]);
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const order =
+    mockOrderData.find(
+      (mockOrder) => String(mockOrder.orderId) === String(orderId),
+    ) ?? null;
 
-  const [selectedReasons, setSelectedReasons] = useState({});
+  const orderItems = order?.items ?? [];
 
-  const [detailReasons, setDetailReasons] = useState({});
+  const initialSelectedProducts = orderItems.map((item, index) =>
+    getItemKey(item, index),
+  );
 
-  const [openDropdown, setOpenDropdown] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState(
+    initialSelectedProducts,
+  );
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [selectedReason, setSelectedReason] = useState("교환 사유 선택");
+
+  const [detailReason, setDetailReason] = useState("");
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const dropdownRefs = useRef({});
+  const dropdownRef = useRef(null);
 
-  
-  
-  
-  
-  
-  useEffect(() => {
-    if (isAuthLoading || !isLoggedIn || !accessToken || !orderId) {
-      return;
-    }
-
-    let isMounted = true;
-
-    const fetchOrder = async () => {
-      try {
-        const result = await getOrder(orderId, accessToken);
-
-        if (!result.success) {
-          throw new Error(result.message || "주문 정보를 불러오지 못했습니다.");
-        }
-
-        if (!isMounted) {
-          return;
-        }
-
-        const order = result.order;
-
-        const orderItems = order?.items ?? [];
-
-        const mappedProducts = orderItems.map((item) => ({
-          id: item.orderItemId ?? item.productId,
-
-          orderItemId: item.orderItemId ?? item.productId,
-
-          productId: item.productId,
-
-          orderNumber: order.orderId ?? orderId,
-
-          name: item.name ?? item.productName ?? "",
-
-          option: item.option ?? item.optionName ?? "기본형",
-
-          price: item.price ?? item.unitPrice ?? 0,
-
-          quantity: item.quantity ?? 1,
-
-          image: item.thumbnail ?? item.image ?? "",
-        }));
-
-        setProducts(mappedProducts);
-
-        
-        setSelectedProducts(mappedProducts.map((product) => product.id));
-      } catch (error) {
-        console.error("교환 주문 조회 실패:", error);
-
-        if (!isMounted) {
-          return;
-        }
-
-        showToast(error.message || "주문 정보를 불러오지 못했습니다.", false);
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchOrder();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [orderId, accessToken, isLoggedIn, isAuthLoading, showToast]);
-
-  
-  
-  
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      const isInsideDropdown = Object.values(dropdownRefs.current).some(
-        (element) => element && element.contains(event.target),
-      );
-
-      if (!isInsideDropdown) {
-        setOpenDropdown(null);
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
       }
     };
 
@@ -523,229 +77,125 @@ function ExchangePage() {
     };
   }, []);
 
-  
-  
-  
-  const handleSelectAll = () => {
-    if (selectedProducts.length === products.length) {
-      setSelectedProducts([]);
+  const isAllSelected =
+    orderItems.length > 0 && selectedProducts.length === orderItems.length;
 
+  const handleSelectAll = () => {
+    if (isAllSelected) {
+      setSelectedProducts([]);
       return;
     }
 
-    setSelectedProducts(products.map((product) => product.id));
+    setSelectedProducts(
+      orderItems.map((item, index) => getItemKey(item, index)),
+    );
   };
 
-  
-  
-  
-  const handleSelectProduct = (productId) => {
+  const handleSelectProduct = (itemKey) => {
     setSelectedProducts((prev) => {
-      if (prev.includes(productId)) {
-        return prev.filter((id) => id !== productId);
+      if (prev.includes(itemKey)) {
+        return prev.filter((key) => key !== itemKey);
       }
 
-      return [...prev, productId];
+      return [...prev, itemKey];
     });
   };
 
-  
-  
-  
-  
-  
-  
-  
   const handleDeleteSelected = () => {
     setSelectedProducts([]);
   };
 
-  
-  
-  
-  const handleToggleDropdown = (productId) => {
-    setOpenDropdown((prev) => (prev === productId ? null : productId));
+  const handleSelectReason = (reason) => {
+    setSelectedReason(reason);
+    setIsDropdownOpen(false);
   };
 
-  
-  
-  
-  const handleSelectReason = (productId, reason) => {
-    setSelectedReasons((prev) => ({
-      ...prev,
-      [productId]: reason,
-    }));
-
-    setOpenDropdown(null);
+  const getSelectedItems = () => {
+    return orderItems
+      .map((item, index) => ({
+        item,
+        itemKey: getItemKey(item, index),
+      }))
+      .filter(({ itemKey }) => selectedProducts.includes(itemKey));
   };
 
-  
-  
-  
-  const handleDetailReasonChange = (productId, value) => {
-    setDetailReasons((prev) => ({
-      ...prev,
-      [productId]: value,
-    }));
-  };
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  const handleSubmitExchange = async () => {
+  const handleSubmitExchange = () => {
     if (isSubmitting) {
       return;
     }
 
-    if (!isLoggedIn || !accessToken) {
-      showToast("로그인 후 교환 신청이 가능합니다.", false);
-
-      navigate("/login");
-
+    if (!order) {
+      showToast("교환할 주문 정보를 확인할 수 없습니다.", "error");
       return;
     }
 
-    if (!orderId) {
-      showToast("주문 정보를 확인할 수 없습니다.", false);
-
+    if (order.status !== "DELIVERED") {
+      showToast("배송완료 상태의 주문만 교환 신청할 수 있습니다.", "error");
       return;
     }
 
     if (selectedProducts.length === 0) {
-      showToast("교환할 상품을 선택해주세요.", false);
-
+      showToast("교환할 상품을 선택해주세요.", "error");
       return;
     }
 
-    
-    
-    
-    const hasEmptyReason = selectedProducts.some(
-      (productId) =>
-        !selectedReasons[productId] ||
-        selectedReasons[productId] === "교환 사유 선택",
+    if (selectedReason === "교환 사유 선택") {
+      showToast("교환 사유를 선택해주세요.", "error");
+      return;
+    }
+
+    const selectedItems = getSelectedItems();
+
+    const scope = isAllSelected ? "ALL" : "PARTIAL";
+
+    const mockClaimData = {
+      claimId: `MOCK-EXCHANGE-${Date.now()}`,
+      orderId: order.orderId,
+      type: "EXCHANGE",
+      scope,
+      status: "EXCHANGE_REQUESTED",
+      reason: selectedReason,
+      detailReason: detailReason.trim() || null,
+      items: selectedItems.map(({ item }) => ({
+        productId: item.productId,
+        name: item.name,
+        thumbnail: item.thumbnail,
+        quantity: Number(item.quantity ?? 1),
+        price: Number(item.price ?? 0),
+        status: "EXCHANGE_REQUESTED",
+      })),
+      createdAt: new Date().toISOString(),
+      isMock: true,
+    };
+
+    setIsSubmitting(true);
+
+    console.log("Mock 교환 신청:", mockClaimData);
+
+    showToast(
+      isAllSelected
+        ? "전체 상품 교환 신청이 완료되었습니다."
+        : `${selectedProducts.length}개 상품의 교환 신청이 완료되었습니다.`,
+      "success",
     );
 
-    if (hasEmptyReason) {
-      showToast("교환 사유를 선택해주세요.", false);
-
-      return;
-    }
-
-    
-    
-    
-    const isAllExchange = selectedProducts.length === products.length;
-
-    const scope = isAllExchange ? "ALL" : "PARTIAL";
-
-    
-    
-    
-    const selectedExchangeItems = products
-      .filter((product) => selectedProducts.includes(product.id))
-      .map((product) => ({
-        orderItemId: product.orderItemId,
-
-        productId: product.productId,
-
-        quantity: product.quantity,
-
-        reason: selectedReasons[product.id],
-
-        detailReason: detailReasons[product.id]?.trim() || "",
-      }));
-
-    try {
-      setIsSubmitting(true);
-
-      
-      
-      
-      const result = await createClaim(
-        {
-          orderId,
-          type: "EXCHANGE",
-          scope,
-
-          items:
-            scope === "PARTIAL" ? selectedExchangeItems : selectedExchangeItems,
-        },
-        accessToken,
-      );
-
-      if (!result.success) {
-        throw new Error(result.message || "교환 신청에 실패했습니다.");
-      }
-
-      showToast(result.message || "상품 교환 신청이 완료되었습니다.", true);
-
-      navigate("/mypage/orders");
-    } catch (error) {
-      console.error("상품 교환 신청 실패:", error);
-
-      showToast(error.message || "교환 신청 중 문제가 발생했습니다.", false);
-    } finally {
-      setIsSubmitting(false);
-    }
+    navigate("/mypage/orders", {
+      replace: true,
+      state: {
+        claimCreated: true,
+        isMock: true,
+        claimType: "EXCHANGE",
+        orderId: order.orderId,
+        scope,
+        claim: mockClaimData,
+      },
+    });
   };
 
-  const isAllSelected =
-    products.length > 0 && selectedProducts.length === products.length;
+  const formatPrice = (price) => {
+    return `${Number(price ?? 0).toLocaleString("ko-KR")}원`;
+  };
 
-  
-  
-  
-  if (isAuthLoading) {
-    return (
-      <>
-        <style>{styles}</style>
-
-        <div className="return-page">
-          <Header />
-
-          <main className="return-main">
-            <Loader />
-          </main>
-
-          <Footer />
-        </div>
-      </>
-    );
-  }
-
-  
-  
-  
-  if (!isLoggedIn || !accessToken) {
-    return (
-      <>
-        <style>{styles}</style>
-
-        <div className="return-page">
-          <Header />
-
-          <main className="return-main">
-            <p>로그인 후 교환 신청이 가능합니다.</p>
-          </main>
-
-          <Footer />
-        </div>
-      </>
-    );
-  }
-
-  
-  
-  
   if (!orderId) {
     return (
       <>
@@ -755,7 +205,19 @@ function ExchangePage() {
           <Header />
 
           <main className="return-main">
-            <p>주문 정보를 확인할 수 없습니다.</p>
+            <section className="return-page-header">
+              <h1>상품 교환</h1>
+
+              <p>주문번호를 확인할 수 없습니다.</p>
+
+              <button
+                type="button"
+                className="return-submit-button"
+                onClick={() => navigate("/mypage/orders")}
+              >
+                주문내역으로 돌아가기
+              </button>
+            </section>
           </main>
 
           <Footer />
@@ -764,10 +226,7 @@ function ExchangePage() {
     );
   }
 
-  
-  
-  
-  if (isLoading) {
+  if (!order) {
     return (
       <>
         <style>{styles}</style>
@@ -776,7 +235,19 @@ function ExchangePage() {
           <Header />
 
           <main className="return-main">
-            <Loader />
+            <section className="return-page-header">
+              <h1>상품 교환</h1>
+
+              <p>해당 Mock 주문 정보를 찾을 수 없습니다.</p>
+
+              <button
+                type="button"
+                className="return-submit-button"
+                onClick={() => navigate("/mypage/orders")}
+              >
+                주문내역으로 돌아가기
+              </button>
+            </section>
           </main>
 
           <Footer />
@@ -796,7 +267,7 @@ function ExchangePage() {
           <section className="return-page-header">
             <h1>상품 교환</h1>
 
-            <p>교환하실 상품과 사유를 선택해주세요.</p>
+            <p>교환할 상품을 선택하고 교환 사유를 입력해주세요.</p>
           </section>
 
           <section className="product-selection">
@@ -809,6 +280,7 @@ function ExchangePage() {
                   }`}
                   onClick={handleSelectAll}
                   aria-label="전체 상품 선택"
+                  aria-pressed={isAllSelected}
                 >
                   {isAllSelected ? "✓" : ""}
                 </button>
@@ -816,8 +288,18 @@ function ExchangePage() {
                 <strong>상품 선택</strong>
 
                 <span>
-                  {selectedProducts.length}/{products.length}
+                  {selectedProducts.length}/{orderItems.length}
                 </span>
+
+                {selectedProducts.length > 0 && (
+                  <span
+                    className={`cancel-scope-badge ${
+                      isAllSelected ? "all" : "partial"
+                    }`}
+                  >
+                    {isAllSelected ? "전체 교환" : "부분 교환"}
+                  </span>
+                )}
               </div>
 
               <div className="delete-button-area">
@@ -825,130 +307,152 @@ function ExchangePage() {
                   type="button"
                   className="delete-button"
                   onClick={handleDeleteSelected}
+                  disabled={selectedProducts.length === 0}
                 >
-                  선택 삭제
+                  선택 해제
                 </button>
-
-                <div className="delete-cat-decoration">
-                  <img src={logoMyshop} alt="" />
-                </div>
               </div>
             </div>
 
             <div className="product-list">
-              {products.map((product) => {
-                const isSelected = selectedProducts.includes(product.id);
+              {orderItems.map((item, index) => {
+                const itemKey = getItemKey(item, index);
 
-                const isOpen = openDropdown === product.id;
-
-                const currentReason =
-                  selectedReasons[product.id] || "교환 사유 선택";
-
-                const currentDetailReason = detailReasons[product.id] || "";
+                const isSelected = selectedProducts.includes(itemKey);
 
                 return (
-                  <article className="return-product-card" key={product.id}>
+                  <article
+                    className={`return-product-card ${
+                      isSelected ? "is-selected" : "is-unselected"
+                    }`}
+                    key={itemKey}
+                  >
                     <button
                       type="button"
                       className={`product-checkbox ${
                         isSelected ? "checked" : ""
                       }`}
-                      onClick={() => handleSelectProduct(product.id)}
-                      aria-label={`${product.name} 선택`}
+                      onClick={() => handleSelectProduct(itemKey)}
+                      aria-label={`${item.name} ${
+                        isSelected ? "교환 대상에서 제외" : "교환 대상으로 선택"
+                      }`}
+                      aria-pressed={isSelected}
                     >
                       {isSelected ? "✓" : ""}
                     </button>
 
                     <div className="product-main-info">
-                      <img
-                        className="product-image"
-                        src={product.image}
-                        alt={product.name}
-                      />
+                      {item.thumbnail && (
+                        <img
+                          className="product-image"
+                          src={item.thumbnail}
+                          alt={item.name}
+                        />
+                      )}
 
                       <div className="product-info">
                         <p className="product-order-number">
-                          주문번호: {product.orderNumber}
+                          주문번호: {order.orderId}
                         </p>
 
-                        <h2>{product.name}</h2>
+                        <h2>{item.name}</h2>
 
-                        <p className="product-option">{product.option}</p>
+                        {item.option && (
+                          <p className="product-option">{item.option}</p>
+                        )}
 
                         <strong className="product-price">
-                          {Number(product.price).toLocaleString()}원
+                          {formatPrice(item.price)}
                         </strong>
                       </div>
                     </div>
 
-                    <p className="product-quantity">{product.quantity}개</p>
+                    <p className="product-quantity">{item.quantity ?? 1}개</p>
 
-                    <div
-                      className="return-reason-area"
-                      ref={(element) => {
-                        dropdownRefs.current[product.id] = element;
-                      }}
-                    >
-                      <div className="custom-dropdown">
-                        <button
-                          type="button"
-                          className="dropdown-trigger"
-                          onClick={() => handleToggleDropdown(product.id)}
-                        >
-                          <span>{currentReason}</span>
-
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="12"
-                            height="12"
-                            fill="currentColor"
-                            className="bi bi-caret-down dropdown-arrow"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753.659" />
-                          </svg>
-                        </button>
-
-                        {isOpen && (
-                          <div className="dropdown-menu">
-                            {exchangeReasons.map((reason) => (
-                              <button
-                                type="button"
-                                className="dropdown-option"
-                                key={reason}
-                                onClick={() =>
-                                  handleSelectReason(product.id, reason)
-                                }
-                              >
-                                {reason}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="reason-textarea-wrapper">
-                        <textarea
-                          value={currentDetailReason}
-                          onChange={(event) =>
-                            handleDetailReasonChange(
-                              product.id,
-                              event.target.value,
-                            )
-                          }
-                          placeholder="상세 사유를 입력해주세요. (선택)"
-                          maxLength={100}
-                        />
-
-                        <span className="text-counter">
-                          {currentDetailReason.length}
-                          /100
-                        </span>
-                      </div>
+                    <div className="product-cancel-status">
+                      {isSelected ? (
+                        <span className="selected">교환 대상</span>
+                      ) : (
+                        <span className="unselected">교환 제외</span>
+                      )}
                     </div>
                   </article>
                 );
               })}
+            </div>
+
+            <div
+              className={`return-reason-area ${
+                selectedProducts.length === 0 ? "is-disabled" : ""
+              }`}
+              ref={dropdownRef}
+            >
+              <div className="reason-title-area">
+                <strong>교환 사유</strong>
+
+                {selectedProducts.length > 0 && (
+                  <span>
+                    {isAllSelected
+                      ? "전체 주문에 적용됩니다."
+                      : `선택한 ${selectedProducts.length}개 상품에 적용됩니다.`}
+                  </span>
+                )}
+              </div>
+
+              <div className="custom-dropdown">
+                <button
+                  type="button"
+                  className="dropdown-trigger"
+                  aria-expanded={isDropdownOpen}
+                  disabled={selectedProducts.length === 0}
+                  onClick={() => setIsDropdownOpen((previous) => !previous)}
+                >
+                  <span>{selectedReason}</span>
+
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    fill="currentColor"
+                    className="bi bi-caret-down dropdown-arrow"
+                    viewBox="0 0 16 16"
+                    aria-hidden="true"
+                  >
+                    <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753.659" />
+                  </svg>
+                </button>
+
+                {isDropdownOpen && selectedProducts.length > 0 && (
+                  <div className="dropdown-menu">
+                    {exchangeReasons.map((reason) => (
+                      <button
+                        type="button"
+                        className="dropdown-option"
+                        key={reason}
+                        onClick={() => handleSelectReason(reason)}
+                      >
+                        {reason}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="reason-textarea-wrapper">
+                <textarea
+                  value={detailReason}
+                  disabled={selectedProducts.length === 0}
+                  onChange={(event) => setDetailReason(event.target.value)}
+                  placeholder={
+                    selectedProducts.length === 0
+                      ? "교환할 상품을 먼저 선택해주세요."
+                      : "상세 사유를 입력해주세요. (선택)"
+                  }
+                  maxLength={100}
+                />
+
+                <span className="text-counter">{detailReason.length}/100</span>
+              </div>
             </div>
           </section>
 
@@ -961,6 +465,14 @@ function ExchangePage() {
               </div>
 
               <ul>
+                <li>배송완료 상태의 상품만 교환 신청할 수 있습니다.</li>
+
+                <li>전체 상품을 선택하면 전체 교환으로 처리됩니다.</li>
+
+                <li>일부 상품만 선택하면 선택한 상품만 부분 교환됩니다.</li>
+
+                <li>체크되지 않은 상품은 교환 대상에 포함되지 않습니다.</li>
+
                 <li>
                   교환 신청 후 상품 확인까지 영업일 기준 1~3일 정도 소요될 수
                   있습니다.
@@ -969,21 +481,41 @@ function ExchangePage() {
                 <li>
                   상품 상태 및 교환 사유에 따라 교환이 어려울 수 있습니다.
                 </li>
-
-                <li>
-                  교환할 상품은 받으신 상태 그대로 포장하여 보내주시기 바랍니다.
-                </li>
               </ul>
             </div>
 
             <div className="notice-submit-area">
+              {selectedProducts.length > 0 && (
+                <div className="cancel-summary">
+                  <strong>{isAllSelected ? "전체 교환" : "부분 교환"}</strong>
+
+                  <span>
+                    {isAllSelected
+                      ? `전체 ${orderItems.length}개 상품`
+                      : `전체 ${orderItems.length}개 중 ${selectedProducts.length}개 상품`}
+                  </span>
+                </div>
+              )}
+
               <button
                 type="button"
                 className="return-submit-button"
                 onClick={handleSubmitExchange}
-                disabled={isSubmitting}
+                disabled={
+                  isSubmitting ||
+                  selectedProducts.length === 0 ||
+                  order.status !== "DELIVERED"
+                }
               >
-                {isSubmitting ? "교환 신청 중..." : "교환 신청하기"}
+                {isSubmitting
+                  ? "교환 신청 중..."
+                  : order.status !== "DELIVERED"
+                    ? "교환할 수 없는 주문"
+                    : selectedProducts.length === 0
+                      ? "교환할 상품을 선택해주세요"
+                      : isAllSelected
+                        ? "전체 상품 교환하기"
+                        : `선택 상품 ${selectedProducts.length}개 교환하기`}
               </button>
 
               <div className="cat-decoration">
@@ -992,7 +524,7 @@ function ExchangePage() {
                     src={catImage}
                     alt=""
                     className={`cat cat-${index + 1}`}
-                    key={index}
+                    key={catImage}
                   />
                 ))}
               </div>

@@ -1,170 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useState } from "react";
 import { verifyPassword } from "../../services/authService";
 import useAuth from "../../hooks/useAuth";
@@ -206,6 +39,10 @@ function PasswordConfirmModal({
   };
 
   const handleClose = () => {
+    if (isSubmitting) {
+      return;
+    }
+
     resetModal();
     onClose();
   };
@@ -213,10 +50,19 @@ function PasswordConfirmModal({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (isSubmitting) {
+      return;
+    }
+
     const trimmedPassword = password.trim();
 
     if (!trimmedPassword) {
       setErrorMessage("비밀번호를 입력해주세요.");
+      return;
+    }
+
+    if (!accessToken) {
+      setErrorMessage("로그인 정보가 없습니다. 다시 로그인해주세요.");
       return;
     }
 
@@ -226,16 +72,31 @@ function PasswordConfirmModal({
 
       const result = await verifyPassword(trimmedPassword, accessToken);
 
-      if (!result.success || result.isMatched === false) {
+      if (!result.success) {
+        setErrorMessage(result.message || "비밀번호 확인에 실패했습니다.");
+        return;
+      }
+
+      if (!result.isMatched) {
         setErrorMessage(result.message || "비밀번호가 일치하지 않습니다.");
         return;
       }
 
       resetModal();
+
       onSuccess();
     } catch (error) {
+      console.error("비밀번호 확인 실패:", error);
+
+      if (error?.status === 401) {
+        setErrorMessage(
+          error.message || "로그인이 필요합니다. 다시 로그인해주세요.",
+        );
+        return;
+      }
+
       setErrorMessage(
-        error.message || "비밀번호 확인에 실패했습니다. 다시 시도해주세요.",
+        error?.message || "비밀번호 확인에 실패했습니다. 다시 시도해주세요.",
       );
     } finally {
       setIsSubmitting(false);
@@ -259,6 +120,7 @@ function PasswordConfirmModal({
           <CloseButton
             type="button"
             onClick={handleClose}
+            disabled={isSubmitting}
             aria-label="비밀번호 확인 창 닫기"
           >
             <span aria-hidden="true">&times;</span>
@@ -282,11 +144,13 @@ function PasswordConfirmModal({
               placeholder="비밀번호를 입력해주세요"
               aria-label="비밀번호"
               aria-invalid={Boolean(errorMessage)}
+              disabled={isSubmitting}
             />
 
             <ToggleButton
               type="button"
               onClick={() => setShowPassword((visible) => !visible)}
+              disabled={isSubmitting}
               aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
             >
               {showPassword ? (
