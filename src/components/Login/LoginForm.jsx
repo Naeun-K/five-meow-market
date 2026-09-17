@@ -151,12 +151,13 @@ export default function LoginForm() {
           <div className="options-container">
             <div className="save-info-container">
               <input
+                id="save-email"
                 type="checkbox"
                 name="saveId"
                 checked={saveEmail}
                 onChange={(event) => setSaveEmail(event.target.checked)}
               />
-              <label>이메일 저장</label>
+              <label htmlFor="save-email">이메일 저장</label>
             </div>
           </div>
 
