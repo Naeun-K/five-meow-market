@@ -124,10 +124,11 @@ export default function MainPage() {
           <ProductListStyle>
             {bestProducts.map((product) => (
               <Link
+                key={product.productId}
                 to={`/products/${product.productId}`}
                 className="product-link"
               >
-                <div className="product-item" key={product.productId}>
+                <div className="product-item">
                   <ProductCard
                     image={product.thumbnail}
                     name={product.name}
@@ -200,11 +201,12 @@ export default function MainPage() {
           <ProductListStyle>
             {newProducts.map((product) => (
               <Link
+                key={product.productId}
                 to={`/products/${product.productId}`}
                 className="product-link"
               >
                 {" "}
-                <div className="product-item" key={product.productId}>
+                <div className="product-item">
                   <ProductCard
                     productId={product.productId}
                     image={product.thumbnail}
