@@ -1377,7 +1377,7 @@ const CustomerInquiryPage = () => {
 
       showToast(result.message || "문의가 등록되었습니다.", true);
 
-      navigate("/community/qna");
+      navigate("/community/inquiry");
     } catch (error) {
       console.error("문의 등록 실패:", error);
 

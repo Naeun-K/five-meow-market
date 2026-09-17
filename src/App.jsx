@@ -22,7 +22,6 @@ import MyOrderDetail from "./pages/MyPage/order/MyOrderDetail";
 import MyReviewPage from "./pages/MyPage/reviews/MyReviewPage";
 import WishlistPage from "./pages/wishlist/WishlistPage";
 import PointPage from "./pages/MyPage/PointPage/PointPage";
-// import DetailProduct from "./pages/product/detailProduct/DetailProduct";
 import CopyDetailProduct from "./pages/product/detailProduct/CopyDetailProduct";
 import BestProductList from "./pages/product/best/BestProductList";
 import NewProductList from "./pages/product/new/NewProductList";
