@@ -2,8 +2,14 @@ import BasicPage from "../basicPage/BasicPage";
 
 import tabletMainBanner from "../../assets/tablet-meow-main-banner.webp";
 import wideMainBanner from "../../assets/wide-main-banner.webp";
+import mobileMainBanner from "../../assets/mobile-meow-main-banner2.webp";
+
 import MeowCategory from "../../components/main/MeowCategory/MeowCategory";
 import MainBenefits from "../../components/main/MainBenefits/MainBenefits";
+import ProductCard from "../../components/product/ProductCard/ProductCard";
+import BestReview from "../../components/bestReview/BestReview";
+import PawIcon from "../../components/common/PawIcon/PawIcon";
+
 import {
   CardContainer,
   ProductListStyle,
@@ -13,51 +19,180 @@ import {
 } from "./MainPageStyle";
 
 import useToast from "../../hooks/useToast";
+import useAuth from "../../hooks/useAuth";
+
 import { useEffect, useState } from "react";
-import { getMainProducts } from "../../services/productServices";
-import ProductCard from "../../components/product/ProductCard/ProductCard";
-import mobileMainBanner from "../../assets/mobile-meow-main-banner2.webp";
 import { Link, useNavigate } from "react-router-dom";
-import BestReview from "../../components/bestReview/BestReview";
-import PawIcon from "../../components/common/PawIcon/PawIcon";
+
+import { getMainProducts } from "../../services/productServices";
+import { getWishlist } from "../../services/wishlistServices";
 
 export default function MainPage() {
   const { showToast } = useToast();
-  const naviagate = useNavigate();
-  const [wishlist, setWishlist] = useState([]);
+  const { accessToken, isAuthLoading } = useAuth();
+
+  const navigate = useNavigate();
+
   const [bestProducts, setBestProducts] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
-  useEffect(() => {
-    const fetchMainProducts = async () => {
-      try {
-        const result = await getMainProducts();
 
-        if (!result.success) {
+  useEffect(() => {
+    if (isAuthLoading) {
+      return;
+    }
+
+    const fetchMainData = async () => {
+      try {
+        // ================================
+        // 1. 메인 상품 조회
+        // ================================
+        const mainResult = await getMainProducts();
+
+        if (!mainResult.success) {
           showToast(
-            result.message || "메인 상품을 불러오지 못했습니다.",
+            mainResult.message || "메인 상품을 불러오지 못했습니다.",
             false,
           );
+
           return;
         }
 
-        setBestProducts(result.bestProducts ?? []);
-        setNewProducts(result.newProducts ?? []);
+        const mainBestProducts = mainResult.bestProducts ?? [];
+        const mainNewProducts = mainResult.newProducts ?? [];
+
+        // ================================
+        // 2. 비로그인
+        // 모든 상품 isLiked = false
+        // ================================
+        if (!accessToken) {
+          setBestProducts(
+            mainBestProducts.map((product) => ({
+              ...product,
+              isLiked: false,
+            })),
+          );
+
+          setNewProducts(
+            mainNewProducts.map((product) => ({
+              ...product,
+              isLiked: false,
+            })),
+          );
+
+          return;
+        }
+
+        // ================================
+        // 3. 로그인 상태
+        // 기존에 저장된 찜 목록 조회
+        // ================================
+        const wishlistResult = await getWishlist(
+          {
+            page: 1,
+            limit: 100,
+          },
+          accessToken,
+        );
+
+        if (!wishlistResult.success) {
+          throw new Error(
+            wishlistResult.message || "찜한 상품을 불러오지 못했습니다.",
+          );
+        }
+
+        // ================================
+        // 4. 찜 상품 목록 가져오기
+        // ================================
+        const wishlistProducts =
+          wishlistResult.products ??
+          wishlistResult.data?.products ??
+          wishlistResult.items ??
+          wishlistResult.data?.items ??
+          [];
+
+        // ================================
+        // 5. 기존 찜 상품 productId 추출
+        // ================================
+        const wishlistIds = new Set(
+          wishlistProducts
+            .map((item) => {
+              if (item.productId) {
+                return String(item.productId);
+              }
+
+              if (item.product?.productId) {
+                return String(item.product.productId);
+              }
+
+              return null;
+            })
+            .filter(Boolean),
+        );
+
+        // ================================
+        // 6. 베스트 상품에 기존 찜 상태 합치기
+        // ================================
+        const bestProductsWithWishlist = mainBestProducts.map((product) => ({
+          ...product,
+
+          isLiked: wishlistIds.has(String(product.productId)),
+        }));
+
+        // ================================
+        // 7. 신상품에 기존 찜 상태 합치기
+        // ================================
+        const newProductsWithWishlist = mainNewProducts.map((product) => ({
+          ...product,
+
+          isLiked: wishlistIds.has(String(product.productId)),
+        }));
+
+        // ================================
+        // 8. 최종 상품 저장
+        // ================================
+        setBestProducts(bestProductsWithWishlist);
+        setNewProducts(newProductsWithWishlist);
       } catch (error) {
-        console.error("메인 상품 조회 실패:", error);
-        showToast("메인 상품 조회 중 오류가 발생했습니다.", false);
+        console.error("메인 페이지 데이터 조회 실패:", error);
+
+        showToast(
+          error.message ||
+            "메인 페이지 데이터를 불러오는 중 오류가 발생했습니다.",
+          false,
+        );
       }
     };
 
-    fetchMainProducts();
-  }, [showToast]);
+    fetchMainData();
+  }, [accessToken, isAuthLoading, showToast]);
 
+  // ========================================
+  // 찜 등록 / 해제 후 화면 상태 변경
+  // ========================================
   const handleWishlistChange = (productId, isLiked) => {
-    if (isLiked) {
-      return;
-    }
-    setWishlist((prev) => prev.filter((item) => item.productId !== productId));
+    // 베스트 상품 상태 변경
+    setBestProducts((prev) =>
+      prev.map((product) =>
+        String(product.productId) === String(productId)
+          ? {
+              ...product,
+              isLiked,
+            }
+          : product,
+      ),
+    );
 
-    // setTotalCount((prev) => Math.max(prev - 1, 0));
+    // 신상품 상태 변경
+    setNewProducts((prev) =>
+      prev.map((product) =>
+        String(product.productId) === String(productId)
+          ? {
+              ...product,
+              isLiked,
+            }
+          : product,
+      ),
+    );
   };
 
   return (
@@ -89,22 +224,30 @@ export default function MainPage() {
           />
         </BannerContainer>
       </BannerBackground>
+
       <MainPageSytle>
         <MeowCategory />
 
+        {/* =========================
+            베스트 상품
+        ========================= */}
         <CardContainer>
           <div className="labeling-wrapper">
             <div className="labeling">
               <p>많은 집사들이 꾹꾹한 상품</p>
+
               <span className="paw-container">
                 <PawIcon />
               </span>
             </div>
+
             <button
+              type="button"
               className="see-more labeling"
-              onClick={() => naviagate("/products/best")}
+              onClick={() => navigate("/products/best")}
             >
               <p>전체보기</p>
+
               <span className="arrow-container">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -112,6 +255,7 @@ export default function MainPage() {
                   height="100%"
                   fill="currentColor"
                   viewBox="4 4.5 8 7"
+                  aria-hidden="true"
                 >
                   <path
                     fillRule="evenodd"
@@ -121,6 +265,7 @@ export default function MainPage() {
               </span>
             </button>
           </div>
+
           <ProductListStyle>
             {bestProducts.map((product) => (
               <Link
@@ -130,10 +275,13 @@ export default function MainPage() {
               >
                 <div className="product-item">
                   <ProductCard
+                    productId={product.productId}
                     image={product.thumbnail}
                     name={product.name}
                     badge="bestOrange"
                     showHeart
+                    isLiked={product.isLiked}
+                    onWishlistChange={handleWishlistChange}
                   />
 
                   <div className="product-info">
@@ -147,10 +295,11 @@ export default function MainPage() {
               </Link>
             ))}
           </ProductListStyle>
+
           <button
             type="button"
             className="mobile-more-button"
-            onClick={() => naviagate("/products/best")}
+            onClick={() => navigate("/products/best")}
           >
             더보기
             <svg
@@ -169,19 +318,26 @@ export default function MainPage() {
           </button>
         </CardContainer>
 
+        {/* =========================
+            신상품
+        ========================= */}
         <CardContainer>
           <div className="labeling-wrapper">
             <div className="labeling">
               <p>고양이도 궁금해할 신상품</p>
+
               <span className="paw-container">
                 <PawIcon />
               </span>
             </div>
+
             <button
+              type="button"
               className="see-more labeling"
-              onClick={() => naviagate("/products/new")}
+              onClick={() => navigate("/products/new")}
             >
               <p>전체보기</p>
+
               <span className="arrow-container">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -189,6 +345,7 @@ export default function MainPage() {
                   height="100%"
                   fill="currentColor"
                   viewBox="4 4.5 8 7"
+                  aria-hidden="true"
                 >
                   <path
                     fillRule="evenodd"
@@ -198,6 +355,7 @@ export default function MainPage() {
               </span>
             </button>
           </div>
+
           <ProductListStyle>
             {newProducts.map((product) => (
               <Link
@@ -205,7 +363,6 @@ export default function MainPage() {
                 to={`/products/${product.productId}`}
                 className="product-link"
               >
-                {" "}
                 <div className="product-item">
                   <ProductCard
                     productId={product.productId}
@@ -228,10 +385,11 @@ export default function MainPage() {
               </Link>
             ))}
           </ProductListStyle>
+
           <button
             type="button"
             className="mobile-more-button"
-            onClick={() => naviagate("/products/new")}
+            onClick={() => navigate("/products/new")}
           >
             더보기
             <svg
@@ -250,19 +408,26 @@ export default function MainPage() {
           </button>
         </CardContainer>
 
+        {/* =========================
+            베스트 리뷰
+        ========================= */}
         <CardContainer>
           <div className="labeling-wrapper">
             <div className="labeling">
               <p>Best Review</p>
+
               <span className="paw-container">
                 <PawIcon />
               </span>
             </div>
+
             <button
+              type="button"
               className="see-more labeling"
-              onClick={() => naviagate("/community/review")}
+              onClick={() => navigate("/community/review")}
             >
               <p>전체보기</p>
+
               <span className="arrow-container">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -270,6 +435,7 @@ export default function MainPage() {
                   height="100%"
                   fill="currentColor"
                   viewBox="4 4.5 8 7"
+                  aria-hidden="true"
                 >
                   <path
                     fillRule="evenodd"
@@ -279,13 +445,15 @@ export default function MainPage() {
               </span>
             </button>
           </div>
+
           <div className="card-wrapper">
             <BestReview />
           </div>
+
           <button
             type="button"
             className="mobile-more-button"
-            onClick={() => naviagate("/community/review")}
+            onClick={() => navigate("/community/review")}
           >
             더보기
             <svg
@@ -304,6 +472,7 @@ export default function MainPage() {
           </button>
         </CardContainer>
       </MainPageSytle>
+
       <MainBenefits />
     </BasicPage>
   );
