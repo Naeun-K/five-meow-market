@@ -7,12 +7,10 @@ export const CartWrapper = styled.section`
   padding: 0 30px;
   box-sizing: border-box;
 
-  
   @media (max-width: 767px) {
     padding: 0 20px;
   }
 `;
-
 
 export const ContinueButton = styled.button`
   display: flex;
@@ -25,7 +23,8 @@ export const ContinueButton = styled.button`
   border: none;
 
   color: var(--text-color);
-  font-size: 17px;
+  font-size: 20px;
+  font-weight: 500;
 
   cursor: pointer;
 
@@ -34,7 +33,6 @@ export const ContinueButton = styled.button`
   }
 `;
 
-
 export const CartHeader = styled.div`
   display: flex;
   flex-direction: column;
@@ -42,6 +40,13 @@ export const CartHeader = styled.div`
   gap: 8px;
 
   padding-bottom: 24px;
+
+  @media (max-width: 767px) {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    width: 100%;
+    gap: 8px 12px;
+  }
 `;
 
 export const CartTitle = styled.h1`
@@ -52,10 +57,39 @@ export const CartTitle = styled.h1`
   font-weight: 700;
 
   @media (max-width: 767px) {
+    grid-column: 1 / -1;
     font-size: 32px;
   }
 `;
+export const CartInfo = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
+  @media (max-width: 767px) {
+    display: contents; /* 🔵 CHANGE: 모바일에서 wrapper만 레이아웃에서 제거 */
+  }
+`;
+
+export const CartList = styled.div`
+  min-height: 400px;
+`;
+
+export const SelectAllLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  cursor: pointer;
+
+  input {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    cursor: pointer;
+  }
+`;
 export const CartSubtitle = styled.p`
   margin: 0;
 
@@ -64,11 +98,35 @@ export const CartSubtitle = styled.p`
   font-weight: 400;
 
   @media (max-width: 767px) {
+    grid-column: 1 / -1;
     font-size: 18px;
   }
 `;
+export const DeleteAllButton = styled.button`
+  padding: 0;
+  margin-left: 12px;
 
+  border: none;
+  background: none;
 
+  color: #777;
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  cursor: pointer;
+
+  &:hover {
+    color: #222;
+  }
+
+  @media (max-width: 767px) {
+    grid-column: 2; 
+    grid-row: 3; 
+    margin-left: 0; 
+    white-space: nowrap;
+`;
 export const OrderSummary = styled.section`
   box-sizing: border-box;
 
@@ -82,12 +140,10 @@ export const OrderSummary = styled.section`
 
   background: var(--bg-notice);
 
-  
   @media (min-width: 768px) and (max-width: 1023px) {
     margin: 50px 0;
   }
 
-  
   @media (max-width: 767px) {
     flex-direction: column;
     align-items: stretch;
@@ -97,7 +153,6 @@ export const OrderSummary = styled.section`
     gap: 32px;
   }
 `;
-
 
 export const SummaryInfo = styled.div`
   display: flex;
@@ -142,21 +197,18 @@ export const SummaryRow = styled.div`
   }
 `;
 
-
 export const TotalAndCheckout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 20px;
 
-  
   margin-top: 60px;
 
   @media (max-width: 767px) {
     width: 100%;
     align-items: stretch;
 
-    
     margin-top: 0;
   }
 `;

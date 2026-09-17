@@ -6,6 +6,7 @@ const CartUI = ({
   cartItems = [],
   selectedItems = [],
   onCheck,
+  onCheckAll,
   onQuantityChange,
   onRemove,
   onCheckout,
@@ -23,7 +24,8 @@ const CartUI = ({
     0,
   );
 
-  const reward = 0;
+  const reward = Math.floor(productPrice * 0.05);
+  // const reward = 0;
 
   const shippingFee = productPrice === 0 ? 0 : productPrice >= 70000 ? 0 : 3000;
 
@@ -46,23 +48,50 @@ const CartUI = ({
         </svg>
         쇼핑 계속하기
       </S.ContinueButton>
-
       <S.CartHeader>
         <S.CartTitle>장바구니</S.CartTitle>
 
         <S.CartSubtitle>{cartCount}개의 상품이 담겨져있습니다.</S.CartSubtitle>
+
+        <S.CartInfo>
+          <S.SelectAllLabel>
+            <input
+              type="checkbox"
+              checked={
+                cartItems.length > 0 &&
+                selectedItems.length === cartItems.length
+              }
+              onChange={onCheckAll}
+            />
+            <span>전체선택</span>
+          </S.SelectAllLabel>
+
+          <S.DeleteAllButton
+            type="button"
+            onClick={() => {
+              cartItems.forEach((item) => {
+                onRemove(item.cartItemId);
+              });
+            }}
+          >
+            전체삭제
+          </S.DeleteAllButton>
+        </S.CartInfo>
       </S.CartHeader>
 
-      {cartItems.map((item) => (
-        <CartItem
-          key={item.cartItemId}
-          item={item}
-          checked={selectedItems.includes(item.cartItemId)}
-          onCheck={onCheck}
-          onQuantityChange={onQuantityChange}
-          onRemove={onRemove}
-        />
-      ))}
+      <S.CartList>
+        {cartItems.map((item) => (
+          <CartItem
+            key={item.cartItemId}
+            item={item}
+            checked={selectedItems.includes(item.cartItemId)}
+            onCheck={onCheck}
+            onCheckAll={onCheckAll}
+            onQuantityChange={onQuantityChange}
+            onRemove={onRemove}
+          />
+        ))}
+      </S.CartList>
 
       <S.OrderSummary>
         <S.SummaryInfo>

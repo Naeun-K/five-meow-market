@@ -37,14 +37,12 @@ export const AuthPageLayoutStyle = styled.div({
     padding: "50px",
   },
 
-  
   "@media (min-width: 768px) and (max-width: 1024px)": {
     "& .form-part": {
       padding: "30px",
     },
   },
 
-  
   "@media (min-width: 320px) and (max-width: 767px)": {
     gridTemplateColumns: "1fr",
 
@@ -54,7 +52,7 @@ export const AuthPageLayoutStyle = styled.div({
 
     "& .form-part": {
       width: "100%",
-      padding: "20px",
+      padding: "16px",
     },
   },
 });

@@ -1,59 +1,55 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import EmptyCart from "../../components/cartui/emptyCart";
 import BasicPage from "../basicPage/BasicPage";
 import CartUI from "../../components/cartui/CartUI";
+import Loader from "../../components/loader/Loader";
+
 import {
   getCart,
   updateCartItem,
   deleteCartItem,
 } from "../../services/cartServices";
-import Loader from "../../components/loader/Loader";
+
+import { createCheckout } from "../../services/checkOutServices";
+
 import useAuth from "../../hooks/useAuth";
 import useToast from "../../hooks/useToast";
 
 export default function CartPage() {
+  const navigate = useNavigate();
+
   const [cartItems, setCartItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
 
   const { isLoggedIn, accessToken, isAuthLoading } = useAuth();
   const { showToast } = useToast();
 
-  
+  // 장바구니 조회
   useEffect(() => {
-    console.count("🔥 Cart useEffect 실행");
-
-    console.log("Cart effect dependencies:", {
-      isLoggedIn,
-      accessToken,
-      showToast,
-    });
-
     if (isAuthLoading || !isLoggedIn || !accessToken) {
       return;
     }
 
     const fetchCart = async () => {
-      console.count("🌐 GET /cart 실제 호출");
-
       try {
         const result = await getCart(accessToken);
-
-        console.log("✅ GET /cart 응답:", result);
 
         if (!result.success) {
           throw new Error(result.message || "장바구니 조회에 실패했습니다.");
         }
 
-        const items = result.data?.cartItems ?? [];
-
-        console.log("📦 cartItems:", items);
+        const items = result.items ?? [];
 
         setCartItems(items);
 
+        // 처음 장바구니 조회 시 전체 상품 선택
         setSelectedItems(items.map((item) => item.cartItemId));
       } catch (error) {
-        console.error("❌ 장바구니 조회 실패:", error);
+        console.error("장바구니 조회 실패:", error);
 
         showToast(error.message || "장바구니 조회에 실패했습니다.", false);
       } finally {
@@ -64,7 +60,7 @@ export default function CartPage() {
     fetchCart();
   }, [isAuthLoading, isLoggedIn, accessToken, showToast]);
 
-  
+  // 상품 선택 / 선택 해제
   const handleCheck = (cartItemId, checked) => {
     if (checked) {
       setSelectedItems((prev) => {
@@ -81,7 +77,19 @@ export default function CartPage() {
     setSelectedItems((prev) => prev.filter((id) => id !== cartItemId));
   };
 
-  
+  // 상품 전체 선택 / 전체 해제
+  const handleCheckAll = (event) => {
+    const checked = event.target.checked;
+
+    if (checked) {
+      setSelectedItems(cartItems.map((item) => item.cartItemId));
+      return;
+    }
+
+    setSelectedItems([]);
+  };
+
+  // 상품 수량 변경
   const handleQuantityChange = async (cartItemId, quantity) => {
     try {
       const result = await updateCartItem(cartItemId, quantity, accessToken);
@@ -90,14 +98,13 @@ export default function CartPage() {
         throw new Error(result.message || "상품 수량 변경에 실패했습니다.");
       }
 
-      const updatedItem = result.data.cartItem;
-
       setCartItems((prev) =>
         prev.map((item) =>
-          item.cartItemId === updatedItem.cartItemId
+          item.cartItemId === result.cartItemId
             ? {
                 ...item,
-                quantity: updatedItem.quantity,
+                quantity: result.quantity,
+                itemAmount: result.itemAmount,
               }
             : item,
         ),
@@ -109,7 +116,7 @@ export default function CartPage() {
     }
   };
 
-  
+  // 상품 개별 삭제
   const handleRemove = async (cartItemId) => {
     try {
       const result = await deleteCartItem(cartItemId, accessToken);
@@ -118,15 +125,14 @@ export default function CartPage() {
         throw new Error(result.message || "상품 삭제에 실패했습니다.");
       }
 
-      const deletedCartItemId = result.data.deletedCartItemId;
-
       setCartItems((prev) =>
-        prev.filter((item) => item.cartItemId !== deletedCartItemId),
+        prev.filter((item) => item.cartItemId !== cartItemId),
       );
 
-      setSelectedItems((prev) => prev.filter((id) => id !== deletedCartItemId));
+      // 삭제된 상품은 선택 목록에서도 제거
+      setSelectedItems((prev) => prev.filter((id) => id !== cartItemId));
 
-      showToast("장바구니에서 상품을 삭제했습니다.", true);
+      showToast(result.message || "장바구니에서 상품을 삭제했습니다.", true);
     } catch (error) {
       console.error("장바구니 상품 삭제 실패:", error);
 
@@ -134,7 +140,53 @@ export default function CartPage() {
     }
   };
 
-  
+  // 선택한 상품 결제
+  const handleCheckout = async () => {
+    if (isCheckoutLoading) {
+      return;
+    }
+
+    if (!isLoggedIn || !accessToken) {
+      showToast("로그인 후 결제할 수 있습니다.", false);
+
+      return;
+    }
+
+    // 체크된 상품이 하나도 없는 경우
+    if (selectedItems.length === 0) {
+      showToast("결제할 상품을 선택해주세요.", false);
+
+      return;
+    }
+
+    try {
+      setIsCheckoutLoading(true);
+
+      // 체크된 cartItemId만 Checkout 생성
+      const result = await createCheckout(selectedItems, accessToken);
+
+      if (!result.success) {
+        throw new Error(result.message || "결제 준비에 실패했습니다.");
+      }
+
+      const checkoutId = result.checkoutId;
+
+      if (!checkoutId) {
+        throw new Error("Checkout 정보를 확인할 수 없습니다.");
+      }
+
+      // 결제 페이지 이동
+      navigate(`/checkout?checkoutId=${encodeURIComponent(checkoutId)}`);
+    } catch (error) {
+      console.error("Checkout 생성 실패:", error);
+
+      showToast(error.message || "결제 준비 중 문제가 발생했습니다.", false);
+    } finally {
+      setIsCheckoutLoading(false);
+    }
+  };
+
+  // 로그인하지 않은 경우
   if (!isLoggedIn || !accessToken) {
     return (
       <BasicPage>
@@ -143,7 +195,7 @@ export default function CartPage() {
     );
   }
 
-  
+  // 장바구니 조회 중
   if (isLoading) {
     return (
       <BasicPage>
@@ -152,7 +204,7 @@ export default function CartPage() {
     );
   }
 
-  
+  // 장바구니가 비어있는 경우
   if (cartItems.length === 0) {
     return (
       <BasicPage>
@@ -167,8 +219,11 @@ export default function CartPage() {
         cartItems={cartItems}
         selectedItems={selectedItems}
         onCheck={handleCheck}
+        onCheckAll={handleCheckAll}
         onQuantityChange={handleQuantityChange}
         onRemove={handleRemove}
+        onCheckout={handleCheckout}
+        isCheckoutLoading={isCheckoutLoading}
       />
     </BasicPage>
   );

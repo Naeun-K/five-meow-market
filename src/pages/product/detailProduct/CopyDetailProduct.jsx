@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductCard from "../../../components/product/ProductCard/ProductCard";
 import BasicPage from "../../basicPage/BasicPage";
 import {
@@ -18,6 +18,8 @@ import HeartButton from "../../../components/product/HeartButton/HeartButton";
 import ProductBottomSheet from "../../../components/product/ProductBottomSheet/ProductBottomSheet";
 import useAuth from "../../../hooks/useAuth";
 import { addCartItem } from "../../../services/cartServices";
+import { createCheckout } from "../../../services/checkOutServices";
+import * as wishlistService from "../../../services/wishlistServices";
 import CartSuccessModal from "../../../components/cartui/CartSuccessModal";
 import RelatedProducts from "../../../components/product/RelateProduct/RelatedProduct";
 import PawIcon from "../../../components/common/PawIcon/PawIcon";
@@ -34,6 +36,7 @@ export default function DetailProduct() {
   const { isAuthLoading, isLoggedIn, accessToken } = useAuth();
   const { productId } = useParams();
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,6 +45,10 @@ export default function DetailProduct() {
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isDetailExpanded, setIsDetailExpanded] = useState(false);
   const [isDetailOverflowing, setIsDetailOverflowing] = useState(false);
+
+  // 찜 상태
+  const [isLiked, setIsLiked] = useState(false);
+  const [isWishlistProcessing, setIsWishlistProcessing] = useState(false);
 
   const detailImageContentRef = useRef(null);
 
@@ -62,6 +69,7 @@ export default function DetailProduct() {
     });
   };
 
+  // 상세 이미지 높이 확인
   useEffect(() => {
     const detailContent = detailImageContentRef.current;
 
@@ -94,6 +102,7 @@ export default function DetailProduct() {
     };
   }, [product]);
 
+  // 상품 상세 조회
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -118,6 +127,48 @@ export default function DetailProduct() {
     fetchProduct();
   }, [productId, showToast]);
 
+  // =====================================================
+  // 현재 상품 찜 상태 조회
+  // 새로고침해도 GET /wishlist를 통해 상태 복구
+  // =====================================================
+  useEffect(() => {
+    if (isAuthLoading) {
+      return;
+    }
+
+    // 비로그인 사용자는 찜 상태 false
+    if (!isLoggedIn || !accessToken || !productId) {
+      return;
+    }
+
+    const fetchWishlistStatus = async () => {
+      try {
+        const result = await wishlistService.getWishlist(
+          {
+            page: 1,
+            limit: 100,
+          },
+          accessToken,
+        );
+
+        if (!result.success) {
+          throw new Error(result.message || "찜한 상품 조회에 실패했습니다.");
+        }
+
+        const liked = result.products.some(
+          (item) => item.productId === productId,
+        );
+
+        setIsLiked(liked);
+      } catch (error) {
+        console.error("찜 상태 조회 실패:", error);
+      }
+    };
+
+    fetchWishlistStatus();
+  }, [productId, accessToken, isLoggedIn, isAuthLoading]);
+
+  // 장바구니 담기
   const handleAddCart = async (selectedQuantity) => {
     if (isAuthLoading) {
       return false;
@@ -150,6 +201,130 @@ export default function DetailProduct() {
     }
   };
 
+  // 바로 구매하기
+  const handleBuyNow = async (selectedQuantity) => {
+    if (isAuthLoading) {
+      return false;
+    }
+
+    if (!isLoggedIn || !accessToken) {
+      showToast("로그인 후 구매할 수 있습니다.", false);
+
+      return false;
+    }
+
+    try {
+      // 1. 현재 상품을 장바구니에 추가
+      const cartResult = await addCartItem(
+        productId,
+        selectedQuantity,
+        accessToken,
+      );
+
+      if (!cartResult.success) {
+        throw new Error(cartResult.message || "상품 구매 준비에 실패했습니다.");
+      }
+
+      const cartItemId = cartResult.cartItemId;
+
+      if (!cartItemId) {
+        throw new Error("장바구니 상품 정보를 확인할 수 없습니다.");
+      }
+
+      // 2. Checkout 생성
+      const checkoutResult = await createCheckout([cartItemId], accessToken);
+
+      if (!checkoutResult.success) {
+        throw new Error(checkoutResult.message || "주문 준비에 실패했습니다.");
+      }
+
+      const checkoutId = checkoutResult.checkoutId;
+
+      if (!checkoutId) {
+        throw new Error("Checkout 정보를 확인할 수 없습니다.");
+      }
+
+      // 3. Checkout 페이지 이동
+      navigate(`/checkout?checkoutId=${encodeURIComponent(checkoutId)}`);
+
+      return true;
+    } catch (error) {
+      console.error("바로 구매 실패:", error);
+
+      showToast(error.message || "구매 준비에 실패했습니다.", false);
+
+      return false;
+    }
+  };
+
+  // =====================================================
+  // 데스크톱 / 태블릿 찜하기 / 찜해제
+  // =====================================================
+  const handleWishlistClick = async () => {
+    if (isAuthLoading || isWishlistProcessing) {
+      return;
+    }
+
+    if (!isLoggedIn || !accessToken) {
+      showToast("로그인 후 찜한 상품을 이용해주세요.", false);
+
+      return;
+    }
+
+    if (!productId) {
+      return;
+    }
+
+    try {
+      setIsWishlistProcessing(true);
+
+      // 이미 찜한 상품 → 찜 해제
+      if (isLiked) {
+        const result = await wishlistService.deleteWishlist(
+          productId,
+          accessToken,
+        );
+
+        if (!result.success) {
+          throw new Error(result.message || "찜 해제에 실패했습니다.");
+        }
+
+        setIsLiked(false);
+
+        showToast(result.message || "찜한 상품에서 해제되었습니다.", true);
+
+        return;
+      }
+
+      // 찜하지 않은 상품 → 찜 추가
+      const result = await wishlistService.addWishlist(productId, accessToken);
+
+      if (!result.success) {
+        throw new Error(result.message || "찜하기에 실패했습니다.");
+      }
+
+      setIsLiked(true);
+
+      showToast(result.message || "찜한 상품에 추가되었습니다.", true);
+    } catch (error) {
+      console.error("찜 상태 변경 실패:", error);
+
+      showToast(error.message || "찜 상태 변경 중 문제가 발생했습니다.", false);
+    } finally {
+      setIsWishlistProcessing(false);
+    }
+  };
+
+  // ProductCard / HeartButton 찜 상태 변경
+  const handleHeartWishlistChange = (changedProductId, nextIsLiked) => {
+    if (changedProductId !== productId) {
+      return;
+    }
+
+    setIsLiked(nextIsLiked);
+  };
+
+  // 모바일 BottomSheet 제출
   const handleBottomSheetSubmit = async () => {
     if (bottomSheetType === "cart") {
       const success = await handleAddCart(quantity);
@@ -162,19 +337,27 @@ export default function DetailProduct() {
       return;
     }
 
-    // if (bottomSheetType === "buy") {
-    //
-    // }
+    if (bottomSheetType === "buy") {
+      const success = await handleBuyNow(quantity);
+
+      if (success) {
+        setBottomSheetType(null);
+      }
+    }
   };
 
-  const handleBuyClick = () => {
+  // 바로 구매 버튼
+  const handleBuyClick = async () => {
     if (window.innerWidth <= 600) {
       setBottomSheetType("buy");
 
       return;
     }
+
+    await handleBuyNow(quantity);
   };
 
+  // 장바구니 버튼
   const handleCartClick = async () => {
     if (window.innerWidth <= 600) {
       setBottomSheetType("cart");
@@ -224,10 +407,13 @@ export default function DetailProduct() {
           <div className="product-photo-area">
             <PhotoWrapper>
               <ProductCard
+                productId={product.productId}
                 image={product.thumbnail}
                 name={product.name}
                 badge=""
                 showHeart
+                isLiked={isLiked}
+                onWishlistChange={handleHeartWishlistChange}
               />
             </PhotoWrapper>
 
@@ -283,9 +469,16 @@ export default function DetailProduct() {
 
               <div className="desc-info product-info">
                 <strong>{product.name}</strong>
+
                 <strong>{product.price.toLocaleString()}원</strong>
-                <p>{product.expectedPoint.toLocaleString()}원(5%)</p>
+
+                <p>
+                  {product.expectedPoint.toLocaleString()}
+                  원(5%)
+                </p>
+
                 <p>카드결제, 무통장입금</p>
+
                 <p>3,000원(70,000원 이상 구매 시 무료)</p>
               </div>
             </div>
@@ -312,7 +505,7 @@ export default function DetailProduct() {
                     >
                       <path
                         fillRule="evenodd"
-                        d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"
+                        d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 1 1 0 1h-11A.5.5 0 0 1 2 8"
                       />
                     </svg>
                   </button>
@@ -369,12 +562,19 @@ export default function DetailProduct() {
                   </span>
                 </button>
 
-                <button type="button" className="btn btn-wishlist">
+                {/* 데스크톱 / 태블릿 찜 버튼 */}
+                <button
+                  type="button"
+                  className={`btn btn-wishlist${isLiked ? " is-liked" : ""}`}
+                  onClick={handleWishlistClick}
+                  disabled={isWishlistProcessing}
+                  aria-pressed={isLiked}
+                >
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 16 16"
-                      fill="none"
+                      fill={isLiked ? "currentColor" : "none"}
                       aria-hidden="true"
                     >
                       <path
@@ -395,11 +595,17 @@ export default function DetailProduct() {
                       />
                     </svg>
                   </span>
-                  찜하기
+
+                  {isLiked ? "찜해제" : "찜하기"}
                 </button>
 
+                {/* 모바일 찜 버튼 */}
                 <div className="mobile-wishlist">
-                  <HeartButton />
+                  <HeartButton
+                    productId={productId}
+                    initialIsLiked={isLiked}
+                    onWishlistChange={handleHeartWishlistChange}
+                  />
                 </div>
               </div>
             </ButtonContainer>
@@ -466,6 +672,7 @@ export default function DetailProduct() {
               </div>
             </dl>
           </div>
+
           {/* 상품 상세 이미지 */}
           {product.images?.[1] && (
             <div className="detail-image-area">

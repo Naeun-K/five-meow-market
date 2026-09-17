@@ -16,23 +16,12 @@ export const CartItemRoot = styled.article`
   @media (min-width: 320px) and (max-width: 767px) {
     display: grid;
     grid-template-columns: 24px 90px minmax(0, 1fr) 24px;
-    grid-template-rows: 164px 94px;
-    gap: 0 12px;
+    grid-template-rows: 145px 48px;
+    gap: 0 10px;
     width: 100%;
-    min-height: 278px;
-    padding: 24px 14px 0;
+    min-height: 210px;
+    padding: 12px 18px;
     overflow: hidden;
-
-    &::after {
-      position: absolute;
-      z-index: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      height: 94px;
-      background: #f0e3d4;
-      content: "";
-    }
 
     > * {
       position: relative;
@@ -98,7 +87,7 @@ export const ProductInfo = styled.div`
 export const ProductName = styled.strong`
   overflow: hidden;
   color: #171717;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   line-height: 1.4;
   text-overflow: ellipsis;
@@ -107,13 +96,13 @@ export const ProductName = styled.strong`
   @media (min-width: 320px) and (max-width: 767px) {
     font-size: 16px;
     line-height: 1.25;
-    white-space: normal;
+    white-space: nowrap;
   }
 `;
 
 export const ProductPrice = styled.span`
   color: #171717;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1.4;
 
@@ -121,30 +110,34 @@ export const ProductPrice = styled.span`
     margin-top: 2px;
     font-size: 16px;
     line-height: 1.25;
+
+    white-space: nowrap;
   }
 `;
 
 export const QuantityControl = styled.div`
   display: flex;
-  flex: 0 0 66px;
+  flex: 0 0 82px;
   align-items: center;
   justify-content: space-between;
-  width: 66px;
-  height: 32px;
+  width: 82px;
+  height: 38px;
   overflow: hidden;
   border: 1px solid #dedede;
   border-radius: 7px;
   background: #fff;
 
   @media (min-width: 320px) and (max-width: 767px) {
-    grid-column: 1 / 3;
+    grid-column: 2 / 3;
     grid-row: 2;
     align-self: center;
     justify-self: start;
-    width: 130px;
-    height: 64px;
-    flex-basis: 130px;
-    border-radius: 12px;
+
+    width: 110px;
+    height: 42px;
+    flex-basis: 110px;
+
+    border-radius: 8px;
   }
 `;
 
@@ -162,14 +155,14 @@ export const QuantityButton = styled.button`
 
 export const QuantityValue = styled.span`
   color: #222;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 1;
 `;
 
 export const ItemPrice = styled.strong`
   flex: 0 0 72px;
   color: #171717;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
   text-align: right;
   white-space: nowrap;
@@ -179,7 +172,7 @@ export const ItemPrice = styled.strong`
     grid-row: 2;
     align-self: center;
     justify-self: end;
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
 
@@ -199,8 +192,12 @@ export const RemoveButton = styled.button`
   @media (min-width: 320px) and (max-width: 767px) {
     grid-column: 4;
     grid-row: 1;
-    align-self: center;
+    align-self: start;
     justify-self: end;
     font-size: 28px;
+    svg {
+      width: 22px;
+      height: 22px;
+    }
   }
 `;

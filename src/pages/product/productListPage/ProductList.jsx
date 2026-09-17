@@ -298,6 +298,7 @@ export default function ProductList() {
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [wishlist, setWishlist] = useState([]);
 
   const limit = useProductLimit();
 
@@ -371,6 +372,15 @@ export default function ProductList() {
     });
   };
 
+  const handleWishlistChange = (productId, isLiked) => {
+    if (isLiked) {
+      return;
+    }
+    setWishlist((prev) => prev.filter((item) => item.productId !== productId));
+
+    setTotalCount((prev) => Math.max(prev - 1, 0));
+  };
+
   return (
     <BasicPage>
       <ProductPage>
@@ -389,10 +399,13 @@ export default function ProductList() {
             >
               <div className="card-wrapper">
                 <ProductCard
+                  productId={product.productId}
                   image={product.thumbnail}
                   name={product.name}
                   badge=""
                   showHeart
+                  isLiked={product.isLiked}
+                  onWishlistChange={handleWishlistChange}
                 />
 
                 <p>{product.name}</p>
