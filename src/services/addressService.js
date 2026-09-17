@@ -1,6 +1,7 @@
 export function searchAddress() {
   return new Promise((resolve) => {
-    new kakao.Postcode({
+    // new kakao.Postcode({
+    new window.kakao.Postcode({
       oncomplete(data) {
         resolve({
           zoneCode: data.zonecode,

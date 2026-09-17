@@ -594,6 +594,55 @@ export const ButtonContainer = styled.div({
 
   "& .mobile-wishlist": {
     display: "none",
+
+    "@media (max-width: 600px)": {
+      display: "flex",
+      flexShrink: 0,
+    },
+  },
+
+  "& .mobile-heart-button": {
+    width: "60px",
+    height: "60px",
+    flexShrink: 0,
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    padding: 0,
+
+    border: "1px solid #806247",
+    borderRadius: "50%",
+
+    backgroundColor: "#fff",
+    color: "#806247",
+
+    cursor: "pointer",
+
+    "& svg": {
+      width: "28px",
+      height: "28px",
+    },
+
+    "&.is-liked": {
+      color: "var(  --acent-error)",
+    },
+
+    "&:disabled": {
+      cursor: "default",
+      opacity: 0.6,
+    },
+
+    "@media (max-width: 374px)": {
+      width: "54px",
+      height: "54px",
+
+      "& svg": {
+        width: "25px",
+        height: "25px",
+      },
+    },
   },
 
   "@media (min-width: 768px) and (max-width: 1023px)": {

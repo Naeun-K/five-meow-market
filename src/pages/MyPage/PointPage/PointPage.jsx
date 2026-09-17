@@ -149,7 +149,9 @@ function PointPage() {
     <BasicPage>
       <main css={page}>
         <header css={pageHeader}>
-          <ForwardButton>마이페이지로</ForwardButton>
+          <ForwardButton onClick={() => navigate("/mypage")}>
+            마이페이지로
+          </ForwardButton>
           <h1 css={pageTitle}>적립금</h1>
           <p css={pageSubtitle}>적립 및 사용 내역을 확인해보세요.</p>
         </header>
