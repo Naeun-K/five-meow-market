@@ -371,14 +371,90 @@ export const OrderCard = styled.div({
   borderRadius: "var(--radius-md)",
   background: "#fffdf9",
 
+    "@media (max-width: 1300px)": {
+    display: "grid",
+    gridTemplateColumns: "70px minmax(0, 1fr)",
+    gridTemplateRows: "auto auto",
+
+    columnGap: 18,
+    rowGap: 10,
+
+    padding: "16px 22px",
+
+    alignItems: "center",
+  },
+
   [TABLET]: {
-    gap: "16px",
+    display: "grid",
+
+    gridTemplateColumns: "64px minmax(0, 1fr)",
+    gap: "12px 16px",
     padding: "16px 20px",
+
+    alignItems: "center",
   },
 
   [MOBILE]: {
-    gap: 16,
-    padding: "14px 16px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+
+  gap: 10,
+  padding: 10,
+  },
+});
+
+export const OrderButtonGroup = styled.div({
+  display: "flex",
+  alignItems: "center",
+  gap: 20,
+  flexShrink: 0,
+
+  "@media (max-width: 1300px)": {
+  gridColumn: "2",
+  gridRow: "2",
+
+  display: "flex",
+  alignItems: "center",
+
+  gap: 12,
+  width: "100%",
+
+  alignSelf: "auto",
+  transform: "none",
+
+    "& > button": {
+    flex: 1,
+  },
+},
+
+  [TABLET]: {
+    gridColumn: "2 / -1",
+    gridRow: "2",
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: "8px 10px",
+
+    width: "100%",
+   
+    alignSelf: "auto",
+    transform: "none",
+  },
+
+  [MOBILE]: {
+    gridColumn: "auto",
+    gridRow: "auto",
+
+    display: "flex",
+    width: "auto",
+
+    alignItems: "center",
+    justifyContent: "center",
+
+    gap: 0,
+
+    alignSelf: "center",
+    flexShrink: 0,
   },
 });
 
@@ -396,13 +472,17 @@ export const Thumb = styled.div({
   background: "#f2f2f2",
 
   [TABLET]: {
-    width: 56,
-    height: 56,
+    width: 64,
+    height: 64,
+
+    gridColumn: "1",
+    gridRow: "1",
   },
 
   [MOBILE]: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
+    flexShrink: 0,
   },
 });
 
@@ -436,11 +516,14 @@ export const OrderInfo = styled.div({
   gap: 8,
 
   [TABLET]: {
-    gap: 6,
+    minWidth: 0,
+    gridColumn: "2",
+    gridRow: "1",
   },
 
   [MOBILE]: {
-    gap: 5,
+    flex: 1,
+    minWidth: 0,
   },
 });
 
@@ -455,13 +538,16 @@ export const OrderHeader = styled.div({
 
   [MOBILE]: {
     display: "grid",
-    gridTemplateColumns: "auto 1fr",
+    gridTemplateColumns: "minmax(0, 1fr) auto",
     gridTemplateAreas: `
       "label badge"
       "id id"
     `,
-    columnGap: 8,
-    rowGap: 5,
+
+    width: "100%",
+    columnGap: 6,
+    rowGap: 4,
+    alignItems: "center",
   },
 });
 
@@ -478,7 +564,14 @@ export const OrderLabelText = styled.span({
   },
 
   [MOBILE]: {
-    fontSize: 15,
+    fontSize: 13,
+
+
+
+    minWidth: 0,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
 });
 
@@ -495,7 +588,14 @@ export const OrderIdText = styled.span({
   },
 
   [MOBILE]: {
-    fontSize: 14,
+    fontSize: 12,
+
+    width: "100%",
+    minWidth: 0,
+
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
 });
 
@@ -563,9 +663,13 @@ export const StatusBadge = styled.span(({ variant }) => {
     },
 
     [MOBILE]: {
-      justifySelf: "start",
-      padding: "1px 6px",
-      fontSize: 11,
+      flexShrink: 0,
+      whiteSpace: "nowrap",
+
+      fontSize: 10,
+      padding: "3px 6px",
+
+      justifySelf: "end",
     },
   };
 });
@@ -600,6 +704,7 @@ export const MetaRow = styled.p({
   [MOBILE]: {
     minHeight: 15,
     fontSize: 11,
+    whiteSpace: "nowrap",
   },
 });
 
@@ -626,7 +731,9 @@ export const OrderSummaryRow = styled.div({
   },
 
   [MOBILE]: {
-    marginTop: 2,
+    alignItems: "center",
+    gap: 6,
+    flexWrap: "nowrap",
   },
 });
 
@@ -655,6 +762,8 @@ export const OrderTotal = styled.span({
 
   [MOBILE]: {
     fontSize: 13,
+    whiteSpace: "nowrap",
+    flexShrink: 0,
   },
 });
 
@@ -690,11 +799,17 @@ export const DetailButton = styled.button({
     borderColor: "var(--bg-button)",
   },
 
+  "@media (max-width: 1300px)": {
+  flex: 1,
+  width: "auto",
+  minWidth: 0,
+},
+
   [TABLET]: {
-    width: 130,
-    height: 46,
+    width: "100%",
+    height: 42,
     padding: "0 12px",
-    fontSize: 15,
+    fontSize: 13,
   },
 
   [MOBILE]: {
@@ -705,6 +820,10 @@ export const DetailButton = styled.button({
 
     border: "none",
     background: "none",
+
+"&:not(:first-of-type)": {
+    display: "none",
+  },
 
     "&:hover": {
       background: "none",
