@@ -1,109 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useState } from "react";
 import { AuthContext } from "../hooks/useAuth";
 import * as authService from "../services/authService";
@@ -130,8 +24,6 @@ export default function AuthProvider({ children }) {
         throw new Error(result.message || "로그인에 실패했습니다.");
       }
 
-      setAccessToken(result.accessToken);
-      setUser(result.user);
       const newAccessToken = result.accessToken;
       const loginUser = result.user;
 
@@ -153,30 +45,23 @@ export default function AuthProvider({ children }) {
       try {
         const refreshResult = await authService.refreshAccessToken();
 
-        if (!refreshResult.success) {
-          clearAuth();
+        if (!refreshResult?.success || !refreshResult?.accessToken) {
           return;
         }
 
         const newAccessToken = refreshResult.accessToken;
 
-        if (!newAccessToken) {
-          clearAuth();
-          return;
-        }
-
         const meResult = await authService.getMe(newAccessToken);
 
-        if (!meResult.success) {
-          clearAuth();
+        if (!meResult?.success || !meResult?.user) {
           return;
         }
 
         setAccessToken(newAccessToken);
         setUser(meResult.user);
       } catch {
-        setAccessToken(null);
-        setUser(null);
+        // Refresh Token이 없거나 만료된 경우
+        // 초기값인 비로그인 상태를 그대로 유지
       } finally {
         setIsAuthLoading(false);
       }

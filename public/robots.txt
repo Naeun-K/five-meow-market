@@ -1,0 +1,15 @@
+User-agent: *
+
+Allow: /
+Allow: /products
+Allow: /community/notice
+Allow: /community/review
+
+Disallow: /login
+Disallow: /signup
+Disallow: /mypage
+Disallow: /cart
+Disallow: /checkout
+Disallow: /claims
+Disallow: /reviews
+Disallow: /community/inquiry

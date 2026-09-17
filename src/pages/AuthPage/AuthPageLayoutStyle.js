@@ -10,7 +10,7 @@ export const AuthBackgroundStyle = styled.div({
   },
 });
 
-export const AuthPageLayoutStyle = styled.div({
+export const AuthPageLayoutStyle = styled.main({
   display: "grid",
   gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
 
