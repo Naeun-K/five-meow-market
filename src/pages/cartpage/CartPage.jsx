@@ -372,7 +372,7 @@ export default function CartPage() {
       if (!updatedCartItem) {
         throw new Error("변경된 장바구니 상품 정보를 확인할 수 없습니다.");
       }
-
+      window.dispatchEvent(new Event("cartUpdated"));
       setCartItems((prev) =>
         prev.map((item) =>
           item.cartItemId === cartItemId
