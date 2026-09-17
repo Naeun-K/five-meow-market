@@ -603,6 +603,9 @@ export const ButtonContainer = styled.div({
     fontWeight: 500,
 
     cursor: "pointer",
+
+    transition:
+      "background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease",
   },
 
   "& .btn-buy-now": {
@@ -613,6 +616,10 @@ export const ButtonContainer = styled.div({
     "&:hover": {
       backgroundColor: "#583e28",
     },
+  },
+
+  "& .btn-cart:hover": {
+    backgroundColor: "var(--border)",
   },
 
   "& .button-text": {
