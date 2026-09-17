@@ -280,41 +280,32 @@ fetch(url, {
 
 ## 주요 화면 이미지 또는 GIF
 
-1. 메인페이지
+### 1. 메인페이지
+![메인페이지](./docs/images/main.png)
 
-   !main.webp
+### 2. 상품목록 페이지
+![상품목록 페이지](./docs/images/product-list.png)
 
-2. 상품목록 페이지
+### 3. 상품 상세페이지
+![상품 상세페이지](./docs/images/product-detail.png)
 
-   !productlist.webp
+### 4. 장바구니 페이지
+![장바구니 페이지](./docs/images/cart.png)
 
-3. 상품 상세페이지
+### 5. 결제 페이지
+![결제 페이지](./docs/images/checkout.png)
 
-   !detail.webp
+### 6. 마이페이지
+![마이페이지](./docs/images/mypage.png)
 
-4. 장바구니 페이지
+### 7. 주문/배송내역 페이지
+![주문 및 배송내역](./docs/images/order-list.png)
 
-   !cart.webp
+### 8. 찜한 상품 페이지
+![찜한 상품](./docs/images/wishlist.png)
 
-5. 결제창 페이지
-
-   !checkout.webp
-
-6. 마이페이지
-
-   !checkout.webp
-
-7. 주문내역 페이지
-
-   !orderlist.webp
-
-8. 찜한 상품 페이지
-
-   !wishlist.webp
-
-9. 적립금 내역 페이지
-
-!535b9e85feb6baa7.png
+### 9. 적립금 내역 페이지
+![적립금 내역](./docs/images/points.png)
 
 ## API 도메인
 
