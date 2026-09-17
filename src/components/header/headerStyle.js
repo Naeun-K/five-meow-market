@@ -42,6 +42,36 @@ export const HeaderStyle = styled.header({
     cursor: "pointer",
   },
 
+  "& .svg-container.cart": {
+    position: "relative",
+    overflow: "visible",
+
+    "& .cart-count": {
+      position: "absolute",
+      top: "-7px",
+      right: "-9px",
+
+      minWidth: "18px",
+      height: "18px",
+
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+
+      padding: "0 4px",
+
+      borderRadius: "999px",
+
+      backgroundColor: "#6b4b32",
+      color: "#ffffff",
+
+      fontSize: "11px",
+      fontWeight: 700,
+      lineHeight: 1,
+      whiteSpace: "nowrap",
+    },
+  },
+
   "& .search-button": {
     display: "none",
   },

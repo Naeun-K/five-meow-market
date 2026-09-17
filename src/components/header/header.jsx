@@ -958,7 +958,7 @@ import useAuth from "../../hooks/useAuth.js";
 import PawIcon from "../common/PawIcon/PawIcon.jsx";
 import myShopCat from "../../assets/logo-myshop.webp";
 import guestCat from "../../assets/logo-guest.webp";
-import * as cartService from "../../services/cartServices";
+import { CART_UPDATED_EVENT, getCartCount } from "../../services/cartServices";
 
 const leftColumns = [
   {
@@ -1142,7 +1142,7 @@ function Header() {
 
     const fetchCartCount = async () => {
       try {
-        const result = await cartService.getCartCount(accessToken);
+        const result = await getCartCount(accessToken);
 
         if (isCancelled) {
           return;
@@ -1168,8 +1168,11 @@ function Header() {
 
     fetchCartCount();
 
+    window.addEventListener(CART_UPDATED_EVENT, fetchCartCount);
+
     return () => {
       isCancelled = true;
+      window.removeEventListener(CART_UPDATED_EVENT, fetchCartCount);
     };
   }, [accessToken, isLoggedIn, isAuthLoading, pathname]);
 
