@@ -180,14 +180,14 @@ export const Page = styled.div({
 export const Header = styled.header({
   // alignSelf: "flex-start",
 
-  marginBottom: 20,
+  marginBottom: 28,
 
   [TABLET]: {
-    marginBottom: 18,
+    marginBottom: 24,
   },
 
   [MOBILE]: {
-    marginBottom: 16,
+    marginBottom: 20,
   },
 });
 
@@ -222,12 +222,12 @@ export const Subtitle = styled.p({
 
 export const SearchBar = styled.div({
   display: "flex",
-  gap: 8,
-  marginBottom: 16,
+  gap: 12,
+  marginBottom: 24,
 
   [TABLET]: {
-    gap: 6,
-    marginBottom: 14,
+    gap: 10,
+    marginBottom: 20,
   },
 
   [MOBILE]: {
@@ -306,17 +306,17 @@ export const SearchIconButton = styled.button({
 export const TabList = styled.div({
   display: "flex",
   flexWrap: "wrap",
-  gap: 8,
-  marginBottom: 20,
+  gap: 12,
+  marginBottom: 56,
 
   [TABLET]: {
-    gap: 6,
-    marginBottom: 18,
+    gap: 10,
+    marginBottom: 44,
   },
 
   [MOBILE]: {
-    gap: 6,
-    marginBottom: 16,
+    gap: 8,
+    marginBottom: 32,
   },
 });
 
@@ -350,35 +350,35 @@ export const TabButton = styled.button(({ isActive }) => ({
 export const OrderList = styled.div({
   display: "flex",
   flexDirection: "column",
-  gap: 12,
+  gap: 20,
 
   [TABLET]: {
-    gap: "10px",
+    gap: "16px",
   },
 
   [MOBILE]: {
-    gap: 8,
+    gap: 12,
   },
 });
 
 export const OrderCard = styled.div({
   display: "flex",
   alignItems: "center",
-  gap: 14,
-  padding: "14px 18px",
+  gap: 20,
+  padding: "18px 22px",
 
   border: "1px solid var(--text-primary)",
   borderRadius: "var(--radius-md)",
   background: "#fffdf9",
 
   [TABLET]: {
-    gap: "12px",
-    padding: "12px 16px",
+    gap: "16px",
+    padding: "16px 20px",
   },
 
   [MOBILE]: {
-    gap: 20,
-    padding: "12px 14px",
+    gap: 16,
+    padding: "14px 16px",
   },
 });
 
@@ -433,24 +433,24 @@ export const OrderInfo = styled.div({
 
   display: "flex",
   flexDirection: "column",
-  gap: 4,
+  gap: 8,
 
   [TABLET]: {
-    gap: 3,
+    gap: 6,
   },
 
   [MOBILE]: {
-    gap: 2,
+    gap: 5,
   },
 });
 
 export const OrderHeader = styled.div({
   display: "flex",
   alignItems: "center",
-  gap: 8,
+  gap: 12,
 
   [TABLET]: {
-    gap: 6,
+    gap: 9,
   },
 
   [MOBILE]: {
@@ -460,8 +460,8 @@ export const OrderHeader = styled.div({
       "label badge"
       "id id"
     `,
-    columnGap: 6,
-    rowGap: 2,
+    columnGap: 8,
+    rowGap: 5,
   },
 });
 
