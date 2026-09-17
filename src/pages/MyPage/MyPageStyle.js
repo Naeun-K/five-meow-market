@@ -1106,21 +1106,21 @@ export const userCard = css({
     gap: "30px",
     "& .profile-wrapper": {
       position: "relative",
-      padding: "0 0 20px 0",
+      // padding: "0 0 20px 0",
       gap: "25px",
     },
-    "& .profile-wrapper::after": {
-      content: '""',
+    // "& .profile-wrapper::after": {
+    //   content: '""',
 
-      position: "absolute",
-      left: 0,
-      bottom: "-5px",
+    //   position: "absolute",
+    //   left: 0,
+    //   bottom: "-5px",
 
-      width: "100%",
-      height: "1px",
+    //   width: "100%",
+    //   height: "1px",
 
-      backgroundColor: "var(--border)",
-    },
+    //   backgroundColor: "var(--border)",
+    // },
   },
 
   "@media (max-width: 374px)": {
@@ -1130,24 +1130,39 @@ export const userCard = css({
 
 export const userInfo = css({
   minWidth: 0,
+  flex: 1,
+
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "flex-start",
+  alignItems: "center",
   gap: "20px",
 
-  "& .info-wrapper": { display: "flex", alignItems: "center", gap: "20px" },
+  "& .info-wrapper": {
+    display: "flex",
+    alignItems: "center",
+    gap: "20px",
+
+    minWidth: 0,
+    maxWidth: "100%",
+  },
 
   "@media (max-width: 1023px)": {
     gap: "15px",
-    "& .info-wrapper": { flexDirection: "column", gap: "15px" },
+
+    "& .info-wrapper": {
+      flexDirection: "column",
+      gap: "15px",
+      width: "100%",
+    },
   },
 
   "@media (max-width: 767px)": {
     flex: 1,
     minWidth: 0,
+    width: "100%",
+
     flexDirection: "column",
-    alignItems: "flex-start",
     justifyContent: "center",
     gap: "10px",
   },
@@ -1179,10 +1194,15 @@ export const userName = css({
 
 export const userEmail = css({
   display: "block",
-  flexShrink: 0,
+  flexShrink: 1,
+  minWidth: 0,
+  maxWidth: "100%",
+
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
 
   fontSize: "18px",
-
   lineHeight: "1.6",
   letterSpacing: "-0.01em",
   color: "var(--text-secondary)",
@@ -1190,7 +1210,14 @@ export const userEmail = css({
   "&.pointDeco": {
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     gap: "10px",
+
+    width: "150px",
+    minWidth: "150px",
+    maxWidth: "150px",
+    flexShrink: 0,
+    boxSizing: "border-box",
 
     padding: "4px 12px",
     border: "1px solid transparent",
@@ -1202,7 +1229,17 @@ export const userEmail = css({
     fontWeight: 600,
 
     transition: "border-color 0.3s",
+
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+
+    transform: "translateX(-60px)",
+
+    "@media (min-width: 768px)": {
+      transform: "none",
+    },
   },
+
   "&.pointDeco:hover": {
     borderColor: "var(--text-primary)",
   },
@@ -1222,30 +1259,30 @@ export const userEmail = css({
   },
 });
 
-export const userPoint = css({
-  display: "block",
-  flexShrink: 0,
+// export const userPoint = css({
+//   display: "block",
+//   flexShrink: 0,
 
-  fontSize: "18px",
-  fontWeight: 600,
-  lineHeight: "1.6",
-  letterSpacing: "-0.01em",
-  color: "var(--text-secondary)",
+//   fontSize: "18px",
+//   fontWeight: 600,
+//   lineHeight: "1.6",
+//   letterSpacing: "-0.01em",
+//   color: "var(--text-secondary)",
 
-  "@media (max-width: 1023px)": {
-    fontSize: "17px",
-    lineHeight: "1.6",
-  },
+//   "@media (max-width: 1023px)": {
+//     fontSize: "17px",
+//     lineHeight: "1.6",
+//   },
 
-  "@media (max-width: 767px)": {
-    fontSize: "16px",
-    lineHeight: "26px",
-  },
+//   "@media (max-width: 767px)": {
+//     fontSize: "16px",
+//     lineHeight: "26px",
+//   },
 
-  "@media (max-width: 374px)": {
-    lineHeight: "26px",
-  },
-});
+//   "@media (max-width: 374px)": {
+//     lineHeight: "26px",
+//   },
+// });
 
 export const editButton = css({
   flexShrink: 0,
@@ -1522,12 +1559,12 @@ export const sectionTitle = css({
 export const orderCard = css({
   display: "flex",
   flexDirection: "row",
-  justifyContent: "space-between",
+  justifyContent: "flex-start",
   alignItems: "center",
 
   width: "100%",
 
-  gap: "20px",
+  gap: "30px",
 
   "& .item-wrapper": {
     width: "250px",
@@ -1588,24 +1625,29 @@ export const orderCard = css({
     },
   },
 
-  "@media (max-width: 1023px)": {
+  "@media (min-width: 736px) and (max-width: 1024px)": {
     gap: "15px",
+
     "& .item-wrapper": {
-      width: "200px",
+      width: "calc((100% - 30px) / 3)",
+    },
+
+    "& .item-wrapper:nth-of-type(n + 4)": {
+      display: "none",
     },
 
     "& .desc-wrapper": {
       padding: "0 10px",
       gap: "8px",
-
       fontSize: "18px",
     },
+
     "& .btn-wrapper": {
       flexDirection: "column",
       gap: "10px",
+
       "& button": {
         width: "100%",
-
         fontSize: "17px",
       },
     },

@@ -1,5 +1,6 @@
 import BasicPage from "../basicPage/BasicPage";
 import BoardPage from "../../components/board/BoardPage";
+import { HomeButton } from "../product/productListPage/ProductListStyle";
 
 const noticeData = [
   {
@@ -71,6 +72,45 @@ const noticeData = [
 export default function NoticePage() {
   return (
     <BasicPage>
+      <style>{`
+      .home-button-wrapper {
+        display: block;
+        width: 100%;
+        max-width: 1450px;
+        margin-bottom: 0;
+        text-align: left;
+        padding-left: 120px;
+        box-sizing: border-box;
+      }
+
+      @media (max-width: 1024px) {
+        .home-button-wrapper {
+          padding-left: 50px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .home-button-wrapper {
+          padding-left: 20px;
+        }
+      }
+    `}</style>
+
+      {/* 홈으로 이동 */}
+      <div className="home-button-wrapper">
+        <HomeButton
+          to="/"
+          style={{
+            display: "block",
+            width: "fit-content",
+            margin: 0,
+            transform: "none",
+          }}
+        >
+          ← 홈으로 이동
+        </HomeButton>
+      </div>
+
       <BoardPage type="notice" data={noticeData} />
     </BasicPage>
   );

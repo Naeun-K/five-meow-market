@@ -5,30 +5,76 @@ export const PhotoWrapper = styled.div({
   maxWidth: "100%",
   minWidth: 0,
 
-  aspectRatio: "1 / 1",
-
-  borderRadius: "8px",
-
-  overflow: "hidden",
-
-  "& > article": {
+  // 큰 상품 이미지
+  "& .main-product-image": {
     width: "100%",
-    height: "100%",
+    aspectRatio: "1 / 1",
+    overflow: "hidden",
+    borderRadius: "8px",
   },
 
-  "& img": {
+  "& .main-product-image img": {
+    display: "block",
     width: "100%",
     height: "100%",
-
     objectFit: "cover",
     objectPosition: "center",
   },
 
+  // 썸네일 3개
+  "& .product-thumbnail-list": {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    width: "100%",
+    marginTop: "12px",
+  },
+
+  "& .product-thumbnail": {
+    width: "80px",
+    height: "80px",
+    flex: "0 0 80px",
+
+    padding: 0,
+
+    overflow: "hidden",
+
+    border: "1px solid var(--border)",
+    borderRadius: "6px",
+
+    backgroundColor: "#fff",
+
+    cursor: "pointer",
+  },
+
+  "& .product-thumbnail img": {
+    display: "block",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "center",
+  },
+
+  // 현재 선택된 이미지
+  "& .product-thumbnail.is-active": {
+    border: "2px solid var(--text-primary)",
+  },
+
+  // 모바일
   "@media (max-width: 767px)": {
     width: "100%",
     maxWidth: "100%",
 
-    aspectRatio: "1 / 1",
+    "& .product-thumbnail-list": {
+      gap: "8px",
+      marginTop: "10px",
+    },
+
+    "& .product-thumbnail": {
+      width: "64px",
+      height: "64px",
+      flex: "0 0 64px",
+    },
   },
 });
 
@@ -557,12 +603,23 @@ export const ButtonContainer = styled.div({
     fontWeight: 500,
 
     cursor: "pointer",
+
+    transition:
+      "background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease",
   },
 
   "& .btn-buy-now": {
     backgroundColor: "var(--bg-button)",
 
     color: "var(--text-button)",
+
+    "&:hover": {
+      backgroundColor: "#583e28",
+    },
+  },
+
+  "& .btn-cart:hover": {
+    backgroundColor: "var(--border)",
   },
 
   "& .button-text": {
@@ -594,6 +651,55 @@ export const ButtonContainer = styled.div({
 
   "& .mobile-wishlist": {
     display: "none",
+
+    "@media (max-width: 600px)": {
+      display: "flex",
+      flexShrink: 0,
+    },
+  },
+
+  "& .mobile-heart-button": {
+    width: "60px",
+    height: "60px",
+    flexShrink: 0,
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
+    padding: 0,
+
+    border: "1px solid #806247",
+    borderRadius: "50%",
+
+    backgroundColor: "#fff",
+    color: "#806247",
+
+    cursor: "pointer",
+
+    "& svg": {
+      width: "28px",
+      height: "28px",
+    },
+
+    "&.is-liked": {
+      color: "var(  --acent-error)",
+    },
+
+    "&:disabled": {
+      cursor: "default",
+      opacity: 0.6,
+    },
+
+    "@media (max-width: 374px)": {
+      width: "54px",
+      height: "54px",
+
+      "& svg": {
+        width: "25px",
+        height: "25px",
+      },
+    },
   },
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
@@ -864,6 +970,14 @@ export const DetailSection = styled.section({
     overflow: "visible",
   },
 
+  " .detail-image-area": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+
+    width: "100%",
+  },
+
   "& .detail-image-content": {
     display: "flex",
     flexDirection: "column",
@@ -899,6 +1013,34 @@ export const DetailSection = styled.section({
     backdropFilter: "blur(2px)",
   },
 
+  // "& .detail-more-button": {
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+
+  //   width: "100%",
+  //   maxWidth: "700px",
+  //   height: "56px",
+
+  //   gap: "10px",
+
+  //   padding: "0 20px",
+
+  //   border: "1px solid var(--border)",
+  //   borderRadius: "0 0 8px 8px",
+
+  //   backgroundColor: "#fff",
+
+  //   color: "var(--text-primary)",
+
+  //   fontSize: "18px",
+  //   fontWeight: 500,
+
+  //   cursor: "pointer",
+
+  //   transition: "background-color 0.2s ease, border-color 0.2s ease",
+  // },
+
   "& .detail-more-button": {
     display: "flex",
     justifyContent: "center",
@@ -909,6 +1051,9 @@ export const DetailSection = styled.section({
     height: "56px",
 
     gap: "10px",
+
+    // 핵심: 버튼 자체를 가운데 정렬
+    // margin: "0 auto",
 
     padding: "0 20px",
 

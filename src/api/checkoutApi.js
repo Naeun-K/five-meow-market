@@ -1,64 +1,122 @@
 import { apiRequest } from "./apiClient";
 
-// Checkout 생성
-export function createCheckout(cartItemIds, token) {
+/**
+ * Checkout 생성
+ *
+ * POST /checkout
+ *
+ * 장바구니 구매:
+ * {
+ *   cartItemIds: [...]
+ * }
+ *
+ * 바로구매:
+ * {
+ *   items: [
+ *     {
+ *       productId,
+ *       quantity
+ *     }
+ *   ]
+ * }
+ */
+export const createCheckout = async (checkoutData, accessToken) => {
   return apiRequest("/checkout", {
     method: "POST",
-    token,
-    body: {
-      cartItemIds,
-    },
+    token: accessToken,
+    body: checkoutData,
   });
-}
+};
 
-// 배송지 목록 조회
-export function getShippingAddresses(token) {
+/**
+ * 배송지 목록 조회
+ *
+ * GET /checkout/addresses
+ */
+export const getAddresses = async (accessToken) => {
   return apiRequest("/checkout/addresses", {
-    token,
+    token: accessToken,
   });
-}
+};
 
-// 배송지 추가
-export function addShippingAddress(addressData, token) {
+/**
+ * 배송지 추가
+ *
+ * POST /checkout/addresses
+ */
+export const addAddress = async (
+  { addressName, recipient, phone, zipCode, address, detailAddress },
+  accessToken,
+) => {
   return apiRequest("/checkout/addresses", {
     method: "POST",
-    token,
-    body: addressData,
-  });
-}
+    token: accessToken,
 
-// 배송지 선택
-export function selectShippingAddress(checkoutId, shippingAddressId, token) {
-  return apiRequest(`/checkout/${checkoutId}/address`, {
-    method: "PATCH",
-    token,
     body: {
-      shippingAddressId,
+      addressName,
+      recipient,
+      phone,
+      zipCode,
+      address,
+      detailAddress,
     },
   });
-}
+};
 
-// 포인트 적용
-export function applyPoints(checkoutId, appliedPoints, token) {
-  return apiRequest(`/checkout/${checkoutId}/points`, {
+/**
+ * Checkout 배송지 선택
+ *
+ * PATCH /checkout/:checkoutId/address
+ */
+export const selectCheckoutAddress = async (
+  checkoutId,
+  addressId,
+  accessToken,
+) => {
+  return apiRequest(`/checkout/${encodeURIComponent(checkoutId)}/address`, {
     method: "PATCH",
-    token,
+    token: accessToken,
+
     body: {
-      appliedPoints,
+      addressId,
     },
   });
-}
+};
 
-// 주문 요약 조회
-export function getCheckoutSummary(checkoutId, token) {
-  return apiRequest(`/checkout/${checkoutId}/summary`, {
-    token,
-  });
-}
+/**
+ * Checkout 적립금 적용
+ *
+ * PATCH /checkout/:checkoutId/points
+ */
+export const applyCheckoutPoints = async (checkoutId, points, accessToken) => {
+  return apiRequest(`/checkout/${encodeURIComponent(checkoutId)}/points`, {
+    method: "PATCH",
+    token: accessToken,
 
-// 주문 가능 여부 검증
-export function validateCheckout(checkoutId, token) {
-  return apiRequest(`/checkout/${checkoutId}/validate`, {
-    token,
+    body: {
+      points,
+    },
   });
-}
+};
+
+/**
+ * 주문 요약 조회
+ *
+ * GET /checkout/:checkoutId/summary
+ */
+export const getCheckoutSummary = async (checkoutId, accessToken) => {
+  return apiRequest(`/checkout/${encodeURIComponent(checkoutId)}/summary`, {
+    token: accessToken,
+  });
+};
+
+/**
+ * 주문 가능 여부 검증
+ *
+ * GET /checkout/:checkoutId/validate
+ */
+export const validateCheckout = async (checkoutId, accessToken) => {
+  return apiRequest(`/checkout/${encodeURIComponent(checkoutId)}/validate`, {
+    token: accessToken,
+  });
+};

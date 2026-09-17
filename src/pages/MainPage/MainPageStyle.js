@@ -9,11 +9,8 @@ export const MainPageSytle = styled.div({
 
   width: "100%",
 
-  
-
   minHeight: "100vh",
   maxWidth: "1300px",
-  
 
   margin: "100px 0",
 
@@ -34,7 +31,6 @@ export const BannerBackground = styled.div({
   width: "100%",
   overflow: "hidden",
 
-  
   backgroundColor: "#F7EEE5",
 
   "&::before": {
@@ -42,7 +38,6 @@ export const BannerBackground = styled.div({
 
     position: "absolute",
 
-    
     width: "1300px",
     height: "100%",
 
@@ -51,20 +46,16 @@ export const BannerBackground = styled.div({
     transform: "translateX(-50%)",
 
     backgroundImage: "var(--desktop-banner)",
-    
+
     backgroundPosition: "center bottom",
     backgroundRepeat: "no-repeat",
 
-    
     backgroundSize: "2560px 100%",
 
     filter: "blur(35px)",
   },
 
   "@media (max-width: 1023px)": {
-    
-    
-    
     "&::before": {
       content: '""',
 
@@ -123,7 +114,6 @@ export const CardContainer = styled.div({
   gap: "30px",
 
   width: "100%",
-  
 
   padding: "0 50px",
 
@@ -151,6 +141,19 @@ export const CardContainer = styled.div({
     "& p": {
       fontSize: "20px",
     },
+
+    transition: "color 0.2s ease",
+
+    "&:hover": {
+      color: "#412511",
+    },
+    "&:hover p": {
+      transform: "scale(1.05)",
+    },
+
+    "&:hover .arrow-container": {
+      transform: "translateX(10px)",
+    },
   },
 
   "& .paw-container": {
@@ -163,10 +166,6 @@ export const CardContainer = styled.div({
     width: "18px",
     height: "18px",
     color: "var(--text-primary)",
-
-    
-    
-    
   },
 
   "& .card-wrapper": {
@@ -176,12 +175,11 @@ export const CardContainer = styled.div({
     maxWidth: "300px",
     minWidth: "260px",
   },
-  
+
   "& .mobile-more-button": {
     display: "none",
   },
 
-  
   "@media (max-width:1023px)": {
     padding: "0 30px",
 
@@ -198,7 +196,6 @@ export const CardContainer = styled.div({
     },
   },
 
-  
   "@media (min-width:320px) and (max-width:767px)": {
     padding: "0 20px",
     gap: "40px",
@@ -216,9 +213,8 @@ export const CardContainer = styled.div({
     },
     "& .product-item": {
       maxWidth: "400px",
-      
     },
-    
+
     "& .mobile-more-button": {
       width: "100%",
       maxWidth: "400px",
@@ -250,8 +246,6 @@ export const ProductListStyle = styled.div({
 
   width: "100%",
 
-  
-
   cursor: "pointer",
   "& .product-item": {
     display: "flex",
@@ -259,8 +253,6 @@ export const ProductListStyle = styled.div({
     justifyContents: "center",
     alignItems: "center",
     gap: "5px",
-
-    
   },
 
   "& .product-info": {
@@ -289,24 +281,11 @@ export const ProductListStyle = styled.div({
     gap: "80px 40px ",
 
     justifyItems: "center",
-    
-    
-    
   },
 
   "@media (max-width: 767px)": {
     gridTemplateColumns: "1fr",
     gap: "40px",
     justifyItems: "center",
-
-    
-    
-    
-
-    
-
-    
-    
-    
   },
 });

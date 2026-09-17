@@ -2,10 +2,11 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function apiRequest(
   endpoint,
-  { method = "GET", body, token } = {},
+  { method = "GET", body, token, headers: customHeaders = {} } = {},
 ) {
   const headers = {
     Accept: "application/json",
+    ...customHeaders,
   };
 
   if (body !== undefined) {

@@ -8,15 +8,15 @@
 
 // import ForwardButton from "../common/forwardBtn/ForwardButton";
 // import Loader from "../loader/Loader";
+// import ReviewModal from "../reviewModal/ReviewModal";
 
 // import useAuth from "../../hooks/useAuth";
 // import useToast from "../../hooks/useToast";
 
+// import { mockOrderData } from "../../mock/mockOrder";
+
 // /*
 //  * 주문 목록 탭
-//  *
-//  * CLAIM은 주문 상태가 아니라 취소·교환·반품 내역이 있는
-//  * 주문을 조회하기 위한 필터값입니다.
 //  */
 // const TABS = [
 //   {
@@ -46,14 +46,14 @@
 // ];
 
 // /*
-//  * 일반 주문 상태 표시 문구
+//  * 주문 상태 표시 문구
 //  */
 // const STATUS_LABELS = {
 //   PAYMENT_COMPLETED: "결제완료",
 //   PREPARING_SHIPMENT: "상품준비중",
 //   SHIPPING: "배송중",
 //   DELIVERED: "배송완료",
-//   CONFIRMED: "구매결정",
+//   CONFIRMED: "구매확정",
 //   CANCELED: "주문취소",
 // };
 
@@ -67,7 +67,7 @@
 // };
 
 // /*
-//  * Claim 처리 상태 표시 문구
+//  * Claim 상태 표시 문구
 //  */
 // const CLAIM_STATUS_LABELS = {
 //   REQUESTED: "신청완료",
@@ -142,30 +142,48 @@
 // }
 
 // /*
-//  * 주문 날짜 변환
+//  * 주문 날짜 표시
 //  */
 // function formatDate(dateString) {
 //   if (!dateString) {
-//     return "-";
+//     return "";
 //   }
 
-//   return new Date(dateString).toLocaleDateString("ko-KR");
+//   const date = new Date(dateString);
+
+//   const formatter = new Intl.DateTimeFormat("ko-KR", {
+//     timeZone: "Asia/Seoul",
+//     year: "numeric",
+//     month: "2-digit",
+//     day: "2-digit",
+//     hour: "2-digit",
+//     minute: "2-digit",
+//     hour12: false,
+//   });
+
+//   const parts = formatter.formatToParts(date);
+
+//   const getPart = (type) =>
+//     parts.find((part) => part.type === type)?.value ?? "";
+
+//   const year = getPart("year");
+//   const month = getPart("month");
+//   const day = getPart("day");
+//   const hour = getPart("hour");
+//   const minute = getPart("minute");
+
+//   return `${year}.${month}.${day} ${hour}:${minute}`;
 // }
 
 // /*
-//  * 금액 변환
+//  * 가격 표시
 //  */
 // function formatPrice(price) {
 //   return `${Number(price ?? 0).toLocaleString("ko-KR")}원`;
 // }
 
 // /*
-//  * Claim 상태를 화면에 표시할 문구로 변환합니다.
-//  *
-//  * 예:
-//  * CANCEL + REQUESTED  -> 취소 신청완료
-//  * RETURN + PROCESSING -> 반품 처리중
-//  * EXCHANGE + COMPLETED -> 교환 처리완료
+//  * Claim 상태 문구 생성
 //  */
 // function getClaimStatusLabel(claimSummary) {
 //   if (!claimSummary) {
@@ -181,27 +199,16 @@
 // }
 
 // /*
-//  * 주문 카드에 표시할 상태를 계산합니다.
-//  *
-//  * 서버의 실제 주문 상태가 CANCELED라면 "주문취소"를 표시합니다.
-//  *
-//  * 주문 상태가 아직 PAYMENT_COMPLETED여도 취소 Claim이 REQUESTED라면
-//  * "취소 신청완료"를 표시합니다.
+//  * 주문 카드에 표시할 상태 계산
 //  */
 // function getOrderStatusInfo(order) {
-//   /*
-//    * 서버에서 주문 상태가 최종적으로 취소 처리된 경우
-//    */
 //   if (order.status === "CANCELED") {
 //     return {
-//       label: STATUS_LABELS.CANCELED,
+//       label: "주문취소",
 //       variant: "CANCELED",
 //     };
 //   }
 
-//   /*
-//    * 주문 목록 응답에 claimSummary가 포함된 경우
-//    */
 //   if (order.claimSummary) {
 //     return {
 //       label: getClaimStatusLabel(order.claimSummary),
@@ -209,19 +216,153 @@
 //     };
 //   }
 
-//   /*
-//    * Claim이 없는 일반 주문
-//    */
 //   return {
 //     label: STATUS_LABELS[order.status] ?? order.status ?? "-",
 //     variant: order.status,
 //   };
 // }
 
-// function OrderCard({ order, onViewDetail }) {
+// /*
+//  * 현재 선택한 탭에 표시할 주문 필터
+//  *
+//  * 배송완료 탭:
+//  * DELIVERED + CONFIRMED
+//  */
+// function filterOrdersByTab(orders, activeTab) {
+//   if (activeTab === "ALL") {
+//     return orders;
+//   }
+
+//   /*
+//    * 취소/교환/반품
+//    */
+//   if (activeTab === "CLAIM") {
+//     return orders.filter(
+//       (order) => Boolean(order.claimSummary) || order.status === "CANCELED",
+//     );
+//   }
+
+//   /*
+//    * 배송완료 + 구매확정
+//    */
+//   if (activeTab === "DELIVERED") {
+//     return orders.filter(
+//       (order) =>
+//         !order.claimSummary &&
+//         (order.status === "DELIVERED" || order.status === "CONFIRMED"),
+//     );
+//   }
+
+//   return orders.filter(
+//     (order) => order.status === activeTab && !order.claimSummary,
+//   );
+// }
+
+// /*
+//  * Mock 주문 검색
+//  */
+// function filterMockOrdersByKeyword(orders, keyword) {
+//   const normalizedKeyword = keyword.trim().toLowerCase();
+
+//   if (!normalizedKeyword) {
+//     return orders;
+//   }
+
+//   return orders.filter((order) => {
+//     const orderId = String(order.orderId ?? "").toLowerCase();
+
+//     const hasMatchingProduct = order.items?.some((item) =>
+//       String(item.name ?? "")
+//         .toLowerCase()
+//         .includes(normalizedKeyword),
+//     );
+
+//     return orderId.includes(normalizedKeyword) || hasMatchingProduct;
+//   });
+// }
+
+// /*
+//  * Mock 주문 기간 필터
+//  */
+// function filterMockOrdersByPeriod(orders, period) {
+//   if (period === "all") {
+//     return orders;
+//   }
+
+//   const currentDate = new Date();
+
+//   let months = 0;
+
+//   if (period === "3m") {
+//     months = 3;
+//   } else if (period === "6m") {
+//     months = 6;
+//   } else if (period === "1y") {
+//     months = 12;
+//   }
+
+//   if (months === 0) {
+//     return orders;
+//   }
+
+//   const startDate = new Date(currentDate);
+
+//   startDate.setMonth(startDate.getMonth() - months);
+
+//   return orders.filter((order) => {
+//     const createdAt = new Date(order.createdAt);
+
+//     if (Number.isNaN(createdAt.getTime())) {
+//       return false;
+//     }
+
+//     return createdAt >= startDate;
+//   });
+// }
+
+// /*
+//  * 주문 카드
+//  *
+//  * 결제완료
+//  * - 취소신청
+//  *
+//  * 배송완료
+//  * - 교환신청
+//  * - 반품신청
+//  * - 구매확정
+//  *
+//  * 구매확정
+//  * - 리뷰작성
+//  *
+//  * 모든 액션 버튼
+//  * className="order-action-button"
+//  */
+// function OrderCard({
+//   order,
+//   onViewDetail,
+//   onClaim,
+//   onConfirm,
+//   onWriteReview,
+//   isConfirming,
+// }) {
 //   const firstItem = order.items?.[0];
 
 //   const statusInfo = getOrderStatusInfo(order);
+
+//   /*
+//    * 결제완료
+//    */
+//   const canCancel = order.status === "PAYMENT_COMPLETED" && !order.claimSummary;
+
+//   /*
+//    * 배송완료
+//    */
+//   const canDeliveryAction = order.status === "DELIVERED" && !order.claimSummary;
+
+//   /*
+//    * 구매확정
+//    */
+//   const canWriteReview = order.status === "CONFIRMED" && !order.claimSummary;
 
 //   return (
 //     <S.OrderCard>
@@ -259,13 +400,92 @@
 //         </S.OrderSummaryRow>
 //       </S.OrderInfo>
 
-//       <S.DetailButton type="button" onClick={() => onViewDetail(order.orderId)}>
+//       {/* 주문 상세보기 */}
+//       <S.DetailButton
+//         type="button"
+//         className="order-action-button"
+//         onClick={() => onViewDetail(order)}
+//       >
 //         <S.DetailButtonText>주문 상세보기</S.DetailButtonText>
 
 //         <S.DetailArrow>
 //           <ChevronRightIcon />
 //         </S.DetailArrow>
 //       </S.DetailButton>
+
+//       {/* 결제완료 → 취소신청 */}
+//       {canCancel && (
+//         <S.DetailButton
+//           type="button"
+//           className="order-action-button"
+//           onClick={() => onClaim(order, "CANCEL")}
+//         >
+//           <S.DetailButtonText>취소신청</S.DetailButtonText>
+
+//           <S.DetailArrow>
+//             <ChevronRightIcon />
+//           </S.DetailArrow>
+//         </S.DetailButton>
+//       )}
+
+//       {/* 배송완료 → 교환신청 / 반품신청 / 구매확정 */}
+//       {canDeliveryAction && (
+//         <>
+//           <S.DetailButton
+//             type="button"
+//             className="order-action-button"
+//             onClick={() => onClaim(order, "EXCHANGE")}
+//           >
+//             <S.DetailButtonText>교환신청</S.DetailButtonText>
+
+//             <S.DetailArrow>
+//               <ChevronRightIcon />
+//             </S.DetailArrow>
+//           </S.DetailButton>
+
+//           <S.DetailButton
+//             type="button"
+//             className="order-action-button"
+//             onClick={() => onClaim(order, "RETURN")}
+//           >
+//             <S.DetailButtonText>반품신청</S.DetailButtonText>
+
+//             <S.DetailArrow>
+//               <ChevronRightIcon />
+//             </S.DetailArrow>
+//           </S.DetailButton>
+
+//           <S.DetailButton
+//             type="button"
+//             className="order-action-button"
+//             disabled={isConfirming === order.orderId}
+//             onClick={() => onConfirm(order)}
+//           >
+//             <S.DetailButtonText>
+//               {isConfirming === order.orderId ? "처리중..." : "구매확정"}
+//             </S.DetailButtonText>
+
+//             <S.DetailArrow>
+//               <ChevronRightIcon />
+//             </S.DetailArrow>
+//           </S.DetailButton>
+//         </>
+//       )}
+
+//       {/* 구매확정 → 리뷰작성 */}
+//       {canWriteReview && (
+//         <S.DetailButton
+//           type="button"
+//           className="order-action-button"
+//           onClick={() => onWriteReview(order)}
+//         >
+//           <S.DetailButtonText>리뷰작성</S.DetailButtonText>
+
+//           <S.DetailArrow>
+//             <ChevronRightIcon />
+//           </S.DetailArrow>
+//         </S.DetailButton>
+//       )}
 //     </S.OrderCard>
 //   );
 // }
@@ -273,16 +493,23 @@
 // export default function OrderList() {
 //   const [activeTab, setActiveTab] = useState("ALL");
 
+//   /*
+//    * 실제 API 주문
+//    */
 //   const [orders, setOrders] = useState([]);
 
 //   /*
-//    * 입력창에 현재 작성 중인 검색어
+//    * Mock 주문
+//    *
+//    * Mock 구매확정 시 화면 상태를
+//    * 변경하기 위해 state로 관리
 //    */
+//   const [mockOrders, setMockOrders] = useState(() => mockOrderData);
+
+//   const [isConfirming, setIsConfirming] = useState(null);
+
 //   const [keyword, setKeyword] = useState("");
 
-//   /*
-//    * 실제 API에 전달하는 검색어
-//    */
 //   const [searchKeyword, setSearchKeyword] = useState("");
 
 //   const [period, setPeriod] = useState("all");
@@ -295,6 +522,11 @@
 
 //   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+//   /*
+//    * 리뷰 모달에 전달할 주문
+//    */
+//   const [reviewOrder, setReviewOrder] = useState(null);
+
 //   const navigate = useNavigate();
 
 //   const { accessToken, isAuthLoading } = useAuth();
@@ -302,13 +534,7 @@
 //   const { showToast } = useToast();
 
 //   /*
-//    * 주문 목록 조회
-//    *
-//    * Effect 안에서 API 호출 전에 setIsLoading을 동기적으로
-//    * 실행하지 않습니다.
-//    *
-//    * 로딩 상태 변경은 탭, 기간, 검색, 더 보기 등의
-//    * 사용자 이벤트 핸들러에서 처리합니다.
+//    * 실제 주문 목록 조회
 //    */
 //   useEffect(() => {
 //     if (isAuthLoading || !accessToken) {
@@ -321,7 +547,7 @@
 //       .getOrders(
 //         {
 //           period,
-//           status: activeTab,
+//           status: "ALL",
 //           keyword: searchKeyword,
 //           page: currentPage,
 //           limit: 5,
@@ -337,14 +563,13 @@
 //           throw new Error(result.message || "주문 내역을 불러오지 못했습니다.");
 //         }
 
-//         /*
-//          * 첫 페이지이면 기존 목록을 교체합니다.
-//          * 다음 페이지이면 기존 목록 뒤에 추가합니다.
-//          */
 //         if (currentPage === 1) {
-//           setOrders(result.orders);
+//           setOrders(result.orders ?? []);
 //         } else {
-//           setOrders((previousOrders) => [...previousOrders, ...result.orders]);
+//           setOrders((previousOrders) => [
+//             ...previousOrders,
+//             ...(result.orders ?? []),
+//           ]);
 //         }
 
 //         setTotalPages(result.pagination?.totalPages ?? 1);
@@ -373,7 +598,6 @@
 //   }, [
 //     accessToken,
 //     isAuthLoading,
-//     activeTab,
 //     period,
 //     searchKeyword,
 //     currentPage,
@@ -381,24 +605,270 @@
 //   ]);
 
 //   /*
+//    * 실제 주문 최신순 정렬
+//    */
+//   const sortedRealOrders = [...orders].sort(
+//     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+//   );
+
+//   /*
+//    * 실제 주문과 Mock 주문의
+//    * orderId 중복 방지
+//    */
+//   const realOrderIds = new Set(sortedRealOrders.map((order) => order.orderId));
+
+//   /*
+//    * Mock 주문
+//    */
+//   let filteredMockOrders = mockOrders.filter(
+//     (order) => !realOrderIds.has(order.orderId),
+//   );
+
+//   /*
+//    * Mock 주문 기간 필터
+//    */
+//   filteredMockOrders = filterMockOrdersByPeriod(filteredMockOrders, period);
+
+//   /*
+//    * Mock 주문 검색
+//    */
+//   filteredMockOrders = filterMockOrdersByKeyword(
+//     filteredMockOrders,
+//     searchKeyword,
+//   );
+
+//   /*
+//    * Mock 주문 최신순
+//    */
+//   filteredMockOrders = [...filteredMockOrders].sort(
+//     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+//   );
+
+//   /*
+//    * 최종 주문 목록
+//    *
+//    * 실제 주문
+//    * ↓
+//    * Mock 주문
+//    */
+//   const combinedOrders = [...sortedRealOrders, ...filteredMockOrders];
+
+//   /*
+//    * 현재 선택한 탭 적용
+//    */
+//   const filteredOrders = filterOrdersByTab(combinedOrders, activeTab);
+
+//   /*
 //    * 주문 상세 페이지 이동
 //    */
-//   const handleViewDetail = (orderId) => {
-//     navigate(`/mypage/orders/${orderId}`);
+//   const handleViewDetail = (order) => {
+//     navigate(`/mypage/orders/${order.orderId}`, {
+//       state: order.isMock
+//         ? {
+//             isMock: true,
+//             mockOrder: order,
+//           }
+//         : undefined,
+//     });
 //   };
 
 //   /*
-//    * 주문 상태 탭 변경
+//    * 취소 / 교환 / 반품 신청
+//    *
+//    * 취소
+//    * → /claims
+//    *
+//    * 교환
+//    * → /claims/exchange
+//    *
+//    * 반품
+//    * → /claims/return
 //    */
-//   const handleTabChange = (status) => {
-//     if (status === activeTab) {
+//   const handleClaim = (order, claimType) => {
+//     const searchParams = new URLSearchParams({
+//       orderId: String(order.orderId),
+//     });
+
+//     if (order.isMock) {
+//       searchParams.set("mock", "true");
+//     }
+
+//     const navigateOptions = {
+//       state: order.isMock
+//         ? {
+//             isMock: true,
+//             mockOrder: order,
+//           }
+//         : undefined,
+//     };
+
+//     /*
+//      * 취소
+//      */
+//     if (claimType === "CANCEL") {
+//       searchParams.set("type", "CANCEL");
+
+//       navigate(`/claims/cancel?${searchParams.toString()}`, navigateOptions);
+
 //       return;
 //     }
 
-//     setIsLoading(true);
-//     setOrders([]);
+//     /*
+//      * 교환
+//      */
+//     if (claimType === "EXCHANGE") {
+//       navigate(`/claims/exchange?${searchParams.toString()}`, navigateOptions);
+
+//       return;
+//     }
+
+//     /*
+//      * 반품
+//      */
+//     if (claimType === "RETURN") {
+//       navigate(`/claims/return?${searchParams.toString()}`, navigateOptions);
+//     }
+//   };
+
+//   /*
+//    * 구매확정
+//    */
+//   const handleConfirmOrder = async (order) => {
+//     if (isConfirming) {
+//       return;
+//     }
+
+//     if (order.status !== "DELIVERED") {
+//       showToast("배송완료된 주문만 구매확정할 수 있습니다.", false);
+
+//       return;
+//     }
+
+//     if (order.claimSummary) {
+//       showToast("취소/교환/반품이 진행 중인 주문입니다.", false);
+
+//       return;
+//     }
+
+//     setIsConfirming(order.orderId);
+
+//     /*
+//      * Mock 주문
+//      */
+//     if (order.isMock) {
+//       setMockOrders((previousOrders) =>
+//         previousOrders.map((mockOrder) => {
+//           if (mockOrder.orderId !== order.orderId) {
+//             return mockOrder;
+//           }
+
+//           return {
+//             ...mockOrder,
+
+//             status: "CONFIRMED",
+//             statusLabel: "구매확정",
+
+//             items: mockOrder.items?.map((item) => ({
+//               ...item,
+//               status: "CONFIRMED",
+//             })),
+//           };
+//         }),
+//       );
+
+//       setIsConfirming(null);
+
+//       showToast("구매확정이 완료되었습니다.", true);
+
+//       return;
+//     }
+
+//     /*
+//      * 실제 주문
+//      */
+//     try {
+//       const result = await orderService.confirmOrder(
+//         order.orderId,
+//         accessToken,
+//       );
+
+//       if (!result.success) {
+//         throw new Error(result.message || "구매확정에 실패했습니다.");
+//       }
+
+//       /*
+//        * 구매확정 성공 후
+//        * 현재 주문 상태 변경
+//        */
+//       setOrders((previousOrders) =>
+//         previousOrders.map((currentOrder) => {
+//           if (currentOrder.orderId !== order.orderId) {
+//             return currentOrder;
+//           }
+
+//           return {
+//             ...currentOrder,
+
+//             status: "CONFIRMED",
+//             statusLabel: "구매확정",
+
+//             items: currentOrder.items?.map((item) => ({
+//               ...item,
+//               status: "CONFIRMED",
+//             })),
+//           };
+//         }),
+//       );
+
+//       showToast(result.message || "구매확정이 완료되었습니다.", true);
+//     } catch (error) {
+//       console.error("구매확정 실패:", error);
+
+//       showToast(
+//         error.message || "구매확정 처리 중 오류가 발생했습니다.",
+//         false,
+//       );
+//     } finally {
+//       setIsConfirming(null);
+//     }
+//   };
+
+//   /*
+//    * 리뷰 작성
+//    *
+//    * 페이지 이동하지 않고
+//    * ReviewModal 표시
+//    */
+//   const handleWriteReview = (order) => {
+//     if (order.status !== "CONFIRMED") {
+//       showToast("구매확정된 상품만 리뷰를 작성할 수 있습니다.", false);
+
+//       return;
+//     }
+
+//     const firstItem = order.items?.[0];
+
+//     if (!firstItem?.productId) {
+//       showToast("리뷰를 작성할 상품 정보를 찾을 수 없습니다.", false);
+
+//       return;
+//     }
+
+//     setReviewOrder(order);
+//   };
+
+//   /*
+//    * 리뷰 모달 닫기
+//    */
+//   const handleCloseReview = () => {
+//     setReviewOrder(null);
+//   };
+
+//   /*
+//    * 탭 변경
+//    */
+//   const handleTabChange = (status) => {
 //     setActiveTab(status);
-//     setCurrentPage(1);
 //   };
 
 //   /*
@@ -418,15 +888,11 @@
 //   };
 
 //   /*
-//    * 검색 실행
+//    * 검색
 //    */
 //   const handleSearch = () => {
 //     const nextKeyword = keyword.trim();
 
-//     /*
-//      * 같은 검색어로 다시 검색하면서 로딩 상태가
-//      * 끝나지 않는 상황을 방지합니다.
-//      */
 //     if (nextKeyword === searchKeyword && currentPage === 1) {
 //       return;
 //     }
@@ -438,7 +904,7 @@
 //   };
 
 //   /*
-//    * 검색창에서 Enter 입력 처리
+//    * 검색창 Enter 처리
 //    */
 //   const handleSearchKeyDown = (event) => {
 //     if (event.key === "Enter") {
@@ -461,44 +927,6 @@
 
 //   if (isAuthLoading || isLoading) {
 //     return <Loader />;
-//   }
-
-//   if (orders.length === 0) {
-//     return (
-//       <S.EmptyOrderStyle>
-//         <ForwardButton onClick={() => navigate("/mypage")}>
-//           마이페이지로
-//         </ForwardButton>
-
-//         <S.Header>
-//           <S.Title>주문/배송내역</S.Title>
-
-//           <S.Subtitle>고객님의 주문 내역을 확인해보세요.</S.Subtitle>
-//         </S.Header>
-
-//         <div className="empty-image-container">
-//           <img
-//             src={EmptyOrder}
-//             alt="주문 내역이 없는 상태를 나타내는 고양이"
-//             className="empty-image"
-//           />
-//         </div>
-
-//         <div className="empty-text-container">
-//           <strong>아직 주문 내역이 없어요</strong>
-
-//           <p>마음에 드는 상품을 찾아보러 가볼까요?</p>
-//         </div>
-
-//         <button
-//           type="button"
-//           className="navProduct"
-//           onClick={() => navigate("/products")}
-//         >
-//           상품 보러가기
-//         </button>
-//       </S.EmptyOrderStyle>
-//     );
 //   }
 
 //   return (
@@ -555,15 +983,33 @@
 //         ))}
 //       </S.TabList>
 
-//       <S.OrderList>
-//         {orders.map((order) => (
-//           <OrderCard
-//             key={order.orderId}
-//             order={order}
-//             onViewDetail={handleViewDetail}
-//           />
-//         ))}
-//       </S.OrderList>
+//       {filteredOrders.length === 0 ? (
+//         <S.EmptyOrderStyle>
+//           <div className="empty-image-container">
+//             <img src={EmptyOrder} alt="" className="empty-image" />
+//           </div>
+
+//           <div className="empty-text-container">
+//             <strong>해당 상태의 주문이 없어요</strong>
+
+//             <p>다른 주문 상태를 선택해주세요.</p>
+//           </div>
+//         </S.EmptyOrderStyle>
+//       ) : (
+//         <S.OrderList>
+//           {filteredOrders.map((order) => (
+//             <OrderCard
+//               key={order.orderId}
+//               order={order}
+//               onViewDetail={handleViewDetail}
+//               onClaim={handleClaim}
+//               onConfirm={handleConfirmOrder}
+//               onWriteReview={handleWriteReview}
+//               isConfirming={isConfirming}
+//             />
+//           ))}
+//         </S.OrderList>
+//       )}
 
 //       {currentPage < totalPages && (
 //         <S.LoadMoreWrap>
@@ -578,10 +1024,19 @@
 //           </S.LoadMoreButton>
 //         </S.LoadMoreWrap>
 //       )}
+
+//       {/* 리뷰 작성 모달 */}
+//       {reviewOrder && (
+//         <ReviewModal
+//           orderId={reviewOrder.orderId}
+//           productId={reviewOrder.items?.[0]?.productId}
+//           product={reviewOrder.items?.[0]}
+//           onClose={handleCloseReview}
+//         />
+//       )}
 //     </S.Page>
 //   );
 // }
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -592,13 +1047,13 @@ import EmptyOrder from "../../assets/EmptyOrder.webp";
 
 import ForwardButton from "../common/forwardBtn/ForwardButton";
 import Loader from "../loader/Loader";
+import ReviewModal from "../reviewModal/ReviewModal";
 
 import useAuth from "../../hooks/useAuth";
 import useToast from "../../hooks/useToast";
 
-/*
- * 주문 목록 탭
- */
+import { mockOrderData } from "../../mock/mockOrder";
+
 const TABS = [
   {
     key: "ALL",
@@ -626,30 +1081,21 @@ const TABS = [
   },
 ];
 
-/*
- * 주문 상태 표시 문구
- */
 const STATUS_LABELS = {
   PAYMENT_COMPLETED: "결제완료",
   PREPARING_SHIPMENT: "상품준비중",
   SHIPPING: "배송중",
   DELIVERED: "배송완료",
-  CONFIRMED: "구매결정",
+  CONFIRMED: "구매확정",
   CANCELED: "주문취소",
 };
 
-/*
- * Claim 유형 표시 문구
- */
 const CLAIM_TYPE_LABELS = {
   CANCEL: "취소",
   EXCHANGE: "교환",
   RETURN: "반품",
 };
 
-/*
- * Claim 상태 표시 문구
- */
 const CLAIM_STATUS_LABELS = {
   REQUESTED: "신청완료",
   PROCESSING: "처리중",
@@ -717,37 +1163,46 @@ function SearchIcon() {
       aria-hidden="true"
     >
       <circle cx="11" cy="11" r="7" />
-
       <line x1="21" y1="21" x2="16.65" y2="16.65" />
     </svg>
   );
 }
 
-/*
- * 주문 날짜 표시
- */
 function formatDate(dateString) {
   if (!dateString) {
-    return "-";
+    return "";
   }
 
-  return new Date(dateString).toLocaleDateString("ko-KR");
+  const date = new Date(dateString);
+
+  const formatter = new Intl.DateTimeFormat("ko-KR", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  const parts = formatter.formatToParts(date);
+
+  const getPart = (type) =>
+    parts.find((part) => part.type === type)?.value ?? "";
+
+  const year = getPart("year");
+  const month = getPart("month");
+  const day = getPart("day");
+  const hour = getPart("hour");
+  const minute = getPart("minute");
+
+  return `${year}.${month}.${day} ${hour}:${minute}`;
 }
 
-/*
- * 가격 표시
- */
 function formatPrice(price) {
   return `${Number(price ?? 0).toLocaleString("ko-KR")}원`;
 }
 
-/*
- * Claim 상태 문구를 생성합니다.
- *
- * CANCEL + REQUESTED -> 취소 신청완료
- * EXCHANGE + PROCESSING -> 교환 처리중
- * RETURN + COMPLETED -> 반품 처리완료
- */
 function getClaimStatusLabel(claimSummary) {
   if (!claimSummary) {
     return null;
@@ -761,16 +1216,7 @@ function getClaimStatusLabel(claimSummary) {
   return `${typeLabel} ${statusLabel}`;
 }
 
-/*
- * 주문 카드에 표시할 상태를 계산합니다.
- *
- * order.status가 PAYMENT_COMPLETED여도 claimSummary가 있으면
- * "결제완료" 대신 "취소 신청완료"와 같은 Claim 상태를 표시합니다.
- */
 function getOrderStatusInfo(order) {
-  /*
-   * 주문취소가 최종 완료된 주문
-   */
   if (order.status === "CANCELED") {
     return {
       label: "주문취소",
@@ -778,9 +1224,6 @@ function getOrderStatusInfo(order) {
     };
   }
 
-  /*
-   * 취소·교환·반품 신청이 연결된 주문
-   */
   if (order.claimSummary) {
     return {
       label: getClaimStatusLabel(order.claimSummary),
@@ -788,55 +1231,109 @@ function getOrderStatusInfo(order) {
     };
   }
 
-  /*
-   * 일반 주문
-   */
   return {
     label: STATUS_LABELS[order.status] ?? order.status ?? "-",
     variant: order.status,
   };
 }
 
-/*
- * 현재 선택한 탭에 표시할 주문을 걸러냅니다.
- *
- * 중요:
- * Claim이 존재하는 주문은 order.status가 PAYMENT_COMPLETED여도
- * 결제완료 탭에서 제외합니다.
- */
 function filterOrdersByTab(orders, activeTab) {
-  /*
-   * 전체 탭에서는 모든 주문을 표시합니다.
-   */
   if (activeTab === "ALL") {
     return orders;
   }
 
-  /*
-   * 취소/교환/반품 탭에서는 Claim이 있는 주문과
-   * 취소가 완료된 주문을 표시합니다.
-   */
   if (activeTab === "CLAIM") {
     return orders.filter(
       (order) => Boolean(order.claimSummary) || order.status === "CANCELED",
     );
   }
 
-  /*
-   * 일반 상태 탭에서는 현재 주문 상태가 일치하면서
-   * Claim이 없는 주문만 표시합니다.
-   *
-   * 따라서 취소 신청완료 주문은 결제완료 탭에서 제외됩니다.
-   */
+  if (activeTab === "DELIVERED") {
+    return orders.filter(
+      (order) =>
+        !order.claimSummary &&
+        (order.status === "DELIVERED" || order.status === "CONFIRMED"),
+    );
+  }
+
   return orders.filter(
     (order) => order.status === activeTab && !order.claimSummary,
   );
 }
 
-function OrderCard({ order, onViewDetail }) {
+function filterMockOrdersByKeyword(orders, keyword) {
+  const normalizedKeyword = keyword.trim().toLowerCase();
+
+  if (!normalizedKeyword) {
+    return orders;
+  }
+
+  return orders.filter((order) => {
+    const orderId = String(order.orderId ?? "").toLowerCase();
+
+    const hasMatchingProduct = order.items?.some((item) =>
+      String(item.name ?? "")
+        .toLowerCase()
+        .includes(normalizedKeyword),
+    );
+
+    return orderId.includes(normalizedKeyword) || hasMatchingProduct;
+  });
+}
+
+function filterMockOrdersByPeriod(orders, period) {
+  if (period === "all") {
+    return orders;
+  }
+
+  const currentDate = new Date();
+
+  let months = 0;
+
+  if (period === "3m") {
+    months = 3;
+  } else if (period === "6m") {
+    months = 6;
+  } else if (period === "1y") {
+    months = 12;
+  }
+
+  if (months === 0) {
+    return orders;
+  }
+
+  const startDate = new Date(currentDate);
+
+  startDate.setMonth(startDate.getMonth() - months);
+
+  return orders.filter((order) => {
+    const createdAt = new Date(order.createdAt);
+
+    if (Number.isNaN(createdAt.getTime())) {
+      return false;
+    }
+
+    return createdAt >= startDate;
+  });
+}
+
+function OrderCard({
+  order,
+  onViewDetail,
+  onClaim,
+  onConfirm,
+  onWriteReview,
+  isConfirming,
+}) {
   const firstItem = order.items?.[0];
 
   const statusInfo = getOrderStatusInfo(order);
+
+  const canCancel = order.status === "PAYMENT_COMPLETED" && !order.claimSummary;
+
+  const canDeliveryAction = order.status === "DELIVERED" && !order.claimSummary;
+
+  const canWriteReview = order.status === "CONFIRMED" && !order.claimSummary;
 
   return (
     <S.OrderCard>
@@ -874,13 +1371,88 @@ function OrderCard({ order, onViewDetail }) {
         </S.OrderSummaryRow>
       </S.OrderInfo>
 
-      <S.DetailButton type="button" onClick={() => onViewDetail(order.orderId)}>
+      <S.DetailButton
+        type="button"
+        className="order-action-button"
+        onClick={() => onViewDetail(order)}
+      >
         <S.DetailButtonText>주문 상세보기</S.DetailButtonText>
 
         <S.DetailArrow>
           <ChevronRightIcon />
         </S.DetailArrow>
       </S.DetailButton>
+
+      {canCancel && (
+        <S.DetailButton
+          type="button"
+          className="order-action-button"
+          onClick={() => onClaim(order, "CANCEL")}
+        >
+          <S.DetailButtonText>취소신청</S.DetailButtonText>
+
+          <S.DetailArrow>
+            <ChevronRightIcon />
+          </S.DetailArrow>
+        </S.DetailButton>
+      )}
+
+      {canDeliveryAction && (
+        <>
+          <S.DetailButton
+            type="button"
+            className="order-action-button"
+            onClick={() => onClaim(order, "EXCHANGE")}
+          >
+            <S.DetailButtonText>교환신청</S.DetailButtonText>
+
+            <S.DetailArrow>
+              <ChevronRightIcon />
+            </S.DetailArrow>
+          </S.DetailButton>
+
+          <S.DetailButton
+            type="button"
+            className="order-action-button"
+            onClick={() => onClaim(order, "RETURN")}
+          >
+            <S.DetailButtonText>반품신청</S.DetailButtonText>
+
+            <S.DetailArrow>
+              <ChevronRightIcon />
+            </S.DetailArrow>
+          </S.DetailButton>
+
+          <S.DetailButton
+            type="button"
+            className="order-action-button"
+            disabled={isConfirming === order.orderId}
+            onClick={() => onConfirm(order)}
+          >
+            <S.DetailButtonText>
+              {isConfirming === order.orderId ? "처리중..." : "구매확정"}
+            </S.DetailButtonText>
+
+            <S.DetailArrow>
+              <ChevronRightIcon />
+            </S.DetailArrow>
+          </S.DetailButton>
+        </>
+      )}
+
+      {canWriteReview && (
+        <S.DetailButton
+          type="button"
+          className="order-action-button"
+          onClick={() => onWriteReview(order)}
+        >
+          <S.DetailButtonText>리뷰작성</S.DetailButtonText>
+
+          <S.DetailArrow>
+            <ChevronRightIcon />
+          </S.DetailArrow>
+        </S.DetailButton>
+      )}
     </S.OrderCard>
   );
 }
@@ -891,13 +1463,20 @@ export default function OrderList() {
   const [orders, setOrders] = useState([]);
 
   /*
-   * 검색창에 입력 중인 값
+   * API에서 받은 실제 주문 전체 개수
+   *
+   * Mock 노출 여부를 판단할 때
+   * 현재 로딩된 orders.length가 아니라
+   * pagination.totalCount를 사용합니다.
    */
+  const [realOrderCount, setRealOrderCount] = useState(0);
+
+  const [mockOrders, setMockOrders] = useState(() => mockOrderData);
+
+  const [isConfirming, setIsConfirming] = useState(null);
+
   const [keyword, setKeyword] = useState("");
 
-  /*
-   * 실제 API 요청에 사용하는 검색어
-   */
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const [period, setPeriod] = useState("all");
@@ -910,21 +1489,14 @@ export default function OrderList() {
 
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+  const [reviewOrder, setReviewOrder] = useState(null);
+
   const navigate = useNavigate();
 
   const { accessToken, isAuthLoading } = useAuth();
 
   const { showToast } = useToast();
 
-  /*
-   * 주문 목록 조회
-   *
-   * 취소/교환/반품 주문을 프런트에서 정확히 분류하기 위해
-   * 서버에는 ALL 상태로 요청합니다.
-   *
-   * 이후 filterOrdersByTab()에서 현재 선택한 탭에 맞게
-   * 주문을 분류합니다.
-   */
   useEffect(() => {
     if (isAuthLoading || !accessToken) {
       return;
@@ -936,14 +1508,7 @@ export default function OrderList() {
       .getOrders(
         {
           period,
-
-          /*
-           * Claim이 연결된 PAYMENT_COMPLETED 주문이 서버의
-           * 결제완료 필터에 섞이는 문제를 방지하기 위해
-           * 상태는 ALL로 조회합니다.
-           */
           status: "ALL",
-
           keyword: searchKeyword,
           page: currentPage,
           limit: 5,
@@ -959,15 +1524,27 @@ export default function OrderList() {
           throw new Error(result.message || "주문 내역을 불러오지 못했습니다.");
         }
 
-        /*
-         * 첫 페이지는 목록을 교체합니다.
-         * 다음 페이지는 기존 목록 뒤에 추가합니다.
-         */
         if (currentPage === 1) {
-          setOrders(result.orders);
+          setOrders(result.orders ?? []);
         } else {
-          setOrders((previousOrders) => [...previousOrders, ...result.orders]);
+          setOrders((previousOrders) => [
+            ...previousOrders,
+            ...(result.orders ?? []),
+          ]);
         }
+
+        /*
+         * 실제 주문 전체 개수 저장
+         *
+         * 예:
+         * 0 → Mock 숨김
+         * 1 → Mock 숨김
+         * 2 → Mock 숨김
+         * 3 이상 → Mock 표시
+         */
+        setRealOrderCount(
+          result.pagination?.totalCount ?? result.orders?.length ?? 0,
+        );
 
         setTotalPages(result.pagination?.totalPages ?? 1);
       })
@@ -1002,33 +1579,248 @@ export default function OrderList() {
   ]);
 
   /*
-   * 현재 선택한 탭에 표시할 주문 목록입니다.
-   *
-   * 별도 state로 만들 필요가 없는 계산값이므로
-   * 렌더링 과정에서 바로 계산합니다.
+   * 실제 주문은 항상 최신순
    */
-  const filteredOrders = filterOrdersByTab(orders, activeTab);
+  const sortedRealOrders = [...orders].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 
   /*
-   * 주문 상세 페이지 이동
+   * 실제 주문과 Mock 주문의
+   * orderId 중복 방지
    */
-  const handleViewDetail = (orderId) => {
-    navigate(`/mypage/orders/${orderId}`);
+  const realOrderIds = new Set(sortedRealOrders.map((order) => order.orderId));
+
+  let filteredMockOrders = mockOrders.filter(
+    (order) => !realOrderIds.has(order.orderId),
+  );
+
+  /*
+   * Mock 기간 필터
+   */
+  filteredMockOrders = filterMockOrdersByPeriod(filteredMockOrders, period);
+
+  /*
+   * Mock 검색 필터
+   */
+  filteredMockOrders = filterMockOrdersByKeyword(
+    filteredMockOrders,
+    searchKeyword,
+  );
+
+  /*
+   * Mock 주문도 최신순
+   */
+  filteredMockOrders = [...filteredMockOrders].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+
+  /*
+   * Mock 주문 노출 기준
+   *
+   * 실제 주문 0~2개
+   * → 실제 API 주문만 표시
+   *
+   * 실제 주문 3개 이상
+   * → 실제 API 주문
+   * → Mock 주문
+   */
+  const shouldShowMockOrders = realOrderCount >= 3;
+
+  /*
+   * 실제 주문이 3개 이상이더라도
+   * 실제 주문이 여러 페이지라면
+   * 아직 불러오지 않은 실제 주문보다
+   * Mock 주문이 먼저 나오면 안 됩니다.
+   *
+   * 따라서 마지막 실제 주문 페이지까지
+   * 불러온 뒤 Mock 주문을 하단에 붙입니다.
+   */
+  const hasLoadedAllRealOrders = currentPage >= totalPages;
+
+  /*
+   * 최종 주문 목록
+   */
+  const combinedOrders =
+    shouldShowMockOrders && hasLoadedAllRealOrders
+      ? [...sortedRealOrders, ...filteredMockOrders]
+      : sortedRealOrders;
+
+  /*
+   * 탭 필터
+   */
+  const filteredOrders = filterOrdersByTab(combinedOrders, activeTab);
+
+  const handleViewDetail = (order) => {
+    navigate(`/mypage/orders/${order.orderId}`, {
+      state: order.isMock
+        ? {
+            isMock: true,
+            mockOrder: order,
+          }
+        : undefined,
+    });
   };
 
-  /*
-   * 탭 변경
-   *
-   * 전체 주문 데이터를 이미 받아왔으므로
-   * 탭 변경 시 API를 다시 호출하지 않습니다.
-   */
+  const handleClaim = (order, claimType) => {
+    const searchParams = new URLSearchParams({
+      orderId: String(order.orderId),
+    });
+
+    if (order.isMock) {
+      searchParams.set("mock", "true");
+    }
+
+    const navigateOptions = {
+      state: order.isMock
+        ? {
+            isMock: true,
+            mockOrder: order,
+          }
+        : undefined,
+    };
+
+    if (claimType === "CANCEL") {
+      searchParams.set("type", "CANCEL");
+
+      navigate(`/claims/cancel?${searchParams.toString()}`, navigateOptions);
+
+      return;
+    }
+
+    if (claimType === "EXCHANGE") {
+      navigate(`/claims/exchange?${searchParams.toString()}`, navigateOptions);
+
+      return;
+    }
+
+    if (claimType === "RETURN") {
+      navigate(`/claims/return?${searchParams.toString()}`, navigateOptions);
+    }
+  };
+
+  const handleConfirmOrder = async (order) => {
+    if (isConfirming) {
+      return;
+    }
+
+    if (order.status !== "DELIVERED") {
+      showToast("배송완료된 주문만 구매확정할 수 있습니다.", false);
+
+      return;
+    }
+
+    if (order.claimSummary) {
+      showToast("취소/교환/반품이 진행 중인 주문입니다.", false);
+
+      return;
+    }
+
+    setIsConfirming(order.orderId);
+
+    /*
+     * Mock 주문 구매확정
+     */
+    if (order.isMock) {
+      setMockOrders((previousOrders) =>
+        previousOrders.map((mockOrder) => {
+          if (mockOrder.orderId !== order.orderId) {
+            return mockOrder;
+          }
+
+          return {
+            ...mockOrder,
+
+            status: "CONFIRMED",
+            statusLabel: "구매확정",
+
+            items: mockOrder.items?.map((item) => ({
+              ...item,
+              status: "CONFIRMED",
+            })),
+          };
+        }),
+      );
+
+      setIsConfirming(null);
+
+      showToast("구매확정이 완료되었습니다.", true);
+
+      return;
+    }
+
+    /*
+     * 실제 주문 구매확정
+     */
+    try {
+      const result = await orderService.confirmOrder(
+        order.orderId,
+        accessToken,
+      );
+
+      if (!result.success) {
+        throw new Error(result.message || "구매확정에 실패했습니다.");
+      }
+
+      setOrders((previousOrders) =>
+        previousOrders.map((currentOrder) => {
+          if (currentOrder.orderId !== order.orderId) {
+            return currentOrder;
+          }
+
+          return {
+            ...currentOrder,
+
+            status: "CONFIRMED",
+            statusLabel: "구매확정",
+
+            items: currentOrder.items?.map((item) => ({
+              ...item,
+              status: "CONFIRMED",
+            })),
+          };
+        }),
+      );
+
+      showToast(result.message || "구매확정이 완료되었습니다.", true);
+    } catch (error) {
+      console.error("구매확정 실패:", error);
+
+      showToast(
+        error.message || "구매확정 처리 중 오류가 발생했습니다.",
+        false,
+      );
+    } finally {
+      setIsConfirming(null);
+    }
+  };
+
+  const handleWriteReview = (order) => {
+    if (order.status !== "CONFIRMED") {
+      showToast("구매확정된 상품만 리뷰를 작성할 수 있습니다.", false);
+
+      return;
+    }
+
+    const firstItem = order.items?.[0];
+
+    if (!firstItem?.productId) {
+      showToast("리뷰를 작성할 상품 정보를 찾을 수 없습니다.", false);
+
+      return;
+    }
+
+    setReviewOrder(order);
+  };
+
+  const handleCloseReview = () => {
+    setReviewOrder(null);
+  };
+
   const handleTabChange = (status) => {
     setActiveTab(status);
   };
 
-  /*
-   * 조회 기간 변경
-   */
   const handlePeriodChange = (event) => {
     const nextPeriod = event.target.value;
 
@@ -1038,13 +1830,17 @@ export default function OrderList() {
 
     setIsLoading(true);
     setOrders([]);
+
+    /*
+     * 새 조회가 시작되므로
+     * 이전 실제 주문 개수를 초기화
+     */
+    setRealOrderCount(0);
+
     setPeriod(nextPeriod);
     setCurrentPage(1);
   };
 
-  /*
-   * 검색
-   */
   const handleSearch = () => {
     const nextKeyword = keyword.trim();
 
@@ -1054,22 +1850,23 @@ export default function OrderList() {
 
     setIsLoading(true);
     setOrders([]);
+
+    /*
+     * 새 검색 결과를 받기 전까지
+     * 이전 주문 개수 사용 방지
+     */
+    setRealOrderCount(0);
+
     setSearchKeyword(nextKeyword);
     setCurrentPage(1);
   };
 
-  /*
-   * 검색창 Enter 처리
-   */
   const handleSearchKeyDown = (event) => {
     if (event.key === "Enter") {
       handleSearch();
     }
   };
 
-  /*
-   * 다음 페이지 조회
-   */
   const handleLoadMore = () => {
     if (isLoadingMore || currentPage >= totalPages) {
       return;
@@ -1082,47 +1879,6 @@ export default function OrderList() {
 
   if (isAuthLoading || isLoading) {
     return <Loader />;
-  }
-
-  /*
-   * 전체 주문 데이터가 없는 경우
-   */
-  if (orders.length === 0) {
-    return (
-      <S.EmptyOrderStyle>
-        <ForwardButton onClick={() => navigate("/mypage")}>
-          마이페이지로
-        </ForwardButton>
-
-        <S.Header>
-          <S.Title>주문/배송내역</S.Title>
-
-          <S.Subtitle>고객님의 주문 내역을 확인해보세요.</S.Subtitle>
-        </S.Header>
-
-        <div className="empty-image-container">
-          <img
-            src={EmptyOrder}
-            alt="주문 내역이 없는 상태를 나타내는 고양이"
-            className="empty-image"
-          />
-        </div>
-
-        <div className="empty-text-container">
-          <strong>아직 주문 내역이 없어요</strong>
-
-          <p>마음에 드는 상품을 찾아보러 가볼까요?</p>
-        </div>
-
-        <button
-          type="button"
-          className="navProduct"
-          onClick={() => navigate("/products")}
-        >
-          상품 보러가기
-        </button>
-      </S.EmptyOrderStyle>
-    );
   }
 
   return (
@@ -1179,12 +1935,6 @@ export default function OrderList() {
         ))}
       </S.TabList>
 
-      {/*
-       * 선택한 탭에 주문이 없는 경우
-       *
-       * 전체 주문 자체는 존재하므로 상품 보러가기 화면 대신
-       * 해당 탭에 내역이 없다는 문구만 표시합니다.
-       */}
       {filteredOrders.length === 0 ? (
         <S.EmptyOrderStyle>
           <div className="empty-image-container">
@@ -1204,6 +1954,10 @@ export default function OrderList() {
               key={order.orderId}
               order={order}
               onViewDetail={handleViewDetail}
+              onClaim={handleClaim}
+              onConfirm={handleConfirmOrder}
+              onWriteReview={handleWriteReview}
+              isConfirming={isConfirming}
             />
           ))}
         </S.OrderList>
@@ -1221,6 +1975,15 @@ export default function OrderList() {
             {!isLoadingMore && <ChevronDownIcon />}
           </S.LoadMoreButton>
         </S.LoadMoreWrap>
+      )}
+
+      {reviewOrder && (
+        <ReviewModal
+          orderId={reviewOrder.orderId}
+          productId={reviewOrder.items?.[0]?.productId}
+          product={reviewOrder.items?.[0]}
+          onClose={handleCloseReview}
+        />
       )}
     </S.Page>
   );

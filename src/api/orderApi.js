@@ -1,80 +1,93 @@
-// import { apiRequest } from "./apiClient";
-
-// // 주문 생성
-// export function createOrder(checkoutId, token) {
-//   return apiRequest("/orders", {
-//     method: "POST",
-//     token,
-//     body: {
-//       checkoutId,
-//     },
-//   });
-// }
-
-// // 주문 목록 조회
-// export function getOrders(token) {
-//   return apiRequest("/orders", {
-//     token,
-//   });
-// }
-
-// // 주문 상세 조회
-// export function getOrder(orderId, token) {
-//   return apiRequest(`/orders/${orderId}`, {
-//     token,
-//   });
-// }
-
-// // 구매 확정
-// export function confirmOrder(orderId, token) {
-//   return apiRequest(`/orders/${orderId}/confirm`, {
-//     method: "POST",
-//     token,
-//   });
-// }
-
 import { apiRequest } from "./apiClient";
 
-export function createOrder(checkoutId, token) {
+/**
+ * 주문 생성
+ *
+ * POST /orders
+ *
+ * body:
+ * {
+ *   checkoutId
+ * }
+ *
+ * 주문 생성 시 서버에서
+ * - Checkout 검증
+ * - 재고 검증
+ * - 배송비 검증
+ * - 사용 적립금 검증
+ * - 적립금 사용 처리
+ * - 적립금 적립 처리
+ * - Point History 저장
+ * 을 수행한다.
+ */
+export const createOrder = async (checkoutId, accessToken) => {
   return apiRequest("/orders", {
     method: "POST",
-    token,
+    token: accessToken,
+
     body: {
       checkoutId,
     },
   });
-}
+};
 
-export function getOrders(
-  { period = "all", status = "ALL", keyword = "", page = 1, limit = 5 } = {},
-  token,
-) {
-  const params = new URLSearchParams();
+/**
+ * 주문 목록 조회
+ *
+ * GET /orders
+ *
+ * Query:
+ * period?
+ * status?
+ * keyword?
+ * page?
+ * limit?
+ */
+export const getOrders = async (
+  { period, status, keyword, page = 1, limit = 10 } = {},
+  accessToken,
+) => {
+  const searchParams = new URLSearchParams();
 
-  params.set("period", period);
-  params.set("status", status);
-
-  if (keyword.trim()) {
-    params.set("keyword", keyword.trim());
+  if (period) {
+    searchParams.set("period", period);
   }
 
-  params.set("page", page);
-  params.set("limit", limit);
+  if (status) {
+    searchParams.set("status", status);
+  }
 
-  return apiRequest(`/orders?${params.toString()}`, {
-    token,
+  if (keyword) {
+    searchParams.set("keyword", keyword);
+  }
+
+  searchParams.set("page", String(page));
+  searchParams.set("limit", String(limit));
+
+  return apiRequest(`/orders?${searchParams.toString()}`, {
+    token: accessToken,
   });
-}
+};
 
-export function getOrder(orderId, token) {
-  return apiRequest(`/orders/${orderId}`, {
-    token,
+/**
+ * 주문 상세 조회
+ *
+ * GET /orders/:orderId
+ */
+export const getOrder = async (orderId, accessToken) => {
+  return apiRequest(`/orders/${encodeURIComponent(orderId)}`, {
+    token: accessToken,
   });
-}
+};
 
-export function confirmOrder(orderId, token) {
-  return apiRequest(`/orders/${orderId}/confirm`, {
+/**
+ * 구매확정
+ *
+ * POST /orders/:orderId/confirm
+ */
+export const confirmOrder = async (orderId, accessToken) => {
+  return apiRequest(`/orders/${encodeURIComponent(orderId)}/confirm`, {
     method: "POST",
-    token,
+    token: accessToken,
   });
-}
+};

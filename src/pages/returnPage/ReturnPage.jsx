@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Header from "../../components/header/Header";
+import Header from "../../components/header/header";
 import Footer from "../../components/footer/Footer";
 import styles from "./ReturnPageStyle";
 

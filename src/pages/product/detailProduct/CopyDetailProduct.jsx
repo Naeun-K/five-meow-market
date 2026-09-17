@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import ProductCard from "../../../components/product/ProductCard/ProductCard";
 import BasicPage from "../../basicPage/BasicPage";
 import {
   ButtonContainer,
@@ -13,16 +12,19 @@ import {
 import useToast from "../../../hooks/useToast";
 import { useEffect, useRef, useState } from "react";
 import Loader from "../../../components/loader/Loader";
-import { getProduct } from "../../../services/productServices";
-import HeartButton from "../../../components/product/HeartButton/HeartButton";
 import ProductBottomSheet from "../../../components/product/ProductBottomSheet/ProductBottomSheet";
 import useAuth from "../../../hooks/useAuth";
-import { addCartItem } from "../../../services/cartServices";
-import { createCheckout } from "../../../services/checkOutServices";
-import * as wishlistService from "../../../services/wishlistServices";
 import CartSuccessModal from "../../../components/cartui/CartSuccessModal";
 import RelatedProducts from "../../../components/product/RelateProduct/RelatedProduct";
 import PawIcon from "../../../components/common/PawIcon/PawIcon";
+import { getProduct } from "../../../services/productServices";
+import {
+  addWishlist,
+  getWishlist,
+  removeWishlist,
+} from "../../../services/wishlistServices";
+import { addCartItem } from "../../../services/cartServices";
+import { createCheckout } from "../../../services/checkOutServices";
 
 const categoryNames = {
   "cat-eat": "먹묘",
@@ -43,6 +45,7 @@ export default function DetailProduct() {
   const [quantity, setQuantity] = useState(1);
   const [bottomSheetType, setBottomSheetType] = useState(null);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [isDetailExpanded, setIsDetailExpanded] = useState(false);
   const [isDetailOverflowing, setIsDetailOverflowing] = useState(false);
 
@@ -69,7 +72,9 @@ export default function DetailProduct() {
     });
   };
 
+  // ==========================================
   // 상세 이미지 높이 확인
+  // ==========================================
   useEffect(() => {
     const detailContent = detailImageContentRef.current;
 
@@ -102,8 +107,14 @@ export default function DetailProduct() {
     };
   }, [product]);
 
+  // ==========================================
   // 상품 상세 조회
+  //
+  // 상품 API의 isLiked를 초기 찜 상태로 사용
+  // ==========================================
   useEffect(() => {
+    let isMounted = true;
+
     const fetchProduct = async () => {
       try {
         setIsLoading(true);
@@ -111,39 +122,64 @@ export default function DetailProduct() {
         const result = await getProduct(productId);
 
         if (!result.success) {
-          throw new Error("상품 상세 조회에 실패했습니다.");
+          throw new Error(result.message || "상품 상세 조회에 실패했습니다.");
+        }
+
+        if (!isMounted) {
+          return;
         }
 
         setProduct(result.product);
+
+        // 상품 API에서 내려주는 찜 상태
+        setIsLiked(Boolean(result.product?.isLiked));
+        setSelectedImage(result.product.thumbnail);
       } catch (error) {
         console.error("상품 상세 조회 실패:", error);
 
-        showToast("상품 정보를 불러오지 못했습니다.", false);
+        if (!isMounted) {
+          return;
+        }
+
+        setProduct(null);
+        setIsLiked(false);
+
+        showToast(error.message || "상품 정보를 불러오지 못했습니다.", false);
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
-    fetchProduct();
+    if (productId) {
+      fetchProduct();
+    }
+
+    return () => {
+      isMounted = false;
+    };
   }, [productId, showToast]);
 
-  // =====================================================
-  // 현재 상품 찜 상태 조회
-  // 새로고침해도 GET /wishlist를 통해 상태 복구
-  // =====================================================
+  // ==========================================
+  // 로그인한 경우 찜 목록으로 상태 재확인
+  //
+  // GET /wishlist
+  // ==========================================
   useEffect(() => {
-    if (isAuthLoading) {
+    if (isAuthLoading || !productId) {
       return;
     }
 
-    // 비로그인 사용자는 찜 상태 false
-    if (!isLoggedIn || !accessToken || !productId) {
+    if (!isLoggedIn || !accessToken) {
       return;
     }
+
+    let isMounted = true;
 
     const fetchWishlistStatus = async () => {
       try {
-        const result = await wishlistService.getWishlist(
+        const result = await getWishlist(
           {
             page: 1,
             limit: 100,
@@ -155,9 +191,15 @@ export default function DetailProduct() {
           throw new Error(result.message || "찜한 상품 조회에 실패했습니다.");
         }
 
-        const liked = result.products.some(
-          (item) => item.productId === productId,
-        );
+        if (!isMounted) {
+          return;
+        }
+
+        const liked = result.wishlistItems.some((item) => {
+          const wishlistProductId = item.productId ?? item.product?.productId;
+
+          return wishlistProductId === productId;
+        });
 
         setIsLiked(liked);
       } catch (error) {
@@ -166,100 +208,18 @@ export default function DetailProduct() {
     };
 
     fetchWishlistStatus();
+
+    return () => {
+      isMounted = false;
+    };
   }, [productId, accessToken, isLoggedIn, isAuthLoading]);
 
-  // 장바구니 담기
-  const handleAddCart = async (selectedQuantity) => {
-    if (isAuthLoading) {
-      return false;
-    }
-
-    if (!isLoggedIn || !accessToken) {
-      showToast("로그인 후 장바구니를 이용해주세요.", false);
-
-      return false;
-    }
-
-    try {
-      const result = await addCartItem(
-        productId,
-        selectedQuantity,
-        accessToken,
-      );
-
-      if (!result.success) {
-        throw new Error(result.message || "장바구니 담기에 실패했습니다.");
-      }
-
-      return true;
-    } catch (error) {
-      console.error("장바구니 추가 실패:", error);
-
-      showToast(error.message || "장바구니 담기에 실패했습니다.", false);
-
-      return false;
-    }
-  };
-
-  // 바로 구매하기
-  const handleBuyNow = async (selectedQuantity) => {
-    if (isAuthLoading) {
-      return false;
-    }
-
-    if (!isLoggedIn || !accessToken) {
-      showToast("로그인 후 구매할 수 있습니다.", false);
-
-      return false;
-    }
-
-    try {
-      // 1. 현재 상품을 장바구니에 추가
-      const cartResult = await addCartItem(
-        productId,
-        selectedQuantity,
-        accessToken,
-      );
-
-      if (!cartResult.success) {
-        throw new Error(cartResult.message || "상품 구매 준비에 실패했습니다.");
-      }
-
-      const cartItemId = cartResult.cartItemId;
-
-      if (!cartItemId) {
-        throw new Error("장바구니 상품 정보를 확인할 수 없습니다.");
-      }
-
-      // 2. Checkout 생성
-      const checkoutResult = await createCheckout([cartItemId], accessToken);
-
-      if (!checkoutResult.success) {
-        throw new Error(checkoutResult.message || "주문 준비에 실패했습니다.");
-      }
-
-      const checkoutId = checkoutResult.checkoutId;
-
-      if (!checkoutId) {
-        throw new Error("Checkout 정보를 확인할 수 없습니다.");
-      }
-
-      // 3. Checkout 페이지 이동
-      navigate(`/checkout?checkoutId=${encodeURIComponent(checkoutId)}`);
-
-      return true;
-    } catch (error) {
-      console.error("바로 구매 실패:", error);
-
-      showToast(error.message || "구매 준비에 실패했습니다.", false);
-
-      return false;
-    }
-  };
-
-  // =====================================================
-  // 데스크톱 / 태블릿 찜하기 / 찜해제
-  // =====================================================
+  // ==========================================
+  // 찜하기 / 찜 해제
+  //
+  // false → POST /wishlist
+  // true  → DELETE /wishlist/:productId
+  // ==========================================
   const handleWishlistClick = async () => {
     if (isAuthLoading || isWishlistProcessing) {
       return;
@@ -280,10 +240,7 @@ export default function DetailProduct() {
 
       // 이미 찜한 상품 → 찜 해제
       if (isLiked) {
-        const result = await wishlistService.deleteWishlist(
-          productId,
-          accessToken,
-        );
+        const result = await removeWishlist(productId, accessToken);
 
         if (!result.success) {
           throw new Error(result.message || "찜 해제에 실패했습니다.");
@@ -291,19 +248,37 @@ export default function DetailProduct() {
 
         setIsLiked(false);
 
+        setProduct((prev) =>
+          prev
+            ? {
+                ...prev,
+                isLiked: false,
+              }
+            : prev,
+        );
+
         showToast(result.message || "찜한 상품에서 해제되었습니다.", true);
 
         return;
       }
 
       // 찜하지 않은 상품 → 찜 추가
-      const result = await wishlistService.addWishlist(productId, accessToken);
+      const result = await addWishlist(productId, accessToken);
 
       if (!result.success) {
         throw new Error(result.message || "찜하기에 실패했습니다.");
       }
 
       setIsLiked(true);
+
+      setProduct((prev) =>
+        prev
+          ? {
+              ...prev,
+              isLiked: true,
+            }
+          : prev,
+      );
 
       showToast(result.message || "찜한 상품에 추가되었습니다.", true);
     } catch (error) {
@@ -315,16 +290,120 @@ export default function DetailProduct() {
     }
   };
 
-  // ProductCard / HeartButton 찜 상태 변경
-  const handleHeartWishlistChange = (changedProductId, nextIsLiked) => {
-    if (changedProductId !== productId) {
-      return;
+  // ==========================================
+  // 장바구니 담기
+  //
+  // POST /cart/items
+  // {
+  //   productId,
+  //   quantity
+  // }
+  // ==========================================
+  const handleAddCart = async (selectedQuantity) => {
+    if (isAuthLoading) {
+      return false;
     }
 
-    setIsLiked(nextIsLiked);
+    if (!isLoggedIn || !accessToken) {
+      showToast("로그인 후 장바구니를 이용해주세요.", false);
+
+      return false;
+    }
+
+    if (!productId) {
+      return false;
+    }
+
+    try {
+      const result = await addCartItem(
+        productId,
+        selectedQuantity,
+        accessToken,
+      );
+
+      if (!result.success) {
+        throw new Error(result.message || "장바구니 담기에 실패했습니다.");
+      }
+      // Header 장바구니 quantity 합계 즉시 갱신
+      window.dispatchEvent(new Event("cartUpdated"));
+      return true;
+    } catch (error) {
+      console.error("장바구니 추가 실패:", error);
+
+      showToast(error.message || "장바구니 담기에 실패했습니다.", false);
+
+      return false;
+    }
   };
 
+  // ==========================================
+  // 바로 구매하기
+  //
+  // 장바구니를 거치지 않고 Checkout 직접 생성
+  //
+  // POST /checkout
+  // {
+  //   items: [
+  //     {
+  //       productId,
+  //       quantity
+  //     }
+  //   ]
+  // }
+  // ==========================================
+  const handleBuyNow = async (selectedQuantity) => {
+    if (isAuthLoading) {
+      return false;
+    }
+
+    if (!isLoggedIn || !accessToken) {
+      showToast("로그인 후 구매할 수 있습니다.", false);
+
+      return false;
+    }
+
+    if (!productId) {
+      return false;
+    }
+
+    try {
+      const checkoutResult = await createCheckout(
+        {
+          items: [
+            {
+              productId,
+              quantity: selectedQuantity,
+            },
+          ],
+        },
+        accessToken,
+      );
+
+      if (!checkoutResult.success) {
+        throw new Error(checkoutResult.message || "주문 준비에 실패했습니다.");
+      }
+
+      const checkoutId = checkoutResult.checkoutId;
+
+      if (!checkoutId) {
+        throw new Error("Checkout 정보를 확인할 수 없습니다.");
+      }
+
+      navigate(`/checkout?checkoutId=${encodeURIComponent(checkoutId)}`);
+
+      return true;
+    } catch (error) {
+      console.error("바로 구매 실패:", error);
+
+      showToast(error.message || "구매 준비에 실패했습니다.", false);
+
+      return false;
+    }
+  };
+
+  // ==========================================
   // 모바일 BottomSheet 제출
+  // ==========================================
   const handleBottomSheetSubmit = async () => {
     if (bottomSheetType === "cart") {
       const success = await handleAddCart(quantity);
@@ -346,7 +425,9 @@ export default function DetailProduct() {
     }
   };
 
+  // ==========================================
   // 바로 구매 버튼
+  // ==========================================
   const handleBuyClick = async () => {
     if (window.innerWidth <= 600) {
       setBottomSheetType("buy");
@@ -357,7 +438,9 @@ export default function DetailProduct() {
     await handleBuyNow(quantity);
   };
 
+  // ==========================================
   // 장바구니 버튼
+  // ==========================================
   const handleCartClick = async () => {
     if (window.innerWidth <= 600) {
       setBottomSheetType("cart");
@@ -372,6 +455,9 @@ export default function DetailProduct() {
     }
   };
 
+  // ==========================================
+  // 로딩
+  // ==========================================
   if (isLoading) {
     return (
       <BasicPage>
@@ -380,6 +466,9 @@ export default function DetailProduct() {
     );
   }
 
+  // ==========================================
+  // 상품 없음
+  // ==========================================
   if (!product) {
     return (
       <BasicPage>
@@ -394,6 +483,12 @@ export default function DetailProduct() {
     ? categoryNames[product.categoryId]
     : "전체상품";
 
+  const productImages = [
+    product.thumbnail,
+    product.images?.[0],
+    product.images?.[1],
+  ].filter(Boolean);
+
   return (
     <>
       <BasicPage>
@@ -406,15 +501,33 @@ export default function DetailProduct() {
           ========================== */}
           <div className="product-photo-area">
             <PhotoWrapper>
-              <ProductCard
-                productId={product.productId}
-                image={product.thumbnail}
-                name={product.name}
-                badge=""
-                showHeart
-                isLiked={isLiked}
-                onWishlistChange={handleHeartWishlistChange}
-              />
+              <div className="main-product-image">
+                <img
+                  src={selectedImage || product.thumbnail}
+                  alt={product.name}
+                />
+              </div>
+
+              <div className="product-thumbnail-list">
+                {productImages.map((image, index) => (
+                  <button
+                    key={`${product.productId}-thumbnail-${index}`}
+                    type="button"
+                    className={`product-thumbnail ${
+                      (selectedImage || product.thumbnail) === image
+                        ? "is-active"
+                        : ""
+                    }`}
+                    onClick={() => setSelectedImage(image)}
+                    aria-label={`${product.name} 이미지 ${index + 1} 보기`}
+                  >
+                    <img
+                      src={image}
+                      alt={`${product.name} 이미지 ${index + 1}`}
+                    />
+                  </button>
+                ))}
+              </div>
             </PhotoWrapper>
 
             {/* 관련상품 스크롤 유도 */}
@@ -473,7 +586,7 @@ export default function DetailProduct() {
                 <strong>{product.price.toLocaleString()}원</strong>
 
                 <p>
-                  {product.expectedPoint.toLocaleString()}
+                  {Number(product.expectedPoint ?? 0).toLocaleString()}
                   원(5%)
                 </p>
 
@@ -483,7 +596,9 @@ export default function DetailProduct() {
               </div>
             </div>
 
-            {/* 수량 / 총 상품금액 */}
+            {/* =========================
+                수량 / 총 상품금액
+            ========================== */}
             <SummaryStyle>
               <div className="summary-wrapper">
                 <strong>{product.name}</strong>
@@ -543,7 +658,9 @@ export default function DetailProduct() {
               </div>
             </SummaryStyle>
 
-            {/* 구매 버튼 */}
+            {/* =========================
+                구매 버튼
+            ========================== */}
             <ButtonContainer>
               <button className="btn btn-buy-now" onClick={handleBuyClick}>
                 <span className="button-text">바로 구매하기</span>
@@ -569,6 +686,7 @@ export default function DetailProduct() {
                   onClick={handleWishlistClick}
                   disabled={isWishlistProcessing}
                   aria-pressed={isLiked}
+                  aria-label={isLiked ? "찜한 상품 해제" : "찜한 상품 추가"}
                 >
                   <span>
                     <svg
@@ -601,11 +719,40 @@ export default function DetailProduct() {
 
                 {/* 모바일 찜 버튼 */}
                 <div className="mobile-wishlist">
-                  <HeartButton
-                    productId={productId}
-                    initialIsLiked={isLiked}
-                    onWishlistChange={handleHeartWishlistChange}
-                  />
+                  <button
+                    type="button"
+                    className={`mobile-heart-button${
+                      isLiked ? " is-liked" : ""
+                    }`}
+                    onClick={handleWishlistClick}
+                    disabled={isWishlistProcessing}
+                    aria-pressed={isLiked}
+                    aria-label={isLiked ? "찜한 상품 해제" : "찜한 상품 추가"}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill={isLiked ? "currentColor" : "none"}
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="
+                          M8 14.5
+                          C7.5 14.15 1.5 10.15 1.5 5.65
+                          C1.5 3.35 3.15 1.85 5.15 1.85
+                          C6.35 1.85 7.35 2.45 8 3.35
+                          C8.65 2.45 9.65 1.85 10.85 1.85
+                          C12.85 1.85 14.5 3.35 14.5 5.65
+                          C14.5 10.15 8.5 14.15 8 14.5
+                          Z
+                        "
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </ButtonContainer>
@@ -674,7 +821,7 @@ export default function DetailProduct() {
           </div>
 
           {/* 상품 상세 이미지 */}
-          {product.images?.[1] && (
+          {product.images?.[2] && (
             <div className="detail-image-area">
               <div
                 className={`detail-image-container${
@@ -686,7 +833,7 @@ export default function DetailProduct() {
                   ref={detailImageContentRef}
                 >
                   <img
-                    src={product.images[1]}
+                    src={product.images[2]}
                     alt={`${product.name} 상세 이미지`}
                   />
                 </div>
