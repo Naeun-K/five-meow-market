@@ -356,42 +356,33 @@ function CheckoutPage() {
     }
 
     const recipientName = newAddress.recipientName.trim();
-
     const recipientPhone = newAddress.recipientPhone.replace(/\D/g, "");
-
     const zipCode = newAddress.zipCode.trim();
-
     const address = newAddress.address.trim();
-
     const detailAddress = newAddress.detailAddress.trim();
 
     if (!recipientName) {
       showToast("받는 분을 입력해주세요.", false);
-
       return;
     }
 
     if (!recipientPhone) {
       showToast("연락처를 입력해주세요.", false);
-
       return;
     }
 
     if (recipientPhone.length !== 11) {
       showToast("휴대폰 번호 11자리를 입력해주세요.", false);
-
       return;
     }
 
     if (!zipCode) {
       showToast("우편번호를 검색해주세요.", false);
-
       return;
     }
 
     if (!address) {
       showToast("주소를 검색해주세요.", false);
-
       return;
     }
 
@@ -401,35 +392,18 @@ function CheckoutPage() {
       const result = await checkoutService.addAddress(
         {
           addressName: recipientName,
-
           recipient: recipientName,
-
           phone: recipientPhone,
-
           zipCode,
-
           address,
-
           detailAddress,
-
           isDefault: newAddress.isDefault,
         },
-
         accessToken,
       );
 
       if (!result.success) {
         throw new Error(result.message || "배송지 추가에 실패했습니다.");
-      }
-
-      const shippingAddressId =
-        result.shippingAddressId ??
-        result.addressId ??
-        result.shippingAddress?.shippingAddressId ??
-        result.shippingAddress?.addressId;
-
-      if (!shippingAddressId) {
-        throw new Error("추가된 배송지 정보를 확인할 수 없습니다.");
       }
 
       const addressResult = await checkoutService.getAddresses(accessToken);
@@ -446,6 +420,43 @@ function CheckoutPage() {
 
       setAddresses(normalizedAddresses);
 
+      const resultShippingAddressId =
+        result.shippingAddressId ??
+        result.addressId ??
+        result.shippingAddress?.shippingAddressId ??
+        result.shippingAddress?.addressId ??
+        null;
+
+      let addedAddress = null;
+
+      if (resultShippingAddressId) {
+        addedAddress =
+          normalizedAddresses.find(
+            (addressItem) =>
+              String(addressItem.shippingAddressId) ===
+              String(resultShippingAddressId),
+          ) ?? null;
+      }
+
+      if (!addedAddress) {
+        addedAddress =
+          normalizedAddresses.find(
+            (addressItem) =>
+              addressItem.recipientName === recipientName &&
+              addressItem.recipientPhone.replace(/\D/g, "") ===
+                recipientPhone &&
+              addressItem.zipCode === zipCode &&
+              addressItem.address === address &&
+              (addressItem.detailAddress ?? "") === detailAddress,
+          ) ?? null;
+      }
+
+      if (!addedAddress?.shippingAddressId) {
+        throw new Error("추가한 배송지 정보를 목록에서 확인할 수 없습니다.");
+      }
+
+      const shippingAddressId = addedAddress.shippingAddressId;
+
       const selectResult = await checkoutService.selectCheckoutAddress(
         checkoutId,
         shippingAddressId,
@@ -457,14 +468,7 @@ function CheckoutPage() {
       }
 
       const selectedAddress =
-        normalizeShippingAddress(selectResult.shippingAddress) ??
-        normalizedAddresses.find(
-          (addressItem) => addressItem.shippingAddressId === shippingAddressId,
-        );
-
-      if (!selectedAddress) {
-        throw new Error("추가한 배송지 정보를 확인할 수 없습니다.");
-      }
+        normalizeShippingAddress(selectResult.shippingAddress) ?? addedAddress;
 
       setCheckout((prev) => ({
         ...prev,
@@ -593,12 +597,6 @@ function CheckoutPage() {
     setPointInput(numbersOnly);
   };
 
-  /*
-   * 적립금 사용
-   *
-   * 입력창에 사용자가 직접 입력한 적립금을
-   * 실제 Checkout에 적용한다.
-   */
   const handleApplyPoints = async () => {
     const points = validatePointAmount(pointInput);
 
@@ -613,15 +611,6 @@ function CheckoutPage() {
     await applyPoints(points);
   };
 
-  /*
-   * 전액사용
-   *
-   * 실제 적립금을 바로 적용하지 않고
-   * 사용할 수 있는 최대 적립금을
-   * 입력창에 채워준다.
-   *
-   * 실제 적용은 "적립금 사용" 버튼을 눌렀을 때 한다.
-   */
   const handleUseAllPoints = () => {
     if (!checkout) {
       return;
@@ -667,13 +656,6 @@ function CheckoutPage() {
     try {
       setIsPaymentProcessing(true);
 
-      /*
-       * 사용자가 적립금 금액만 입력하고
-       * "적립금 사용" 버튼을 누르지 않은 상태에서
-       * 바로 결제하는 것을 방지한다.
-       *
-       * 실제 Checkout에 적용된 적립금만 사용한다.
-       */
       const inputPoints = validatePointAmount(pointInput);
 
       if (inputPoints === null) {
@@ -1291,7 +1273,7 @@ function CheckoutPage() {
                 name="recipientPhone"
                 value={newAddress.recipientPhone}
                 onChange={handlePhoneChange}
-                placeholder="010-0000-0000"
+                placeholder="휴대폰번호를 입력해주세요"
                 inputMode="numeric"
                 autoComplete="tel"
                 maxLength={13}

@@ -7,9 +7,7 @@ export const CustomerInquiryPageStyle = styled.div({
   color: "#4f3927",
   backgroundColor: "#fcfaf7",
 
-  /*
-   * 전체 콘텐츠 영역
-   */
+  
   "& .customer-inquiry-layout": {
     width: "100%",
     minHeight: "calc(100vh - 200px)",
@@ -32,9 +30,7 @@ export const CustomerInquiryPageStyle = styled.div({
     width: "100%",
   },
 
-  /*
-   * 페이지 제목
-   */
+  
   "& .page-heading": {
     display: "flex",
     flexDirection: "column",
@@ -63,9 +59,7 @@ export const CustomerInquiryPageStyle = styled.div({
     lineHeight: 1.8,
   },
 
-  /*
-   * 문의 폼
-   */
+  
   "& .inquiry-form": {
     display: "flex",
     flexDirection: "column",
@@ -103,9 +97,7 @@ export const CustomerInquiryPageStyle = styled.div({
     fontWeight: 700,
   },
 
-  /*
-   * 입력창
-   */
+  
   "& .form-field input[type='text'], & .form-field textarea": {
     width: "100%",
 
@@ -156,9 +148,7 @@ export const CustomerInquiryPageStyle = styled.div({
     fontSize: "12px",
   },
 
-  /*
-   * 공통 커스텀 드롭다운
-   */
+  
   "& .select-wrapper": {
     position: "relative",
 
@@ -311,9 +301,7 @@ export const CustomerInquiryPageStyle = styled.div({
     fontWeight: 700,
   },
 
-  /*
-   * 상품 및 주문 관련 드롭다운
-   */
+  
   "& .related-select-wrapper": {
     position: "relative",
   },
@@ -328,9 +316,7 @@ export const CustomerInquiryPageStyle = styled.div({
     padding: "12px 14px",
   },
 
-  /*
-   * 전체 상품 드롭다운
-   */
+  
   "& .select-product-image": {
     flex: "0 0 62px",
 
@@ -386,9 +372,7 @@ export const CustomerInquiryPageStyle = styled.div({
     fontSize: "13px",
   },
 
-  /*
-   * 주문내역 드롭다운
-   */
+  
   "& .order-select-options": {
     maxHeight: "420px",
   },
@@ -470,9 +454,7 @@ export const CustomerInquiryPageStyle = styled.div({
     textAlign: "center",
   },
 
-  /*
-   * 비밀글 선택
-   */
+  
   "& .secret-check": {
     display: "flex",
     alignItems: "center",
@@ -537,9 +519,7 @@ export const CustomerInquiryPageStyle = styled.div({
     color: "#8a7d72",
   },
 
-  /*
-   * 하단 버튼
-   */
+  
   "& .form-buttons": {
     display: "flex",
     justifyContent: "center",
@@ -606,9 +586,7 @@ export const CustomerInquiryPageStyle = styled.div({
     opacity: 0.55,
   },
 
-  /*
-   * 제출 버튼 위 고양이 이미지
-   */
+  
   "& .hover-cats": {
     display: "flex",
     justifyContent: "center",
@@ -644,9 +622,7 @@ export const CustomerInquiryPageStyle = styled.div({
     transform: "translate(-50%, 0)",
   },
 
-  /*
-   * 태블릿
-   */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     "& .customer-inquiry-layout": {
       padding: "80px 32px 130px",
@@ -665,9 +641,7 @@ export const CustomerInquiryPageStyle = styled.div({
     },
   },
 
-  /*
-   * 모바일
-   */
+  
   "@media (max-width: 767px)": {
     "& .customer-inquiry-layout": {
       padding: "56px 16px 100px",
@@ -780,9 +754,7 @@ export const CustomerInquiryPageStyle = styled.div({
     },
   },
 
-  /*
-   * 작은 모바일
-   */
+  
   "@media (max-width: 360px)": {
     "& .customer-inquiry-layout": {
       paddingRight: "12px",

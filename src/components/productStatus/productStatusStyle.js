@@ -73,19 +73,19 @@ export const HomeButton = styled(Link)`
     background-color 0.2s ease,
     color 0.2s ease;
 
-  /* PC 마우스 호버 */
+  
   &:hover {
     background-color: var(--bg-button);
     color: #fff;
   }
 
-  /* 모바일 터치 및 클릭 시 */
+  
   &:active {
     background-color: var(--bg-button);
     color: #fff;
   }
 
-  /* 키보드 포커스 시 */
+  
   &:focus-visible {
     outline: 2px solid var(--bg-button);
     outline-offset: 3px;
@@ -99,7 +99,7 @@ export const HomeButton = styled(Link)`
     padding: 0 20px;
     font-size: 14px;
 
-    /* 모바일에서 터치할 때 색상 유지 */
+    
     &:hover,
     &:active,
     &:focus-visible {

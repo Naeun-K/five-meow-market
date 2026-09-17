@@ -42,9 +42,7 @@ const styles = `
     padding: 50px;
   }
 
-  /* ========================================
-     페이지 제목
-  ======================================== */
+  
 
   .return-page-header {
     width: 844px;
@@ -74,9 +72,7 @@ const styles = `
     line-height: 27px;
   }
 
-  /* ========================================
-     상품 선택
-  ======================================== */
+  
 
   .product-selection {
     width: 844px;
@@ -126,9 +122,7 @@ const styles = `
     white-space: nowrap;
   }
 
-  /* ========================================
-     전체취소 / 부분취소 배지
-  ======================================== */
+  
 
   .cancel-scope-badge {
     min-width: 68px;
@@ -159,9 +153,7 @@ const styles = `
     color: #4f3927 !important;
   }
 
-  /* ========================================
-     체크박스
-  ======================================== */
+  
 
   .select-all-checkbox,
   .product-checkbox {
@@ -220,9 +212,7 @@ const styles = `
     outline-offset: 2px;
   }
 
-  /* ========================================
-     선택 해제 버튼
-  ======================================== */
+  
 
   .delete-button-area {
     position: relative;
@@ -273,9 +263,7 @@ const styles = `
     cursor: not-allowed;
   }
 
-  /* ========================================
-     상품 목록
-  ======================================== */
+  
 
   .product-list {
     width: 844px;
@@ -284,11 +272,7 @@ const styles = `
     flex-direction: column;
   }
 
-  /*
-    PC
-
-    체크박스 | 상품정보 | 수량 | 취소사유
-  */
+  
 
   .return-product-card {
     position: relative;
@@ -320,20 +304,13 @@ const styles = `
       background-color 0.2s ease;
   }
 
-  /*
-    체크된 상품
-  */
+  
 
   .return-product-card.is-selected {
     opacity: 1;
   }
 
-  /*
-    체크 해제된 상품
-
-    화면에서는 상품을 유지하지만
-    취소 대상에서는 제외되었다는 것을 보여줌
-  */
+  
 
   .return-product-card.is-unselected {
     opacity: 0.5;
@@ -343,7 +320,7 @@ const styles = `
     z-index: 10;
   }
 
-  /* 상품 체크박스 */
+  
 
   .return-product-card > .product-checkbox {
     grid-column: 1;
@@ -351,9 +328,7 @@ const styles = `
     margin-top: 2px;
   }
 
-  /* ========================================
-     상품 이미지 + 상품정보
-  ======================================== */
+  
 
   .product-main-info {
     grid-column: 2;
@@ -449,9 +424,7 @@ const styles = `
     white-space: nowrap;
   }
 
-  /* ========================================
-     수량
-  ======================================== */
+  
 
   .product-quantity {
     grid-column: 3;
@@ -470,9 +443,7 @@ const styles = `
     white-space: nowrap;
   }
 
-  /* ========================================
-     상품별 취소 사유
-  ======================================== */
+  
 
   .return-reason-area {
     grid-column: 4;
@@ -491,10 +462,7 @@ const styles = `
     transition: opacity 0.2s ease;
   }
 
-  /*
-    체크가 해제된 상품의 취소 사유는
-    사용할 수 없다는 시각적 표시
-  */
+  
 
   .return-product-card.is-unselected .return-reason-area {
     opacity: 0.6;
@@ -514,9 +482,7 @@ const styles = `
     box-shadow: none;
   }
 
-  /* ========================================
-     커스텀 드롭다운
-  ======================================== */
+  
 
   .custom-dropdown {
     position: relative;
@@ -649,9 +615,7 @@ const styles = `
     background: #f3f1ef;
   }
 
-  /* ========================================
-     상세 사유
-  ======================================== */
+  
 
   .reason-textarea-wrapper {
     position: relative;
@@ -723,9 +687,7 @@ const styles = `
     line-height: 12px;
   }
 
-  /* ========================================
-     취소 안내
-  ======================================== */
+  
 
   .return-notice {
     width: 844px;
@@ -797,9 +759,7 @@ const styles = `
     line-height: 26px;
   }
 
-  /* ========================================
-     취소 버튼 영역
-  ======================================== */
+  
 
   .notice-submit-area {
     position: relative;
@@ -852,9 +812,7 @@ const styles = `
     cursor: not-allowed;
   }
 
-  /* ========================================
-     버튼 위 고양이
-  ======================================== */
+  
 
   .cat-decoration {
     position: absolute;
@@ -916,10 +874,7 @@ const styles = `
     transform: none !important;
   }
 
-  /* ========================================
-     태블릿
-     768px ~ 1023px
-  ======================================== */
+  
 
   @media (max-width: 1023px) and (min-width: 768px) {
     .return-main {
@@ -998,10 +953,7 @@ const styles = `
     }
   }
 
-  /* ========================================
-     모바일
-     320px ~ 767px
-  ======================================== */
+  
 
   @media (max-width: 767px) {
     .return-main {
@@ -1032,9 +984,7 @@ const styles = `
       line-height: 24px;
     }
 
-    /*
-      상품 선택 헤더
-    */
+    
 
     .product-selection-header {
       height: auto;
@@ -1064,13 +1014,7 @@ const styles = `
       font-size: 11px !important;
     }
 
-    /*
-      모바일 상품
-
-      체크박스 | 상품정보
-                   ↓
-              취소사유
-    */
+    
 
     .return-product-card {
       width: 100%;
@@ -1120,9 +1064,7 @@ const styles = `
       display: none;
     }
 
-    /*
-      취소 사유는 체크박스 오른쪽에서 시작
-    */
+    
 
     .return-reason-area {
       grid-column: 2;
@@ -1140,18 +1082,13 @@ const styles = `
       width: 100%;
     }
 
-    /*
-      체크 해제 상품은
-      취소사유 비활성 상태가 더 잘 보이도록
-    */
+    
 
     .return-product-card.is-unselected {
       opacity: 0.45;
     }
 
-    /*
-      안내
-    */
+    
 
     .return-notice {
       width: 100%;
@@ -1175,9 +1112,7 @@ const styles = `
       line-height: 23px;
     }
 
-    /*
-      취소 버튼
-    */
+    
 
     .notice-submit-area {
       justify-content: center;

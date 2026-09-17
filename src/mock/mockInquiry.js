@@ -1,4 +1,4 @@
-// src/data/mockInquiry.js
+
 
 export const mockInquiryData = [
   {

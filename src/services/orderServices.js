@@ -1,8 +1,6 @@
 import * as orderApi from "../api/orderApi";
 
-/**
- * 주문 생성
- */
+
 export const createOrder = async (checkoutId, accessToken) => {
   const response = await orderApi.createOrder(checkoutId, accessToken);
 
@@ -23,9 +21,7 @@ export const createOrder = async (checkoutId, accessToken) => {
   };
 };
 
-/**
- * 주문 목록 조회
- */
+
 export const getOrders = async (options = {}, accessToken) => {
   const response = await orderApi.getOrders(options, accessToken);
 
@@ -45,9 +41,7 @@ export const getOrders = async (options = {}, accessToken) => {
   };
 };
 
-/**
- * 주문 상세 조회
- */
+
 export const getOrder = async (orderId, accessToken) => {
   const response = await orderApi.getOrder(orderId, accessToken);
 
@@ -60,9 +54,7 @@ export const getOrder = async (orderId, accessToken) => {
   };
 };
 
-/**
- * 구매확정
- */
+
 export const confirmOrder = async (orderId, accessToken) => {
   const response = await orderApi.confirmOrder(orderId, accessToken);
 

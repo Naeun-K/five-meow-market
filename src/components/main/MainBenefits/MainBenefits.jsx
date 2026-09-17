@@ -1,4 +1,4 @@
-/** @jsxImportSource @emotion/react */
+
 
 import * as S from "./MainBenefits.style";
 

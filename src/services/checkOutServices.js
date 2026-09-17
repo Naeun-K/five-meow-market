@@ -1,27 +1,6 @@
 import * as checkoutApi from "../api/checkoutApi";
 
-/**
- * Checkout 생성
- *
- * 장바구니:
- * createCheckout(
- *   { cartItemIds: [...] },
- *   accessToken,
- * )
- *
- * 바로구매:
- * createCheckout(
- *   {
- *     items: [
- *       {
- *         productId,
- *         quantity,
- *       },
- *     ],
- *   },
- *   accessToken,
- * )
- */
+
 export const createCheckout = async (checkoutData, accessToken) => {
   const response = await checkoutApi.createCheckout(checkoutData, accessToken);
 
@@ -33,9 +12,7 @@ export const createCheckout = async (checkoutData, accessToken) => {
   };
 };
 
-/**
- * 배송지 목록 조회
- */
+
 export const getAddresses = async (accessToken) => {
   const response = await checkoutApi.getAddresses(accessToken);
 
@@ -46,20 +23,18 @@ export const getAddresses = async (accessToken) => {
   };
 };
 
-/**
- * 배송지 추가
- */
-// export const addAddress = async (addressData, accessToken) => {
-//   const response = await checkoutApi.addAddress(addressData, accessToken);
 
-//   return {
-//     success: response.success,
-//     recipient: response.data?.recipient ?? "",
-//     phone: response.data?.phone ?? "",
-//     address: response.data?.address ?? "",
-//     message: response.message,
-//   };
-// };
+
+
+
+
+
+
+
+
+
+
+
 export const addAddress = async (addressData, accessToken) => {
   const response = await checkoutApi.addAddress(addressData, accessToken);
 
@@ -76,9 +51,7 @@ export const addAddress = async (addressData, accessToken) => {
   };
 };
 
-/**
- * Checkout 배송지 선택
- */
+
 export const selectCheckoutAddress = async (
   checkoutId,
   addressId,
@@ -98,9 +71,7 @@ export const selectCheckoutAddress = async (
   };
 };
 
-/**
- * Checkout 적립금 적용
- */
+
 export const applyCheckoutPoints = async (checkoutId, points, accessToken) => {
   const response = await checkoutApi.applyCheckoutPoints(
     checkoutId,
@@ -117,9 +88,7 @@ export const applyCheckoutPoints = async (checkoutId, points, accessToken) => {
   };
 };
 
-/**
- * Checkout 주문 요약 조회
- */
+
 export const getCheckoutSummary = async (checkoutId, accessToken) => {
   const response = await checkoutApi.getCheckoutSummary(
     checkoutId,
@@ -149,9 +118,7 @@ export const getCheckoutSummary = async (checkoutId, accessToken) => {
   };
 };
 
-/**
- * Checkout 주문 가능 여부 검증
- */
+
 export const validateCheckout = async (checkoutId, accessToken) => {
   const response = await checkoutApi.validateCheckout(checkoutId, accessToken);
 

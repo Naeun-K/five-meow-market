@@ -3,8 +3,8 @@ import { css } from "@emotion/react";
 export const page = css({
   width: "100%",
   maxWidth: "1300px",
-  // boxSizing: "border-box",
-  // margin: "0 auto",
+  
+  
   padding: "16px 24px 72px",
   display: "flex",
   flexDirection: "column",
@@ -430,7 +430,7 @@ export const emptyText = css({
 });
 
 export const emptyButton = css({
-  // 🔴 SIZE
+  
   width: "260px",
   height: "60px",
   padding: 0,

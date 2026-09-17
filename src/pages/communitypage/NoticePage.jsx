@@ -96,7 +96,7 @@ export default function NoticePage() {
       }
     `}</style>
 
-      {/* 홈으로 이동 */}
+      {}
       <div className="home-button-wrapper">
         <HomeButton
           to="/"
