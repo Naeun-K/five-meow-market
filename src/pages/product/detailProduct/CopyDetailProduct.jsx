@@ -49,7 +49,7 @@ export default function DetailProduct() {
   const [isDetailExpanded, setIsDetailExpanded] = useState(false);
   const [isDetailOverflowing, setIsDetailOverflowing] = useState(false);
 
-  // 찜 상태
+  
   const [isLiked, setIsLiked] = useState(false);
   const [isWishlistProcessing, setIsWishlistProcessing] = useState(false);
 
@@ -72,9 +72,9 @@ export default function DetailProduct() {
     });
   };
 
-  // ==========================================
-  // 상세 이미지 높이 확인
-  // ==========================================
+  
+  
+  
   useEffect(() => {
     const detailContent = detailImageContentRef.current;
 
@@ -107,11 +107,11 @@ export default function DetailProduct() {
     };
   }, [product]);
 
-  // ==========================================
-  // 상품 상세 조회
-  //
-  // 상품 API의 isLiked를 초기 찜 상태로 사용
-  // ==========================================
+  
+  
+  
+  
+  
   useEffect(() => {
     let isMounted = true;
 
@@ -131,7 +131,7 @@ export default function DetailProduct() {
 
         setProduct(result.product);
 
-        // 상품 API에서 내려주는 찜 상태
+        
         setIsLiked(Boolean(result.product?.isLiked));
         setSelectedImage(result.product.thumbnail);
       } catch (error) {
@@ -161,11 +161,11 @@ export default function DetailProduct() {
     };
   }, [productId, showToast]);
 
-  // ==========================================
-  // 로그인한 경우 찜 목록으로 상태 재확인
-  //
-  // GET /wishlist
-  // ==========================================
+  
+  
+  
+  
+  
   useEffect(() => {
     if (isAuthLoading || !productId) {
       return;
@@ -214,12 +214,12 @@ export default function DetailProduct() {
     };
   }, [productId, accessToken, isLoggedIn, isAuthLoading]);
 
-  // ==========================================
-  // 찜하기 / 찜 해제
-  //
-  // false → POST /wishlist
-  // true  → DELETE /wishlist/:productId
-  // ==========================================
+  
+  
+  
+  
+  
+  
   const handleWishlistClick = async () => {
     if (isAuthLoading || isWishlistProcessing) {
       return;
@@ -238,7 +238,7 @@ export default function DetailProduct() {
     try {
       setIsWishlistProcessing(true);
 
-      // 이미 찜한 상품 → 찜 해제
+      
       if (isLiked) {
         const result = await removeWishlist(productId, accessToken);
 
@@ -262,7 +262,7 @@ export default function DetailProduct() {
         return;
       }
 
-      // 찜하지 않은 상품 → 찜 추가
+      
       const result = await addWishlist(productId, accessToken);
 
       if (!result.success) {
@@ -290,15 +290,15 @@ export default function DetailProduct() {
     }
   };
 
-  // ==========================================
-  // 장바구니 담기
-  //
-  // POST /cart/items
-  // {
-  //   productId,
-  //   quantity
-  // }
-  // ==========================================
+  
+  
+  
+  
+  
+  
+  
+  
+  
   const handleAddCart = async (selectedQuantity) => {
     if (isAuthLoading) {
       return false;
@@ -324,7 +324,7 @@ export default function DetailProduct() {
       if (!result.success) {
         throw new Error(result.message || "장바구니 담기에 실패했습니다.");
       }
-      // Header 장바구니 quantity 합계 즉시 갱신
+      
       window.dispatchEvent(new Event("cartUpdated"));
       return true;
     } catch (error) {
@@ -336,21 +336,21 @@ export default function DetailProduct() {
     }
   };
 
-  // ==========================================
-  // 바로 구매하기
-  //
-  // 장바구니를 거치지 않고 Checkout 직접 생성
-  //
-  // POST /checkout
-  // {
-  //   items: [
-  //     {
-  //       productId,
-  //       quantity
-  //     }
-  //   ]
-  // }
-  // ==========================================
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   const handleBuyNow = async (selectedQuantity) => {
     if (isAuthLoading) {
       return false;
@@ -401,9 +401,9 @@ export default function DetailProduct() {
     }
   };
 
-  // ==========================================
-  // 모바일 BottomSheet 제출
-  // ==========================================
+  
+  
+  
   const handleBottomSheetSubmit = async () => {
     if (bottomSheetType === "cart") {
       const success = await handleAddCart(quantity);
@@ -425,9 +425,9 @@ export default function DetailProduct() {
     }
   };
 
-  // ==========================================
-  // 바로 구매 버튼
-  // ==========================================
+  
+  
+  
   const handleBuyClick = async () => {
     if (window.innerWidth <= 600) {
       setBottomSheetType("buy");
@@ -438,9 +438,9 @@ export default function DetailProduct() {
     await handleBuyNow(quantity);
   };
 
-  // ==========================================
-  // 장바구니 버튼
-  // ==========================================
+  
+  
+  
   const handleCartClick = async () => {
     if (window.innerWidth <= 600) {
       setBottomSheetType("cart");
@@ -455,9 +455,9 @@ export default function DetailProduct() {
     }
   };
 
-  // ==========================================
-  // 로딩
-  // ==========================================
+  
+  
+  
   if (isLoading) {
     return (
       <BasicPage>
@@ -466,9 +466,9 @@ export default function DetailProduct() {
     );
   }
 
-  // ==========================================
-  // 상품 없음
-  // ==========================================
+  
+  
+  
   if (!product) {
     return (
       <BasicPage>
@@ -492,13 +492,9 @@ export default function DetailProduct() {
   return (
     <>
       <BasicPage>
-        {/* =========================
-            상품 대표 영역
-        ========================== */}
+        {}
         <DetailProductStyle>
-          {/* =========================
-              왼쪽 상품 이미지 영역
-          ========================== */}
+          {}
           <div className="product-photo-area">
             <PhotoWrapper>
               <div className="main-product-image">
@@ -530,7 +526,7 @@ export default function DetailProduct() {
               </div>
             </PhotoWrapper>
 
-            {/* 관련상품 스크롤 유도 */}
+            {}
             <button
               type="button"
               className="related-scroll-button"
@@ -567,9 +563,7 @@ export default function DetailProduct() {
             </p>
           </div>
 
-          {/* =========================
-              오른쪽 상품정보 영역
-          ========================== */}
+          {}
           <DescWrapper>
             <div className="desc-container">
               <div className="desc-field product-info">
@@ -596,9 +590,7 @@ export default function DetailProduct() {
               </div>
             </div>
 
-            {/* =========================
-                수량 / 총 상품금액
-            ========================== */}
+            {}
             <SummaryStyle>
               <div className="summary-wrapper">
                 <strong>{product.name}</strong>
@@ -658,9 +650,7 @@ export default function DetailProduct() {
               </div>
             </SummaryStyle>
 
-            {/* =========================
-                구매 버튼
-            ========================== */}
+            {}
             <ButtonContainer>
               <button className="btn btn-buy-now" onClick={handleBuyClick}>
                 <span className="button-text">바로 구매하기</span>
@@ -679,7 +669,7 @@ export default function DetailProduct() {
                   </span>
                 </button>
 
-                {/* 데스크톱 / 태블릿 찜 버튼 */}
+                {}
                 <button
                   type="button"
                   className={`btn btn-wishlist${isLiked ? " is-liked" : ""}`}
@@ -717,7 +707,7 @@ export default function DetailProduct() {
                   {isLiked ? "찜해제" : "찜하기"}
                 </button>
 
-                {/* 모바일 찜 버튼 */}
+                {}
                 <div className="mobile-wishlist">
                   <button
                     type="button"
@@ -759,9 +749,7 @@ export default function DetailProduct() {
           </DescWrapper>
         </DetailProductStyle>
 
-        {/* =========================
-            관련상품
-        ========================== */}
+        {}
         <DetailSection id="related-products">
           <div className="section-heading">
             <p>YOU MAY ALSO LIKE</p>
@@ -771,9 +759,7 @@ export default function DetailProduct() {
           <RelatedProducts productId={productId} />
         </DetailSection>
 
-        {/* =========================
-            상세페이지 메뉴
-        ========================== */}
+        {}
         <DetailBanner aria-label="상품 상세 메뉴">
           <a
             href="#product-information"
@@ -790,9 +776,7 @@ export default function DetailProduct() {
           </a>
         </DetailBanner>
 
-        {/* =========================
-            상세정보
-        ========================== */}
+        {}
         <DetailSection id="product-information">
           <div className="section-heading">
             <p>PRODUCT INFORMATION</p>
@@ -820,7 +804,7 @@ export default function DetailProduct() {
             </dl>
           </div>
 
-          {/* 상품 상세 이미지 */}
+          {}
           {product.images?.[2] && (
             <div className="detail-image-area">
               <div
@@ -868,9 +852,7 @@ export default function DetailProduct() {
           )}
         </DetailSection>
 
-        {/* =========================
-            구매안내
-        ========================== */}
+        {}
         <DetailSection id="purchase-guide">
           <div className="section-heading">
             <p>SHOPPING GUIDE</p>
@@ -896,7 +878,7 @@ export default function DetailProduct() {
         </DetailSection>
       </BasicPage>
 
-      {/* 모바일 구매 BottomSheet */}
+      {}
       <ProductBottomSheet
         isOpen={bottomSheetType !== null}
         type={bottomSheetType}
@@ -908,7 +890,7 @@ export default function DetailProduct() {
         onSubmit={handleBottomSheetSubmit}
       />
 
-      {/* 장바구니 성공 모달 */}
+      {}
       <CartSuccessModal
         isOpen={isCartModalOpen}
         onClose={() => setIsCartModalOpen(false)}

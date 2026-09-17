@@ -62,7 +62,7 @@ export const EmptyOrderStyle = styled.div({
   },
 
   "& > .navProduct": {
-    // width: "260px",
+    
     width: "340px",
     height: "60px",
 
@@ -91,7 +91,7 @@ export const EmptyOrderStyle = styled.div({
     },
   },
 
-  /* 태블릿 */
+  
   "@media (min-width: 768px) and (max-width: 1023px)": {
     minHeight: "620px",
 
@@ -118,14 +118,14 @@ export const EmptyOrderStyle = styled.div({
 
     "& > button": {
       width: "300px",
-      // width: "240px",
+      
       height: "56px",
 
       fontSize: "17px",
     },
   },
 
-  /* 모바일 */
+  
   "@media (max-width: 767px)": {
     minHeight: "520px",
 
@@ -152,7 +152,7 @@ export const EmptyOrderStyle = styled.div({
     },
 
     "& > button": {
-      // width: "220px",
+      
       width: "260px",
       height: "52px",
 
@@ -178,7 +178,7 @@ export const Page = styled.div({
 });
 
 export const Header = styled.header({
-  // alignSelf: "flex-start",
+  
 
   marginBottom: 28,
 

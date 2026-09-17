@@ -1,4 +1,4 @@
-/** @jsxImportSource @emotion/react */
+
 
 import ReviewCard from "./ReviewCard";
 import { reviewGrid } from "./BestReviewStyle";

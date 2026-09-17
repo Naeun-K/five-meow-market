@@ -40,7 +40,7 @@ const styles = `
   gap: 32px;
 }
 
-  /* 페이지 제목 */
+  
 
   .return-page-header {
     width: 844px;
@@ -64,7 +64,7 @@ const styles = `
     line-height: 27px;
   }
 
-  /* 상품 선택 헤더 */
+  
 
   .product-selection {
     width: 844px;
@@ -136,7 +136,7 @@ const styles = `
     background: var(--bg-button);
   }
 
-  /* 선택 삭제 */
+  
 
   .delete-button-area {
     position: relative;
@@ -187,7 +187,7 @@ const styles = `
       transform 0.2s ease;
   }
 
-  /* 선택 삭제 버튼 자체에 마우스를 올렸을 때만 표시 */
+  
 
   .delete-button:hover + .delete-cat-decoration {
     opacity: 1;
@@ -201,7 +201,7 @@ const styles = `
     object-fit: contain;
   }
 
-  /* 상품 목록 */
+  
 
   .product-list {
     width: 844px;
@@ -209,11 +209,7 @@ const styles = `
     flex-direction: column;
   }
 
-  /*
-    PC / 태블릿 배치
-
-    체크박스 | 상품 이미지 + 상품정보 | 수량 | 교환 사유
-  */
+  
 
   .return-product-card {
     position: relative;
@@ -233,14 +229,14 @@ const styles = `
     z-index: 10;
   }
 
-  /* 상품 체크박스 */
+  
 
   .return-product-card > .product-checkbox {
     grid-column: 1;
     margin-top: 2px;
   }
 
-  /* 상품 이미지 + 정보 */
+  
 
   .product-main-info {
     grid-column: 2;
@@ -313,7 +309,7 @@ const styles = `
     white-space: nowrap;
   }
 
-  /* 수량 */
+  
 
   .product-quantity {
     grid-column: 3;
@@ -326,7 +322,7 @@ const styles = `
     white-space: nowrap;
   }
 
-  /* 교환 사유 영역 */
+  
 
   .return-reason-area {
     grid-column: 4;
@@ -339,7 +335,7 @@ const styles = `
     padding: 0;
   }
 
-  /* 커스텀 드롭다운 */
+  
 
   .custom-dropdown {
     position: relative;
@@ -431,7 +427,7 @@ const styles = `
     background: #f3f1ef;
   }
 
-  /* 상세 사유 */
+  
 
   .reason-textarea-wrapper {
     position: relative;
@@ -482,7 +478,7 @@ const styles = `
     line-height: 12px;
   }
 
-  /* 교환 안내 */
+  
 
   .return-notice {
     width: 844px;
@@ -568,7 +564,7 @@ const styles = `
     background: #614832;
   }
 
-  /* 교환 신청 버튼 위 고양이 5마리 */
+  
 
   .cat-decoration {
     position: absolute;
@@ -589,7 +585,7 @@ const styles = `
       transform 0.25s ease;
   }
 
-  /* 교환 신청하기 버튼 자체에 마우스를 올렸을 때만 표시 */
+  
 
   .return-submit-button:hover + .cat-decoration {
     opacity: 1;
@@ -616,7 +612,7 @@ const styles = `
     transform: none !important;
   }
 
-  /* 태블릿 */
+  
 
   @media (max-width: 1023px) and (min-width: 768px) {
     .return-main {
@@ -683,7 +679,7 @@ const styles = `
     }
   }
 
-  /* 모바일 */
+  
 
   @media (max-width: 767px) {
     .return-main {

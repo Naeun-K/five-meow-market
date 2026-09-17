@@ -1,4 +1,4 @@
-/** @jsxImportSource @emotion/react */
+
 
 import * as S from "./MeowCategory.style";
 import logoClean from "../../../assets/logo-clean.webp";

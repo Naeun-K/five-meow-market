@@ -54,9 +54,9 @@ export const ChatIconStyle = styled.button({
     overflow: "visible",
   },
 
-  // "@media (max-width: 767px)": {
-  //   width: "40px",
-  // },
+  
+  
+  
 
   "@media  (max-width: 1023px)": {
     width: "50px",

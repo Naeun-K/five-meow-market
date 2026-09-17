@@ -154,20 +154,20 @@ export const FooterLine = styled.div`
   flex-shrink: 0;
 `;
 
-// export const FooterCopyright = styled.p`
-//   width: 100%;
 
-//   color: var(--text-secondary);
 
-//   font-size: 16px;
 
-//   @media (max-width: 767px) {
-//     font-size: 15px;
-//     line-height: 1.6;
-//     text-align: center;
-//     word-break: keep-all;
-//   }
-// `;
+
+
+
+
+
+
+
+
+
+
+
 
 export const FooterCopyright = styled.p`
   width: 100%;

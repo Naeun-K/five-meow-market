@@ -1,4 +1,171 @@
-import { useEffect, useState } from "react";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { useState } from "react";
 import { verifyPassword } from "../../services/authService";
 import useAuth from "../../hooks/useAuth";
 import {
@@ -25,24 +192,27 @@ function PasswordConfirmModal({
   purpose = "회원정보를 확인",
 }) {
   const { accessToken } = useAuth();
+
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (!isOpen) {
-      setPassword("");
-      setShowPassword(false);
-      setErrorMessage("");
-      setIsSubmitting(false);
-    }
-  }, [isOpen]);
+  const resetModal = () => {
+    setPassword("");
+    setShowPassword(false);
+    setErrorMessage("");
+    setIsSubmitting(false);
+  };
 
-  if (!isOpen) return null;
+  const handleClose = () => {
+    resetModal();
+    onClose();
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const trimmedPassword = password.trim();
 
     if (!trimmedPassword) {
@@ -53,6 +223,7 @@ function PasswordConfirmModal({
     try {
       setIsSubmitting(true);
       setErrorMessage("");
+
       const result = await verifyPassword(trimmedPassword, accessToken);
 
       if (!result.success || result.isMatched === false) {
@@ -60,6 +231,7 @@ function PasswordConfirmModal({
         return;
       }
 
+      resetModal();
       onSuccess();
     } catch (error) {
       setErrorMessage(
@@ -70,6 +242,10 @@ function PasswordConfirmModal({
     }
   };
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <ModalOverlay role="presentation">
       <Modal
@@ -79,9 +255,10 @@ function PasswordConfirmModal({
       >
         <Header>
           <Title id="password-confirm-title">비밀번호 확인</Title>
+
           <CloseButton
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             aria-label="비밀번호 확인 창 닫기"
           >
             <span aria-hidden="true">&times;</span>
@@ -106,6 +283,7 @@ function PasswordConfirmModal({
               aria-label="비밀번호"
               aria-invalid={Boolean(errorMessage)}
             />
+
             <ToggleButton
               type="button"
               onClick={() => setShowPassword((visible) => !visible)}
@@ -141,6 +319,7 @@ function PasswordConfirmModal({
               )}
             </ToggleButton>
           </InputWrapper>
+
           {errorMessage && (
             <ErrorMessage role="alert">{errorMessage}</ErrorMessage>
           )}
@@ -148,11 +327,12 @@ function PasswordConfirmModal({
           <Actions>
             <CancelButton
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               disabled={isSubmitting}
             >
               취소
             </CancelButton>
+
             <ConfirmButton type="submit" disabled={isSubmitting}>
               {isSubmitting ? "확인 중..." : "확인"}
             </ConfirmButton>

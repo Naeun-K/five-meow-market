@@ -6,9 +6,7 @@ function notifyCartUpdated() {
   window.dispatchEvent(new CustomEvent(CART_UPDATED_EVENT));
 }
 
-/**
- * 장바구니 조회
- */
+
 export const getCart = async (accessToken) => {
   const response = await cartApi.getCart(accessToken);
 
@@ -19,9 +17,7 @@ export const getCart = async (accessToken) => {
   };
 };
 
-/**
- * 장바구니 상품 추가
- */
+
 export const addCartItem = async (productId, quantity, accessToken) => {
   const response = await cartApi.addCartItem(productId, quantity, accessToken);
 
@@ -36,9 +32,7 @@ export const addCartItem = async (productId, quantity, accessToken) => {
   };
 };
 
-/**
- * 장바구니 여러 상품 일괄 추가
- */
+
 export const addCartItemsBulk = async (items, accessToken) => {
   const response = await cartApi.addCartItemsBulk(items, accessToken);
 
@@ -54,9 +48,7 @@ export const addCartItemsBulk = async (items, accessToken) => {
   };
 };
 
-/**
- * 장바구니 상품 수량 변경
- */
+
 export const updateCartItem = async (cartItemId, quantity, accessToken) => {
   const response = await cartApi.updateCartItem(
     cartItemId,
@@ -75,9 +67,7 @@ export const updateCartItem = async (cartItemId, quantity, accessToken) => {
   };
 };
 
-/**
- * 장바구니 상품 하나 삭제
- */
+
 export const deleteCartItem = async (cartItemId, accessToken) => {
   const response = await cartApi.deleteCartItem(cartItemId, accessToken);
 
@@ -91,9 +81,7 @@ export const deleteCartItem = async (cartItemId, accessToken) => {
   };
 };
 
-/**
- * 장바구니 선택 상품 삭제
- */
+
 export const deleteCartItems = async (cartItemIds, accessToken) => {
   const response = await cartApi.deleteCartItems(cartItemIds, accessToken);
 
@@ -108,9 +96,7 @@ export const deleteCartItems = async (cartItemIds, accessToken) => {
   };
 };
 
-/**
- * 장바구니 전체 삭제
- */
+
 export const clearCart = async (accessToken) => {
   const response = await cartApi.clearCart(accessToken);
 
@@ -124,9 +110,7 @@ export const clearCart = async (accessToken) => {
   };
 };
 
-/**
- * 장바구니 상품 개수 조회
- */
+
 export const getCartCount = async (accessToken) => {
   const response = await cartApi.getCartCount(accessToken);
 

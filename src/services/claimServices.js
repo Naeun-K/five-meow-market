@@ -1,17 +1,6 @@
 import * as claimApi from "../api/claimApi";
 
-/**
- * 취소 / 교환 / 반품 신청
- *
- * type:
- * CANCEL
- * EXCHANGE
- * RETURN
- *
- * scope:
- * ALL
- * PARTIAL
- */
+
 export const createClaim = async (claimData, accessToken) => {
   const response = await claimApi.createClaim(claimData, accessToken);
 
@@ -36,9 +25,7 @@ export const createClaim = async (claimData, accessToken) => {
   };
 };
 
-/**
- * Claim 목록 조회
- */
+
 export const getClaims = async (options = {}, accessToken) => {
   const response = await claimApi.getClaims(options, accessToken);
 
@@ -58,9 +45,7 @@ export const getClaims = async (options = {}, accessToken) => {
   };
 };
 
-/**
- * Claim 상세 조회
- */
+
 export const getClaim = async (claimId, accessToken) => {
   const response = await claimApi.getClaim(claimId, accessToken);
 

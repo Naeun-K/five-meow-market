@@ -522,9 +522,9 @@ export const ReviewText = styled.p({
   },
 });
 
-// ========================================
-// [추가] 리뷰가 없을 때 Empty 화면
-// ========================================
+
+
+
 
 export const EmptyReview = styled.div({
   display: "flex",
@@ -550,7 +550,7 @@ export const EmptyReview = styled.div({
   },
 });
 
-// [추가] 고양이 이미지
+
 export const EmptyImage = styled.img({
   width: "180px",
   height: "auto",
@@ -569,7 +569,7 @@ export const EmptyImage = styled.img({
   },
 });
 
-// [추가] 리뷰내역이 없습니다.
+
 export const EmptyTitle = styled.h2({
   color: "var(--text-color)",
 
@@ -586,7 +586,7 @@ export const EmptyTitle = styled.h2({
   },
 });
 
-// [추가] 설명 문구
+
 export const EmptyDescription = styled.p({
   margin: "16px 0 0",
 
@@ -606,7 +606,7 @@ export const EmptyDescription = styled.p({
   },
 });
 
-// [추가] 상품보러가기 버튼
+
 export const ProductButton = styled.button({
   width: "380px",
   height: "58px",

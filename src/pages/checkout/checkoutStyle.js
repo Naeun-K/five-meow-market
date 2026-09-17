@@ -249,7 +249,7 @@ export const InfoList = styled.div`
   gap: 7px;
   padding-top: 12px;
 
-  /* 배송정보 내부 항목 간격 */
+  
   &.delivery-info-list {
     gap: 14px;
     padding-top: 18px;
@@ -396,7 +396,7 @@ export const PointRows = styled.div`
   gap: 10px;
   padding-top: 12px;
 
-  /* 보유 적립금 행 */
+  
   > div:first-child {
     grid-template-columns: max-content minmax(0, 1fr);
     column-gap: 19px;
@@ -730,7 +730,7 @@ export const AgreementBox = styled.section`
   }
 `;
 
-/* 결제하기 버튼 hover 시 나타나는 고양이 5마리 */
+
 export const HoverCats = styled.div`
   position: absolute;
   left: 50%;
