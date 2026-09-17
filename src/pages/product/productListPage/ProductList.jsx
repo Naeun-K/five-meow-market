@@ -1,3 +1,271 @@
+// // // // import { useEffect, useState } from "react";
+// // // // import Pagination from "../../../components/pagnation/Pagnation";
+// // // // import BasicPage from "../../basicPage/BasicPage";
+// // // // import Loader from "../../../components/loader/Loader";
+// // // // import ProductCard from "../../../components/product/ProductCard/ProductCard";
+// // // // import * as productService from "../../../services/productServices";
+// // // // import {
+// // // //   CardContainer,
+// // // //   PageTitleContainer,
+// // // //   ProductPage,
+// // // // } from "./ProductListStyle";
+// // // // import useToast from "../../../hooks/useToast";
+// // // // import { useProductLimit } from "../../../hooks/useProductLimit";
+// // // // import { Link, useSearchParams } from "react-router-dom";
+
+// // // // const categoryNames = {
+// // // //   "cat-eat": "먹묘",
+// // // //   "cat-play": "놀묘",
+// // // //   "cat-rest": "쉼묘",
+// // // //   "cat-high": "높묘",
+// // // //   "cat-clean": "깔묘",
+// // // // };
+
+// // // // export default function ProductList() {
+// // // //   const { showToast } = useToast();
+// // // //   const [searchParams, setSearchParams] = useSearchParams();
+// // // //   const [products, setProducts] = useState([]);
+// // // //   const [totalPages, setTotalPages] = useState(1);
+// // // //   const [totalCount, setTotalCount] = useState(0);
+// // // //   const [isLoading, setIsLoading] = useState(true);
+
+// // // //   const limit = useProductLimit();
+// // // //   const keyword = searchParams.get("keyword") || "";
+// // // //   const category = searchParams.get("category") || "";
+
+// // // //   const currentPage = Math.max(1, Number(searchParams.get("page")) || 1);
+
+// // // //   useEffect(() => {
+// // // //     const fetchProducts = async () => {
+// // // //       try {
+// // // //         setIsLoading(true);
+
+// // // //         const result = await productService.getProducts({
+// // // //           page: currentPage,
+// // // //           limit,
+// // // //           category,
+// // // //           keyword,
+// // // //         });
+
+// // // //         if (!result.success) {
+// // // //           throw new Error("상품 목록 조회에 실패했습니다.");
+// // // //         }
+
+// // // //         setProducts(result.data?.products);
+// // // //         setTotalPages(result.data?.pagination.totalPages);
+// // // //         setTotalCount(result.data?.pagination.totalCount);
+// // // //       } catch (error) {
+// // // //         console.error("상품 목록 조회 실패:", error);
+// // // //         showToast(error.message, false);
+// // // //         setProducts([]);
+// // // //       } finally {
+// // // //         setIsLoading(false);
+// // // //       }
+// // // //     };
+
+// // // //     fetchProducts();
+// // // //   }, [currentPage, limit, keyword, category, showToast]);
+
+// // // //   if (isLoading) {
+// // // //     return (
+// // // //       <BasicPage>
+// // // //         <Loader />
+// // // //       </BasicPage>
+// // // //     );
+// // // //   }
+
+// // // //   const pageTitle = category ? categoryNames[category] : "전체상품";
+
+// // // //   const handlePageChange = (page) => {
+// // // //     setSearchParams((prev) => {
+// // // //       const params = new URLSearchParams(prev);
+
+// // // //       params.set("page", String(page));
+
+// // // //       return params;
+// // // //     });
+// // // //   };
+
+// // // //   return (
+// // // //     <BasicPage>
+// // // //       <ProductPage>
+// // // //         <PageTitleContainer>
+// // // //           <h2>{pageTitle}</h2>
+
+// // // //           <p>총 {totalCount}개의 상품</p>
+// // // //         </PageTitleContainer>
+
+// // // //         <CardContainer>
+// // // //           {products.map((product) => (
+// // // //             <Link
+// // // //               key={product.productId}
+// // // //               to={`/products/${product.productId}`}
+// // // //               className="product-link"
+// // // //             >
+// // // //               <div className="card-wrapper">
+// // // //                 <ProductCard
+// // // //                   image={product.thumbnail}
+// // // //                   name={product.name}
+// // // //                   badge=""
+// // // //                   showHeart
+// // // //                 />
+
+// // // //                 <p>{product.name}</p>
+
+// // // //                 <strong>{product.price.toLocaleString()}원</strong>
+// // // //               </div>
+// // // //             </Link>
+// // // //           ))}
+// // // //         </CardContainer>
+// // // //         <Pagination
+// // // //           currentPage={currentPage}
+// // // //           totalPages={totalPages}
+// // // //           onPageChange={handlePageChange}
+// // // //         />
+// // // //       </ProductPage>
+// // // //     </BasicPage>
+// // // //   );
+// // // // }
+
+// // // import { useEffect, useState } from "react";
+// // // import Pagination from "../../../components/pagnation/Pagnation";
+// // // import BasicPage from "../../basicPage/BasicPage";
+// // // import Loader from "../../../components/loader/Loader";
+// // // import ProductCard from "../../../components/product/ProductCard/ProductCard";
+// // // import * as productService from "../../../services/productServices";
+// // // import {
+// // //   CardContainer,
+// // //   PageTitleContainer,
+// // //   ProductPage,
+// // // } from "./ProductListStyle";
+// // // import useToast from "../../../hooks/useToast";
+// // // import { useProductLimit } from "../../../hooks/useProductLimit";
+// // // import { Link, useSearchParams } from "react-router-dom";
+
+// // // const categoryNames = {
+// // //   "cat-eat": "먹묘",
+// // //   "cat-play": "놀묘",
+// // //   "cat-rest": "쉼묘",
+// // //   "cat-high": "높묘",
+// // //   "cat-clean": "깔묘",
+// // // };
+
+// // // export default function ProductList() {
+// // //   const { showToast } = useToast();
+
+// // //   const [searchParams, setSearchParams] = useSearchParams();
+
+// // //   const [products, setProducts] = useState([]);
+// // //   const [totalPages, setTotalPages] = useState(1);
+// // //   const [totalCount, setTotalCount] = useState(0);
+// // //   const [isLoading, setIsLoading] = useState(true);
+
+// // //   const limit = useProductLimit();
+
+// // //   const keyword = searchParams.get("keyword") || "";
+// // //   const categoryId = searchParams.get("categoryId") || "";
+
+// // //   const currentPage = Math.max(1, Number(searchParams.get("page")) || 1);
+
+// // //   useEffect(() => {
+// // //     const fetchProducts = async () => {
+// // //       try {
+// // //         setIsLoading(true);
+
+// // //         const result = await productService.getProducts({
+// // //           page: currentPage,
+// // //           limit,
+// // //           categoryId,
+// // //           keyword,
+// // //         });
+
+// // //         if (!result.success) {
+// // //           throw new Error("상품 목록 조회에 실패했습니다.");
+// // //         }
+
+// // //         setProducts(result.products);
+// // //         setTotalPages(result.pagination.totalPages);
+// // //         setTotalCount(result.pagination.totalCount);
+// // //       } catch (error) {
+// // //         console.error("상품 목록 조회 실패:", error);
+
+// // //         showToast(error.message || "상품 목록 조회에 실패했습니다.", false);
+
+// // //         setProducts([]);
+// // //       } finally {
+// // //         setIsLoading(false);
+// // //       }
+// // //     };
+
+// // //     fetchProducts();
+// // //   }, [currentPage, limit, keyword, categoryId, showToast]);
+
+// // //   if (isLoading) {
+// // //     return (
+// // //       <BasicPage>
+// // //         <Loader />
+// // //       </BasicPage>
+// // //     );
+// // //   }
+
+// // //   const pageTitle = categoryId
+// // //     ? categoryNames[categoryId]
+// // //     : keyword
+// // //       ? `"${keyword}" 검색결과`
+// // //       : "전체상품";
+
+// // //   const handlePageChange = (page) => {
+// // //     setSearchParams((prev) => {
+// // //       const params = new URLSearchParams(prev);
+
+// // //       params.set("page", String(page));
+
+// // //       return params;
+// // //     });
+// // //   };
+
+// // //   return (
+// // //     <BasicPage>
+// // //       <ProductPage>
+// // //         <PageTitleContainer>
+// // //           <h2>{pageTitle}</h2>
+
+// // //           <p>총 {totalCount}개의 상품</p>
+// // //         </PageTitleContainer>
+
+// // //         <CardContainer>
+// // //           {products.map((product) => (
+// // //             <Link
+// // //               key={product.productId}
+// // //               to={`/products/${product.productId}`}
+// // //               className="product-link"
+// // //             >
+// // //               <div className="card-wrapper">
+// // //                 <ProductCard
+// // //                   image={product.thumbnail}
+// // //                   name={product.name}
+// // //                   badge=""
+// // //                   showHeart
+// // //                 />
+
+// // //                 <p>{product.name}</p>
+
+// // //                 <strong>{product.price.toLocaleString()}원</strong>
+// // //               </div>
+// // //             </Link>
+// // //           ))}
+// // //         </CardContainer>
+
+// // //         <Pagination
+// // //           currentPage={currentPage}
+// // //           totalPages={totalPages}
+// // //           onPageChange={handlePageChange}
+// // //         />
+// // //       </ProductPage>
+// // //     </BasicPage>
+// // //   );
+// // // }
+
 // // import { useEffect, useState } from "react";
 // // import Pagination from "../../../components/pagnation/Pagnation";
 // // import BasicPage from "../../basicPage/BasicPage";
@@ -23,13 +291,18 @@
 
 // // export default function ProductList() {
 // //   const { showToast } = useToast();
+
 // //   const [searchParams, setSearchParams] = useSearchParams();
+
 // //   const [products, setProducts] = useState([]);
 // //   const [totalPages, setTotalPages] = useState(1);
 // //   const [totalCount, setTotalCount] = useState(0);
 // //   const [isLoading, setIsLoading] = useState(true);
+// //   const [wishlist, setWishlist] = useState([]);
 
 // //   const limit = useProductLimit();
+
+// //   // URL 파라미터
 // //   const keyword = searchParams.get("keyword") || "";
 // //   const category = searchParams.get("category") || "";
 
@@ -43,7 +316,11 @@
 // //         const result = await productService.getProducts({
 // //           page: currentPage,
 // //           limit,
-// //           category,
+
+// //           // URL에서는 category를 사용하지만
+// //           // API 요청에서는 categoryId로 전달
+// //           categoryId: category,
+
 // //           keyword,
 // //         });
 
@@ -51,13 +328,17 @@
 // //           throw new Error("상품 목록 조회에 실패했습니다.");
 // //         }
 
-// //         setProducts(result.data?.products);
-// //         setTotalPages(result.data?.pagination.totalPages);
-// //         setTotalCount(result.data?.pagination.totalCount);
+// //         setProducts(result.products);
+// //         setTotalPages(result.pagination.totalPages);
+// //         setTotalCount(result.pagination.totalCount);
 // //       } catch (error) {
 // //         console.error("상품 목록 조회 실패:", error);
-// //         showToast(error.message, false);
+
+// //         showToast(error.message || "상품 목록 조회에 실패했습니다.", false);
+
 // //         setProducts([]);
+// //         setTotalPages(1);
+// //         setTotalCount(0);
 // //       } finally {
 // //         setIsLoading(false);
 // //       }
@@ -74,7 +355,12 @@
 // //     );
 // //   }
 
-// //   const pageTitle = category ? categoryNames[category] : "전체상품";
+// //   // 카테고리별 페이지 제목
+// //   const pageTitle = category
+// //     ? categoryNames[category]
+// //     : keyword
+// //       ? `"${keyword}" 검색결과`
+// //       : "전체상품";
 
 // //   const handlePageChange = (page) => {
 // //     setSearchParams((prev) => {
@@ -84,6 +370,15 @@
 
 // //       return params;
 // //     });
+// //   };
+
+// //   const handleWishlistChange = (productId, isLiked) => {
+// //     if (isLiked) {
+// //       return;
+// //     }
+// //     setWishlist((prev) => prev.filter((item) => item.productId !== productId));
+
+// //     setTotalCount((prev) => Math.max(prev - 1, 0));
 // //   };
 
 // //   return (
@@ -104,10 +399,13 @@
 // //             >
 // //               <div className="card-wrapper">
 // //                 <ProductCard
+// //                   productId={product.productId}
 // //                   image={product.thumbnail}
 // //                   name={product.name}
 // //                   badge=""
 // //                   showHeart
+// //                   isLiked={product.isLiked}
+// //                   onWishlistChange={handleWishlistChange}
 // //                 />
 
 // //                 <p>{product.name}</p>
@@ -117,6 +415,7 @@
 // //             </Link>
 // //           ))}
 // //         </CardContainer>
+
 // //         <Pagination
 // //           currentPage={currentPage}
 // //           totalPages={totalPages}
@@ -133,12 +432,14 @@
 // import Loader from "../../../components/loader/Loader";
 // import ProductCard from "../../../components/product/ProductCard/ProductCard";
 // import * as productService from "../../../services/productServices";
+// import * as wishlistService from "../../../services/wishlistServices";
 // import {
 //   CardContainer,
 //   PageTitleContainer,
 //   ProductPage,
 // } from "./ProductListStyle";
 // import useToast from "../../../hooks/useToast";
+// import useAuth from "../../../hooks/useAuth";
 // import { useProductLimit } from "../../../hooks/useProductLimit";
 // import { Link, useSearchParams } from "react-router-dom";
 
@@ -152,6 +453,7 @@
 
 // export default function ProductList() {
 //   const { showToast } = useToast();
+//   const { accessToken, isAuthLoading } = useAuth();
 
 //   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -162,54 +464,108 @@
 
 //   const limit = useProductLimit();
 
+//   // URL 파라미터
 //   const keyword = searchParams.get("keyword") || "";
-//   const categoryId = searchParams.get("categoryId") || "";
+//   const category = searchParams.get("category") || "";
 
 //   const currentPage = Math.max(1, Number(searchParams.get("page")) || 1);
 
 //   useEffect(() => {
+//     if (isAuthLoading) {
+//       return;
+//     }
+
 //     const fetchProducts = async () => {
 //       try {
 //         setIsLoading(true);
 
-//         const result = await productService.getProducts({
+//         // 상품 목록 조회
+//         const productResult = await productService.getProducts({
 //           page: currentPage,
 //           limit,
-//           categoryId,
+
+//           // URL에서는 category를 사용하지만
+//           // API 요청에서는 categoryId로 전달
+//           categoryId: category,
+
 //           keyword,
 //         });
 
-//         if (!result.success) {
+//         if (!productResult.success) {
 //           throw new Error("상품 목록 조회에 실패했습니다.");
 //         }
 
-//         setProducts(result.products);
-//         setTotalPages(result.pagination.totalPages);
-//         setTotalCount(result.pagination.totalCount);
+//         const productList = productResult.products || [];
+
+//         setTotalPages(productResult.pagination?.totalPages || 1);
+//         setTotalCount(productResult.pagination?.totalCount || 0);
+
+//         // 비로그인 상태
+//         if (!accessToken) {
+//           const productsWithWishlist = productList.map((product) => ({
+//             ...product,
+//             isLiked: false,
+//           }));
+
+//           setProducts(productsWithWishlist);
+
+//           return;
+//         }
+
+//         // 로그인 상태 - 찜 목록 조회
+//         const wishlistResult = await wishlistService.getWishlist(
+//           {
+//             page: 1,
+//             limit: 100,
+//           },
+//           accessToken,
+//         );
+
+//         if (!wishlistResult.success) {
+//           throw new Error("찜한 상품 조회에 실패했습니다.");
+//         }
+
+//         const wishlistProducts = wishlistResult.products || [];
+
+//         // 찜한 상품의 productId만 추출
+//         const wishlistProductIds = new Set(
+//           wishlistProducts.map((item) => item.productId),
+//         );
+
+//         // 현재 상품 목록과 찜 목록 비교
+//         const productsWithWishlist = productList.map((product) => ({
+//           ...product,
+//           isLiked: wishlistProductIds.has(product.productId),
+//         }));
+
+//         setProducts(productsWithWishlist);
 //       } catch (error) {
 //         console.error("상품 목록 조회 실패:", error);
 
 //         showToast(error.message || "상품 목록 조회에 실패했습니다.", false);
 
 //         setProducts([]);
+//         setTotalPages(1);
+//         setTotalCount(0);
 //       } finally {
 //         setIsLoading(false);
 //       }
 //     };
 
 //     fetchProducts();
-//   }, [currentPage, limit, keyword, categoryId, showToast]);
+//   }, [
+//     currentPage,
+//     limit,
+//     keyword,
+//     category,
+//     accessToken,
+//     isAuthLoading,
+//     showToast,
+//   ]);
 
-//   if (isLoading) {
-//     return (
-//       <BasicPage>
-//         <Loader />
-//       </BasicPage>
-//     );
-//   }
-
-//   const pageTitle = categoryId
-//     ? categoryNames[categoryId]
+//   // 카테고리별 페이지 제목
+//   const pageTitle = category
+//     ? categoryNames[category]
 //     : keyword
 //       ? `"${keyword}" 검색결과`
 //       : "전체상품";
@@ -223,6 +579,28 @@
 //       return params;
 //     });
 //   };
+
+//   // 찜 등록 / 해제 후 현재 상품의 isLiked 상태 변경
+//   const handleWishlistChange = (productId, isLiked) => {
+//     setProducts((prev) =>
+//       prev.map((product) =>
+//         product.productId === productId
+//           ? {
+//               ...product,
+//               isLiked,
+//             }
+//           : product,
+//       ),
+//     );
+//   };
+
+//   if (isAuthLoading || isLoading) {
+//     return (
+//       <BasicPage>
+//         <Loader />
+//       </BasicPage>
+//     );
+//   }
 
 //   return (
 //     <BasicPage>
@@ -242,10 +620,13 @@
 //             >
 //               <div className="card-wrapper">
 //                 <ProductCard
+//                   productId={product.productId}
 //                   image={product.thumbnail}
 //                   name={product.name}
 //                   badge=""
 //                   showHeart
+//                   isLiked={product.isLiked}
+//                   onWishlistChange={handleWishlistChange}
 //                 />
 
 //                 <p>{product.name}</p>
@@ -272,12 +653,14 @@ import BasicPage from "../../basicPage/BasicPage";
 import Loader from "../../../components/loader/Loader";
 import ProductCard from "../../../components/product/ProductCard/ProductCard";
 import * as productService from "../../../services/productServices";
+import * as wishlistService from "../../../services/wishlistServices";
 import {
   CardContainer,
   PageTitleContainer,
   ProductPage,
 } from "./ProductListStyle";
 import useToast from "../../../hooks/useToast";
+import useAuth from "../../../hooks/useAuth";
 import { useProductLimit } from "../../../hooks/useProductLimit";
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -291,14 +674,15 @@ const categoryNames = {
 
 export default function ProductList() {
   const { showToast } = useToast();
+  const { accessToken, isAuthLoading } = useAuth();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [products, setProducts] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [wishlist, setWishlist] = useState([]);
 
   const limit = useProductLimit();
 
@@ -309,11 +693,16 @@ export default function ProductList() {
   const currentPage = Math.max(1, Number(searchParams.get("page")) || 1);
 
   useEffect(() => {
+    if (isAuthLoading) {
+      return;
+    }
+
     const fetchProducts = async () => {
       try {
         setIsLoading(true);
 
-        const result = await productService.getProducts({
+        // 상품 목록 조회
+        const productResult = await productService.getProducts({
           page: currentPage,
           limit,
 
@@ -324,19 +713,50 @@ export default function ProductList() {
           keyword,
         });
 
-        if (!result.success) {
+        if (!productResult.success) {
           throw new Error("상품 목록 조회에 실패했습니다.");
         }
 
-        setProducts(result.products);
-        setTotalPages(result.pagination.totalPages);
-        setTotalCount(result.pagination.totalCount);
+        const productList = productResult.products || [];
+
+        setProducts(productList);
+        setTotalPages(productResult.pagination?.totalPages || 1);
+        setTotalCount(productResult.pagination?.totalCount || 0);
+
+        // 비로그인 상태
+        if (!accessToken) {
+          setWishlist([]);
+          return;
+        }
+
+        // 로그인 상태 - 기존 찜 목록 조회
+        const wishlistResult = await wishlistService.getWishlist(
+          {
+            page: 1,
+            limit: 100,
+          },
+          accessToken,
+        );
+
+        if (!wishlistResult.success) {
+          throw new Error("찜한 상품 조회에 실패했습니다.");
+        }
+
+        const wishlistProducts = wishlistResult.products || [];
+
+        // 기존에 찜한 상품의 productId만 저장
+        const wishlistProductIds = wishlistProducts
+          .map((item) => item.productId)
+          .filter(Boolean);
+
+        setWishlist(wishlistProductIds);
       } catch (error) {
         console.error("상품 목록 조회 실패:", error);
 
         showToast(error.message || "상품 목록 조회에 실패했습니다.", false);
 
         setProducts([]);
+        setWishlist([]);
         setTotalPages(1);
         setTotalCount(0);
       } finally {
@@ -345,15 +765,15 @@ export default function ProductList() {
     };
 
     fetchProducts();
-  }, [currentPage, limit, keyword, category, showToast]);
-
-  if (isLoading) {
-    return (
-      <BasicPage>
-        <Loader />
-      </BasicPage>
-    );
-  }
+  }, [
+    currentPage,
+    limit,
+    keyword,
+    category,
+    accessToken,
+    isAuthLoading,
+    showToast,
+  ]);
 
   // 카테고리별 페이지 제목
   const pageTitle = category
@@ -372,14 +792,31 @@ export default function ProductList() {
     });
   };
 
+  // ProductCard에서 찜 등록/해제 API 성공 후 호출
   const handleWishlistChange = (productId, isLiked) => {
-    if (isLiked) {
-      return;
-    }
-    setWishlist((prev) => prev.filter((item) => item.productId !== productId));
+    setWishlist((prev) => {
+      // 찜 등록 성공
+      if (isLiked) {
+        // 이미 등록되어 있으면 중복 추가하지 않음
+        if (prev.includes(productId)) {
+          return prev;
+        }
 
-    setTotalCount((prev) => Math.max(prev - 1, 0));
+        return [...prev, productId];
+      }
+
+      // 찜 해제 성공
+      return prev.filter((id) => id !== productId);
+    });
   };
+
+  if (isAuthLoading || isLoading) {
+    return (
+      <BasicPage>
+        <Loader />
+      </BasicPage>
+    );
+  }
 
   return (
     <BasicPage>
@@ -391,29 +828,34 @@ export default function ProductList() {
         </PageTitleContainer>
 
         <CardContainer>
-          {products.map((product) => (
-            <Link
-              key={product.productId}
-              to={`/products/${product.productId}`}
-              className="product-link"
-            >
-              <div className="card-wrapper">
-                <ProductCard
-                  productId={product.productId}
-                  image={product.thumbnail}
-                  name={product.name}
-                  badge=""
-                  showHeart
-                  isLiked={product.isLiked}
-                  onWishlistChange={handleWishlistChange}
-                />
+          {products.map((product) => {
+            // 현재 상품이 찜 목록에 있는지 확인
+            const isLiked = wishlist.includes(product.productId);
 
-                <p>{product.name}</p>
+            return (
+              <Link
+                key={product.productId}
+                to={`/products/${product.productId}`}
+                className="product-link"
+              >
+                <div className="card-wrapper">
+                  <ProductCard
+                    productId={product.productId}
+                    image={product.thumbnail}
+                    name={product.name}
+                    badge=""
+                    showHeart
+                    isLiked={isLiked}
+                    onWishlistChange={handleWishlistChange}
+                  />
 
-                <strong>{product.price.toLocaleString()}원</strong>
-              </div>
-            </Link>
-          ))}
+                  <p>{product.name}</p>
+
+                  <strong>{product.price.toLocaleString()}원</strong>
+                </div>
+              </Link>
+            );
+          })}
         </CardContainer>
 
         <Pagination
