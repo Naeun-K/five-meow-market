@@ -1,5 +1,11 @@
 import * as cartApi from "../api/cartApi";
 
+export const CART_UPDATED_EVENT = "cart-updated";
+
+function notifyCartUpdated() {
+  window.dispatchEvent(new CustomEvent(CART_UPDATED_EVENT));
+}
+
 /**
  * 장바구니 조회
  */
@@ -19,6 +25,10 @@ export const getCart = async (accessToken) => {
 export const addCartItem = async (productId, quantity, accessToken) => {
   const response = await cartApi.addCartItem(productId, quantity, accessToken);
 
+  if (response.success) {
+    notifyCartUpdated();
+  }
+
   return {
     success: response.success,
     cartItem: response.data?.cartItem ?? null,
@@ -31,6 +41,10 @@ export const addCartItem = async (productId, quantity, accessToken) => {
  */
 export const addCartItemsBulk = async (items, accessToken) => {
   const response = await cartApi.addCartItemsBulk(items, accessToken);
+
+  if (response.success) {
+    notifyCartUpdated();
+  }
 
   return {
     success: response.success,
@@ -50,6 +64,10 @@ export const updateCartItem = async (cartItemId, quantity, accessToken) => {
     accessToken,
   );
 
+  if (response.success) {
+    notifyCartUpdated();
+  }
+
   return {
     success: response.success,
     cartItem: response.data?.cartItem ?? null,
@@ -63,6 +81,10 @@ export const updateCartItem = async (cartItemId, quantity, accessToken) => {
 export const deleteCartItem = async (cartItemId, accessToken) => {
   const response = await cartApi.deleteCartItem(cartItemId, accessToken);
 
+  if (response.success) {
+    notifyCartUpdated();
+  }
+
   return {
     success: response.success,
     message: response.message,
@@ -74,6 +96,10 @@ export const deleteCartItem = async (cartItemId, accessToken) => {
  */
 export const deleteCartItems = async (cartItemIds, accessToken) => {
   const response = await cartApi.deleteCartItems(cartItemIds, accessToken);
+
+  if (response.success) {
+    notifyCartUpdated();
+  }
 
   return {
     success: response.success,
@@ -87,6 +113,10 @@ export const deleteCartItems = async (cartItemIds, accessToken) => {
  */
 export const clearCart = async (accessToken) => {
   const response = await cartApi.clearCart(accessToken);
+
+  if (response.success) {
+    notifyCartUpdated();
+  }
 
   return {
     success: response.success,
