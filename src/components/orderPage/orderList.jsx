@@ -448,6 +448,7 @@ function OrderCard({
         </S.OrderSummaryRow>
       </S.OrderInfo>
 
+    <S.OrderButtonGroup>
       <S.DetailButton
         type="button"
         className="order-action-button"
@@ -463,7 +464,7 @@ function OrderCard({
       {canCancel && (
         <S.DetailButton
           type="button"
-          className="order-action-button"
+          className="order-action-button cancel-button"
           onClick={() => onClaim(order, "CANCEL")}
         >
           <S.DetailButtonText>취소신청</S.DetailButtonText>
@@ -530,6 +531,8 @@ function OrderCard({
           </S.DetailArrow>
         </S.DetailButton>
       )}
+
+      </S.OrderButtonGroup>
     </S.OrderCard>
   );
 }
