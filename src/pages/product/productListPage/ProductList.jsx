@@ -879,6 +879,7 @@ import {
   CardContainer,
   PageTitleContainer,
   ProductPage,
+  HomeButton,
 } from "./ProductListStyle";
 import useToast from "../../../hooks/useToast";
 import useAuth from "../../../hooks/useAuth";
@@ -1188,6 +1189,9 @@ export default function ProductList() {
   return (
     <BasicPage>
       <ProductPage>
+        {/* 홈으로 이동 */}
+        <HomeButton to="/">← 홈으로 이동</HomeButton>
+
         <PageTitleContainer>
           <h2>{pageTitle}</h2>
 

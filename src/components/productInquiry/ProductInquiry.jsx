@@ -999,6 +999,7 @@ import * as S from "./ProductInquiry.style";
 
 import EmptyReviewCat from "../../assets/empty-review-cat.webp";
 import Loader from "../../components/loader/Loader";
+import ForwardButton from "../common/forwardBtn/ForwardButton";
 
 import useAuth from "../../hooks/useAuth";
 import useToast from "../../hooks/useToast";
@@ -1190,8 +1191,14 @@ function ErrorInquiry({ message, onRetry }) {
 }
 
 function InquiryPageTitle() {
+  const navigate = useNavigate();
+
   return (
     <S.TitleArea>
+      <ForwardButton onClick={() => navigate("/mypage")}>
+        마이페이지로
+      </ForwardButton>
+
       <div>
         <h1>문의 내역</h1>
 

@@ -672,7 +672,6 @@ export default function QnaPage() {
         </HomeButton>
       </div>
 
-      {/* 문의 게시판 */}
       <BoardPage type="qna" data={qnaData} />
     </BasicPage>
   );

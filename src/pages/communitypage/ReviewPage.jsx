@@ -444,7 +444,6 @@ export default function ReviewPage() {
         </HomeButton>
       </div>
 
-      {/* 리뷰 게시판 */}
       <BoardPage type="review" data={reviewData} />
     </BasicPage>
   );

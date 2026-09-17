@@ -5,30 +5,76 @@ export const PhotoWrapper = styled.div({
   maxWidth: "100%",
   minWidth: 0,
 
-  aspectRatio: "1 / 1",
-
-  borderRadius: "8px",
-
-  overflow: "hidden",
-
-  "& > article": {
+  // 큰 상품 이미지
+  "& .main-product-image": {
     width: "100%",
-    height: "100%",
+    aspectRatio: "1 / 1",
+    overflow: "hidden",
+    borderRadius: "8px",
   },
 
-  "& img": {
+  "& .main-product-image img": {
+    display: "block",
     width: "100%",
     height: "100%",
-
     objectFit: "cover",
     objectPosition: "center",
   },
 
+  // 썸네일 3개
+  "& .product-thumbnail-list": {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    width: "100%",
+    marginTop: "12px",
+  },
+
+  "& .product-thumbnail": {
+    width: "80px",
+    height: "80px",
+    flex: "0 0 80px",
+
+    padding: 0,
+
+    overflow: "hidden",
+
+    border: "1px solid var(--border)",
+    borderRadius: "6px",
+
+    backgroundColor: "#fff",
+
+    cursor: "pointer",
+  },
+
+  "& .product-thumbnail img": {
+    display: "block",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "center",
+  },
+
+  // 현재 선택된 이미지
+  "& .product-thumbnail.is-active": {
+    border: "2px solid var(--text-primary)",
+  },
+
+  // 모바일
   "@media (max-width: 767px)": {
     width: "100%",
     maxWidth: "100%",
 
-    aspectRatio: "1 / 1",
+    "& .product-thumbnail-list": {
+      gap: "8px",
+      marginTop: "10px",
+    },
+
+    "& .product-thumbnail": {
+      width: "64px",
+      height: "64px",
+      flex: "0 0 64px",
+    },
   },
 });
 
@@ -563,6 +609,10 @@ export const ButtonContainer = styled.div({
     backgroundColor: "var(--bg-button)",
 
     color: "var(--text-button)",
+
+    "&:hover": {
+      backgroundColor: "#583e28",
+    },
   },
 
   "& .button-text": {
