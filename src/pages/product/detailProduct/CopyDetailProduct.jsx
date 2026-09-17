@@ -1274,7 +1274,6 @@
 //   );
 // }
 import { useNavigate, useParams } from "react-router-dom";
-import ProductCard from "../../../components/product/ProductCard/ProductCard";
 import BasicPage from "../../basicPage/BasicPage";
 import {
   ButtonContainer,
@@ -1321,6 +1320,7 @@ export default function DetailProduct() {
   const [quantity, setQuantity] = useState(1);
   const [bottomSheetType, setBottomSheetType] = useState(null);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [isDetailExpanded, setIsDetailExpanded] = useState(false);
   const [isDetailOverflowing, setIsDetailOverflowing] = useState(false);
 
@@ -1408,6 +1408,7 @@ export default function DetailProduct() {
 
         // 상품 API에서 내려주는 찜 상태
         setIsLiked(Boolean(result.product?.isLiked));
+        setSelectedImage(result.product.thumbnail);
       } catch (error) {
         console.error("상품 상세 조회 실패:", error);
 
@@ -1756,6 +1757,12 @@ export default function DetailProduct() {
     ? categoryNames[product.categoryId]
     : "전체상품";
 
+  const productImages = [
+    product.thumbnail,
+    product.images?.[0],
+    product.images?.[1],
+  ].filter(Boolean);
+
   return (
     <>
       <BasicPage>
@@ -1768,12 +1775,33 @@ export default function DetailProduct() {
           ========================== */}
           <div className="product-photo-area">
             <PhotoWrapper>
-              <ProductCard
-                image={product.thumbnail}
-                name={product.name}
-                badge=""
-                showHeart={false}
-              />
+              <div className="main-product-image">
+                <img
+                  src={selectedImage || product.thumbnail}
+                  alt={product.name}
+                />
+              </div>
+
+              <div className="product-thumbnail-list">
+                {productImages.map((image, index) => (
+                  <button
+                    key={`${product.productId}-thumbnail-${index}`}
+                    type="button"
+                    className={`product-thumbnail ${
+                      (selectedImage || product.thumbnail) === image
+                        ? "is-active"
+                        : ""
+                    }`}
+                    onClick={() => setSelectedImage(image)}
+                    aria-label={`${product.name} 이미지 ${index + 1} 보기`}
+                  >
+                    <img
+                      src={image}
+                      alt={`${product.name} 이미지 ${index + 1}`}
+                    />
+                  </button>
+                ))}
+              </div>
             </PhotoWrapper>
 
             {/* 관련상품 스크롤 유도 */}
