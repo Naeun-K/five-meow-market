@@ -405,9 +405,27 @@ export const logout = async (accessToken) => {
 /**
  * 현재 비밀번호 확인
  *
- * purpose
- * - PROFILE_UPDATE
- * - ACCOUNT_DELETE
+ * POST /auth/verify-password
+ *
+ * 비밀번호 일치:
+ * {
+ *   success: true,
+ *   data: {
+ *     isMatched: true
+ *   },
+ *   message: "비밀번호가 확인되었습니다."
+ * }
+ *
+ * 비밀번호 불일치:
+ * {
+ *   success: true,
+ *   data: {
+ *     isMatched: false
+ *   },
+ *   message: "비밀번호가 일치하지 않습니다."
+ * }
+ *
+ * 별도의 비밀번호 검증 Token은 사용하지 않습니다.
  */
 export const verifyPassword = async (password, accessToken) => {
   const response = await authApi.verifyPassword(password, accessToken);
@@ -415,12 +433,9 @@ export const verifyPassword = async (password, accessToken) => {
   return {
     success: response.success,
     isMatched: response.data?.isMatched ?? false,
-    passwordVerificationToken: response.data?.passwordVerificationToken ?? null,
-    expiresIn: response.data?.expiresIn ?? null,
     message: response.message,
   };
 };
-
 /**
  * 비밀번호 찾기 본인 확인
  */
