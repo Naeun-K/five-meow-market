@@ -106,7 +106,7 @@ const HeartButton = ({
 
       if (isLiked) {
         // 찜 해제
-        result = await wishlistService.deleteWishlist(productId, accessToken);
+        result = await wishlistService.removeWishlist(productId, accessToken);
       } else {
         // 찜 추가
         result = await wishlistService.addWishlist(productId, accessToken);

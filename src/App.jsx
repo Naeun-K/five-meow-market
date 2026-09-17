@@ -27,12 +27,15 @@ import BestProductList from "./pages/product/best/BestProductList";
 import NewProductList from "./pages/product/new/NewProductList";
 import CheckoutPage from "./pages/checkout/CheckoutPage";
 import CancelPage from "./pages/cancelPage/CancelPage";
+import ExchangePage from "./pages/exchangePage/ExchangePage";
+import ReturnPage from "./pages/returnPage/ReturnPage";
 
 function App() {
   return (
     <>
       <ScrollToTop />
 
+      {/* <ExchangePage /> */}
       <Routes>
         <Route path="/" element={<MainPage />} />
 
@@ -57,8 +60,8 @@ function App() {
         <Route path="/checkout" element={<CheckoutPage />} />
 
         <Route path="/claims/cancel" element={<CancelPage />} />
-        {/* <Route path="/claims/exchange" element={<ExchangePage />} /> */}
-        {/* <Route path="/claims/return" element={<ReturnPage />} /> */}
+        <Route path="/claims/exchange" element={<ExchangePage />} />
+        <Route path="/claims/return" element={<ReturnPage />} />
 
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />

@@ -1,32 +1,57 @@
 import { apiRequest } from "./apiClient";
 
-// 찜 추가
-export function addWishlist(productId, token) {
+/**
+ * 찜 추가
+ *
+ * POST /wishlist
+ *
+ * body:
+ * {
+ *   productId
+ * }
+ */
+export const addWishlist = async (productId, accessToken) => {
   return apiRequest("/wishlist", {
     method: "POST",
-    token,
+    token: accessToken,
+
     body: {
       productId,
     },
   });
-}
+};
 
-// 찜 해제
-export function deleteWishlist(productId, token) {
-  return apiRequest(`/wishlist/${productId}`, {
+/**
+ * 찜 해제
+ *
+ * DELETE /wishlist/:productId
+ */
+export const removeWishlist = async (productId, accessToken) => {
+  return apiRequest(`/wishlist/${encodeURIComponent(productId)}`, {
     method: "DELETE",
-    token,
+    token: accessToken,
   });
-}
+};
 
-// 찜 목록 조회
-export function getWishlist({ page = 1, limit = 10 } = {}, token) {
-  const params = new URLSearchParams();
+/**
+ * 찜 목록 조회
+ *
+ * GET /wishlist
+ *
+ * Query:
+ * page
+ * limit
+ */
+export const getWishlist = async (
+  { page = 1, limit = 10 } = {},
+  accessToken,
+) => {
+  const searchParams = new URLSearchParams();
 
-  params.set("page", page);
-  params.set("limit", limit);
+  searchParams.set("page", String(page));
+  searchParams.set("limit", String(limit));
 
-  return apiRequest(`/wishlist?${params.toString()}`, {
-    token,
+  return apiRequest(`/wishlist?${searchParams.toString()}`, {
+    token: accessToken,
   });
-}
+};

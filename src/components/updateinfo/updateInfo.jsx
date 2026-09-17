@@ -929,8 +929,6 @@ import { useNavigate } from "react-router-dom";
 import { verifyPhone } from "../../services/authService";
 import { searchAddress } from "../../services/addressService";
 
-import { updateUser, deleteUser } from "../../services/userService";
-
 import useToast from "../../hooks/useToast";
 import useAuth from "../../hooks/useAuth";
 
@@ -938,6 +936,7 @@ import { UpdateStyle } from "./updateInfoStyle";
 
 import PawIcon from "../common/PawIcon/PawIcon";
 import PasswordConfirmModal from "../passwordConfirmModal/PasswordConfirmModal";
+import { deleteMe, updateMe } from "../../services/userService";
 
 /*
  * 새 비밀번호 유효성 검사
@@ -1246,7 +1245,7 @@ const UpdateInfo = () => {
     try {
       setIsSubmitting(true);
 
-      const result = await updateUser(updateData, accessToken);
+      const result = await updateMe(updateData, accessToken);
 
       if (!result.success) {
         throw new Error(result.message || "회원정보 수정에 실패했습니다.");
@@ -1311,7 +1310,7 @@ const UpdateInfo = () => {
        * 비밀번호 검증은 PasswordConfirmModal에서
        * 이미 완료했으므로 탈퇴 요청만 실행합니다.
        */
-      const result = await deleteUser(accessToken);
+      const result = await deleteMe(accessToken);
 
       if (!result.success) {
         throw new Error(result.message || "회원탈퇴에 실패했습니다.");

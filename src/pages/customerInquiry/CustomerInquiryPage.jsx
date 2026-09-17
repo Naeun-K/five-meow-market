@@ -1326,6 +1326,67 @@ const CustomerInquiryPage = () => {
     return true;
   };
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //   if (isSubmitting) {
+  //     return;
+  //   }
+
+  //   if (!isLoggedIn || !accessToken) {
+  //     showToast("로그인 후 문의를 작성해주세요.", false);
+
+  //     navigate("/login");
+
+  //     return;
+  //   }
+
+  //   if (!validateForm()) {
+  //     return;
+  //   }
+
+  //   try {
+  //     setIsSubmitting(true);
+
+  //     const result = await createInquiry(
+  //       {
+  //         category: formData.category,
+
+  //         /*
+  //          * 상품 문의일 때만 productId를 전달합니다.
+  //          */
+  //         productId: isProductCategory ? formData.productId : null,
+
+  //         /*
+  //          * 주문 관련 문의일 때만 orderId를 전달합니다.
+  //          */
+  //         orderId: canSelectOrder ? formData.orderId : null,
+
+  //         title: formData.title.trim(),
+
+  //         content: formData.content.trim(),
+
+  //         isPrivate: formData.isPrivate,
+  //       },
+  //       accessToken,
+  //     );
+
+  //     if (!result.success) {
+  //       throw new Error(result.message || "문의 등록에 실패했습니다.");
+  //     }
+
+  //     showToast(result.message || "문의가 등록되었습니다.", true);
+
+  //     navigate("/community/inquiry");
+  //   } catch (error) {
+  //     console.error("문의 등록 실패:", error);
+
+  //     showToast(error.message || "문의 등록에 실패했습니다.", false);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -1333,9 +1394,9 @@ const CustomerInquiryPage = () => {
       return;
     }
 
+    // 문의 작성은 로그인 필요
     if (!isLoggedIn || !accessToken) {
       showToast("로그인 후 문의를 작성해주세요.", false);
-
       navigate("/login");
 
       return;
@@ -1348,28 +1409,26 @@ const CustomerInquiryPage = () => {
     try {
       setIsSubmitting(true);
 
-      const result = await createInquiry(
-        {
-          category: formData.category,
+      const inquiryData = {
+        category: formData.category,
+        title: formData.title.trim(),
+        content: formData.content.trim(),
+        isPrivate: formData.isPrivate,
+      };
 
-          /*
-           * 상품 문의일 때만 productId를 전달합니다.
-           */
-          productId: isProductCategory ? formData.productId : null,
+      // 상품 문의
+      // productId만 추가
+      if (isProductCategory) {
+        inquiryData.productId = formData.productId;
+      }
 
-          /*
-           * 주문 관련 문의일 때만 orderId를 전달합니다.
-           */
-          orderId: canSelectOrder ? formData.orderId : null,
+      // 배송 / 주문·결제 / 교환·반품 문의
+      // orderId만 추가
+      if (isOrderRelatedCategory) {
+        inquiryData.orderId = formData.orderId;
+      }
 
-          title: formData.title.trim(),
-
-          content: formData.content.trim(),
-
-          isPrivate: formData.isPrivate,
-        },
-        accessToken,
-      );
+      const result = await createInquiry(inquiryData, accessToken);
 
       if (!result.success) {
         throw new Error(result.message || "문의 등록에 실패했습니다.");
