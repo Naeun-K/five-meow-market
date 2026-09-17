@@ -1522,12 +1522,12 @@ export const sectionTitle = css({
 export const orderCard = css({
   display: "flex",
   flexDirection: "row",
-  justifyContent: "space-between",
+  justifyContent: "flex-start",
   alignItems: "center",
 
   width: "100%",
 
-  gap: "20px",
+  gap: "30px",
 
   "& .item-wrapper": {
     width: "250px",
@@ -1588,24 +1588,29 @@ export const orderCard = css({
     },
   },
 
-  "@media (max-width: 1023px)": {
+  "@media (min-width: 736px) and (max-width: 1024px)": {
     gap: "15px",
+
     "& .item-wrapper": {
-      width: "200px",
+      width: "calc((100% - 30px) / 3)",
+    },
+
+    "& .item-wrapper:nth-of-type(n + 4)": {
+      display: "none",
     },
 
     "& .desc-wrapper": {
       padding: "0 10px",
       gap: "8px",
-
       fontSize: "18px",
     },
+
     "& .btn-wrapper": {
       flexDirection: "column",
       gap: "10px",
+
       "& button": {
         width: "100%",
-
         fontSize: "17px",
       },
     },
