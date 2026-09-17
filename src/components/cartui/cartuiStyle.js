@@ -67,12 +67,18 @@ export const CartInfo = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  margin-top: 40px;
+
   @media (max-width: 767px) {
     display: contents; /* 🔵 CHANGE: 모바일에서 wrapper만 레이아웃에서 제거 */
   }
 `;
 
 export const CartList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
   min-height: 400px;
 `;
 
