@@ -34,6 +34,7 @@
 // import PawIcon from "../common/PawIcon/PawIcon.jsx";
 // import myShopCat from "../../assets/logo-myshop.webp";
 // import guestCat from "../../assets/logo-guest.webp";
+// import { CART_UPDATED_EVENT, getCartCount } from "../../services/cartServices";
 
 // const leftColumns = [
 //   {
@@ -79,9 +80,11 @@
 //   const [openSection, setOpenSection] = useState("집사 PICK");
 //   const headerRef = useRef(null);
 //   const closeTimerRef = useRef(null);
+
 //   const navigate = useNavigate();
 //   const { showToast } = useToast();
-//   const { user, isLoggedIn, isAuthLoading, logout } = useAuth();
+
+//   const { user, accessToken, isLoggedIn, isAuthLoading, logout } = useAuth();
 
 //   const authButtons = [
 //     { label: "로그인", path: "/login", filled: false },
@@ -90,6 +93,10 @@
 
 //   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 //   const userMenuRef = useRef(null);
+
+//   // 장바구니 개수
+//   const [cartCount, setCartCount] = useState(0);
+
 //   const { pathname, search } = useLocation();
 
 //   const nickname =
@@ -112,7 +119,8 @@
 //   const isCommunityPage =
 //     pathname === "/community/notice" ||
 //     pathname === "/community/review" ||
-//     pathname === "/community/qna";
+//     pathname === "/community/qna" ||
+//     pathname === "/community/inquiry";
 
 //   const isActiveMenu = (label) => {
 //     switch (label) {
@@ -135,6 +143,8 @@
 //         return false;
 //     }
 //   };
+
+//   const isSmallScreen = () => window.matchMedia("(max-width: 1024px)").matches;
 
 //   const handleMenuEnter = (menu) => {
 //     if (isSmallScreen()) return;
@@ -192,7 +202,110 @@
 //       document.removeEventListener("pointerdown", handleUserMenuOutsideClick);
 //   }, []);
 
-//   const isSmallScreen = () => window.matchMedia("(max-width: 1024px)").matches;
+//   // ================================
+//   // 장바구니 개수 조회
+//   // ================================
+//   // useEffect(() => {
+//   //   if (isAuthLoading) {
+//   //     return undefined;
+//   //   }
+
+//   //   if (!isLoggedIn || !accessToken) {
+//   //     setCartCount(0);
+//   //     return undefined;
+//   //   }
+
+//   //   let isCancelled = false;
+
+//   //   const fetchCartCount = async () => {
+//   //     try {
+//   //       const result = await getCartCount(accessToken);
+
+//   //       if (isCancelled) {
+//   //         return;
+//   //       }
+
+//   //       if (!result.success) {
+//   //         throw new Error(
+//   //           result.message || "장바구니 개수 조회에 실패했습니다.",
+//   //         );
+//   //       }
+
+//   //       setCartCount(Number(result.count ?? 0));
+//   //     } catch (error) {
+//   //       if (isCancelled) {
+//   //         return;
+//   //       }
+
+//   //       console.error("장바구니 개수 조회 실패:", error);
+
+//   //       setCartCount(0);
+//   //     }
+//   //   };
+
+//   //   fetchCartCount();
+
+//   //   window.addEventListener(CART_UPDATED_EVENT, fetchCartCount);
+
+//   //   return () => {
+//   //     isCancelled = true;
+
+//   //     window.removeEventListener(CART_UPDATED_EVENT, fetchCartCount);
+//   //   };
+//   // }, [accessToken, isLoggedIn, isAuthLoading, pathname]);
+
+//   // ================================
+//   // 장바구니 개수 조회
+//   // ================================
+//   useEffect(() => {
+//     if (isAuthLoading || !isLoggedIn || !accessToken) {
+//       return undefined;
+//     }
+
+//     let isCancelled = false;
+
+//     const fetchCartCount = async () => {
+//       try {
+//         const result = await getCartCount(accessToken);
+
+//         if (isCancelled) {
+//           return;
+//         }
+
+//         if (!result.success) {
+//           throw new Error(
+//             result.message || "장바구니 개수 조회에 실패했습니다.",
+//           );
+//         }
+
+//         setCartCount(Number(result.count ?? 0));
+//       } catch (error) {
+//         if (isCancelled) {
+//           return;
+//         }
+
+//         console.error("장바구니 개수 조회 실패:", error);
+
+//         setCartCount(0);
+//       }
+//     };
+
+//     // 로그인 상태에서 최초 조회
+//     fetchCartCount();
+
+//     // 장바구니 변경 이벤트 발생 시 다시 조회
+//     const handleCartUpdated = () => {
+//       fetchCartCount();
+//     };
+
+//     window.addEventListener(CART_UPDATED_EVENT, handleCartUpdated);
+
+//     return () => {
+//       isCancelled = true;
+
+//       window.removeEventListener(CART_UPDATED_EVENT, handleCartUpdated);
+//     };
+//   }, [accessToken, isLoggedIn, isAuthLoading, pathname]);
 
 //   const handleMenuClick = (label) => {
 //     if (isSmallScreen()) {
@@ -226,11 +339,15 @@
 //     try {
 //       await logout();
 
+//       setCartCount(0);
 //       setIsUserMenuOpen(false);
+
 //       navigate("/");
+
 //       showToast("로그아웃되었습니다.", true);
 //     } catch (error) {
 //       console.error("로그아웃 실패:", error);
+
 //       showToast("로그아웃 중 오류가 발생했습니다.", false);
 //     }
 //   };
@@ -239,39 +356,78 @@
 //     if (!path || path === "#") return;
 
 //     navigate(path);
+
 //     setOpenMenu(null);
 //     setIsMenuOpen(false);
 //   };
 
 //   const navItems = [
-//     { label: "홈", path: "/", image: navCat1 },
+//     {
+//       label: "홈",
+//       path: "/",
+//       image: navCat1,
+//     },
 //     {
 //       label: "집사 PICK",
 //       image: navCat2,
 //       children: [
-//         { label: "베스트", path: "/products/best" },
-//         { label: "신상품", path: "/products/new" },
+//         {
+//           label: "베스트",
+//           path: "/products/best",
+//         },
+//         {
+//           label: "신상품",
+//           path: "/products/new",
+//         },
 //       ],
 //     },
 //     {
 //       label: "카테고리",
 //       image: navCat3,
 //       children: [
-//         { label: "먹묘", path: "/products?category=cat-eat" },
-//         { label: "놀묘", path: "/products?category=cat-play" },
-//         { label: "쉼묘", path: "/products?category=cat-rest" },
-//         { label: "높묘", path: "/products?category=cat-high" },
-//         { label: "깔묘", path: "/products?category=cat-clean" },
+//         {
+//           label: "먹묘",
+//           path: "/products?category=cat-eat",
+//         },
+//         {
+//           label: "놀묘",
+//           path: "/products?category=cat-play",
+//         },
+//         {
+//           label: "쉼묘",
+//           path: "/products?category=cat-rest",
+//         },
+//         {
+//           label: "높묘",
+//           path: "/products?category=cat-high",
+//         },
+//         {
+//           label: "깔묘",
+//           path: "/products?category=cat-clean",
+//         },
 //       ],
 //     },
-//     { label: "전체상품", image: navCat4, path: "/products" },
+//     {
+//       label: "전체상품",
+//       image: navCat4,
+//       path: "/products",
+//     },
 //     {
 //       label: "커뮤니티",
 //       image: navCat5,
 //       children: [
-//         { label: "공지사항", path: "/community/notice" },
-//         { label: "제품후기", path: "/community/review" },
-//         { label: "Q & A", path: "/community/inquiry" },
+//         {
+//           label: "공지사항",
+//           path: "/community/notice",
+//         },
+//         {
+//           label: "제품후기",
+//           path: "/community/review",
+//         },
+//         {
+//           label: "Q & A",
+//           path: "/community/inquiry",
+//         },
 //       ],
 //     },
 //   ];
@@ -295,8 +451,11 @@
 //               xmlns="http://www.w3.org/2000/svg"
 //             >
 //               <rect y="0" width="32" height="2" rx="1" fill="black" />
+
 //               <rect y="7" width="32" height="2" rx="1" fill="black" />
+
 //               <rect y="14" width="32" height="2" rx="1" fill="black" />
+
 //               <rect y="21" width="32" height="2" rx="1" fill="black" />
 //             </svg>
 //           </button>
@@ -324,6 +483,7 @@
 //                     onClick={() => setIsUserMenuOpen((isOpen) => !isOpen)}
 //                   >
 //                     <span className="user-nickname">{nickname}</span>
+
 //                     <span className="user-nim">님</span>
 
 //                     <span className="user-icon svg-container">
@@ -344,15 +504,15 @@
 
 //                         <path
 //                           d="M10 20
-//        L10 12
-//        L16 16
-//        C18 15 22 15 24 16
-//        L30 12
-//        L30 20
-//        C32 22 32 25 31 27
-//        C29 31 25 33 20 33
-//        C15 33 11 31 9 27
-//        C8 25 8 22 10 20Z"
+//                             L10 12
+//                             L16 16
+//                             C18 15 22 15 24 16
+//                             L30 12
+//                             L30 20
+//                             C32 22 32 25 31 27
+//                             C29 31 25 33 20 33
+//                             C15 33 11 31 9 27
+//                             C8 25 8 22 10 20Z"
 //                           stroke="#614832"
 //                           strokeWidth="1.5"
 //                           strokeLinecap="round"
@@ -360,15 +520,16 @@
 //                         />
 
 //                         <circle cx="16" cy="23" r="1" fill="#614832" />
+
 //                         <circle cx="24" cy="23" r="1" fill="#614832" />
 
 //                         <circle cx="20" cy="26" r="0.8" fill="#614832" />
 
 //                         <path
 //                           d="M20 27
-//        C19 29 17.5 29 17 28
-//        M20 27
-//        C21 29 22.5 29 23 28"
+//                             C19 29 17.5 29 17 28
+//                             M20 27
+//                             C21 29 22.5 29 23 28"
 //                           stroke="#614832"
 //                           strokeWidth="1"
 //                           strokeLinecap="round"
@@ -376,9 +537,9 @@
 
 //                         <path
 //                           d="M14 26L10 25
-//        M14 28L10 29
-//        M26 26L30 25
-//        M26 28L30 29"
+//                             M14 28L10 29
+//                             M26 26L30 25
+//                             M26 28L30 29"
 //                           stroke="#614832"
 //                           strokeWidth="1"
 //                           strokeLinecap="round"
@@ -394,6 +555,7 @@
 //                   >
 //                     <div className="user-dropdown-info">
 //                       <strong>{nickname}님</strong>
+
 //                       <span>{points.toLocaleString()}P</span>
 //                     </div>
 
@@ -441,9 +603,12 @@
 //               </svg>
 //             </button>
 
+//             {/* 장바구니 */}
 //             <button
 //               type="button"
-//               aria-label="장바구니"
+//               aria-label={
+//                 cartCount > 0 ? `장바구니 상품 ${cartCount}개` : "장바구니"
+//               }
 //               className="svg-container cart"
 //               onClick={() => navigate("/cart")}
 //             >
@@ -457,6 +622,12 @@
 //               >
 //                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
 //               </svg>
+
+//               {cartCount > 0 && (
+//                 <span className="cart-count" aria-hidden="true">
+//                   {cartCount > 99 ? "99+" : cartCount}
+//                 </span>
+//               )}
 //             </button>
 //           </div>
 //         </div>
@@ -469,9 +640,9 @@
 //               return (
 //                 <div
 //                   key={menu.label}
-//                   className={`nav-item ${
-//                     isActive ? "active" : ""
-//                   } ${menu.label === "집사 PICK" ? "pick-item" : ""}`}
+//                   className={`nav-item ${isActive ? "active" : ""} ${
+//                     menu.label === "집사 PICK" ? "pick-item" : ""
+//                   }`}
 //                   onMouseEnter={() => handleMenuEnter(menu)}
 //                   onMouseLeave={handleMenuLeave}
 //                 >
@@ -491,6 +662,7 @@
 //                       <PawIcon />
 //                     </span>
 //                   )}
+
 //                   {menu.children ? (
 //                     <button
 //                       type="button"
@@ -665,6 +837,7 @@
 //                       >
 //                         <h3>
 //                           {col.title}
+
 //                           {col.title === "집사 PICK" && (
 //                             <span className="mega-paw">
 //                               <PawIcon />
@@ -675,6 +848,7 @@
 //                     ) : (
 //                       <h3>
 //                         {col.title}
+
 //                         {col.title === "집사 PICK" && (
 //                           <span className="mega-paw">
 //                             <PawIcon />
@@ -867,6 +1041,7 @@
 //                   </div>
 //                 </div>
 //               )}
+
 //               {isLoggedIn && (
 //                 <div className="mobile-user-area">
 //                   <div className="mobile-user-profile">
@@ -896,6 +1071,7 @@
 //                   </div>
 //                 </div>
 //               )}
+
 //               <MobileCloseButton
 //                 onClick={handleMenuClose}
 //                 aria-label="메뉴 닫기"
@@ -946,19 +1122,19 @@ import {
   MobileSubNavLink,
   MobileCloseButton,
 } from "./navMenuStyle.js";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useToast from "../../hooks/useToast.js";
 import navCat1 from "../../assets/logo-eat.webp";
 import navCat2 from "../../assets/logo-play.webp";
 import navCat3 from "../../assets/logo-rest.webp";
 import navCat4 from "../../assets/logo-high.webp";
 import navCat5 from "../../assets/logo-clean.webp";
-import { useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
 import PawIcon from "../common/PawIcon/PawIcon.jsx";
 import myShopCat from "../../assets/logo-myshop.webp";
 import guestCat from "../../assets/logo-guest.webp";
 import { CART_UPDATED_EVENT, getCartCount } from "../../services/cartServices";
+import { getPoints } from "../../services/userService";
 
 const leftColumns = [
   {
@@ -998,35 +1174,41 @@ const mobileSections = [...leftColumns.filter((col) => col.title !== "REVIEW")];
 function Header() {
   const [openMenu, setOpenMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const desktopSearchInputRef = useRef(null);
-  const mobileSearchInputRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSection, setOpenSection] = useState("집사 PICK");
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  const [cartCount, setCartCount] = useState(0);
+  const [points, setPoints] = useState(0);
+
+  const desktopSearchInputRef = useRef(null);
+  const mobileSearchInputRef = useRef(null);
   const headerRef = useRef(null);
   const closeTimerRef = useRef(null);
+  const userMenuRef = useRef(null);
 
   const navigate = useNavigate();
   const { showToast } = useToast();
 
   const { user, accessToken, isLoggedIn, isAuthLoading, logout } = useAuth();
 
-  const authButtons = [
-    { label: "로그인", path: "/login", filled: false },
-    { label: "회원가입", path: "/signup", filled: true },
-  ];
-
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const userMenuRef = useRef(null);
-
-  // 장바구니 개수
-  const [cartCount, setCartCount] = useState(0);
-
   const { pathname, search } = useLocation();
+
+  const authButtons = [
+    {
+      label: "로그인",
+      path: "/login",
+      filled: false,
+    },
+    {
+      label: "회원가입",
+      path: "/signup",
+      filled: true,
+    },
+  ];
 
   const nickname =
     user?.nickname || user?.nickName || user?.username || user?.name || "회원";
-
-  const points = user?.points ?? 0;
 
   const params = new URLSearchParams(search);
   const category = params.get("category");
@@ -1071,7 +1253,9 @@ function Header() {
   const isSmallScreen = () => window.matchMedia("(max-width: 1024px)").matches;
 
   const handleMenuEnter = (menu) => {
-    if (isSmallScreen()) return;
+    if (isSmallScreen()) {
+      return;
+    }
 
     clearTimeout(closeTimerRef.current);
 
@@ -1083,7 +1267,9 @@ function Header() {
   };
 
   const handleMenuLeave = () => {
-    if (isSmallScreen()) return;
+    if (isSmallScreen()) {
+      return;
+    }
 
     closeTimerRef.current = setTimeout(() => {
       setOpenMenu(null);
@@ -1109,8 +1295,9 @@ function Header() {
 
     document.addEventListener("pointerdown", handleOutsideClick);
 
-    return () =>
+    return () => {
       document.removeEventListener("pointerdown", handleOutsideClick);
+    };
   }, []);
 
   useEffect(() => {
@@ -1122,65 +1309,11 @@ function Header() {
 
     document.addEventListener("pointerdown", handleUserMenuOutsideClick);
 
-    return () =>
+    return () => {
       document.removeEventListener("pointerdown", handleUserMenuOutsideClick);
+    };
   }, []);
 
-  // ================================
-  // 장바구니 개수 조회
-  // ================================
-  // useEffect(() => {
-  //   if (isAuthLoading) {
-  //     return undefined;
-  //   }
-
-  //   if (!isLoggedIn || !accessToken) {
-  //     setCartCount(0);
-  //     return undefined;
-  //   }
-
-  //   let isCancelled = false;
-
-  //   const fetchCartCount = async () => {
-  //     try {
-  //       const result = await getCartCount(accessToken);
-
-  //       if (isCancelled) {
-  //         return;
-  //       }
-
-  //       if (!result.success) {
-  //         throw new Error(
-  //           result.message || "장바구니 개수 조회에 실패했습니다.",
-  //         );
-  //       }
-
-  //       setCartCount(Number(result.count ?? 0));
-  //     } catch (error) {
-  //       if (isCancelled) {
-  //         return;
-  //       }
-
-  //       console.error("장바구니 개수 조회 실패:", error);
-
-  //       setCartCount(0);
-  //     }
-  //   };
-
-  //   fetchCartCount();
-
-  //   window.addEventListener(CART_UPDATED_EVENT, fetchCartCount);
-
-  //   return () => {
-  //     isCancelled = true;
-
-  //     window.removeEventListener(CART_UPDATED_EVENT, fetchCartCount);
-  //   };
-  // }, [accessToken, isLoggedIn, isAuthLoading, pathname]);
-
-  // ================================
-  // 장바구니 개수 조회
-  // ================================
   useEffect(() => {
     if (isAuthLoading || !isLoggedIn || !accessToken) {
       return undefined;
@@ -1214,10 +1347,8 @@ function Header() {
       }
     };
 
-    // 로그인 상태에서 최초 조회
     fetchCartCount();
 
-    // 장바구니 변경 이벤트 발생 시 다시 조회
     const handleCartUpdated = () => {
       fetchCartCount();
     };
@@ -1231,20 +1362,60 @@ function Header() {
     };
   }, [accessToken, isLoggedIn, isAuthLoading, pathname]);
 
+  useEffect(() => {
+    if (isAuthLoading || !isLoggedIn || !accessToken) {
+      return undefined;
+    }
+
+    let isCancelled = false;
+
+    const fetchPoints = async () => {
+      try {
+        const result = await getPoints(accessToken);
+
+        if (isCancelled) {
+          return;
+        }
+
+        if (!result.success) {
+          throw new Error(result.message || "보유 적립금 조회에 실패했습니다.");
+        }
+
+        setPoints(Number(result.point ?? 0));
+      } catch (error) {
+        if (isCancelled) {
+          return;
+        }
+
+        console.error("보유 적립금 조회 실패:", error);
+
+        setPoints(0);
+      }
+    };
+
+    fetchPoints();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [accessToken, isLoggedIn, isAuthLoading, pathname]);
+
   const handleMenuClick = (label) => {
     if (isSmallScreen()) {
       setOpenMenu((currentMenu) => (currentMenu === label ? null : label));
     }
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const handleSearch = (event) => {
+    event.preventDefault();
 
-    const searchValue = new FormData(e.currentTarget);
+    const searchValue = new FormData(event.currentTarget);
+
     const keyword = searchValue.get("keyword")?.trim();
 
     if (!keyword) {
       showToast("검색할 상품명을 입력해주세요", false);
+
       return;
     }
 
@@ -1253,17 +1424,24 @@ function Header() {
     setIsSearchOpen(false);
   };
 
-  const handleSearchToggle = () => setIsSearchOpen((isOpen) => !isOpen);
+  const handleSearchToggle = () => {
+    setIsSearchOpen((isOpen) => !isOpen);
+  };
 
-  const handleMenuToggle = () => setIsMenuOpen((isOpen) => !isOpen);
+  const handleMenuToggle = () => {
+    setIsMenuOpen((isOpen) => !isOpen);
+  };
 
-  const handleMenuClose = () => setIsMenuOpen(false);
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
+  };
 
   const handleLogout = async () => {
     try {
       await logout();
 
       setCartCount(0);
+      setPoints(0);
       setIsUserMenuOpen(false);
 
       navigate("/");
@@ -1277,7 +1455,9 @@ function Header() {
   };
 
   const handleNavigate = (path) => {
-    if (!path || path === "#") return;
+    if (!path || path === "#") {
+      return;
+    }
 
     navigate(path);
 
@@ -1527,7 +1707,6 @@ function Header() {
               </svg>
             </button>
 
-            {/* 장바구니 */}
             <button
               type="button"
               aria-label={

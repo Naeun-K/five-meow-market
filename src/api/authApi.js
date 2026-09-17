@@ -256,13 +256,24 @@ export const logout = async (accessToken) => {
 
 /**
  * 현재 비밀번호 확인
+ *
  * POST /auth/verify-password
  *
- * 회원정보 수정:
- * purpose = PROFILE_UPDATE
+ * Request
+ * {
+ *   password
+ * }
  *
- * 회원탈퇴:
- * purpose = ACCOUNT_DELETE
+ * Response
+ * {
+ *   success: true,
+ *   data: {
+ *     isMatched: true | false
+ *   },
+ *   message
+ * }
+ *
+ * 별도의 비밀번호 검증 Token은 발급하지 않습니다.
  */
 export const verifyPassword = async (password, accessToken) => {
   return apiRequest("/auth/verify-password", {
