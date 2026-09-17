@@ -274,9 +274,17 @@ export const InfoRow = styled.div`
 
   p {
     min-width: 0;
+
     overflow-wrap: anywhere;
     color: #201b17;
     font-weight: 700;
+  }
+
+  @media (max-width: 767px) {
+    width: fit-content;
+    p {
+      width: fit-content;
+    }
   }
 `;
 
@@ -404,6 +412,9 @@ export const PointRows = styled.div`
     font-size: 15px;
     font-weight: 600;
     white-space: nowrap;
+    strong {
+      padding-left: 10px;
+    }
   }
 
   @media (max-width: 767px) {
@@ -426,7 +437,10 @@ export const PointInputRow = styled.div`
   color: #4a433d;
   font-size: 15px;
   font-weight: 600;
-
+  .point-button-wrap {
+    display: flex;
+    gap: 10px;
+  }
   input {
     width: 100%;
     min-width: 0;
@@ -463,9 +477,12 @@ export const PointInputRow = styled.div`
   }
 
   @media (max-width: 767px) {
-    grid-template-columns: 70px minmax(0, 1fr) auto;
-    gap: 5px;
-
+    display: contents;
+    .point-button-wrap {
+      align-self: flex-start;
+      flex-direction: column;
+      gap: 10px;
+    }
     input {
       font-size: 13px;
     }
