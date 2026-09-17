@@ -963,6 +963,14 @@ export const DetailSection = styled.section({
     overflow: "visible",
   },
 
+  " .detail-image-area": {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+
+    width: "100%",
+  },
+
   "& .detail-image-content": {
     display: "flex",
     flexDirection: "column",
@@ -998,6 +1006,34 @@ export const DetailSection = styled.section({
     backdropFilter: "blur(2px)",
   },
 
+  // "& .detail-more-button": {
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+
+  //   width: "100%",
+  //   maxWidth: "700px",
+  //   height: "56px",
+
+  //   gap: "10px",
+
+  //   padding: "0 20px",
+
+  //   border: "1px solid var(--border)",
+  //   borderRadius: "0 0 8px 8px",
+
+  //   backgroundColor: "#fff",
+
+  //   color: "var(--text-primary)",
+
+  //   fontSize: "18px",
+  //   fontWeight: 500,
+
+  //   cursor: "pointer",
+
+  //   transition: "background-color 0.2s ease, border-color 0.2s ease",
+  // },
+
   "& .detail-more-button": {
     display: "flex",
     justifyContent: "center",
@@ -1008,6 +1044,9 @@ export const DetailSection = styled.section({
     height: "56px",
 
     gap: "10px",
+
+    // 핵심: 버튼 자체를 가운데 정렬
+    // margin: "0 auto",
 
     padding: "0 20px",
 

@@ -1129,12 +1129,60 @@ function Header() {
   // ================================
   // 장바구니 개수 조회
   // ================================
-  useEffect(() => {
-    if (isAuthLoading) {
-      return undefined;
-    }
+  // useEffect(() => {
+  //   if (isAuthLoading) {
+  //     return undefined;
+  //   }
 
-    if (!isLoggedIn || !accessToken) {
+  //   if (!isLoggedIn || !accessToken) {
+  //     setCartCount(0);
+  //     return undefined;
+  //   }
+
+  //   let isCancelled = false;
+
+  //   const fetchCartCount = async () => {
+  //     try {
+  //       const result = await getCartCount(accessToken);
+
+  //       if (isCancelled) {
+  //         return;
+  //       }
+
+  //       if (!result.success) {
+  //         throw new Error(
+  //           result.message || "장바구니 개수 조회에 실패했습니다.",
+  //         );
+  //       }
+
+  //       setCartCount(Number(result.count ?? 0));
+  //     } catch (error) {
+  //       if (isCancelled) {
+  //         return;
+  //       }
+
+  //       console.error("장바구니 개수 조회 실패:", error);
+
+  //       setCartCount(0);
+  //     }
+  //   };
+
+  //   fetchCartCount();
+
+  //   window.addEventListener(CART_UPDATED_EVENT, fetchCartCount);
+
+  //   return () => {
+  //     isCancelled = true;
+
+  //     window.removeEventListener(CART_UPDATED_EVENT, fetchCartCount);
+  //   };
+  // }, [accessToken, isLoggedIn, isAuthLoading, pathname]);
+
+  // ================================
+  // 장바구니 개수 조회
+  // ================================
+  useEffect(() => {
+    if (isAuthLoading || !isLoggedIn || !accessToken) {
       return undefined;
     }
 
@@ -1166,13 +1214,20 @@ function Header() {
       }
     };
 
+    // 로그인 상태에서 최초 조회
     fetchCartCount();
 
-    window.addEventListener(CART_UPDATED_EVENT, fetchCartCount);
+    // 장바구니 변경 이벤트 발생 시 다시 조회
+    const handleCartUpdated = () => {
+      fetchCartCount();
+    };
+
+    window.addEventListener(CART_UPDATED_EVENT, handleCartUpdated);
 
     return () => {
       isCancelled = true;
-      window.removeEventListener(CART_UPDATED_EVENT, fetchCartCount);
+
+      window.removeEventListener(CART_UPDATED_EVENT, handleCartUpdated);
     };
   }, [accessToken, isLoggedIn, isAuthLoading, pathname]);
 

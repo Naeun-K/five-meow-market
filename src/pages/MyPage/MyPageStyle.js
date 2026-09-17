@@ -1106,21 +1106,21 @@ export const userCard = css({
     gap: "30px",
     "& .profile-wrapper": {
       position: "relative",
-      padding: "0 0 20px 0",
+      // padding: "0 0 20px 0",
       gap: "25px",
     },
-    "& .profile-wrapper::after": {
-      content: '""',
+    // "& .profile-wrapper::after": {
+    //   content: '""',
 
-      position: "absolute",
-      left: 0,
-      bottom: "-5px",
+    //   position: "absolute",
+    //   left: 0,
+    //   bottom: "-5px",
 
-      width: "100%",
-      height: "1px",
+    //   width: "100%",
+    //   height: "1px",
 
-      backgroundColor: "var(--border)",
-    },
+    //   backgroundColor: "var(--border)",
+    // },
   },
 
   "@media (max-width: 374px)": {
@@ -1133,7 +1133,8 @@ export const userInfo = css({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "flex-start",
+  // alignItems: "flex-start",
+  alignItems: "center",
   gap: "20px",
 
   "& .info-wrapper": { display: "flex", alignItems: "center", gap: "20px" },
@@ -1147,7 +1148,7 @@ export const userInfo = css({
     flex: 1,
     minWidth: 0,
     flexDirection: "column",
-    alignItems: "flex-start",
+    // alignItems: "flex-start",
     justifyContent: "center",
     gap: "10px",
   },
@@ -1222,30 +1223,30 @@ export const userEmail = css({
   },
 });
 
-export const userPoint = css({
-  display: "block",
-  flexShrink: 0,
+// export const userPoint = css({
+//   display: "block",
+//   flexShrink: 0,
 
-  fontSize: "18px",
-  fontWeight: 600,
-  lineHeight: "1.6",
-  letterSpacing: "-0.01em",
-  color: "var(--text-secondary)",
+//   fontSize: "18px",
+//   fontWeight: 600,
+//   lineHeight: "1.6",
+//   letterSpacing: "-0.01em",
+//   color: "var(--text-secondary)",
 
-  "@media (max-width: 1023px)": {
-    fontSize: "17px",
-    lineHeight: "1.6",
-  },
+//   "@media (max-width: 1023px)": {
+//     fontSize: "17px",
+//     lineHeight: "1.6",
+//   },
 
-  "@media (max-width: 767px)": {
-    fontSize: "16px",
-    lineHeight: "26px",
-  },
+//   "@media (max-width: 767px)": {
+//     fontSize: "16px",
+//     lineHeight: "26px",
+//   },
 
-  "@media (max-width: 374px)": {
-    lineHeight: "26px",
-  },
-});
+//   "@media (max-width: 374px)": {
+//     lineHeight: "26px",
+//   },
+// });
 
 export const editButton = css({
   flexShrink: 0,

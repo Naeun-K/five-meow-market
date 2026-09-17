@@ -25,71 +25,82 @@ import {
 } from "./MyPageStyle";
 
 import buttonHover from "../../assets/buttonHover.webp";
-import myShopCat from "../../assets/logo-myshop.webp";
-
 import BasicPage from "../basicPage/BasicPage";
-import Loader from "../../components/loader/Loader";
-import ProductCard from "../../components/product/ProductCard/ProductCard";
-import ReviewModal from "../../components/reviewModal/ReviewModal";
-import PasswordConfirmModal from "../../components/passwordConfirmModal/PasswordConfirmModal";
-
 import useAuth from "../../hooks/useAuth";
 import useToast from "../../hooks/useToast";
+import Loader from "../../components/loader/Loader";
+import myShopCat from "../../assets/logo-myshop.webp";
+import ProductCard from "../../components/product/ProductCard/ProductCard";
+import ReviewModal from "../../components/reviewModal/ReviewModal";
+// import PasswordConfirmModal from "../../components/passwordConfirmModal/PasswordConfirmModal";
 
 import * as orderService from "../../services/orderServices";
 import * as wishlistService from "../../services/wishlistServices";
+import * as cartService from "../../services/cartServices";
+import * as checkoutService from "../../services/checkOutServices";
 
 import { getPoints } from "../../services/userService";
 import { getWritableReviews } from "../../services/reviewService";
 import { getMyInquiries } from "../../services/inquiryService";
 
-/*
- * 일반 주문 상태
- */
+/* =========================================================
+   주문 상태
+========================================================= */
+
 const STATUS_LABELS = {
   PAYMENT_COMPLETED: "결제완료",
-  PREPARING_SHIPMENT: "상품준비중",
+  PREPARING: "상품준비중",
   SHIPPING: "배송중",
   DELIVERED: "배송완료",
   CONFIRMED: "구매확정",
-  CANCELED: "주문취소",
+
+  CANCEL_REQUESTED: "취소 신청완료",
+  CANCELED: "취소완료",
+  PARTIALLY_CANCELED: "부분취소",
+
+  EXCHANGE_REQUESTED: "교환 신청완료",
+  EXCHANGED: "교환완료",
+  PARTIALLY_EXCHANGED: "부분교환",
+
+  RETURN_REQUESTED: "반품 신청완료",
+  RETURNED: "반품완료",
+  PARTIALLY_RETURNED: "부분반품",
 };
 
-/*
- * Claim 유형
- */
-const CLAIM_TYPE_LABELS = {
-  CANCEL: "취소",
-  EXCHANGE: "교환",
-  RETURN: "반품",
-};
+/* =========================================================
+   Claim 상태
+========================================================= */
 
-/*
- * Claim 처리 상태
- */
-const CLAIM_STATUS_LABELS = {
-  REQUESTED: "신청완료",
-  PROCESSING: "처리중",
-  COMPLETED: "처리완료",
-  REJECTED: "처리불가",
-};
+const ACTIVE_CLAIM_STATUSES = [
+  "REQUESTED",
+  "PENDING",
+  "PROCESSING",
+  "APPROVED",
+];
 
-/*
- * 처리 중인 Claim 상태
- *
- * REQUESTED 또는 PROCESSING 상태의 Claim이 있으면
- * 중복 신청과 구매확정을 막습니다.
- */
-const ACTIVE_CLAIM_STATUSES = ["REQUESTED", "PROCESSING"];
+/* =========================================================
+   API Response
+========================================================= */
+
+function getResponseData(response) {
+  return response?.data ?? response ?? {};
+}
+
+/* =========================================================
+   날짜
+   yyyy.mm.dd hh:mm
+========================================================= */
 
 function formatDate(dateString) {
   if (!dateString) {
     return "";
   }
 
-  // return new Date(dateString).toLocaleDateString("ko-KR");
-
   const date = new Date(dateString);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
 
   const formatter = new Intl.DateTimeFormat("ko-KR", {
     timeZone: "Asia/Seoul",
@@ -106,294 +117,194 @@ function formatDate(dateString) {
   const getPart = (type) =>
     parts.find((part) => part.type === type)?.value ?? "";
 
-  const year = getPart("year");
-  const month = getPart("month");
-  const day = getPart("day");
-  const hour = getPart("hour");
-  const minute = getPart("minute");
-
-  return `${year}.${month}.${day} ${hour}:${minute}`;
+  return `${getPart("year")}.${getPart("month")}.${getPart(
+    "day",
+  )} ${getPart("hour")}:${getPart("minute")}`;
 }
+
+/* =========================================================
+   가격
+========================================================= */
 
 function formatPrice(price) {
-  return `${Number(price ?? 0).toLocaleString("ko-KR")}원`;
+  return `${Number(price ?? 0).toLocaleString()}원`;
 }
 
-/*
- * 주문 카드의 상품명을 생성합니다.
- *
- * 상품이 하나면 상품명만 표시하고,
- * 여러 개면 "상품명 외 N건"으로 표시합니다.
- */
-function getOrderProductName(order) {
-  const items = order.items ?? [];
-  const firstProduct = items[0];
+/* =========================================================
+   주문 상품명
+========================================================= */
 
-  if (!firstProduct) {
+function getOrderProductName(order) {
+  const items = Array.isArray(order?.items) ? order.items : [];
+
+  if (items.length === 0) {
     return "";
   }
 
-  const additionalItemCount = items.length - 1;
+  const firstProductName = items[0]?.name ?? items[0]?.productName ?? "상품";
 
-  if (additionalItemCount <= 0) {
-    return firstProduct.name;
+  if (items.length === 1) {
+    return firstProductName;
   }
 
-  return `${firstProduct.name} 외 ${additionalItemCount}건`;
+  return `${firstProductName} 외 ${items.length - 1}건`;
 }
 
-/*
- * 주문 상품 종류, 총수량, 총금액을 계산합니다.
- */
+/* =========================================================
+   주문 요약
+========================================================= */
+
 function getOrderSummary(order) {
-  const items = order.items ?? [];
+  const items = Array.isArray(order?.items) ? order.items : [];
+
+  const productCount = items.length;
 
   const totalQuantity = items.reduce(
-    (total, item) => total + Number(item.quantity ?? 0),
+    (sum, item) => sum + Number(item?.quantity ?? 0),
     0,
   );
 
-  return {
-    productCount: items.length,
-    totalQuantity,
+  let totalAmount = Number(
+    order?.finalAmount ?? order?.totalAmount ?? order?.paymentAmount ?? 0,
+  );
 
-    /*
-     * 주문 API 응답마다 금액 필드명이 다를 수 있으므로
-     * 사용 가능한 금액을 순서대로 확인합니다.
-     */
-    totalAmount:
-      order.finalAmount ??
-      order.totalPaymentAmount ??
-      order.paymentAmount ??
-      order.totalAmount ??
-      items.reduce((total, item) => total + Number(item.itemAmount ?? 0), 0),
+  if (!totalAmount) {
+    totalAmount = items.reduce((sum, item) => {
+      const itemAmount =
+        item?.itemAmount !== undefined
+          ? Number(item.itemAmount)
+          : Number(item?.price ?? 0) * Number(item?.quantity ?? 0);
+
+      return sum + itemAmount;
+    }, 0);
+  }
+
+  return {
+    productCount,
+    totalQuantity,
+    totalAmount,
   };
 }
 
-/*
- * Claim 상태 표시 문구를 생성합니다.
- *
- * 예:
- * CANCEL + REQUESTED -> 취소 신청완료
- * EXCHANGE + PROCESSING -> 교환 처리중
- * RETURN + COMPLETED -> 반품 처리완료
- */
-function getClaimStatusLabel(claimSummary) {
-  if (!claimSummary) {
-    return null;
-  }
+/* =========================================================
+   처리 중 Claim 존재 여부
+========================================================= */
 
-  const typeLabel = CLAIM_TYPE_LABELS[claimSummary.type] ?? claimSummary.type;
-
-  const statusLabel =
-    CLAIM_STATUS_LABELS[claimSummary.status] ?? claimSummary.status;
-
-  return `${typeLabel} ${statusLabel}`;
-}
-
-/*
- * 마이페이지 주문 카드에 표시할 상태를 계산합니다.
- *
- * 취소 신청 직후에는 order.status가 PAYMENT_COMPLETED여도
- * claimSummary를 확인하여 "취소 신청완료"를 표시합니다.
- */
-function getOrderStatusLabel(order) {
-  /*
-   * 주문 상태가 실제로 CANCELED까지 변경된 경우
-   */
-  if (order.status === "CANCELED") {
-    return STATUS_LABELS.CANCELED;
-  }
-
-  /*
-   * 주문에 취소·교환·반품 신청이 연결된 경우
-   */
-  if (order.claimSummary) {
-    return getClaimStatusLabel(order.claimSummary);
-  }
-
-  /*
-   * Claim이 없는 일반 주문
-   */
-  return STATUS_LABELS[order.status] ?? order.status ?? "-";
-}
-
-/*
- * 현재 주문에 처리 중인 Claim이 있는지 확인합니다.
- */
 function hasActiveClaim(order) {
-  const claimStatus = order.claimSummary?.status;
+  const claimSummary = order?.claimSummary;
 
-  if (!claimStatus) {
+  if (!claimSummary) {
     return false;
   }
 
-  return ACTIVE_CLAIM_STATUSES.includes(claimStatus);
+  return ACTIVE_CLAIM_STATUSES.includes(claimSummary.status);
 }
 
-/*
- * 취소가 완료된 주문인지 확인합니다.
- *
- * 서버 주문 상태가 CANCELED이거나,
- * 취소 Claim이 COMPLETED이면 취소 완료로 판단합니다.
- */
+/* =========================================================
+   취소된 주문인지 확인
+========================================================= */
+
 function isCanceledOrder(order) {
-  if (order.status === "CANCELED") {
-    return true;
+  return (
+    order?.status === "CANCELED" ||
+    (order?.claimSummary?.type === "CANCEL" &&
+      order?.claimSummary?.status === "COMPLETED")
+  );
+}
+
+/* =========================================================
+   화면에 표시할 주문 상태
+========================================================= */
+
+function getOrderStatusLabel(order) {
+  if (STATUS_LABELS[order?.status]) {
+    return STATUS_LABELS[order.status];
   }
 
-  return (
-    order.claimSummary?.type === "CANCEL" &&
-    order.claimSummary?.status === "COMPLETED"
-  );
+  const claim = order?.claimSummary;
+
+  if (claim) {
+    if (claim.type === "CANCEL") {
+      if (claim.status === "COMPLETED") {
+        return "취소완료";
+      }
+
+      return "취소 신청완료";
+    }
+
+    if (claim.type === "EXCHANGE") {
+      if (claim.status === "COMPLETED") {
+        return "교환완료";
+      }
+
+      return "교환 신청완료";
+    }
+
+    if (claim.type === "RETURN") {
+      if (claim.status === "COMPLETED") {
+        return "반품완료";
+      }
+
+      return "반품 신청완료";
+    }
+  }
+
+  return order?.statusLabel ?? order?.status ?? "";
 }
 
-function OrderIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="100%"
-      fill="currentColor"
-      className="bi bi-receipt-cutoff"
-      viewBox="0 0 16 16"
-      aria-hidden="true"
-    >
-      <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5M11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z" />
-
-      <path d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293zm-.217 1.198.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118z" />
-    </svg>
-  );
-}
-
-function WishlistIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="100%"
-      fill="currentColor"
-      className="bi bi-box2-heart"
-      viewBox="0 0 16 16"
-      aria-hidden="true"
-    >
-      <path d="M8 7.982C9.664 6.309 13.825 9.236 8 13 2.175 9.236 6.336 6.31 8 7.982" />
-
-      <path d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4zm0 1H7.5v3h-6zM8.5 4V1h3.75l2.25 3zM15 5v10H1V5z" />
-    </svg>
-  );
-}
-
-function ReviewIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="100%"
-      fill="currentColor"
-      className="bi bi-pencil-square"
-      viewBox="0 0 16 16"
-      aria-hidden="true"
-    >
-      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-
-      <path
-        fillRule="evenodd"
-        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-      />
-    </svg>
-  );
-}
-
-function InquiryIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="100%"
-      fill="currentColor"
-      className="bi bi-patch-question"
-      viewBox="0 0 16 16"
-      aria-hidden="true"
-    >
-      <path d="M8.05 9.6c.336 0 .504-.24.554-.627.04-.534.198-.815.847-1.26.673-.475 1.049-1.09 1.049-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.7 1.7 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745" />
-
-      <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911z" />
-
-      <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0" />
-    </svg>
-  );
-}
-
-const MENU_ICONS = {
-  orders: OrderIcon,
-  wishlist: WishlistIcon,
-  reviews: ReviewIcon,
-  inquiries: InquiryIcon,
-};
+/* =========================================================
+   MyPage
+========================================================= */
 
 function MyPage() {
   const { user, isLoggedIn, isAuthLoading, accessToken } = useAuth();
 
   const navigate = useNavigate();
+
   const { showToast } = useToast();
 
+  /* 주문 */
+
   const [orders, setOrders] = useState([]);
-  const [points, setPoints] = useState(0);
+  // const [points, setPoints] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
   const [isOrderLoading, setIsOrderLoading] = useState(true);
 
+  /* 리뷰 */
+
   const [writableReviewCount, setWritableReviewCount] = useState(0);
+
+  /* 문의 */
 
   const [inquiryCount, setInquiryCount] = useState(0);
 
+  /* 찜 */
+
   const [wishlistProducts, setWishlistProducts] = useState([]);
-
   const [wishlistCount, setWishlistCount] = useState(0);
-
   const [isWishlistLoading, setIsWishlistLoading] = useState(true);
+
+  /* 리뷰 모달 */
 
   const [selectedProductId, setSelectedProductId] = useState(null);
 
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  /* 비밀번호 확인 */
+
+  // const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   const nickname =
     user?.nickname || user?.nickName || user?.username || user?.name || "회원";
 
   const email = user?.email ?? "";
 
-  const myPageMenus = [
-    {
-      key: "orders",
-      label: "주문 내역",
-      count: orderCount,
-      path: "/mypage/orders",
-    },
-    {
-      key: "wishlist",
-      label: "찜한 상품",
-      count: wishlistCount,
-      path: "/mypage/wishlist",
-    },
-    {
-      key: "reviews",
-      label: "리뷰 관리",
-      count: writableReviewCount,
-      path: "/mypage/reviews",
-    },
-    {
-      key: "inquiries",
-      label: "문의 내역",
-      count: inquiryCount,
-      path: "/mypage/inquiry",
-    },
-  ];
+  /* =========================================================
+     작성 가능한 리뷰 개수
+  ========================================================= */
 
-  /*
-   * 작성 가능한 리뷰 개수 조회
-   */
   useEffect(() => {
     if (!accessToken) {
       return undefined;
@@ -413,7 +324,9 @@ function MyPage() {
           return;
         }
 
-        setWritableReviewCount(response.data?.pagination?.totalCount ?? 0);
+        const data = getResponseData(response);
+
+        setWritableReviewCount(data.pagination?.totalCount ?? 0);
       })
       .catch((error) => {
         if (isCancelled) {
@@ -428,9 +341,10 @@ function MyPage() {
     };
   }, [accessToken]);
 
-  /*
-   * 문의 내역 개수 조회
-   */
+  /* =========================================================
+     문의 개수
+  ========================================================= */
+
   useEffect(() => {
     if (!accessToken) {
       return undefined;
@@ -450,7 +364,9 @@ function MyPage() {
           return;
         }
 
-        setInquiryCount(response.data?.pagination?.totalCount ?? 0);
+        const data = getResponseData(response);
+
+        setInquiryCount(data.pagination?.totalCount ?? 0);
       })
       .catch((error) => {
         if (isCancelled) {
@@ -465,12 +381,10 @@ function MyPage() {
     };
   }, [accessToken]);
 
-  /*
-   * 최근 주문과 적립금 조회
-   *
-   * 주문 API에서 각 주문의 claimSummary를 함께 받아야
-   * 취소·교환·반품 상태를 표시할 수 있습니다.
-   */
+  /* =========================================================
+     주문 + 적립금
+  ========================================================= */
+
   useEffect(() => {
     if (isAuthLoading || !accessToken) {
       return undefined;
@@ -478,44 +392,47 @@ function MyPage() {
 
     let isCancelled = false;
 
-    Promise.all([
-      orderService.getOrders(
-        {
-          period: "all",
-          status: "ALL",
-          keyword: "",
-          page: 1,
-          limit: 2,
-        },
-        accessToken,
-      ),
+    const fetchMyPageData = async () => {
+      try {
+        const [orderResult, pointResult] = await Promise.all([
+          orderService.getOrders(
+            {
+              period: "all",
+              page: 1,
+              limit: 2,
+            },
+            accessToken,
+          ),
 
-      getPoints(accessToken),
-    ])
-      .then(([orderResult, pointResult]) => {
+          getPoints(accessToken),
+        ]);
+
         if (isCancelled) {
           return;
         }
 
-        if (!orderResult.success) {
+        if (orderResult?.success === false) {
           throw new Error(
             orderResult.message || "주문 내역을 불러오지 못했습니다.",
           );
         }
 
-        if (!pointResult.success) {
+        const orderData = getResponseData(orderResult);
+
+        setOrders(Array.isArray(orderData.orders) ? orderData.orders : []);
+
+        setOrderCount(orderData.pagination?.totalCount ?? 0);
+
+        if (pointResult?.success === false) {
           throw new Error(
             pointResult.message || "적립금을 불러오지 못했습니다.",
           );
         }
 
-        setOrders(orderResult.orders ?? []);
+        // const pointData = getResponseData(pointResult);
 
-        setOrderCount(orderResult.pagination?.totalCount ?? 0);
-
-        setPoints(pointResult.point ?? 0);
-      })
-      .catch((error) => {
+        // setPoints(Number(pointData.point ?? 0));
+      } catch (error) {
         if (isCancelled) {
           return;
         }
@@ -523,24 +440,27 @@ function MyPage() {
         console.error("마이페이지 데이터 조회 실패:", error);
 
         showToast(
-          error.message || "마이페이지 정보를 불러오지 못했습니다.",
+          error?.message || "마이페이지 정보를 불러오지 못했습니다.",
           false,
         );
-      })
-      .finally(() => {
+      } finally {
         if (!isCancelled) {
           setIsOrderLoading(false);
         }
-      });
+      }
+    };
+
+    fetchMyPageData();
 
     return () => {
       isCancelled = true;
     };
   }, [accessToken, isAuthLoading, showToast]);
 
-  /*
-   * 찜한 상품 조회
-   */
+  /* =========================================================
+     찜한 상품
+  ========================================================= */
+
   useEffect(() => {
     if (isAuthLoading || !accessToken) {
       return undefined;
@@ -548,15 +468,16 @@ function MyPage() {
 
     let isCancelled = false;
 
-    wishlistService
-      .getWishlist(
-        {
-          page: 1,
-          limit: 4,
-        },
-        accessToken,
-      )
-      .then((result) => {
+    const fetchWishlist = async () => {
+      try {
+        const result = await wishlistService.getWishlist(
+          {
+            page: 1,
+            limit: 4,
+          },
+          accessToken,
+        );
+
         if (isCancelled) {
           return;
         }
@@ -565,42 +486,210 @@ function MyPage() {
           throw new Error(result.message || "찜한 상품을 불러오지 못했습니다.");
         }
 
-        setWishlistProducts(result.products ?? []);
+        const wishlistItems = Array.isArray(result.wishlistItems)
+          ? result.wishlistItems
+          : [];
+
+        const products = wishlistItems
+          .map((item) => {
+            const product = item?.product ?? item;
+
+            return {
+              ...product,
+
+              productId: product?.productId ?? item?.productId,
+
+              thumbnail:
+                product?.thumbnail ??
+                product?.image ??
+                item?.thumbnail ??
+                item?.image ??
+                "",
+
+              name: product?.name ?? item?.name ?? "",
+
+              price: Number(product?.price ?? item?.price ?? 0),
+
+              isLiked: true,
+            };
+          })
+          .filter((product) => product.productId);
+
+        setWishlistProducts(products);
 
         setWishlistCount(result.pagination?.totalCount ?? 0);
-      })
-      .catch((error) => {
+      } catch (error) {
         if (isCancelled) {
           return;
         }
 
         console.error("마이페이지 찜 목록 조회 실패:", error);
 
-        showToast(error.message || "찜한 상품을 불러오지 못했습니다.", false);
-      })
-      .finally(() => {
+        showToast(error?.message || "찜한 상품을 불러오지 못했습니다.", false);
+      } finally {
         if (!isCancelled) {
           setIsWishlistLoading(false);
         }
-      });
+      }
+    };
+
+    fetchWishlist();
 
     return () => {
       isCancelled = true;
     };
   }, [accessToken, isAuthLoading, showToast]);
 
-  /*
-   * 구매확정
-   */
-  const handleConfirmOrder = async (orderId) => {
-    const selectedOrder = orders.find((order) => order.orderId === orderId);
+  /* =========================================================
+     찜 해제
 
-    /*
-     * 처리 중인 취소·교환·반품이 있으면
-     * 구매확정을 요청하지 않습니다.
-     */
-    if (!selectedOrder || hasActiveClaim(selectedOrder)) {
-      showToast("처리 중인 취소, 교환 또는 반품 신청이 있습니다.", false);
+     마이페이지에는 찜한 상품만 존재하므로
+     하트를 누르면 DELETE /wishlist/:productId 실행 후
+     화면에서도 즉시 제거
+  ========================================================= */
+
+  const handleRemoveWishlist = async (productId) => {
+    if (!accessToken) {
+      showToast("로그인이 필요합니다.", false);
+
+      return;
+    }
+
+    try {
+      const result = await wishlistService.removeWishlist(
+        productId,
+        accessToken,
+      );
+
+      if (!result.success) {
+        throw new Error(result.message || "찜 해제에 실패했습니다.");
+      }
+
+      setWishlistProducts((previousProducts) =>
+        previousProducts.filter((product) => product.productId !== productId),
+      );
+
+      setWishlistCount((previousCount) => Math.max(0, previousCount - 1));
+
+      showToast(result.message || "찜한 상품에서 삭제되었습니다.", true);
+    } catch (error) {
+      console.error("찜 해제 실패:", error);
+
+      showToast(error?.message || "찜 해제에 실패했습니다.", false);
+    }
+  };
+
+  /* =========================================================
+     찜한 상품 → 장바구니
+
+     POST /cart/items
+     quantity = 1
+  ========================================================= */
+
+  const handleAddCart = async (productId) => {
+    if (!accessToken) {
+      showToast("로그인이 필요합니다.", false);
+
+      return;
+    }
+
+    if (!productId) {
+      showToast("상품 정보가 없습니다.", false);
+
+      return;
+    }
+
+    try {
+      const result = await cartService.addCartItem(productId, 1, accessToken);
+
+      if (!result.success) {
+        throw new Error(result.message || "장바구니에 상품을 담지 못했습니다.");
+      }
+
+      showToast(result.message || "장바구니에 상품을 담았습니다.", true);
+    } catch (error) {
+      console.error("장바구니 추가 실패:", error);
+
+      showToast(error?.message || "장바구니에 상품을 담지 못했습니다.", false);
+    }
+  };
+
+  /* =========================================================
+     찜한 상품 → 바로구매
+
+     POST /checkout
+     {
+       items: [
+         {
+           productId,
+           quantity: 1
+         }
+       ]
+     }
+  ========================================================= */
+
+  const handleBuyNow = async (productId) => {
+    if (!accessToken) {
+      showToast("로그인이 필요합니다.", false);
+
+      return;
+    }
+
+    if (!productId) {
+      showToast("상품 정보가 없습니다.", false);
+
+      return;
+    }
+
+    try {
+      const result = await checkoutService.createCheckout(
+        {
+          items: [
+            {
+              productId,
+              quantity: 1,
+            },
+          ],
+        },
+        accessToken,
+      );
+
+      if (!result.success) {
+        throw new Error(result.message || "바로구매 처리에 실패했습니다.");
+      }
+
+      if (!result.checkoutId) {
+        throw new Error("Checkout ID를 확인할 수 없습니다.");
+      }
+
+      navigate(`/checkout?checkoutId=${encodeURIComponent(result.checkoutId)}`);
+    } catch (error) {
+      console.error("바로구매 실패:", error);
+
+      showToast(error?.message || "바로구매 처리에 실패했습니다.", false);
+    }
+  };
+
+  /* =========================================================
+     취소 / 교환 / 반품
+  ========================================================= */
+
+  const handleClaim = (orderId, claimType) => {
+    const searchParams = new URLSearchParams({
+      orderId: String(orderId),
+      type: claimType,
+    });
+
+    navigate(`/claims?${searchParams.toString()}`);
+  };
+
+  /* =========================================================
+     구매확정
+  ========================================================= */
+
+  const handleConfirmOrder = async (orderId) => {
+    if (!accessToken) {
+      showToast("로그인 정보가 없습니다.", false);
 
       return;
     }
@@ -608,61 +697,53 @@ function MyPage() {
     try {
       const result = await orderService.confirmOrder(orderId, accessToken);
 
-      if (!result.success) {
+      if (result?.success === false) {
         throw new Error(result.message || "구매확정에 실패했습니다.");
       }
 
-      setOrders((previousOrders) =>
-        previousOrders.map((order) =>
+      const data = getResponseData(result);
+
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
           order.orderId === orderId
             ? {
                 ...order,
-                status: result.status ?? "CONFIRMED",
+
+                status: data.status ?? "CONFIRMED",
+
+                statusLabel: "구매확정",
+
                 canConfirm: false,
-                confirmedAt: result.confirmedAt,
+
+                confirmedAt: data.confirmedAt ?? order.confirmedAt,
               }
             : order,
         ),
       );
 
-      const confirmedItemCount = selectedOrder.items?.length ?? 0;
-
-      setWritableReviewCount(
-        (previousCount) => previousCount + confirmedItemCount,
-      );
-
-      showToast(result.message || "구매가 확정되었습니다.", true);
+      showToast(result?.message || "구매가 확정되었습니다.", true);
     } catch (error) {
       console.error("구매확정 실패:", error);
 
-      showToast(error.message || "구매확정에 실패했습니다.", false);
+      showToast(error?.message || "구매확정에 실패했습니다.", false);
     }
   };
 
-  /*
-   * 취소·교환·반품 페이지 이동
-   */
-  const handleClaim = (orderId, claimType) => {
-    const searchParams = new URLSearchParams({
-      orderId: String(orderId),
-    });
+  /* =========================================================
+     리뷰
+  ========================================================= */
 
-    navigate(`/claims/${claimType}?${searchParams.toString()}`);
-  };
-
-  /*
-   * 리뷰 작성 모달 열기
-   */
-  const handleReview = (productId) => {
-    if (!productId) {
-      showToast("리뷰를 작성할 상품 정보가 없습니다.", false);
-
-      return;
-    }
+  const handleReview = (orderId, productId) => {
+    setSelectedOrderId(orderId);
 
     setSelectedProductId(productId);
+
     setIsModalOpen(true);
   };
+
+  /* =========================================================
+     Loading
+  ========================================================= */
 
   if (isAuthLoading) {
     return (
@@ -681,6 +762,10 @@ function MyPage() {
       <main css={page}>
         <h1 css={pageTitle}>MY PAGE</h1>
 
+        {/* =====================================================
+            회원 정보
+        ===================================================== */}
+
         <section css={userCard}>
           <div className="profile-wrapper">
             <div className="profile-svg">
@@ -688,12 +773,12 @@ function MyPage() {
             </div>
 
             <div css={userInfo}>
-              <span css={userName}>{nickname}님</span>
+              <span css={userName}>안녕하세요, {nickname}님!</span>
 
               <div className="info-wrapper">
                 <span css={userEmail}>{email}</span>
 
-                <button
+                {/* <button
                   type="button"
                   css={userEmail}
                   className="pointDeco"
@@ -702,12 +787,12 @@ function MyPage() {
                   <span>적립금</span>
 
                   <span>{Number(points ?? 0).toLocaleString()} P</span>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
 
-          <button
+          {/* <button
             type="button"
             css={editButton}
             onClick={() => setIsPasswordModalOpen(true)}
@@ -729,41 +814,162 @@ function MyPage() {
                 />
               </svg>
             </span>
-          </button>
+          </button> */}
         </section>
+
+        {/* =====================================================
+            요약
+        ===================================================== */}
 
         <section css={summary}>
-          {myPageMenus.map((menu) => {
-            const MenuIcon = MENU_ICONS[menu.key];
+          {/* 주문 내역 */}
 
-            return (
-              <div css={summaryItem} key={menu.key}>
-                <div className="btn-hover-container">
-                  <img
-                    src={buttonHover}
-                    alt=""
-                    className="btn-hover"
-                    aria-hidden="true"
-                    loading="lazy"
-                  />
-                </div>
+          <div css={summaryItem}>
+            <div className="btn-hover-container">
+              <img
+                src={buttonHover}
+                alt="버튼꾸미기용 고양이 이미지"
+                className="btn-hover"
+                aria-hidden="true"
+              />
+            </div>
 
-                <button
-                  type="button"
-                  className="svg-container"
-                  aria-label={menu.label}
-                  onClick={() => navigate(menu.path)}
-                >
-                  <MenuIcon />
-                </button>
+            <button
+              className="svg-container"
+              onClick={() => navigate("/mypage/orders")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5M11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z" />
 
-                <span css={summaryLabel}>{menu.label}</span>
+                <path d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293zm-.217 1.198.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118z" />
+              </svg>
+            </button>
 
-                <strong css={summaryValue}>{menu.count}</strong>
-              </div>
-            );
-          })}
+            <span css={summaryLabel}>주문 내역</span>
+
+            <strong css={summaryValue}>{orderCount}</strong>
+          </div>
+
+          {/* 찜한 상품 */}
+
+          <div css={summaryItem}>
+            <div className="btn-hover-container">
+              <img
+                src={buttonHover}
+                alt="버튼꾸미기용 고양이 이미지"
+                className="btn-hover"
+                aria-hidden="true"
+              />
+            </div>
+
+            <button
+              className="svg-container"
+              onClick={() => navigate("/mypage/wishlist")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 7.982C9.664 6.309 13.825 9.236 8 13 2.175 9.236 6.336 6.31 8 7.982" />
+
+                <path d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4zm0 1H7.5v3h-6zM8.5 4V1h3.75l2.25 3zM15 5v10H1V5z" />
+              </svg>
+            </button>
+
+            <span css={summaryLabel}>찜한 상품</span>
+
+            <strong css={summaryValue}>{wishlistCount}</strong>
+          </div>
+
+          {/* 리뷰 관리 */}
+
+          <div css={summaryItem}>
+            <div className="btn-hover-container">
+              <img
+                src={buttonHover}
+                alt="버튼꾸미기용 고양이 이미지"
+                className="btn-hover"
+                aria-hidden="true"
+              />
+            </div>
+
+            <button
+              className="svg-container"
+              onClick={() => navigate("/mypage/reviews")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+
+                <path
+                  fillRule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                />
+              </svg>
+            </button>
+
+            <span css={summaryLabel}>리뷰 관리</span>
+
+            <strong css={summaryValue}>
+              {accessToken ? writableReviewCount : 0}
+            </strong>
+          </div>
+
+          {/* 문의 내역 */}
+
+          <div css={summaryItem}>
+            <div className="btn-hover-container">
+              <img
+                src={buttonHover}
+                alt="버튼꾸미기용 고양이 이미지"
+                className="btn-hover"
+                aria-hidden="true"
+                loading="lazy"
+              />
+            </div>
+
+            <button
+              className="svg-container"
+              onClick={() => navigate("/mypage/inquiry")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8.05 9.6c.336 0 .504-.24.554-.627.04-.534.198-.815.847-1.26.673-.475 1.049-1.09 1.049-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.7 1.7 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745" />
+
+                <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911z" />
+
+                <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0" />
+              </svg>
+            </button>
+
+            <span css={summaryLabel}>문의 내역</span>
+
+            <strong css={summaryValue}>{accessToken ? inquiryCount : 0}</strong>
+          </div>
         </section>
+
+        {/* =====================================================
+            주문 내역
+        ===================================================== */}
 
         <section css={section}>
           <div css={titleWrapper}>
@@ -846,29 +1052,17 @@ function MyPage() {
 
                   const canceledOrder = isCanceledOrder(order);
 
-                  /*
-                   * 결제완료이고 처리 중인 Claim이 없을 때만
-                   * 주문취소 버튼을 표시합니다.
-                   */
                   const canCancel =
                     order.status === "PAYMENT_COMPLETED" &&
                     !activeClaim &&
                     !canceledOrder &&
                     !order.claimSummary;
 
-                  /*
-                   * 배송완료이고 처리 중인 Claim이 없을 때만
-                   * 교환·반품 및 구매확정 버튼을 표시합니다.
-                   */
                   const canUseDeliveredActions =
                     order.status === "DELIVERED" &&
                     !activeClaim &&
                     !canceledOrder;
 
-                  /*
-                   * 구매확정 주문이면서 취소·반품 완료 주문이
-                   * 아닐 때 리뷰 버튼을 표시합니다.
-                   */
                   const canWriteReview =
                     order.status === "CONFIRMED" &&
                     !canceledOrder &&
@@ -881,14 +1075,18 @@ function MyPage() {
                     <OrderCard key={order.orderId}>
                       <div className="order-banner">
                         <span className="order-date">
-                          {formatDate(order.createdAt)}
+                          {formatDate(order.orderedAt ?? order.createdAt)}
                         </span>
 
                         <button
                           type="button"
                           className="order-number"
                           onClick={() =>
-                            navigate(`/mypage/orders/${order.orderId}`)
+                            navigate(
+                              `/mypage/orders?orderId=${encodeURIComponent(
+                                order.orderId,
+                              )}`,
+                            )
                           }
                         >
                           {order.orderId}
@@ -924,10 +1122,6 @@ function MyPage() {
                             </strong>
                           </p>
 
-                          {/*
-                           * order.status 대신 Claim까지 반영한
-                           * 상태 문구를 표시합니다.
-                           */}
                           <div className="order-status">{orderStatusLabel}</div>
                         </div>
 
@@ -974,7 +1168,9 @@ function MyPage() {
                             <button
                               type="button"
                               className="review-button"
-                              onClick={() => handleReview(product.productId)}
+                              onClick={() =>
+                                handleReview(order.orderId, product.productId)
+                              }
                             >
                               리뷰작성
                             </button>
@@ -988,6 +1184,10 @@ function MyPage() {
             )}
           </div>
         </section>
+
+        {/* =====================================================
+            찜한 상품
+        ===================================================== */}
 
         <section css={section}>
           <div css={titleWrapper}>
@@ -1063,6 +1263,9 @@ function MyPage() {
                         badge=""
                         showHeart
                         isLiked={product.isLiked}
+                        onHeartClick={() =>
+                          handleRemoveWishlist(product.productId)
+                        }
                       />
                     </div>
 
@@ -1073,9 +1276,19 @@ function MyPage() {
                     </div>
 
                     <div className="btn-wrapper">
-                      <button type="button">장바구니</button>
+                      <button
+                        type="button"
+                        onClick={() => handleAddCart(product.productId)}
+                      >
+                        장바구니
+                      </button>
 
-                      <button type="button">바로구매</button>
+                      <button
+                        type="button"
+                        onClick={() => handleBuyNow(product.productId)}
+                      >
+                        바로구매
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -1085,22 +1298,38 @@ function MyPage() {
         </section>
       </main>
 
+      {/* =====================================================
+          리뷰 모달
+      ===================================================== */}
+
       {isModalOpen && (
         <ReviewModal
+          orderId={selectedOrderId}
           productId={selectedProductId}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => {
+            setIsModalOpen(false);
+
+            setSelectedOrderId(null);
+
+            setSelectedProductId(null);
+          }}
         />
       )}
 
-      <PasswordConfirmModal
+      {/* =====================================================
+          회원정보 수정 비밀번호 확인
+      ===================================================== */}
+
+      {/* <PasswordConfirmModal
         isOpen={isPasswordModalOpen}
         onClose={() => setIsPasswordModalOpen(false)}
         onSuccess={() => {
           setIsPasswordModalOpen(false);
+
           navigate("/mypage/edit");
         }}
-        purpose="회원정보를 확인"
-      />
+        purpose="PROFILE_UPDATE"
+      /> */}
     </BasicPage>
   );
 }

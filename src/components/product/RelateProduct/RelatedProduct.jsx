@@ -332,7 +332,7 @@ export default function RelatedProducts({ productId }) {
                 image={product.thumbnail}
                 name={product.name}
                 badge=""
-                showHeart
+                showHeart={false}
               />
             </ProductImageWrapper>
 
