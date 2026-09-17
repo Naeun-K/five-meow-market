@@ -4821,7 +4821,7 @@ function MyPage() {
                   className="pointDeco"
                   onClick={() => navigate("/mypage/points")}
                 >
-                  <span>현재 적립금</span>
+                  <span>적립금</span>
 
                   <span>{Number(points ?? 0).toLocaleString()} P</span>
                 </button>

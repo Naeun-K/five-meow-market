@@ -1130,25 +1130,39 @@ export const userCard = css({
 
 export const userInfo = css({
   minWidth: 0,
+  flex: 1,
+
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  // alignItems: "flex-start",
   alignItems: "center",
   gap: "20px",
 
-  "& .info-wrapper": { display: "flex", alignItems: "center", gap: "20px" },
+  "& .info-wrapper": {
+    display: "flex",
+    alignItems: "center",
+    gap: "20px",
+
+    minWidth: 0,
+    maxWidth: "100%",
+  },
 
   "@media (max-width: 1023px)": {
     gap: "15px",
-    "& .info-wrapper": { flexDirection: "column", gap: "15px" },
+
+    "& .info-wrapper": {
+      flexDirection: "column",
+      gap: "15px",
+      width: "100%",
+    },
   },
 
   "@media (max-width: 767px)": {
     flex: 1,
     minWidth: 0,
+    width: "100%",
+
     flexDirection: "column",
-    // alignItems: "flex-start",
     justifyContent: "center",
     gap: "10px",
   },
@@ -1180,10 +1194,15 @@ export const userName = css({
 
 export const userEmail = css({
   display: "block",
-  flexShrink: 0,
+  flexShrink: 1,
+  minWidth: 0,
+  maxWidth: "100%",
+
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
 
   fontSize: "18px",
-
   lineHeight: "1.6",
   letterSpacing: "-0.01em",
   color: "var(--text-secondary)",
@@ -1191,7 +1210,14 @@ export const userEmail = css({
   "&.pointDeco": {
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     gap: "10px",
+
+    width: "150px",
+    minWidth: "150px",
+    maxWidth: "150px",
+    flexShrink: 0,
+    boxSizing: "border-box",
 
     padding: "4px 12px",
     border: "1px solid transparent",
@@ -1203,7 +1229,13 @@ export const userEmail = css({
     fontWeight: 600,
 
     transition: "border-color 0.3s",
+
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+
+    transform: "translateX(-60px)",
   },
+
   "&.pointDeco:hover": {
     borderColor: "var(--text-primary)",
   },
