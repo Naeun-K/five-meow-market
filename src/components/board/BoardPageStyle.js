@@ -345,7 +345,6 @@ export const BoardRow = styled.div`
       overflow: hidden;
     }
 
-    
     .title-text {
       display: block;
       min-width: 0;
@@ -445,7 +444,6 @@ export const BoardRow = styled.div`
         `}
   }
 `;
-
 
 export const ProductInfo = styled.div`
   display: flex;

@@ -637,6 +637,7 @@ export default function QnaPage() {
       <style>{`
         .home-button-wrapper {
           display: block;
+          max-width: 1450px;
           width: 100%;
           margin-bottom: 0;
           text-align: left;
