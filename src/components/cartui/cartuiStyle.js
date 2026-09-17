@@ -70,7 +70,7 @@ export const CartInfo = styled.div`
   margin-top: 40px;
 
   @media (max-width: 767px) {
-    display: contents; /* 🔵 CHANGE: 모바일에서 wrapper만 레이아웃에서 제거 */
+    display: contents; 
   }
 `;
 

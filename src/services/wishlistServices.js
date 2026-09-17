@@ -1,8 +1,6 @@
 import * as wishlistApi from "../api/wishlistApi";
 
-/**
- * 찜 추가
- */
+
 export const addWishlist = async (productId, accessToken) => {
   const response = await wishlistApi.addWishlist(productId, accessToken);
 
@@ -21,9 +19,7 @@ export const addWishlist = async (productId, accessToken) => {
   };
 };
 
-/**
- * 찜 해제
- */
+
 export const removeWishlist = async (productId, accessToken) => {
   const response = await wishlistApi.removeWishlist(productId, accessToken);
 
@@ -38,9 +34,7 @@ export const removeWishlist = async (productId, accessToken) => {
   };
 };
 
-/**
- * 찜 목록 조회
- */
+
 export const getWishlist = async (options = {}, accessToken) => {
   const response = await wishlistApi.getWishlist(options, accessToken);
 

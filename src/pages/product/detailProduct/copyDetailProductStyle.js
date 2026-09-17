@@ -5,7 +5,7 @@ export const PhotoWrapper = styled.div({
   maxWidth: "100%",
   minWidth: 0,
 
-  // 큰 상품 이미지
+  
   "& .main-product-image": {
     width: "100%",
     aspectRatio: "1 / 1",
@@ -21,7 +21,7 @@ export const PhotoWrapper = styled.div({
     objectPosition: "center",
   },
 
-  // 썸네일 3개
+  
   "& .product-thumbnail-list": {
     display: "flex",
     alignItems: "center",
@@ -55,12 +55,12 @@ export const PhotoWrapper = styled.div({
     objectPosition: "center",
   },
 
-  // 현재 선택된 이미지
+  
   "& .product-thumbnail.is-active": {
     border: "2px solid var(--text-primary)",
   },
 
-  // 모바일
+  
   "@media (max-width: 767px)": {
     width: "100%",
     maxWidth: "100%",
@@ -282,9 +282,7 @@ export const DetailProductStyle = styled.div({
     color: "var(--text-primary)",
   },
 
-  /* =====================================
-     상품 이미지 영역
-  ===================================== */
+  
 
   "& .product-photo-area": {
     display: "flex",
@@ -296,9 +294,7 @@ export const DetailProductStyle = styled.div({
     minWidth: 0,
   },
 
-  /* =====================================
-     관련상품 이동 버튼
-  ===================================== */
+  
 
   "& .related-scroll-button": {
     display: "flex",
@@ -329,12 +325,7 @@ export const DetailProductStyle = styled.div({
       "background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease",
   },
 
-  /* =====================================
-     실제 JSX:
-     <span className="related-scroll-paw">
-       <PawIcon />
-     </span>
-  ===================================== */
+  
 
   "& .related-scroll-paw": {
     display: "flex",
@@ -349,10 +340,7 @@ export const DetailProductStyle = styled.div({
     color: "var(--bg-button)",
   },
 
-  /*
-    PawIcon이 내부에서 어떤 wrapper를 반환하더라도
-    related-scroll-paw 크기 안에서 동작하도록 처리
-  */
+  
   "& .related-scroll-paw > *": {
     display: "flex",
 
@@ -373,9 +361,7 @@ export const DetailProductStyle = styled.div({
     whiteSpace: "nowrap",
   },
 
-  /* =====================================
-     화살표 SVG
-  ===================================== */
+  
 
   "& .related-scroll-icon": {
     display: "flex",
@@ -397,9 +383,7 @@ export const DetailProductStyle = styled.div({
     height: "100%",
   },
 
-  /* =====================================
-     버튼 하단 설명
-  ===================================== */
+  
 
   "& .related-scroll-description": {
     margin: "10px 0 0",
@@ -422,7 +406,7 @@ export const DetailProductStyle = styled.div({
     },
   },
 
-  /* PC hover */
+  
   "@media (hover: hover) and (pointer: fine)": {
     "& .related-scroll-button:hover": {
       borderColor: "var(--bg-button)",
@@ -443,9 +427,7 @@ export const DetailProductStyle = styled.div({
     },
   },
 
-  /* =====================================
-     태블릿
-  ===================================== */
+  
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     gap: "40px",
@@ -489,9 +471,7 @@ export const DetailProductStyle = styled.div({
     },
   },
 
-  /* =====================================
-     모바일
-  ===================================== */
+  
 
   "@media (max-width: 767px)": {
     flexDirection: "column",
@@ -861,9 +841,7 @@ export const DetailSection = styled.section({
 
   scrollMarginTop: "160px",
 
-  /* =====================================
-     관련상품
-  ===================================== */
+  
 
   "&#related-products": {
     paddingTop: "20px",
@@ -878,9 +856,7 @@ export const DetailSection = styled.section({
     fontSize: "32px",
   },
 
-  /* =====================================
-     공통 섹션
-  ===================================== */
+  
 
   "& .section-heading": {
     paddingBottom: "18px",
@@ -947,9 +923,7 @@ export const DetailSection = styled.section({
     margin: 0,
   },
 
-  /* =====================================
-     상세 이미지
-  ===================================== */
+  
 
   "& .detail-image-container": {
     position: "relative",
@@ -992,10 +966,7 @@ export const DetailSection = styled.section({
     height: "auto",
   },
 
-  /*
-    JSX의 실제 클래스명:
-    detail-image-fade
-  */
+  
   "& .detail-image-fade": {
     position: "absolute",
 
@@ -1013,33 +984,33 @@ export const DetailSection = styled.section({
     backdropFilter: "blur(2px)",
   },
 
-  // "& .detail-more-button": {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
+  
+  
+  
+  
 
-  //   width: "100%",
-  //   maxWidth: "700px",
-  //   height: "56px",
+  
+  
+  
 
-  //   gap: "10px",
+  
 
-  //   padding: "0 20px",
+  
 
-  //   border: "1px solid var(--border)",
-  //   borderRadius: "0 0 8px 8px",
+  
+  
 
-  //   backgroundColor: "#fff",
+  
 
-  //   color: "var(--text-primary)",
+  
 
-  //   fontSize: "18px",
-  //   fontWeight: 500,
+  
+  
 
-  //   cursor: "pointer",
+  
 
-  //   transition: "background-color 0.2s ease, border-color 0.2s ease",
-  // },
+  
+  
 
   "& .detail-more-button": {
     display: "flex",
@@ -1052,8 +1023,8 @@ export const DetailSection = styled.section({
 
     gap: "10px",
 
-    // 핵심: 버튼 자체를 가운데 정렬
-    // margin: "0 auto",
+    
+    
 
     padding: "0 20px",
 
@@ -1090,9 +1061,7 @@ export const DetailSection = styled.section({
     transform: "rotate(180deg)",
   },
 
-  /* =====================================
-     구매안내
-  ===================================== */
+  
 
   "& .guide-content p": {
     margin: "0 0 12px",
@@ -1110,9 +1079,7 @@ export const DetailSection = styled.section({
     color: "var(--text-primary)",
   },
 
-  /* =====================================
-     태블릿
-  ===================================== */
+  
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     padding: "0 30px",
@@ -1157,9 +1124,7 @@ export const DetailSection = styled.section({
     },
   },
 
-  /* =====================================
-     모바일
-  ===================================== */
+  
 
   "@media (max-width: 767px)": {
     padding: "0 20px",

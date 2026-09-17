@@ -29,8 +29,8 @@ export const FloatingIconStyle = styled.div(({ $isVisible }) => ({
 
   "@media (min-width: 768px) and (max-width: 1023px)": {
     right: "30px",
-    // bottom: "150px",
+    
 
-    // gap: "20px",
+    
   },
 }));

@@ -1,8 +1,6 @@
 import * as inquiryApi from "../api/inquryApi";
 
-/**
- * 문의 작성
- */
+
 export const createInquiry = async (inquiryData, accessToken) => {
   const response = await inquiryApi.createInquiry(inquiryData, accessToken);
 
@@ -21,9 +19,7 @@ export const createInquiry = async (inquiryData, accessToken) => {
   };
 };
 
-/**
- * 전체 문의 목록 조회
- */
+
 export const getInquiries = async (options = {}) => {
   const response = await inquiryApi.getInquiries(options);
 
@@ -43,9 +39,7 @@ export const getInquiries = async (options = {}) => {
   };
 };
 
-/**
- * 내가 작성한 문의 목록 조회
- */
+
 export const getMyInquiries = async (options = {}, accessToken) => {
   const response = await inquiryApi.getMyInquiries(options, accessToken);
 
@@ -65,9 +59,7 @@ export const getMyInquiries = async (options = {}, accessToken) => {
   };
 };
 
-/**
- * 문의 상세 조회
- */
+
 export const getInquiry = async (inquiryId, accessToken) => {
   const response = await inquiryApi.getInquiry(inquiryId, accessToken);
 
@@ -78,9 +70,7 @@ export const getInquiry = async (inquiryId, accessToken) => {
   };
 };
 
-/**
- * 문의 수정
- */
+
 export const updateInquiry = async (inquiryId, inquiryData, accessToken) => {
   const response = await inquiryApi.updateInquiry(
     inquiryId,
@@ -99,9 +89,7 @@ export const updateInquiry = async (inquiryId, inquiryData, accessToken) => {
   };
 };
 
-/**
- * 문의 삭제
- */
+
 export const deleteInquiry = async (inquiryId, accessToken) => {
   const response = await inquiryApi.deleteInquiry(inquiryId, accessToken);
 

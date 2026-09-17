@@ -61,24 +61,24 @@ const returnReasons = [
 const catImages = [logoEat, logoPlay, logoRest, logoHigh, logoClean];
 
 function ReturnPage() {
-  // 전체 선택된 상품
+  
   const [selectedProducts, setSelectedProducts] = useState(
     products.map((product) => product.id),
   );
 
-  // 상품별 반품 사유
+  
   const [selectedReasons, setSelectedReasons] = useState({});
 
-  // 상품별 상세 사유
+  
   const [detailReasons, setDetailReasons] = useState({});
 
-  // 현재 열려 있는 드롭다운 상품 id
+  
   const [openDropdown, setOpenDropdown] = useState(null);
 
-  // 드롭다운 영역 참조
+  
   const dropdownRefs = useRef({});
 
-  // 드롭다운 외부 클릭 시 닫기
+  
   useEffect(() => {
     const handleOutsideClick = (event) => {
       const isInsideDropdown = Object.values(dropdownRefs.current).some(
@@ -97,7 +97,7 @@ function ReturnPage() {
     };
   }, []);
 
-  // 전체 선택 / 전체 해제
+  
   const handleSelectAll = () => {
     if (selectedProducts.length === products.length) {
       setSelectedProducts([]);
@@ -106,7 +106,7 @@ function ReturnPage() {
     }
   };
 
-  // 개별 상품 선택 / 해제
+  
   const handleSelectProduct = (productId) => {
     setSelectedProducts((prev) => {
       if (prev.includes(productId)) {
@@ -117,17 +117,17 @@ function ReturnPage() {
     });
   };
 
-  // 선택 삭제
+  
   const handleDeleteSelected = () => {
     setSelectedProducts([]);
   };
 
-  // 드롭다운 열기 / 닫기
+  
   const handleToggleDropdown = (productId) => {
     setOpenDropdown((prev) => (prev === productId ? null : productId));
   };
 
-  // 반품 사유 선택
+  
   const handleSelectReason = (productId, reason) => {
     setSelectedReasons((prev) => ({
       ...prev,
@@ -137,7 +137,7 @@ function ReturnPage() {
     setOpenDropdown(null);
   };
 
-  // 상세 사유 입력
+  
   const handleDetailReasonChange = (productId, value) => {
     setDetailReasons((prev) => ({
       ...prev,
@@ -145,7 +145,7 @@ function ReturnPage() {
     }));
   };
 
-  // 반품 신청
+  
   const handleSubmitReturn = () => {
     if (selectedProducts.length === 0) {
       alert("반품할 상품을 선택해주세요.");
@@ -176,13 +176,13 @@ function ReturnPage() {
         <Header />
 
         <main className="return-main">
-          {/* 페이지 헤더 */}
+          {}
           <section className="return-page-header">
             <h1>반품 신청</h1>
             <p>반품하실 상품과 사유를 선택해주세요.</p>
           </section>
 
-          {/* 상품 선택 영역 */}
+          {}
           <section className="product-selection">
             <div className="product-selection-header">
               <div className="selection-title-area">
@@ -204,7 +204,7 @@ function ReturnPage() {
                 </span>
               </div>
 
-              {/* 선택 삭제 */}
+              {}
               <div className="delete-button-area">
                 <button
                   type="button"
@@ -214,14 +214,14 @@ function ReturnPage() {
                   선택 삭제
                 </button>
 
-                {/* 버튼에 호버했을 때만 나타나는 고양이 */}
+                {}
                 <div className="delete-cat-decoration">
                   <img src={logoMyshop} alt="" />
                 </div>
               </div>
             </div>
 
-            {/* 상품 목록 */}
+            {}
             <div className="product-list">
               {products.map((product) => {
                 const isSelected = selectedProducts.includes(product.id);
@@ -234,7 +234,7 @@ function ReturnPage() {
 
                 return (
                   <article className="return-product-card" key={product.id}>
-                    {/* 상품 체크박스 */}
+                    {}
                     <button
                       type="button"
                       className={`product-checkbox ${
@@ -246,7 +246,7 @@ function ReturnPage() {
                       {isSelected ? "✓" : ""}
                     </button>
 
-                    {/* 상품 이미지 + 상품 정보 */}
+                    {}
                     <div className="product-main-info">
                       <img
                         className="product-image"
@@ -269,17 +269,17 @@ function ReturnPage() {
                       </div>
                     </div>
 
-                    {/* 수량 */}
+                    {}
                     <p className="product-quantity">{product.quantity}개</p>
 
-                    {/* 반품 사유 영역 */}
+                    {}
                     <div
                       className="return-reason-area"
                       ref={(element) => {
                         dropdownRefs.current[product.id] = element;
                       }}
                     >
-                      {/* 커스텀 드롭다운 */}
+                      {}
                       <div className="custom-dropdown">
                         <button
                           type="button"
@@ -318,7 +318,7 @@ function ReturnPage() {
                         )}
                       </div>
 
-                      {/* 상세 사유 */}
+                      {}
                       <div className="reason-textarea-wrapper">
                         <textarea
                           value={currentDetailReason}
@@ -343,7 +343,7 @@ function ReturnPage() {
             </div>
           </section>
 
-          {/* 반품 안내 */}
+          {}
           <section className="return-notice">
             <div className="notice-content">
               <div className="notice-title-area">
@@ -363,7 +363,7 @@ function ReturnPage() {
               </ul>
             </div>
 
-            {/* 반품 신청 버튼 + 고양이 5마리 */}
+            {}
             <div className="notice-submit-area">
               <div className="cat-decoration">
                 {catImages.map((catImage, index) => (

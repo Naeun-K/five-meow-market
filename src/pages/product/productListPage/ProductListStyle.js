@@ -145,7 +145,7 @@ export const CardContainer = styled.div({
   },
 });
 
-/* 홈으로 이동 */
+
 export const HomeButton = styled(Link)({
   display: "flex",
   alignItems: "center",

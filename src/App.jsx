@@ -35,7 +35,7 @@ function App() {
     <>
       <ScrollToTop />
 
-      {/* <ExchangePage /> */}
+      {}
       <Routes>
         <Route path="/" element={<MainPage />} />
 

@@ -458,7 +458,7 @@ export const DetailBanner = styled.nav({
   width: "100%",
   maxWidth: "1300px",
 
-  // margin: "0 auto",
+  
 
   borderTop: "1px solid var(--border)",
   borderBottom: "1px solid var(--border)",
@@ -521,7 +521,7 @@ export const DetailSection = styled.section({
   maxWidth: "1300px",
 
   padding: "0 50px ",
-  // paddingTop: "50px",
+  
 
   scrollMarginTop: "160px",
 
@@ -651,7 +651,7 @@ export const DetailSection = styled.section({
 
     gap: "10px",
 
-    // margin: "0 auto",
+    
 
     padding: "0 20px",
 
@@ -735,7 +735,7 @@ export const DetailSection = styled.section({
   },
 
   "@media (max-width: 767px)": {
-    // padding: "20px 20px 0",
+    
     padding: "0 20px ",
 
     scrollMarginTop: "120px",

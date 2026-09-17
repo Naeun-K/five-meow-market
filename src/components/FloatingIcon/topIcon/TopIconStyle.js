@@ -43,9 +43,9 @@ export const TopIconStyle = styled.button({
     width: "45%",
     height: "45%",
   },
-  // "@media (max-width: 767px)": {
-  //   width: "40px",
-  // },
+  
+  
+  
 
   "@media  (max-width: 1023px)": {
     width: "50px",

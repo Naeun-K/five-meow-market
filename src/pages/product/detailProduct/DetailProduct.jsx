@@ -156,9 +156,9 @@ export default function DetailProduct() {
       return;
     }
 
-    // if (bottomSheetType === "buy") {
+    
 
-    // }
+    
   };
 
   const handleBuyClick = () => {
