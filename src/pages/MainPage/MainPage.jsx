@@ -24,6 +24,7 @@ import PawIcon from "../../components/common/PawIcon/PawIcon";
 export default function MainPage() {
   const { showToast } = useToast();
   const naviagate = useNavigate();
+  const [wishlist, setWishlist] = useState([]);
   const [bestProducts, setBestProducts] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
   useEffect(() => {
@@ -49,6 +50,15 @@ export default function MainPage() {
 
     fetchMainProducts();
   }, [showToast]);
+
+  const handleWishlistChange = (productId, isLiked) => {
+    if (isLiked) {
+      return;
+    }
+    setWishlist((prev) => prev.filter((item) => item.productId !== productId));
+
+    // setTotalCount((prev) => Math.max(prev - 1, 0));
+  };
 
   return (
     <BasicPage>
@@ -196,10 +206,13 @@ export default function MainPage() {
                 {" "}
                 <div className="product-item" key={product.productId}>
                   <ProductCard
+                    productId={product.productId}
                     image={product.thumbnail}
                     name={product.name}
-                    badge="new"
+                    badge=""
                     showHeart
+                    isLiked={product.isLiked}
+                    onWishlistChange={handleWishlistChange}
                   />
 
                   <div className="product-info">

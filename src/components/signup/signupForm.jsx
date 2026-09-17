@@ -15,7 +15,9 @@ import { useNavigate } from "react-router-dom";
 import PawIcon from "../common/PawIcon/PawIcon";
 
 const isValidPassword = (password) => {
-  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/.test(
+    password,
+  );
 };
 
 const SignupForm = () => {
@@ -323,7 +325,7 @@ const SignupForm = () => {
               >
                 {isValidPassword(password)
                   ? "사용 가능한 비밀번호입니다."
-                  : "비밀번호는 영문, 숫자, 대문자를 포함해야 합니다."}
+                  : "비밀번호는 8자이상 16자 이하로 영문, 숫자, 대문자, @ $ ! % * # ? & 를 포함해야 합니다."}
               </p>
             </div>
 
