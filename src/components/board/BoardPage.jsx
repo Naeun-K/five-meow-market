@@ -41,7 +41,7 @@ const boardConfig = {
   },
 };
 
-export default function BoardPage({ type, data = [] }) {
+export default function BoardPage({ type, data = [], onItemClick }) {
   const config = boardConfig[type];
 
   if (!config) {
@@ -62,7 +62,12 @@ export default function BoardPage({ type, data = [] }) {
 
       <div className="board-body">
         {data.map((item) => (
-          <BoardRow key={item.id} boardType={type}>
+          <BoardRow
+            key={item.id}
+            boardType={type}
+            $clickable={Boolean(onItemClick)}
+            onClick={() => onItemClick?.(item)}
+          >
             {config.columns.map((column) => (
               <BoardCell key={column.key} column={column.key} item={item} />
             ))}

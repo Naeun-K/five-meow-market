@@ -1,6 +1,5 @@
 import { apiRequest } from "./apiClient";
 
-
 export const createInquiry = async (inquiryData, accessToken) => {
   return apiRequest("/inquiries", {
     method: "POST",
@@ -8,7 +7,6 @@ export const createInquiry = async (inquiryData, accessToken) => {
     body: inquiryData,
   });
 };
-
 
 export const getInquiries = async ({
   page = 1,
@@ -32,7 +30,6 @@ export const getInquiries = async ({
   return apiRequest(`/inquiries?${searchParams.toString()}`);
 };
 
-
 export const getMyInquiries = async (
   { page = 1, limit = 10, category, status } = {},
   accessToken,
@@ -55,13 +52,11 @@ export const getMyInquiries = async (
   });
 };
 
-
 export const getInquiry = async (inquiryId, accessToken) => {
   return apiRequest(`/inquiries/${encodeURIComponent(inquiryId)}`, {
     token: accessToken,
   });
 };
-
 
 export const updateInquiry = async (inquiryId, inquiryData, accessToken) => {
   return apiRequest(`/inquiries/${encodeURIComponent(inquiryId)}`, {
@@ -71,10 +66,16 @@ export const updateInquiry = async (inquiryId, inquiryData, accessToken) => {
   });
 };
 
-
 export const deleteInquiry = async (inquiryId, accessToken) => {
   return apiRequest(`/inquiries/${encodeURIComponent(inquiryId)}`, {
     method: "DELETE",
+    token: accessToken,
+  });
+};
+
+export const getInquiryDetail = async (inquiryId, accessToken) => {
+  return apiRequest(`/inquiries/${encodeURIComponent(inquiryId)}`, {
+    method: "GET",
     token: accessToken,
   });
 };

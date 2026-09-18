@@ -1,6 +1,5 @@
 import * as inquiryApi from "../api/inquryApi";
 
-
 export const createInquiry = async (inquiryData, accessToken) => {
   const response = await inquiryApi.createInquiry(inquiryData, accessToken);
 
@@ -18,7 +17,6 @@ export const createInquiry = async (inquiryData, accessToken) => {
     message: response.message,
   };
 };
-
 
 export const getInquiries = async (options = {}) => {
   const response = await inquiryApi.getInquiries(options);
@@ -39,7 +37,6 @@ export const getInquiries = async (options = {}) => {
   };
 };
 
-
 export const getMyInquiries = async (options = {}, accessToken) => {
   const response = await inquiryApi.getMyInquiries(options, accessToken);
 
@@ -59,7 +56,6 @@ export const getMyInquiries = async (options = {}, accessToken) => {
   };
 };
 
-
 export const getInquiry = async (inquiryId, accessToken) => {
   const response = await inquiryApi.getInquiry(inquiryId, accessToken);
 
@@ -69,7 +65,6 @@ export const getInquiry = async (inquiryId, accessToken) => {
     message: response.message,
   };
 };
-
 
 export const updateInquiry = async (inquiryId, inquiryData, accessToken) => {
   const response = await inquiryApi.updateInquiry(
@@ -89,7 +84,6 @@ export const updateInquiry = async (inquiryId, inquiryData, accessToken) => {
   };
 };
 
-
 export const deleteInquiry = async (inquiryId, accessToken) => {
   const response = await inquiryApi.deleteInquiry(inquiryId, accessToken);
 
@@ -97,4 +91,8 @@ export const deleteInquiry = async (inquiryId, accessToken) => {
     success: response.success,
     message: response.message,
   };
+};
+
+export const getInquiryDetail = async (inquiryId, accessToken) => {
+  return inquiryApi.getInquiryDetail(inquiryId, accessToken);
 };

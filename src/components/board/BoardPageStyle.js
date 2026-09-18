@@ -170,6 +170,17 @@ export const BoardRow = styled.div`
   border-bottom: 1px solid var(--border, #ddd6cc);
   text-align: center;
 
+  ${({ $clickable }) =>
+    $clickable &&
+    `
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #faf6f2;
+      }
+    `}
+
   ${({ boardType }) =>
     boardType === "review"
       ? `

@@ -16,7 +16,7 @@ export const BasicPageStyle = styled.div({
     alignItems: "center",
     justifyContent: "space-between",
 
-    gap: "80px",
+    gap: "50px",
 
     width: "100%",
   },

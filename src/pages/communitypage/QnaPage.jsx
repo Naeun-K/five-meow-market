@@ -1,333 +1,18 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import BasicPage from "../basicPage/BasicPage";
 import BoardPage from "../../components/board/BoardPage";
 import Loader from "../../components/loader/Loader";
+
 import { HomeButton } from "../product/productListPage/ProductListStyle";
 
 import useAuth from "../../hooks/useAuth";
-import { getMyInquiries } from "../../services/inquiryService";
+import { getInquiries } from "../../services/inquiryService";
 import { mockInquiryData } from "../../mock/mockInquiry";
+import Pagination from "../../components/pagnation/Pagnation";
 
+const ITEMS_PER_PAGE = 10;
 
 const checkIsNew = (createdAt) => {
   if (!createdAt) {
@@ -342,12 +27,10 @@ const checkIsNew = (createdAt) => {
 
   const currentTime = Date.now();
   const twentyFourHours = 24 * 60 * 60 * 1000;
-
   const elapsedTime = currentTime - createdTime;
 
   return elapsedTime >= 0 && elapsedTime < twentyFourHours;
 };
-
 
 const formatInquiryDate = (createdAt) => {
   if (!createdAt) {
@@ -367,7 +50,6 @@ const formatInquiryDate = (createdAt) => {
   return `${year}.${month}.${day}`;
 };
 
-
 const maskNickname = (nickname) => {
   if (!nickname) {
     return "";
@@ -382,21 +64,19 @@ const maskNickname = (nickname) => {
   return `${trimmedNickname.charAt(0)}****`;
 };
 
-
 const convertInquiryForBoard = (
   inquiry,
   number,
   isMine = false,
   maskedNickname = "",
 ) => {
-  
-  const author = isMine ? maskedNickname : (inquiry.author ?? "");
+  const apiAuthor =
+    inquiry.maskedNickname ?? inquiry.author ?? inquiry.writer ?? "";
+
+  const author = isMine && maskedNickname ? maskedNickname : apiAuthor;
 
   return {
-    
     id: inquiry.inquiryId,
-
-    
     inquiryId: inquiry.inquiryId,
 
     number,
@@ -409,84 +89,61 @@ const convertInquiryForBoard = (
     title: inquiry.title ?? "",
     content: inquiry.content ?? "",
 
-    
     writer: author,
-
-    
     author,
 
-    
     date: formatInquiryDate(inquiry.createdAt),
-
-    
     createdAt: inquiry.createdAt,
 
-    views: inquiry.views ?? 0,
+    views: inquiry.viewCount ?? inquiry.views ?? 0,
 
     status: inquiry.status ?? "WAITING",
 
-    
     isPrivate: Boolean(inquiry.isPrivate),
-
-    
     isSecret: Boolean(inquiry.isPrivate),
 
-    
     isNew: checkIsNew(inquiry.createdAt),
 
-    
     isMine,
   };
 };
 
 export default function QnaPage() {
-  const { accessToken, user, isLoggedIn, isAuthLoading } = useAuth();
+  const navigate = useNavigate();
 
-  const [myInquiries, setMyInquiries] = useState([]);
+  const { user, isLoggedIn, isAuthLoading } = useAuth();
+
+  const [apiInquiries, setApiInquiries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  
   const maskedNickname = maskNickname(user?.nickname);
 
-  
   useEffect(() => {
     let isMounted = true;
 
-    const loadMyInquiries = async () => {
-      if (isAuthLoading) {
-        return;
-      }
-
-      
-      if (!isLoggedIn || !accessToken) {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-
-        return;
-      }
-
+    const loadInquiries = async () => {
       try {
-        const response = await getMyInquiries(
-          {
-            page: 1,
-            limit: 100,
-          },
-          accessToken,
-        );
+        const response = await getInquiries({
+          page: 1,
+          limit: 100,
+        });
 
         if (!isMounted) {
           return;
         }
 
         if (response.success) {
-          setMyInquiries(response.inquiries ?? []);
+          setApiInquiries(response.inquiries ?? []);
+          return;
         }
+
+        setApiInquiries([]);
       } catch (error) {
-        console.error("내 문의 조회 실패:", error);
+        console.error("문의 목록 조회 실패:", error);
 
         if (isMounted) {
-          setMyInquiries([]);
+          setApiInquiries([]);
         }
       } finally {
         if (isMounted) {
@@ -495,53 +152,114 @@ export default function QnaPage() {
       }
     };
 
-    loadMyInquiries();
+    loadInquiries();
 
     return () => {
       isMounted = false;
     };
-  }, [accessToken, isLoggedIn, isAuthLoading]);
+  }, []);
 
-  
-  const sortedMyInquiries = [...myInquiries].sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  });
+  const isMyInquiry = (inquiry) => {
+    if (!isLoggedIn || !user) {
+      return false;
+    }
 
-  
-  const myInquiryIds = new Set(
-    sortedMyInquiries.map((inquiry) => inquiry.inquiryId),
+    if (inquiry.isMine === true) {
+      return true;
+    }
+
+    if (
+      inquiry.userId &&
+      user.userId &&
+      String(inquiry.userId) === String(user.userId)
+    ) {
+      return true;
+    }
+
+    if (inquiry.email && user.email && inquiry.email === user.email) {
+      return true;
+    }
+
+    if (inquiry.userEmail && user.email && inquiry.userEmail === user.email) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const apiInquiryIds = new Set(
+    apiInquiries.map((inquiry) => String(inquiry.inquiryId)),
   );
 
-  
-  const sortedMockInquiries = [...mockInquiryData]
-    .filter((inquiry) => !myInquiryIds.has(inquiry.inquiryId))
-    .sort((a, b) => {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    });
+  const filteredMockInquiries = mockInquiryData.filter(
+    (inquiry) => !apiInquiryIds.has(String(inquiry.inquiryId)),
+  );
 
-  
+  const sortedMockInquiries = [...filteredMockInquiries].sort((a, b) => {
+    return (b.number ?? 0) - (a.number ?? 0);
+  });
+
   const maxMockNumber = sortedMockInquiries.reduce((maxNumber, inquiry) => {
-    return Math.max(maxNumber, inquiry.number ?? 0);
+    return Math.max(maxNumber, Number(inquiry.number) || 0);
   }, 0);
 
-  
-  const myInquiryCount = sortedMyInquiries.length;
+  const apiInquiryCount = apiInquiries.length;
 
-  const convertedMyInquiries = sortedMyInquiries.map((inquiry, index) => {
-    const number = maxMockNumber + myInquiryCount - index;
+  const convertedApiInquiries = apiInquiries.map((inquiry, index) => {
+    const displayNumber = maxMockNumber + apiInquiryCount - index;
 
-    return convertInquiryForBoard(inquiry, number, true, maskedNickname);
+    return convertInquiryForBoard(
+      inquiry,
+      displayNumber,
+      isMyInquiry(inquiry),
+      maskedNickname,
+    );
   });
 
-  
   const convertedMockInquiries = sortedMockInquiries.map((inquiry) => {
-    return convertInquiryForBoard(inquiry, inquiry.number, false);
+    return convertInquiryForBoard(
+      inquiry,
+      inquiry.number,
+      isMyInquiry(inquiry),
+      maskedNickname,
+    );
   });
 
-  
-  const qnaData = [...convertedMyInquiries, ...convertedMockInquiries];
+  const qnaData = [...convertedApiInquiries, ...convertedMockInquiries];
 
-  
+  const totalPages = Math.max(1, Math.ceil(qnaData.length / ITEMS_PER_PAGE));
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+
+  const paginatedQnaData = qnaData.slice(startIndex, endIndex);
+
+  const handlePageChange = (page) => {
+    if (page < 1 || page > totalPages) {
+      return;
+    }
+
+    setCurrentPage(page);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleInquiryClick = (inquiry) => {
+    if (!inquiry?.inquiryId) {
+      return;
+    }
+
+    navigate(`/community/inquiry/${inquiry.inquiryId}`, {
+      state: {
+        inquiry,
+      },
+    });
+  };
+
   if (isAuthLoading) {
     return (
       <BasicPage>
@@ -550,7 +268,6 @@ export default function QnaPage() {
     );
   }
 
-  
   if (isLoading) {
     return (
       <BasicPage>
@@ -572,9 +289,21 @@ export default function QnaPage() {
           box-sizing: border-box;
         }
 
+        .qna-pagination-wrapper {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 40px;
+        }
+
         @media (max-width: 1024px) {
           .home-button-wrapper {
             padding-left: 50px;
+          }
+
+          .qna-pagination-wrapper {
+            margin-top: 30px;
           }
         }
 
@@ -582,10 +311,13 @@ export default function QnaPage() {
           .home-button-wrapper {
             padding-left: 20px;
           }
+
+          .qna-pagination-wrapper {
+            margin-top: 24px;
+          }
         }
       `}</style>
 
-      {}
       <div className="home-button-wrapper">
         <HomeButton
           to="/"
@@ -600,7 +332,21 @@ export default function QnaPage() {
         </HomeButton>
       </div>
 
-      <BoardPage type="qna" data={qnaData} />
+      <BoardPage
+        type="qna"
+        data={paginatedQnaData}
+        onItemClick={handleInquiryClick}
+      />
+
+      {totalPages > 1 && (
+        <div className="qna-pagination-wrapper">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </BasicPage>
   );
 }

@@ -1,158 +1,14 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import BasicPage from "../basicPage/BasicPage";
 import BoardPage from "../../components/board/BoardPage";
-import Loader from "../../components/loader/Loader";
+import Pagination from "../../components/pagnation/Pagnation";
 import { HomeButton } from "../product/productListPage/ProductListStyle";
 
-import useAuth from "../../hooks/useAuth";
-import { getMyReviews } from "../../services/reviewService";
 import { mockReviewData } from "../../mock/mockReview";
 
+const ITEMS_PER_PAGE = 10;
 
 const checkIsNew = (createdAt) => {
   if (!createdAt) {
@@ -167,12 +23,10 @@ const checkIsNew = (createdAt) => {
 
   const currentTime = Date.now();
   const twentyFourHours = 24 * 60 * 60 * 1000;
-
   const elapsedTime = currentTime - createdTime;
 
   return elapsedTime >= 0 && elapsedTime < twentyFourHours;
 };
-
 
 const formatReviewDate = (createdAt) => {
   if (!createdAt) {
@@ -192,163 +46,100 @@ const formatReviewDate = (createdAt) => {
   return `${year}.${month}.${day}`;
 };
 
-
-const convertReviewForBoard = (review, number, isMine = false) => {
+const convertReviewForBoard = (review, number) => {
   return {
     id: review.reviewId,
 
     reviewId: review.reviewId,
-    orderId: review.orderId,
+    orderId: review.orderId ?? null,
 
     number,
 
     product: {
-      productId: review.product?.productId ?? "",
-      name: review.product?.name ?? "",
-      thumbnail: review.product?.thumbnail ?? "",
+      productId: review.product?.productId ?? review.productId ?? "",
+
+      name: review.product?.name ?? review.productName ?? "",
+
+      thumbnail: review.product?.thumbnail ?? review.thumbnail ?? "",
     },
 
     title: review.content ?? "",
     content: review.content ?? "",
 
-    writer: review.author ?? "",
-    author: review.author ?? "",
+    writer: review.maskedNickname ?? review.author ?? review.writer ?? "",
+
+    author: review.maskedNickname ?? review.author ?? review.writer ?? "",
 
     date: formatReviewDate(review.createdAt),
     createdAt: review.createdAt,
 
-    rating: review.rating ?? 0,
+    rating: Number(review.rating) || 0,
 
     images: review.images ?? [],
 
-    
-    isPrivate: Boolean(review.isPrivate),
-
-    
     isNew: checkIsNew(review.createdAt),
 
-    
-    isMine,
+    isMock: true,
   };
 };
 
 export default function ReviewPage() {
-  const { accessToken, isLoggedIn, isAuthLoading } = useAuth();
+  const navigate = useNavigate();
 
-  const [myReviews, setMyReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  
-  useEffect(() => {
-    let isMounted = true;
+  const sortedMockReviews = [...mockReviewData].sort((a, b) => {
+    const aNumber = Number(a.number) || 0;
+    const bNumber = Number(b.number) || 0;
 
-    const loadMyReviews = async () => {
-      
-      if (isAuthLoading) {
-        return;
-      }
+    if (aNumber !== bNumber) {
+      return bNumber - aNumber;
+    }
 
-      
-      
-      if (!isLoggedIn || !accessToken) {
-        if (isMounted) {
-          setIsLoading(false);
-        }
+    const aTime = new Date(a.createdAt).getTime();
+    const bTime = new Date(b.createdAt).getTime();
 
-        return;
-      }
-
-      try {
-        const response = await getMyReviews(
-          {
-            page: 1,
-            limit: 100,
-          },
-          accessToken,
-        );
-
-        if (!isMounted) {
-          return;
-        }
-
-        if (response.success) {
-          setMyReviews(response.reviews ?? []);
-        }
-      } catch (error) {
-        console.error("내 리뷰 조회 실패:", error);
-
-        if (isMounted) {
-          setMyReviews([]);
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    loadMyReviews();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [accessToken, isLoggedIn, isAuthLoading]);
-
-  
-  const sortedMyReviews = [...myReviews].sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    return bTime - aTime;
   });
 
-  
-  const myReviewIds = new Set(sortedMyReviews.map((review) => review.reviewId));
+  const reviewData = sortedMockReviews.map((review, index) => {
+    const number = Number(review.number) || sortedMockReviews.length - index;
 
-  
-  const sortedMockReviews = [...mockReviewData]
-    .filter((review) => !myReviewIds.has(review.reviewId))
-    .sort((a, b) => {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    return convertReviewForBoard(review, number);
+  });
+
+  const totalPages = Math.max(1, Math.ceil(reviewData.length / ITEMS_PER_PAGE));
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+
+  const paginatedReviewData = reviewData.slice(startIndex, endIndex);
+
+  const handlePageChange = (page) => {
+    if (page < 1 || page > totalPages) {
+      return;
+    }
+
+    setCurrentPage(page);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
     });
+  };
 
-  
-  const combinedReviews = [
-    ...sortedMyReviews.map((review) => ({
-      ...review,
-      isMine: true,
-    })),
+  const handleReviewClick = (review) => {
+    if (!review?.reviewId) {
+      return;
+    }
 
-    ...sortedMockReviews.map((review) => ({
-      ...review,
-      isMine: false,
-    })),
-  ];
-
-  
-  const totalCount = combinedReviews.length;
-
-  
-  const reviewData = combinedReviews.map((review, index) => {
-    const number = totalCount - index;
-
-    return convertReviewForBoard(review, number, Boolean(review.isMine));
-  });
-
-  
-  if (isAuthLoading) {
-    return (
-      <BasicPage>
-        <Loader />
-      </BasicPage>
-    );
-  }
-
-  
-  if (isLoading) {
-    return (
-      <BasicPage>
-        <Loader />
-      </BasicPage>
-    );
-  }
+    navigate(`/community/review/${review.reviewId}`, {
+      state: {
+        review,
+      },
+    });
+  };
 
   return (
     <BasicPage>
@@ -363,9 +154,21 @@ export default function ReviewPage() {
           box-sizing: border-box;
         }
 
+        .review-pagination-wrapper {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 40px;
+        }
+
         @media (max-width: 1024px) {
           .home-button-wrapper {
             padding-left: 50px;
+          }
+
+          .review-pagination-wrapper {
+            margin-top: 30px;
           }
         }
 
@@ -373,10 +176,13 @@ export default function ReviewPage() {
           .home-button-wrapper {
             padding-left: 20px;
           }
+
+          .review-pagination-wrapper {
+            margin-top: 24px;
+          }
         }
       `}</style>
 
-      {}
       <div className="home-button-wrapper">
         <HomeButton
           to="/"
@@ -391,7 +197,21 @@ export default function ReviewPage() {
         </HomeButton>
       </div>
 
-      <BoardPage type="review" data={reviewData} />
+      <BoardPage
+        type="review"
+        data={paginatedReviewData}
+        onItemClick={handleReviewClick}
+      />
+
+      {totalPages > 1 && (
+        <div className="review-pagination-wrapper">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </BasicPage>
   );
 }
