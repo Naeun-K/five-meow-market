@@ -72,7 +72,7 @@ Five Meow Market은 고양이의 생활을 다음 다섯 카테고리로 구분�
 
 ### 비회원
 
-```text
+```
 메인
 → 카테고리 / 검색 / 해시태그
 → 상품 목록
@@ -84,7 +84,7 @@ Five Meow Market은 고양이의 생활을 다음 다섯 카테고리로 구분�
 
 ### 회원 구매
 
-```text
+```
 로그인
 → 상품 탐색
 → 상품 상세
@@ -122,7 +122,7 @@ Five Meow Market은 고양이의 생활을 다음 다섯 카테고리로 구분�
 
 ### 구매 이후
 
-```text
+```
 주문내역
 → 주문·배송 상태 확인
 → 배송완료
@@ -132,7 +132,7 @@ Five Meow Market은 고양이의 생활을 다음 다섯 카테고리로 구분�
 
 ## Checkout 계산 규칙
 
-```text
+```
 상품총액이 70,000원 이상이면 배송비 0원
 상품총액이 70,000원 미만이면 배송비 3,000원
 
@@ -175,19 +175,19 @@ Five Meow Market은 고양이의 생활을 다음 다섯 카테고리로 구분�
 
 ## 실제 프로젝트 파일 구조
 
-```text
+```
 five-meow-market/
 ├─ public/
 │  ├─ favicon.png
 │  ├─ favicon.svg
-│  └─ icons.svg
+│  ├─ icons.svg
+│  └─ robots.txt
 ├─ src/
 │  ├─ api/          REST API 요청 모듈
 │  ├─ assets/       이미지 및 정적 리소스
 │  ├─ components/   공통 및 기능별 UI 컴포넌트
-│  ├─ data/         로컬 데이터와 Mock 데이터
 │  ├─ hooks/        커스텀 Hook
-│  ├─ mock/         Mock API와 상품 데이터
+│  ├─ mock/         로컬 데이터와 Mock 데이터
 │  ├─ pages/        화면 단위 페이지
 │  ├─ providers/    전역 Context Provider
 │  ├─ routes/       라우팅 설정
@@ -195,7 +195,7 @@ five-meow-market/
 │  ├─ style/        전역 스타일
 │  ├─ App.jsx       애플리케이션 루트
 │  └─ main.jsx      React 진입점
-├─ .env             로컬 환경 변수 파일
+├─ .env.local       로컬 환경 변수 파일
 ├─ mock.env         Mock 실행용 환경 변수 예시
 ├─ index.html       Vite HTML 진입점
 ├─ package.json     의존성 및 실행 스크립트
@@ -252,7 +252,7 @@ npm run preview
 
 ### Mock 실행
 
-```env
+```
 VITE_USE_MOCK=true
 ```
 
@@ -260,8 +260,8 @@ VITE_USE_MOCK=true
 
 ### API 서버 연결
 
-```env
-VITE_USE_MOCK=false
+```
+
 VITE_API_BASE_URL=<API_SERVER_URL>
 ```
 
@@ -269,7 +269,7 @@ VITE_API_BASE_URL=<API_SERVER_URL>
 
 인증 요청은 다음과 같은 형태로 처리합니다.
 
-```javascript
+```jsx
 fetch(url, {
   credentials: "include",
   headers: {
@@ -280,25 +280,32 @@ fetch(url, {
 
 ## 주요 화면 이미지 또는 GIF
 
-현재 저장소의 `public`에는 파비콘과 아이콘만 포함되어 있어 화면 캡처 이미지는 별도로 추가하지 않은 상태입니다. 대표 화면을 촬영한 뒤 다음과 같이 저장하면 README에서 사용할 수 있습니다.
+### 1. 메인페이지
+![메인페이지](./docs/images/main.png)
 
-```text
-public/docs/main.gif
-public/docs/product.gif
-public/docs/cart.gif
-public/docs/order.gif
-public/docs/mypage.gif
-```
+### 2. 상품목록 페이지
+![상품목록 페이지](./docs/images/product-list.png)
 
-추가 후 작성 예시:
+### 3. 상품 상세페이지
+![상품 상세페이지](./docs/images/product-detail.png)
 
-```markdown
-![메인 화면](./public/docs/main.gif)
-![상품 탐색](./public/docs/product.gif)
-![주문 과정](./public/docs/order.gif)
-```
+### 4. 장바구니 페이지
+![장바구니 페이지](./docs/images/cart.png)
 
-권장 촬영 흐름은 `메인 → 상품 탐색 → 상품 상세 → 장바구니 → Checkout → 주문내역`입니다.
+### 5. 결제 페이지
+![결제 페이지](./docs/images/checkout.png)
+
+### 6. 마이페이지
+![마이페이지](./docs/images/mypage.png)
+
+### 7. 주문/배송내역 페이지
+![주문 및 배송내역](./docs/images/order-list.png)
+
+### 8. 찜한 상품 페이지
+![찜한 상품](./docs/images/wishlist.png)
+
+### 9. 적립금 내역 페이지
+![적립금 내역](./docs/images/points.png)
 
 ## API 도메인
 
@@ -337,7 +344,7 @@ public/docs/mypage.gif
 
 실제 API 서버를 사용할 때는 `.env`에 `VITE_API_BASE_URL`을 설정합니다. 인증이 필요한 요청에는 Access Token을 `Authorization` 헤더로 전달하고, HttpOnly Cookie로 관리되는 Refresh Token을 위해 `credentials: "include"`를 사용합니다.
 
-```javascript
+```jsx
 const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/products`, {
   headers: {
     Accept: "application/json",
@@ -350,7 +357,7 @@ const result = await response.json();
 
 인증 요청 예시:
 
-```javascript
+```jsx
 const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/cart`, {
   headers: {
     Accept: "application/json",
@@ -362,7 +369,7 @@ const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/cart`, {
 
 Checkout 요청은 구매 방식에 따라 `cartItemIds` 또는 상품별 `items`를 전달합니다.
 
-```javascript
+```jsx
 await fetch(`${import.meta.env.VITE_API_BASE_URL}/checkout`, {
   method: "POST",
   headers: {
@@ -378,7 +385,7 @@ await fetch(`${import.meta.env.VITE_API_BASE_URL}/checkout`, {
 
 주요 요청 흐름은 다음과 같습니다.
 
-```text
+```
 GET  /products
 GET  /products/:productId
 POST /cart
@@ -392,39 +399,27 @@ Mock 환경에서는 `VITE_USE_MOCK=true`로 API 서버 없이 로컬 데이터�
 
 ## 트러블슈팅
 
-### API 요청 주소가 undefined로 표시되는 경우
+### git 충돌 해결하는 과정에서 이전까지 작업했던 사항이 사라지는 케이스 발생
 
-프로젝트 루트의 `.env`에 `VITE_API_BASE_URL`을 추가하고 개발 서버를 재시작합니다. Vite 환경 변수는 서버가 시작될 때 읽기 때문에 파일을 수정한 뒤에는 반드시 다시 실행해야 합니다.
+- 원인: rebase하는 도중에 이전에 커밋했던 내역이 풀리는 현상이 발생함
+- 해결: 평소 git stash / git stash apply 로 임시저장소 내역을 하나하나 찾아가면 이전에 작업했던 내용을 복구
 
-```env
-VITE_API_BASE_URL=<API_SERVER_URL>
-```
+### 코드 내역을 수정했으나, 변경사항이 적용되지 않는 케이스 발생
 
-### Refresh Token 인증이 유지되지 않는 경우
+- 원인 : 파일을 두 가지 연결했으나, 한 개의 파일만 수정하였음
+- 해결 : App.jsx에서 import 된
+  파일 재확인 후 두 가지
+  파일 수정 진행
 
-Refresh Token은 HttpOnly Cookie로 전송되므로 요청에 `credentials: "include"`가 필요합니다. API 서버의 CORS 설정도 프론트엔드 주소를 허용하고 Credentials를 활성화해야 합니다.
+### 이미지 뒤에 깔린 배경 크기로 인해 이미지 크기가 가지각색인 이슈 발생
 
-### Mock 데이터로 실행하고 싶은 경우
+- 원인 : 배경에 자체적으로 가지고 있던 여백이 원인
+- 해결 : 사진 배경 진행 후 비율을 1:1로 설정 후 작업 진행
 
-`.env`에 다음 값을 설정한 뒤 개발 서버를 재시작합니다.
+### PC, 반응형에서는 정상적으로 작동하지만 모바일에서는 화면이 잘리는 상황
 
-```env
-VITE_USE_MOCK=true
-```
-
-### 빌드 또는 린트가 실패하는 경우
-
-의존성을 다시 설치한 뒤 각각의 오류 위치를 확인합니다.
-
-```bash
-npm install
-npm run lint
-npm run build
-```
-
-### 포트가 이미 사용 중인 경우
-
-Vite가 안내하는 다른 포트를 사용하거나 실행 중인 개발 서버를 종료한 뒤 다시 `npm run dev`를 실행합니다.
+- 원인 : 기존 PC, 반응형, 모바일 코드 문제가 아닌 헤더에 넣은 로고 이미지의 공간 차지
+- 해결 : 로고 이미지 모바일 화면에서 보여지는 크기 설정 후 작업 진행
 
 ## 프로젝트 회고
 

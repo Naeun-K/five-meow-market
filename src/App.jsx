@@ -29,6 +29,8 @@ import CheckoutPage from "./pages/checkout/CheckoutPage";
 import CancelPage from "./pages/cancelPage/CancelPage";
 import ExchangePage from "./pages/exchangePage/ExchangePage";
 import ReturnPage from "./pages/returnPage/ReturnPage";
+import QnaDetailPage from "./pages/communitypage/detail/QnaDetailPage";
+import ReviewDetailPage from "./pages/communitypage/detail/ReviewDetailPage";
 
 function App() {
   return (
@@ -70,6 +72,14 @@ function App() {
         <Route path="/community/notice" element={<NoticePage />} />
         <Route path="/community/inquiry" element={<QnaPage />} />
         <Route path="/community/review" element={<ReviewPage />} />
+        <Route
+          path="/community/inquiry/:inquiryId"
+          element={<QnaDetailPage />}
+        />
+        <Route
+          path="/community/review/:reviewId"
+          element={<ReviewDetailPage />}
+        />
 
         <Route path="/support" element={<CustomerContactPage />} />
         <Route path="/support/inquiry" element={<CustomerInquiryPage />} />
