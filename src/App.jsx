@@ -36,7 +36,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
-
+      {/* 마지막 커밋 에러 해결용 */}
       {}
       <Routes>
         <Route path="/" element={<MainPage />} />
